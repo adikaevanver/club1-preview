@@ -1,0 +1,347 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Клуб Номер Один — CLUB 1, на главную" [ref=e4] [cursor=pointer]:
+        - /url: index.html
+        - img "Клуб Номер Один · CLUB 1" [ref=e5]
+      - button "Открыть меню" [ref=e7] [cursor=pointer]
+  - main [ref=e9]:
+    - region "Гурам Амарян" [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e13]:
+          - generic [ref=e14]:
+            - text: "27.03"
+            - generic [ref=e15]: 19:30
+          - img [ref=e16]
+          - generic [ref=e17]:
+            - generic [ref=e18]: STANDUP
+            - generic [ref=e19]: Сольный концерт
+          - generic [ref=e20]:
+            - generic [ref=e21]: Гурам
+            - generic [ref=e22]: Амарян
+          - generic [ref=e23]: 18+
+        - generic [ref=e24]:
+          - paragraph [ref=e25]: Сольный концерт
+          - heading "Гурам Амарян" [level=1] [ref=e26]
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - img [ref=e30]
+              - generic [ref=e33]:
+                - text: 27 марта
+                - generic [ref=e34]: пятница, 19:30
+            - generic [ref=e35]:
+              - img [ref=e37]
+              - generic [ref=e40]:
+                - text: 1 час 30 минут
+                - generic [ref=e41]: длительность концерта
+            - generic [ref=e42]:
+              - img [ref=e44]
+              - generic [ref=e48]:
+                - text: Сбор гостей
+                - generic [ref=e49]: за 30 минут до начала
+            - generic [ref=e50]:
+              - generic [ref=e51]: ₽
+              - generic [ref=e52]:
+                - text: 1500–3000 руб
+                - generic [ref=e53]: стоимость билета
+          - generic [ref=e54]:
+            - link "Подробнее" [ref=e55] [cursor=pointer]:
+              - /url: "#about"
+            - link "Купить билет" [ref=e56] [cursor=pointer]:
+              - /url: "#dates"
+          - generic [ref=e57]:
+            - generic [ref=e58]: "Ближайшие даты сольника:"
+            - generic [ref=e59]:
+              - generic [ref=e60]: Март
+              - group "Выберите дату сольного концерта" [ref=e61]:
+                - button "14 Сб · аншлаг" [disabled]:
+                  - generic: "14"
+                  - generic: Сб · аншлаг
+                - button "20 Пт" [ref=e62] [cursor=pointer]:
+                  - generic [ref=e63]: "20"
+                  - generic [ref=e64]: Пт
+                - button "21 Сб" [ref=e65] [cursor=pointer]:
+                  - generic [ref=e66]: "21"
+                  - generic [ref=e67]: Сб
+                - button "27 Пт" [pressed] [ref=e68] [cursor=pointer]:
+                  - generic [ref=e69]: "27"
+                  - generic [ref=e70]: Пт
+                - button "28 Сб" [ref=e71] [cursor=pointer]:
+                  - generic [ref=e72]: "28"
+                  - generic [ref=e73]: Сб
+            - paragraph [ref=e74]: "Выбрана дата: 27 марта, начало в 19:30."
+            - link "Забронировать место" [ref=e75] [cursor=pointer]:
+              - /url: "#"
+    - region "О сольнике" [ref=e76]:
+      - heading "О сольнике" [level=2] [ref=e79]
+      - generic [ref=e80]:
+        - paragraph [ref=e81]: "Гурам Амарян выходит на сцену Клуба №1 с сольной программой — полтора часа стендапа без разогрева и долгих пауз. Только комик, микрофон и зал, который отвечает смехом. Это не сборный концерт: весь вечер держит один артист, и материал выстроен как цельная история, а не набор случайных шуток."
+        - paragraph [ref=e82]: "В программу вошёл материал, который Гурам обкатывал на открытых микрофонах и сборных вечерах: наблюдения о жизни в большом городе, отношениях, работе и семье. Манера — разговорная: комик много импровизирует, реагирует на зал и не боится уводить номер в сторону, если ситуация того просит. Двух одинаковых вечеров не бывает."
+        - paragraph [ref=e83]: Концерт идёт единым блоком, 18+. Сбор гостей — за 30 минут до начала. На площадке работают бар и кухня, места — за столиками, так что вечер можно провести спокойно и с компанией.
+        - paragraph [ref=e84]: Точный сет-лист артист не раскрывает заранее — как на любом живом стендапе, часть шуток рождается прямо на сцене. Программа и тайминг могут немного меняться от даты к дате.
+    - region "Регалии и проекты" [ref=e85]:
+      - generic [ref=e86]:
+        - heading "Регалии и проекты" [level=2] [ref=e88]
+        - paragraph [ref=e89]: Проекты, шоу и достижения, в которых участвовал комик.
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - img [ref=e93]
+          - generic [ref=e96]: Регалия появится позже
+        - generic [ref=e97]:
+          - img [ref=e99]
+          - generic [ref=e102]: Проект появится позже
+        - generic [ref=e103]:
+          - img [ref=e105]
+          - generic [ref=e108]: Проект появится позже
+        - generic [ref=e109]:
+          - img [ref=e111]
+          - generic [ref=e114]: Проект появится позже
+      - paragraph [ref=e115]: Полный список регалий и проектов Гурама мы уточняем и добавим сюда после подтверждения у артиста.
+    - region "Видео и смешные моменты" [ref=e116]:
+      - generic [ref=e117]:
+        - heading "Видео и смешные моменты" [level=2] [ref=e119]
+        - paragraph [ref=e120]: Нарезка выступлений и пример сольного номера — добавим ролики ближе к концерту.
+      - generic [ref=e121]:
+        - button "Предыдущее видео" [disabled] [ref=e122] [cursor=pointer]: ‹
+        - generic [ref=e123]:
+          - figure "Смешные моменты с выступлений" [ref=e124]:
+            - generic [ref=e125]:
+              - img [ref=e127]
+              - generic [ref=e129]: Видео появится позже
+            - generic [ref=e130]: Смешные моменты с выступлений
+          - figure "Пример сольного номера" [ref=e131]:
+            - generic [ref=e132]:
+              - img [ref=e134]
+              - generic [ref=e136]: Видео появится позже
+            - generic [ref=e137]: Пример сольного номера
+          - figure "Бэкстейдж и разговор с залом" [ref=e138]:
+            - generic [ref=e139]:
+              - img [ref=e141]
+              - generic [ref=e143]: Видео появится позже
+            - generic [ref=e144]: Бэкстейдж и разговор с залом
+        - button "Следующее видео" [ref=e145] [cursor=pointer]: ›
+    - region "Комик в соцсетях" [ref=e146]:
+      - heading "Комик в соцсетях" [level=2] [ref=e149]
+      - generic [ref=e150]:
+        - link "ВКонтакте комика (ссылка появится позже)" [ref=e151] [cursor=pointer]:
+          - /url: "#"
+          - img [ref=e152]
+          - text: ВКонтакте
+        - link "Telegram комика (ссылка появится позже)" [ref=e154] [cursor=pointer]:
+          - /url: "#"
+          - img [ref=e155]
+          - text: Telegram
+        - link "YouTube комика (ссылка появится позже)" [ref=e157] [cursor=pointer]:
+          - /url: "#"
+          - img [ref=e158]
+          - text: YouTube
+      - paragraph [ref=e160]: Официальные аккаунты Гурама появятся здесь после подтверждения — сейчас мы сверяем ссылки, чтобы не привести на страницу-двойник.
+    - region "Гурам у нас на площадке и другие его сольники" [ref=e161]:
+      - heading "Гурам у нас на площадке и другие его сольники" [level=2] [ref=e164]
+      - list [ref=e165]:
+        - listitem [ref=e166]:
+          - generic [ref=e167]:
+            - generic [ref=e168]:
+              - text: "08.03"
+              - generic [ref=e169]: 18:30
+            - img [ref=e170]
+            - generic [ref=e171]:
+              - generic [ref=e172]: STANDUP
+              - generic [ref=e173]: Сборный концерт
+            - generic [ref=e174]:
+              - generic [ref=e175]: От опытных
+              - generic [ref=e176]: комиков
+            - generic [ref=e177]: 18+
+          - heading "От опытных комиков" [level=3] [ref=e178]
+          - generic [ref=e179]:
+            - link "Подробнее" [ref=e180] [cursor=pointer]:
+              - /url: show.html
+            - link "Купить билет" [ref=e181] [cursor=pointer]:
+              - /url: "#"
+        - listitem [ref=e182]:
+          - generic [ref=e183]:
+            - generic [ref=e184]:
+              - text: "24.04"
+              - generic [ref=e185]: 19:30
+            - img [ref=e186]
+            - generic [ref=e187]:
+              - generic [ref=e188]: STANDUP
+              - generic [ref=e189]: Сольный концерт
+            - generic [ref=e190]:
+              - generic [ref=e191]: Гурам
+              - generic [ref=e192]: Амарян
+            - generic [ref=e193]: 18+
+          - heading "Гурам Амарян" [level=3] [ref=e194]
+          - generic [ref=e195]:
+            - link "Подробнее" [ref=e196] [cursor=pointer]:
+              - /url: solnik.html
+            - link "Купить билет" [ref=e197] [cursor=pointer]:
+              - /url: "#"
+        - listitem [ref=e198]:
+          - generic [ref=e199]:
+            - generic [ref=e200]:
+              - text: "15.05"
+              - generic [ref=e201]: 20:00
+            - img [ref=e202]
+            - generic [ref=e203]:
+              - generic [ref=e204]: STANDUP
+              - generic [ref=e205]: Сольный концерт
+            - generic [ref=e206]:
+              - generic [ref=e207]: Гурам
+              - generic [ref=e208]: Амарян
+            - generic [ref=e209]: 18+
+          - heading "Гурам Амарян" [level=3] [ref=e210]
+          - generic [ref=e211]:
+            - link "Подробнее" [ref=e212] [cursor=pointer]:
+              - /url: solnik.html
+            - link "Купить билет" [ref=e213] [cursor=pointer]:
+              - /url: "#"
+        - listitem [ref=e214]:
+          - generic [ref=e215]:
+            - generic [ref=e216]:
+              - text: "30.04"
+              - generic [ref=e217]: 19:00
+            - img [ref=e218]
+            - generic [ref=e219]:
+              - generic [ref=e220]: STANDUP
+              - generic [ref=e221]: Стендап-вечер
+            - generic [ref=e222]:
+              - generic [ref=e223]: В большом
+              - generic [ref=e224]: городе
+            - generic [ref=e225]: 18+
+          - heading "В большом городе" [level=3] [ref=e226]
+          - generic [ref=e227]:
+            - link "Подробнее" [ref=e228] [cursor=pointer]:
+              - /url: show.html
+            - link "Купить билет" [ref=e229] [cursor=pointer]:
+              - /url: "#"
+    - region "Вам может понравиться" [ref=e230]:
+      - heading "Вам может понравиться" [level=2] [ref=e233]
+      - list [ref=e234]:
+        - listitem [ref=e235]:
+          - generic [ref=e236]:
+            - generic [ref=e237]:
+              - text: "25.03"
+              - generic [ref=e238]: 20:00
+            - img [ref=e239]
+            - generic [ref=e240]:
+              - generic [ref=e241]: STANDUP
+              - generic [ref=e242]: Сольный концерт
+            - generic [ref=e243]:
+              - generic [ref=e244]: Стас
+              - generic [ref=e245]: Старовойтов
+            - generic [ref=e246]: 18+
+          - heading "Стас Старовойтов" [level=3] [ref=e247]
+          - generic [ref=e248]:
+            - link "Подробнее" [ref=e249] [cursor=pointer]:
+              - /url: solnik.html
+            - link "Купить билет" [ref=e250] [cursor=pointer]:
+              - /url: "#"
+        - listitem [ref=e251]:
+          - generic [ref=e252]:
+            - img [ref=e253]
+            - generic [ref=e255]:
+              - text: "11.04"
+              - generic [ref=e256]: 18:30
+            - img [ref=e257]
+            - generic [ref=e258]:
+              - generic [ref=e259]: STANDUP
+              - generic [ref=e260]: Сольный концерт
+            - generic [ref=e261]:
+              - generic [ref=e262]: Расул
+              - generic [ref=e263]: Чабдаров
+            - generic [ref=e264]: 18+
+          - heading "Расул Чабдаров" [level=3] [ref=e265]
+          - generic [ref=e266]:
+            - link "Подробнее" [ref=e267] [cursor=pointer]:
+              - /url: solnik.html
+            - link "Купить билет" [ref=e268] [cursor=pointer]:
+              - /url: "#"
+        - listitem [ref=e269]:
+          - generic [ref=e270]:
+            - img [ref=e271]
+            - generic [ref=e273]:
+              - text: "24.04"
+              - generic [ref=e274]: 19:30
+            - img [ref=e275]
+            - generic [ref=e276]:
+              - generic [ref=e277]: STANDUP
+              - generic [ref=e278]: Сольный концерт
+            - generic [ref=e279]:
+              - generic [ref=e280]: Илья
+              - generic [ref=e281]: Раевский
+            - generic [ref=e282]: 18+
+          - heading "Илья Раевский" [level=3] [ref=e283]
+          - generic [ref=e284]:
+            - link "Подробнее" [ref=e285] [cursor=pointer]:
+              - /url: solnik.html
+            - link "Купить билет" [ref=e286] [cursor=pointer]:
+              - /url: "#"
+        - listitem [ref=e287]:
+          - generic [ref=e288]:
+            - img [ref=e289]
+            - generic [ref=e291]:
+              - text: "25.04"
+              - generic [ref=e292]: 18:30
+            - img [ref=e293]
+            - generic [ref=e294]:
+              - generic [ref=e295]: STANDUP
+              - generic [ref=e296]: Сольный концерт
+            - generic [ref=e297]:
+              - generic [ref=e298]: Денис
+              - generic [ref=e299]: Чебатков
+            - generic [ref=e300]: 18+
+          - heading "Денис Чебатков" [level=3] [ref=e301]
+          - generic [ref=e302]:
+            - link "Подробнее" [ref=e303] [cursor=pointer]:
+              - /url: solnik.html
+            - link "Купить билет" [ref=e304] [cursor=pointer]:
+              - /url: "#"
+  - contentinfo [ref=e305]:
+    - generic [ref=e306]:
+      - generic [ref=e307]:
+        - link "Клуб Номер Один — CLUB 1, на главную" [ref=e308] [cursor=pointer]:
+          - /url: index.html
+          - img "Клуб Номер Один · CLUB 1" [ref=e309]
+        - paragraph [ref=e310]: Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.
+      - generic [ref=e311]:
+        - heading "Контакты" [level=3] [ref=e312]
+        - list [ref=e313]:
+          - listitem [ref=e314]:
+            - text: Телефон
+            - link "+7 (499) 686 91 11" [ref=e315] [cursor=pointer]:
+              - /url: tel:+74996869111
+          - listitem [ref=e316]:
+            - text: Электронная почта
+            - link "hello@club1.ru" [ref=e317] [cursor=pointer]:
+              - /url: mailto:hello@club1.ru
+          - listitem [ref=e318]:
+            - text: Адрес
+            - text: Москва, Новый Арбат, 21
+        - paragraph [ref=e319]:
+          - text: ООО «Клуб Номер Один» · ИНН 7700000000
+          - text: Юридическая информация
+      - generic [ref=e320]:
+        - heading "Информация" [level=3] [ref=e321]
+        - list [ref=e322]:
+          - listitem [ref=e323]:
+            - link "Возврат билетов" [ref=e324] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e325]:
+            - link "Политика конфиденциальности" [ref=e326] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e327]:
+            - link "Договор оферты" [ref=e328] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e329]:
+            - link "Аренда площадки" [ref=e330] [cursor=pointer]:
+              - /url: arenda.html
+      - generic [ref=e331]:
+        - heading "Мы в соцсетях" [level=3] [ref=e332]
+        - generic [ref=e333]:
+          - link "ВКонтакте" [ref=e334] [cursor=pointer]:
+            - /url: https://vk.com/
+            - img [ref=e335]
+          - link "Telegram" [ref=e337] [cursor=pointer]:
+            - /url: https://t.me/
+            - img [ref=e338]

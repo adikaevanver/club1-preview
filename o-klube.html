@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>О клубе — Клуб №1 · CLUB 1, стендап-клуб на Новом Арбате</title>
+
+<meta name="description" content="О Клубе №1 — камерном комедийном клубе в центре Москвы на Новом Арбате, 21. Два зала: малый на 120 гостей и большой до 550, 150+ шоу в год, живой стендап 18+. Как нас найти — м. Арбатская.">
+<meta name="theme-color" content="#0a0810">
+<link rel="canonical" href="https://club1.ru/o-klube.html">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Клуб №1 · CLUB 1">
+<meta property="og:title" content="О клубе — Клуб №1 на Новом Арбате">
+<meta property="og:description" content="Камерный комедийный клуб в центре Москвы. Два зала, 150+ шоу в год, живой стендап рядом со сценой. Новый Арбат, 21 · м. Арбатская.">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://club1.ru/o-klube.html">
+<meta property="og:image" content="assets/comics/dedishchev.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- =====================================================================
+     PAGE-SPECIFIC CSS — «О клубе»
+     Reuses shared tokens/components from styles.css. Everything here is
+     scoped with an `about-` / section prefix so it can't collide with the
+     other sub-pages being built in parallel.
+     ===================================================================== -->
+<style>
+  /* ---- HERO ------------------------------------------------------- */
+  .about-hero{position:relative;padding:clamp(40px,7vw,72px) 0 clamp(26px,4vw,40px)}
+  .about-hero__glow-a{width:520px;height:520px;top:-170px;left:-190px}
+  .about-hero__glow-b{width:440px;height:440px;top:-60px;right:-200px}
+  .about-hero__inner{position:relative;z-index:1;max-width:840px}
+  .about-hero h1{
+    font-family:var(--display);font-weight:900;
+    font-size:clamp(2.6rem,9vw,5.2rem);line-height:.92;
+    text-transform:uppercase;letter-spacing:-.015em;margin-top:16px;
+  }
+  .about-hero .lede{
+    font-size:clamp(1.05rem,2.3vw,1.42rem);line-height:1.5;
+    color:var(--text);opacity:.9;max-width:660px;margin-top:22px;
+  }
+  .about-hero .lede b{color:#fff;font-weight:600}
+  .about-hero .rule{margin-top:28px}
+
+  /* ---- SECTION shell --------------------------------------------- */
+  .about-section{position:relative;padding:clamp(46px,7vw,86px) 0}
+  .about-section + .about-section{border-top:1px solid var(--hairline)}
+  .section-head{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(28px,4vw,44px)}
+  .section-head h2{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(1.75rem,4.4vw,3rem);line-height:1;
+    text-transform:uppercase;letter-spacing:-.01em;
+  }
+  .section-lead{font-size:clamp(1rem,1.6vw,1.15rem);color:var(--muted);max-width:60ch;line-height:1.55}
+
+  /* ---- STORY ------------------------------------------------------ */
+  .story-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;
+    gap:clamp(30px,5vw,64px);align-items:center;
+  }
+  .story-copy .badge1{margin-bottom:20px}
+  .story-copy p{font-size:1.05rem;line-height:1.62;color:var(--text);opacity:.88;margin-top:16px;max-width:54ch}
+  .story-copy p b{color:#fff;font-weight:600}
+
+  /* signature skewed photo frame (same technique as the home hero),
+     wrapped so the leaning corners never push the layout wider */
+  .photo-skew{
+    padding:34px 46px;                 /* absorbs the skew overhang */
+    display:flex;justify-content:center;
+  }
+  .photo-skew__frame{
+    position:relative;width:min(320px,100%);aspect-ratio:4/5;
+    border-radius:6px;overflow:hidden;background:#151019;
+    transform:skewX(var(--skew));
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.9);
+  }
+  .photo-skew__frame img{
+    width:100%;height:100%;object-fit:cover;object-position:50% 20%;
+    transform:skewX(var(--unskew)) scale(1.26);
+  }
+  .photo-skew__tag{
+    position:absolute;left:0;bottom:0;z-index:2;
+    transform:skewX(var(--unskew));transform-origin:left bottom;
+    background:rgba(7,5,9,.72);backdrop-filter:blur(4px);
+    padding:8px 14px;font-family:var(--display);font-weight:700;
+    font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;
+  }
+
+  /* ---- TWO HALLS -------------------------------------------------- */
+  .halls{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.4vw,26px)}
+  .hall{
+    position:relative;overflow:hidden;
+    background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r);
+    padding:clamp(24px,3vw,38px);display:flex;flex-direction:column;gap:16px;
+  }
+  .hall__glow{position:absolute;width:280px;height:280px;top:-120px;right:-120px;z-index:0}
+  .hall > *{position:relative;z-index:1}
+  .hall__name{font-family:var(--display);font-weight:800;font-size:clamp(1.4rem,2.6vw,1.9rem);text-transform:uppercase;letter-spacing:.005em}
+  .hall__cap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .hall__cap b{font-family:var(--display);font-weight:900;font-size:clamp(2.2rem,4vw,3rem);color:var(--gold);line-height:.9}
+  .hall__cap span{color:var(--muted);font-size:.95rem;letter-spacing:.01em}
+  .hall p{color:var(--text);opacity:.84;line-height:1.55;font-size:1rem}
+  .hall ul{display:flex;flex-direction:column;gap:9px;margin-top:2px}
+  .hall li{position:relative;padding-left:22px;color:var(--muted);font-size:.96rem;line-height:1.45}
+  .hall li::before{
+    content:"";position:absolute;left:0;top:.5em;width:11px;height:11px;
+    background:var(--magenta);border-radius:2px;transform:skewX(var(--skew));
+  }
+
+  /* ---- STAT ROW --------------------------------------------------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,22px)}
+  .stat{
+    background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r);
+    padding:clamp(22px,3vw,32px);
+  }
+  .stat b{
+    display:block;font-family:var(--display);font-weight:900;color:var(--gold);
+    font-size:clamp(2.1rem,4.6vw,3.3rem);line-height:.9;letter-spacing:-.01em;
+  }
+  .stat span{display:block;margin-top:12px;color:var(--muted);font-size:.94rem;letter-spacing:.02em;line-height:1.4}
+
+  /* ---- ATMOSPHERE ------------------------------------------------- */
+  .atmo-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(28px,4.5vw,56px);align-items:center}
+  .atmo-copy p{font-size:1.05rem;line-height:1.62;color:var(--text);opacity:.88;margin-top:16px;max-width:52ch}
+  .atmo-copy p b{color:#fff;font-weight:600}
+  .atmo-photos{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:clamp(12px,1.6vw,18px)}
+  .atmo-photos figure{
+    position:relative;border-radius:12px;overflow:hidden;background:#151019;
+    aspect-ratio:3/4;margin:0;
+  }
+  .atmo-photos figure:first-child{grid-row:span 2;aspect-ratio:auto}
+  .atmo-photos img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;transition:transform .5s var(--ease)}
+  .atmo-photos figure:hover img{transform:scale(1.05)}
+
+  /* ---- HOW TO FIND US -------------------------------------------- */
+  .find-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,32px);align-items:stretch}
+  .find-card{
+    background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r);
+    padding:clamp(26px,3.4vw,40px);display:flex;flex-direction:column;gap:22px;
+  }
+  .find-item{display:flex;flex-direction:column;gap:4px}
+  .find-item .k{font-family:var(--body);font-weight:600;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)}
+  .find-item .v{font-size:1.1rem;color:var(--text);font-weight:500}
+  .find-item .v a:hover{color:var(--magenta)}
+  .find-item .sub{font-size:.92rem;color:var(--muted);margin-top:2px}
+  .find-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+
+  /* stylised "map" panel — decorative, not a live map */
+  .find-map{
+    position:relative;overflow:hidden;border-radius:var(--r);min-height:320px;
+    background:
+      linear-gradient(150deg,#140f1d,#0a0810),
+      var(--ink-2);
+    border:1px solid var(--hairline);
+    isolation:isolate;
+  }
+  .find-map__grid{
+    position:absolute;inset:0;z-index:0;opacity:.5;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:44px 44px;
+  }
+  /* one broad "avenue" crossing the panel — Новый Арбат */
+  .find-map__road{
+    position:absolute;left:-10%;right:-10%;top:52%;height:34px;z-index:1;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+    transform:skewY(-6deg);
+  }
+  .find-map__road::after{
+    content:"Новый Арбат";position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted-2);white-space:nowrap;
+  }
+  .find-map__glow{position:absolute;width:300px;height:300px;top:20%;left:40%;z-index:0}
+  .find-map__pin{
+    position:absolute;left:50%;top:44%;z-index:3;transform:translate(-50%,-100%);
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .find-map__pin .badge1{--s:52px;box-shadow:0 16px 34px -14px rgba(255,47,109,.9)}
+  .find-map__pin .lbl{
+    font-family:var(--display);font-weight:700;font-size:.8rem;letter-spacing:.02em;
+    text-transform:uppercase;color:#fff;background:rgba(7,5,9,.72);
+    backdrop-filter:blur(4px);padding:7px 13px;border-radius:8px;white-space:nowrap;
+  }
+  .find-map__metro{
+    position:absolute;left:16px;bottom:14px;z-index:3;
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.9rem;color:var(--text);
+    background:rgba(7,5,9,.66);backdrop-filter:blur(4px);
+    padding:8px 13px;border-radius:9px;border:1px solid var(--hairline);
+  }
+  .find-map__m{
+    width:24px;height:24px;flex:0 0 auto;border-radius:50%;
+    background:var(--magenta);color:#fff;font-family:var(--display);font-weight:900;
+    font-size:.9rem;display:flex;align-items:center;justify-content:center;line-height:1;
+  }
+
+  /* ---- VENUE SLIDESHOW (placeholder tiles) ----------------------- */
+  /* Real interior/guest photos aren't shot yet — each slide is a clearly
+     grey, hatched placeholder so nothing pretends to be a real photo.
+     Sits inside the shared .slideshow / .slideshow__slide from styles.css. */
+  .venue-ph{
+    position:relative;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:13px;text-align:center;
+    height:clamp(220px,42vw,440px);padding:26px;
+    background:
+      repeating-linear-gradient(-45deg,rgba(255,255,255,.04) 0 14px,rgba(255,255,255,.012) 14px 28px),
+      var(--ink-2);
+  }
+  .venue-ph__glyph{width:44px;height:44px;opacity:.5}
+  .venue-ph__label{
+    font-family:var(--display);font-weight:800;font-size:1rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--text);
+  }
+  .venue-ph__note{font-size:.82rem;letter-spacing:.02em;color:var(--muted)}
+
+  /* ---- OPENING HOURS (inside the contacts card) ------------------ */
+  .hours{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+  .hours li{display:flex;align-items:baseline;justify-content:space-between;gap:18px}
+  .hours li span{color:var(--muted);font-size:.95rem}
+  .hours li b{font-family:var(--display);font-weight:700;font-size:.96rem;color:var(--text);white-space:nowrap}
+
+  /* ---- PROMINENT «АРЕНДА» CTA BAND -------------------------------- */
+  .arenda-cta{
+    position:relative;overflow:hidden;
+    background:var(--panel);border:1px solid var(--hairline-strong);border-radius:var(--r);
+    padding:clamp(30px,4.5vw,52px);
+    display:grid;grid-template-columns:1.35fr auto;gap:clamp(24px,4vw,48px);align-items:center;
+  }
+  .arenda-cta__glow{width:360px;height:360px;top:-170px;right:-120px}
+  .arenda-cta__body,.arenda-cta__action{position:relative;z-index:1}
+  .arenda-cta h2{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.03;
+    text-transform:uppercase;letter-spacing:-.01em;margin:12px 0 14px;
+  }
+  .arenda-cta p{color:var(--text);opacity:.86;font-size:1.05rem;line-height:1.55;max-width:54ch}
+  .arenda-cta__action{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+  .arenda-cta__btn{font-size:1.05rem;padding:.95em 1.9em}
+  .arenda-cta__sub{font-size:.86rem;color:var(--muted-2);max-width:24ch;line-height:1.4}
+
+  /* ---- RESPONSIVE ------------------------------------------------- */
+  @media (max-width:900px){
+    .story-grid,.atmo-grid,.find-grid{grid-template-columns:1fr}
+    .story-copy p,.atmo-copy p{max-width:none}
+    .halls{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .story-photo-wrap{order:-1}          /* photo above copy on narrow */
+    .atmo-photos{order:-1}
+    .find-map{min-height:280px;order:-1}
+    .arenda-cta{grid-template-columns:1fr;gap:24px}
+    .arenda-cta__action{align-items:stretch}
+    .arenda-cta__btn{justify-content:center}
+    .arenda-cta__sub{max-width:none}
+  }
+
+  @media (max-width:640px){
+    .about-hero{padding-top:26px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    /* drop the skew on the story photo so nothing leans off-screen */
+    .photo-skew{padding:0}
+    .photo-skew__frame{transform:none;width:100%;aspect-ratio:4/5;border-radius:14px}
+    .photo-skew__frame img{transform:none}
+    .photo-skew__tag{transform:none}
+    .atmo-photos figure:first-child{grid-row:auto;aspect-ratio:3/4}
+    .find-actions .btn{flex:1}
+  }
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================================
+     SITE HEADER  (reused verbatim on every sub-page)
+     Left: logo lockup · Centre: primary nav · Right: phone + CTA / burger
+     ===================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container site-header__inner">
+
+    <!-- logo lockup: КЛУБ / НОМЕР / ОДИН · CLUB · [1] -->
+    <a class="logo" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+      <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+    </a>
+
+    <!-- primary navigation -->
+    <nav class="main-nav" aria-label="Основная навигация">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="index.html">Главная</a></li>
+        <li><a class="main-nav__link" href="komiki.html">Комики</a></li>
+        <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
+        <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
+        <li><a class="main-nav__link" href="o-klube.html" aria-current="page">О клубе</a></li>
+        <li><a class="main-nav__link" href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary" href="index.html#afisha">Купить билет</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile drawer -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
+    <a class="main-nav__link" href="index.html">Главная</a>
+    <a class="main-nav__link" href="komiki.html">Комики</a>
+    <a class="main-nav__link" href="formaty.html">Форматы</a>
+    <a class="main-nav__link" href="eda.html">Еда и напитки</a>
+    <a class="main-nav__link" href="o-klube.html" aria-current="page">О клубе</a>
+    <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
+    <div class="mobile-menu__foot">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary btn--block" href="index.html#afisha">Купить билет</a>
+    </div>
+  </nav>
+</header>
+
+
+<main class="container" id="main">
+
+  <!-- =================================================================
+       HERO — О клубе
+       ================================================================= -->
+  <section class="about-hero" aria-labelledby="about-title">
+    <div class="glow glow--mag about-hero__glow-a" aria-hidden="true"></div>
+    <div class="glow glow--pur about-hero__glow-b" aria-hidden="true"></div>
+
+    <div class="about-hero__inner">
+      <p class="eyebrow">Клуб №1 · Новый Арбат, 21</p>
+      <h1 id="about-title">О клубе</h1>
+      <p class="lede">
+        Камерный комедийный клуб в самом центре Москвы. Два зала, живой звук и сцена
+        в двух шагах от зрителя — здесь <b>федеральные хедлайнеры</b> обкатывают новые
+        часы, а вечерние сольники идут почти каждый день.
+      </p>
+      <div class="rule" aria-hidden="true"></div>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       STORY
+       ================================================================= -->
+  <section class="about-section" aria-labelledby="story-title">
+    <div class="story-grid">
+
+      <div class="story-copy">
+        <div class="badge1" aria-hidden="true"><b>1</b></div>
+        <div class="section-head">
+          <h2 id="story-title">Наш клуб</h2>
+        </div>
+        <p>
+          Клуб №1 открылся, чтобы вернуть стендапу то, ради чего его и придумали, —
+          близость. У нас нет огромной дистанции между сценой и залом: комик видит
+          глаза зрителя, а зритель слышит живую реакцию соседнего столика. Это меняет
+          сам вечер — шутки рождаются здесь и сейчас, а не читаются с экрана.
+        </p>
+        <p>
+          Мы работаем на <b>Новом Арбате, 21</b> — в пяти минутах от метро, в здании,
+          которое давно стало частью московской ночной жизни. За сезон через нашу сцену
+          проходят и большие имена, и молодые комики с первым сольником: афиша живёт
+          каждый день, а не только по выходным.
+        </p>
+      </div>
+
+      <div class="story-photo-wrap photo-skew">
+        <figure class="photo-skew__frame">
+          <img src="assets/comics/dedishchev.jpg" alt="Резидент Клуба №1 — стендап-комик на сцене" loading="lazy" width="900" height="900">
+          <figcaption class="photo-skew__tag">На сцене Клуба №1</figcaption>
+        </figure>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       TWO HALLS
+       ================================================================= -->
+  <section class="about-section" aria-labelledby="halls-title">
+    <div class="section-head">
+      <p class="eyebrow">Две сцены под одной крышей</p>
+      <h2 id="halls-title">Малый и большой залы</h2>
+      <p class="section-lead">
+        Один клуб — два разных вечера. Камерный зал для сольников и открытых микрофонов
+        и большая сцена для концертов, съёмок и корпоративов.
+      </p>
+    </div>
+
+    <div class="halls">
+
+      <article class="hall">
+        <div class="glow glow--mag hall__glow" aria-hidden="true"></div>
+        <p class="eyebrow">Малый зал</p>
+        <h3 class="hall__name">Камерная сцена</h3>
+        <p class="hall__cap"><b>≈120</b><span>гостей за столами</span></p>
+        <p>
+          Плотная посадка, сцена почти на уровне зала и тот самый эффект, когда комик
+          обращается будто лично к тебе. Идеально для вечерних сольников, разогревов
+          и открытых микрофонов.
+        </p>
+        <ul>
+          <li>Вечерние сольные концерты и прогоны материала</li>
+          <li>Открытые микрофоны и стендап-баттлы</li>
+          <li>Барная карта и обслуживание прямо за столиком</li>
+        </ul>
+      </article>
+
+      <article class="hall">
+        <div class="glow glow--pur hall__glow" aria-hidden="true"></div>
+        <p class="eyebrow">Большой зал</p>
+        <h3 class="hall__name">Главная сцена</h3>
+        <p class="hall__cap"><b>≈350</b><span>за столами · до 550 в театральной рассадке</span></p>
+        <p>
+          Просторная площадка с профессиональным светом и звуком: сюда выходят
+          федеральные хедлайнеры с большими программами. Гибкая рассадка — от банкетной
+          до концертной под формат вечера.
+        </p>
+        <ul>
+          <li>Сольные концерты хедлайнеров и премьеры программ</li>
+          <li>Съёмки стендап-спешелов и корпоративные вечера</li>
+          <li>Банкетная и театральная рассадка на выбор</li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       STAT ROW  (gold figures)
+       ================================================================= -->
+  <section class="about-section" aria-labelledby="stats-title">
+    <h2 id="stats-title" class="sr-only">Клуб №1 в цифрах</h2>
+    <div class="stats">
+      <div class="stat"><b>150+</b><span>шоу в год на двух сценах</span></div>
+      <div class="stat"><b>2</b><span>зала — малый и большой</span></div>
+      <div class="stat"><b>550</b><span>гостей — максимальная вместимость</span></div>
+      <div class="stat"><b>18+</b><span>честный стендап без цензуры</span></div>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       ATMOSPHERE
+       ================================================================= -->
+  <section class="about-section" aria-labelledby="atmo-title">
+    <div class="atmo-grid">
+
+      <div class="atmo-copy">
+        <div class="section-head">
+          <p class="eyebrow">Атмосфера</p>
+          <h2 id="atmo-title">Вечер, а не «мероприятие»</h2>
+        </div>
+        <p>
+          Приглушённый свет, тёплый ламповый гул зала, бокал у сцены — вечер здесь
+          складывается сам собой. Можно прийти за час до шоу, занять столик, заказать
+          с барной карты и не спешить.
+        </p>
+        <p>
+          Мы держим <b>живой звук</b> и честную сцену: без фонограмм, без экранов между
+          комиком и залом. Каждый вечер немного другой — потому что импровизация и
+          реакция зала здесь такая же часть шоу, как заготовленный материал.
+        </p>
+        <a class="btn btn--ghost" href="index.html#afisha">Смотреть афишу</a>
+      </div>
+
+      <div class="atmo-photos" aria-hidden="false">
+        <figure>
+          <img src="assets/comics/chebatkov.jpg" alt="Комик выступает в зале Клуба №1" loading="lazy" width="900" height="900">
+        </figure>
+        <figure>
+          <img src="assets/comics/makedonskaya.jpg" alt="Стендап-вечер в Клубе №1" loading="lazy" width="900" height="900">
+        </figure>
+        <figure>
+          <img src="assets/comics/shcherbak.jpg" alt="Гость на сцене Клуба №1" loading="lazy" width="900" height="900">
+        </figure>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       VENUE SLIDESHOW  (shared .slideshow component · script.js)
+       Placeholder tiles until real interior / guest photos are shot.
+       ================================================================= -->
+  <section class="about-section" aria-labelledby="venue-title">
+    <div class="section-head">
+      <p class="eyebrow">Площадка в фотографиях</p>
+      <h2 id="venue-title">Интерьер и живые вечера</h2>
+      <p class="section-lead">
+        Как клуб выглядит изнутри — залы и сцена, бар и гости на вечерних шоу.
+        Галерею скоро наполним настоящими кадрами со съёмок.
+      </p>
+    </div>
+
+    <div class="slideshow" data-slideshow>
+      <button class="slider-arrow slider-arrow--prev" data-slide="prev" aria-label="Предыдущее фото">&lsaquo;</button>
+      <div class="slideshow__track">
+
+        <figure class="slideshow__slide">
+          <div class="venue-ph" role="img" aria-label="Интерьер клуба — фото появится позже">
+            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
+            <span class="venue-ph__label">Интерьер</span>
+            <span class="venue-ph__note">Фото появится позже</span>
+          </div>
+          <figcaption>Интерьер клуба — тёплый ламповый свет</figcaption>
+        </figure>
+
+        <figure class="slideshow__slide">
+          <div class="venue-ph" role="img" aria-label="Большой зал — фото появится позже">
+            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
+            <span class="venue-ph__label">Зал</span>
+            <span class="venue-ph__note">Фото появится позже</span>
+          </div>
+          <figcaption>Большой зал — концертная рассадка</figcaption>
+        </figure>
+
+        <figure class="slideshow__slide">
+          <div class="venue-ph" role="img" aria-label="Сцена — фото появится позже">
+            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
+            <span class="venue-ph__label">Сцена</span>
+            <span class="venue-ph__note">Фото появится позже</span>
+          </div>
+          <figcaption>Сцена — комик в двух шагах от зала</figcaption>
+        </figure>
+
+        <figure class="slideshow__slide">
+          <div class="venue-ph" role="img" aria-label="Бар — фото появится позже">
+            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
+            <span class="venue-ph__label">Бар</span>
+            <span class="venue-ph__note">Фото появится позже</span>
+          </div>
+          <figcaption>Бар — коктейли и обслуживание за столиком</figcaption>
+        </figure>
+
+        <figure class="slideshow__slide">
+          <div class="venue-ph" role="img" aria-label="Гости на вечернем шоу — фото появится позже">
+            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
+            <span class="venue-ph__label">Гости</span>
+            <span class="venue-ph__note">Фото появится позже</span>
+          </div>
+          <figcaption>Гости на вечернем шоу — живая реакция зала</figcaption>
+        </figure>
+
+      </div>
+      <button class="slider-arrow slider-arrow--next" data-slide="next" aria-label="Следующее фото">&rsaquo;</button>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       HOW TO FIND US
+       ================================================================= -->
+  <section class="about-section" aria-labelledby="find-title">
+    <div class="section-head">
+      <p class="eyebrow">Как нас найти</p>
+      <h2 id="find-title">Новый Арбат, 21</h2>
+      <p class="section-lead">
+        В центре Москвы, в паре минут от метро. Приходите заранее — до начала шоу
+        успеете занять столик и заказать с бара.
+      </p>
+    </div>
+
+    <div class="find-grid">
+
+      <div class="find-card">
+        <div class="find-item">
+          <span class="k">Адрес</span>
+          <span class="v">Москва, Новый Арбат, 21</span>
+          <span class="sub">1-й этаж, вход со стороны Нового Арбата</span>
+        </div>
+        <div class="find-item">
+          <span class="k">Метро</span>
+          <span class="v">Арбатская — 5 минут пешком</span>
+          <span class="sub">также Смоленская и Краснопресненская в пешей доступности</span>
+        </div>
+        <div class="find-item">
+          <span class="k">Режим работы</span>
+          <ul class="hours">
+            <li><span>Пн–Чт</span><b>18:00–00:00</b></li>
+            <li><span>Пт–Сб</span><b>18:00–02:00</b></li>
+            <li><span>Вс</span><b>по афише</b></li>
+          </ul>
+          <span class="sub">зал открывается за час до начала шоу</span>
+        </div>
+        <div class="find-item">
+          <span class="k">Парковка</span>
+          <span class="v">Городские парковки вдоль Нового Арбата</span>
+          <span class="sub">удобнее приезжать на такси или метро</span>
+        </div>
+        <div class="find-item">
+          <span class="k">Связаться</span>
+          <span class="v"><a href="tel:+74996869111">+7 (499) 686 91 11</a></span>
+          <span class="sub"><a href="mailto:hello@club1.ru">hello@club1.ru</a></span>
+        </div>
+        <div class="find-actions">
+          <a class="btn btn--primary" href="index.html#afisha">Купить билет</a>
+          <a class="btn btn--ghost" href="arenda.html">Арендовать зал</a>
+        </div>
+      </div>
+
+      <div class="find-map" role="img" aria-label="Схема расположения: Клуб №1 на Новом Арбате, 21, рядом со станцией метро Арбатская">
+        <div class="find-map__grid" aria-hidden="true"></div>
+        <div class="glow glow--mag find-map__glow" aria-hidden="true"></div>
+        <div class="find-map__road" aria-hidden="true"></div>
+        <div class="find-map__pin" aria-hidden="true">
+          <div class="badge1"><b>1</b></div>
+          <span class="lbl">Новый Арбат, 21</span>
+        </div>
+        <span class="find-map__metro" aria-hidden="true"><span class="find-map__m">М</span>Арбатская</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       ARENDA CTA  (prominent link to the rental page)
+       ================================================================= -->
+  <section class="about-section" aria-labelledby="arenda-cta-title">
+    <div class="arenda-cta">
+      <div class="glow glow--mag arenda-cta__glow" aria-hidden="true"></div>
+
+      <div class="arenda-cta__body">
+        <p class="eyebrow">Аренда площадки</p>
+        <h2 id="arenda-cta-title">Проведите своё мероприятие в Клубе №1</h2>
+        <p>
+          Корпоратив, съёмка, презентация или частный вечер — сдаём малый и большой
+          залы под ключ: свет, звук, бар и команда клуба уже на месте. Расскажем
+          про форматы, вместимость и свободные даты.
+        </p>
+      </div>
+
+      <div class="arenda-cta__action">
+        <a class="btn btn--primary arenda-cta__btn" href="arenda.html">Арендовать площадку</a>
+        <span class="arenda-cta__sub">условия, форматы и форма заявки — на странице аренды</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- =====================================================================
+     SITE FOOTER  (reused verbatim on every sub-page)
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+
+    <div class="footer-brand">
+      <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+        <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+      </a>
+      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Контакты</h3>
+      <ul>
+        <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:hello@club1.ru">hello@club1.ru</a></li>
+        <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
+      </ul>
+      <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Информация</h3>
+      <ul>
+        <li><a href="#">Возврат билетов</a></li>
+        <li><a href="#">Политика конфиденциальности</a></li>
+        <li><a href="#">Договор оферты</a></li>
+        <li><a href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-social-col">
+      <h3>Мы в соцсетях</h3>
+      <div class="social">
+        <a class="social-btn" href="https://vk.com/" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+        </a>
+        <a class="social-btn" href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+/* ---------------------------------------------------------------------
+   Club №1 — foundation interactions (shared subset)
+   1. header ink-on-scroll   2. burger drawer
+   --------------------------------------------------------------------- */
+(function(){
+  "use strict";
+
+  /* 1 · sticky header goes ink once the page scrolls */
+  var header = document.getElementById('siteHeader');
+  var onScroll = function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* 2 · burger / mobile drawer */
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mobileMenu');
+  var setMenu = function(open){
+    menu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', function(){
+    setMenu(!menu.classList.contains('is-open'));
+  });
+  menu.addEventListener('click', function(e){
+    if (e.target.closest('a')) setMenu(false);
+  });
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+  });
+})();
+</script>
+
+<!-- shared interactive components (slideshow) -->
+<script src="script.js" defer></script>
+
+</body>
+</html>

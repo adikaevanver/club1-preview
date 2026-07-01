@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stand up от опытных комиков · Клуб №1 · CLUB 1 — стендап на Новом Арбате</title>
+
+<meta name="description" content="Stand up от опытных комиков в Клубе №1 на Новом Арбате: три комика и ведущий, час живого стендапа. Расписание по датам, билеты 1000–2500 ₽ и профили комиков на сайте.">
+<meta name="theme-color" content="#0a0810">
+<link rel="canonical" href="https://club1.ru/show.html">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Клуб №1 · CLUB 1">
+<meta property="og:title" content="Stand up от опытных комиков — Клуб №1 на Новом Арбате">
+<meta property="og:description" content="Опытные комики столицы, три артиста и ведущий, час живого стендапа. Живой зал в центре Москвы, Новый Арбат, 21.">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://club1.ru/show.html">
+<meta property="og:image" content="assets/comics/dedishchev.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- =====================================================================
+     PAGE-SPECIFIC CSS  (event-detail template — show.html only)
+     Reuses shared classes (.poster, .btn, .pill, .event-card, .rule,
+     .eyebrow, .glow, and the §12 .modal / .datebar components).
+     Everything below is layout unique to this page.
+     ===================================================================== -->
+<style>
+  /* ---- generic section rhythm ------------------------------------- */
+  .show-section{position:relative;padding:clamp(44px,6vw,84px) 0}
+  .show-section + .show-section{border-top:1px solid var(--hairline)}
+
+  .section-head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,4vw,44px)}
+  .section-title{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.06;letter-spacing:-.01em;color:#fff;
+  }
+  .section-sub{color:var(--muted);font-size:1.02rem;line-height:1.55;max-width:62ch}
+
+  /* =================================================================
+     1 · HERO — two columns: poster (left) · event facts (right)
+     ================================================================= */
+  .show-hero{position:relative;padding:clamp(26px,4vw,48px) 0 clamp(40px,5vw,64px)}
+  .show-hero__glow-a{width:520px;height:520px;top:-120px;left:-180px}
+  .show-hero__glow-b{width:440px;height:440px;top:40px;right:-180px}
+
+  .show-hero__grid{
+    position:relative;z-index:1;
+    display:grid;grid-template-columns:minmax(280px,440px) minmax(0,1fr);
+    gap:clamp(28px,4vw,60px);align-items:start;
+  }
+
+  /* left: enlarged shared poster */
+  .show-poster{width:100%}
+  .show-poster .poster{aspect-ratio:1/1}
+  /* the show is a multi-comic bill: scale the STANDUP art up a touch */
+  .show-poster .poster__standup{font-size:clamp(2.9rem,6.2vw,3.9rem)}
+
+  /* right column */
+  .show-facts{display:flex;flex-direction:column;gap:clamp(18px,2.4vw,26px)}
+  .show-title{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(2rem,4.8vw,3.15rem);line-height:1.03;letter-spacing:-.02em;color:#fff;
+  }
+
+  /* meta chips row — Краткая информация (длительность · сбор · стоимость) */
+  .event-meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 30px}
+  .meta-chip{display:inline-flex;align-items:center;gap:.7em;font-weight:500;font-size:1.02rem;color:var(--text)}
+  .meta-chip__ic{
+    width:40px;height:40px;flex:0 0 auto;border-radius:50%;
+    border:1.5px solid var(--hairline-strong);
+    display:flex;align-items:center;justify-content:center;color:var(--magenta);
+    font-family:var(--display);font-weight:700;font-size:1.05rem;
+  }
+  .meta-chip__ic svg{width:19px;height:19px;display:block}
+
+  .show-lede{color:var(--muted);font-size:1.05rem;line-height:1.6;max-width:56ch}
+  .show-lede + .show-lede{margin-top:-6px}
+  .show-lede b{color:var(--text);font-weight:600}
+
+  /* Кнопка подробнее + Кнопка покупки */
+  .show-cta-row{display:flex;flex-wrap:wrap;gap:14px;align-self:flex-start;margin-top:2px}
+
+  /* =================================================================
+     2 · SCHEDULE — «Перечень шоу и билеты по датам и времени»
+     datebar filter (shared §12 component) + dated rows with buy CTA
+     ================================================================= */
+  .schedule__bar{margin-bottom:clamp(22px,3vw,34px)}
+  .schedule__list{display:flex;flex-direction:column}
+  .sched-row{
+    display:flex;align-items:center;gap:16px 22px;flex-wrap:wrap;
+    padding:16px 0;border-top:1px solid var(--hairline);
+  }
+  .sched-row:first-child{border-top:0}
+  .sched-row[hidden]{display:none}
+  .sched-row__meta{display:flex;align-items:center;gap:14px 26px;flex:1 1 auto;min-width:0}
+  .sched-row__cell{display:inline-flex;align-items:center;gap:.55em;font-weight:500;white-space:nowrap;color:var(--text)}
+  .sched-row__cell svg{width:18px;height:18px;flex:0 0 auto;color:var(--magenta)}
+  .sched-row__cell--day{font-family:var(--display);font-weight:600;font-size:1.05rem;color:#fff}
+  .sched-row .book-btn{flex:0 0 auto;min-width:210px}
+  /* white booking CTA (matches mock) — built on the shared .btn base */
+  .book-btn{background:#fff;color:var(--ink);box-shadow:0 8px 24px -14px rgba(255,255,255,.55)}
+  .book-btn:hover{background:#ece9f5}
+  .book-btn[disabled]{opacity:.4;box-shadow:none;pointer-events:none;background:#fff}
+  .sched-note{margin-top:16px;font-size:.92rem;color:var(--muted)}
+
+  /* =================================================================
+     3 · PRESENTS — Подробная информация о шоу (copy + stage card)
+     ================================================================= */
+  .present__grid{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(30px,4.5vw,64px);align-items:center;
+  }
+  .present__show{color:var(--magenta)}
+  .present__copy p{color:var(--muted);font-size:1.04rem;line-height:1.62}
+  .present__copy p + p{margin-top:16px}
+  .present__copy p b{color:var(--text);font-weight:600}
+
+  .stage-card{
+    position:relative;border-radius:var(--r);overflow:hidden;
+    aspect-ratio:16/11;background:#000;isolation:isolate;
+  }
+  .stage-card img{width:100%;height:100%;object-fit:cover;object-position:50% 32%}
+  /* stage light + vignette so a headshot reads as a live-stage frame */
+  .stage-card::after{
+    content:"";position:absolute;inset:0;z-index:2;
+    background:
+      radial-gradient(55% 46% at 50% 8%, rgba(255,194,75,.30), transparent 62%),
+      radial-gradient(90% 70% at 50% 120%, rgba(180,70,255,.22), transparent 60%),
+      linear-gradient(180deg, transparent 42%, rgba(10,8,16,.55));
+  }
+  .stage-card__tag{
+    position:absolute;left:14px;bottom:14px;z-index:3;
+    font-family:var(--body);font-weight:600;font-size:.8rem;letter-spacing:.02em;
+    color:#fff;background:rgba(0,0,0,.36);border:1px solid rgba(255,255,255,.28);
+    padding:5px 11px;border-radius:8px;backdrop-filter:blur(4px);
+  }
+
+  /* =================================================================
+     4 · VIDEO — «Видео с нарезкой моментов из шоу» (placeholder)
+     ================================================================= */
+  .video-ph{
+    position:relative;border-radius:var(--r);overflow:hidden;
+    aspect-ratio:16/9;
+    background:
+      radial-gradient(120% 120% at 50% 0, rgba(255,47,109,.18), transparent 60%),
+      var(--ink-2);
+    border:1px solid var(--hairline);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    text-align:center;padding:24px;
+  }
+  .video-ph__play{
+    width:78px;height:78px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.06);border:1.5px solid var(--hairline-strong);color:#fff;
+  }
+  .video-ph__play svg{width:30px;height:30px;margin-left:4px}
+  .video-ph__label{font-family:var(--display);font-weight:600;color:#fff;font-size:1.05rem}
+  .video-ph__hint{color:var(--muted);font-size:.92rem;max-width:46ch}
+
+  /* =================================================================
+     5 · LINEUP — «Комики на сцене» (headshots open the bio pop-up)
+     ================================================================= */
+  .lineup{
+    display:grid;grid-template-columns:repeat(5,1fr);
+    gap:clamp(14px,1.8vw,22px);
+  }
+  /* each item is now a <button> that opens the shared .modal — reset it */
+  .lineup__item{
+    -webkit-appearance:none;appearance:none;background:transparent;border:0;
+    padding:0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .lineup__item:focus-visible{outline:2px solid var(--magenta);outline-offset:4px;border-radius:16px}
+  .lineup__photo{
+    display:block;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:#151019;
+    border:1px solid var(--hairline);
+  }
+  .lineup__photo img{
+    width:100%;height:100%;object-fit:cover;object-position:50% 20%;
+    transition:transform .5s var(--ease);
+  }
+  .lineup__item:hover .lineup__photo img,
+  .lineup__item:focus-visible .lineup__photo img{transform:scale(1.06)}
+  .lineup__name{display:block;font-weight:600;font-size:1rem;color:#fff;line-height:1.2}
+  .lineup__role{display:block;font-size:.82rem;color:var(--muted);margin-top:2px}
+  .lineup__more{
+    display:inline-block;margin-top:4px;font-size:.8rem;font-weight:600;color:var(--magenta);
+    opacity:0;transform:translateY(-3px);transition:opacity .2s,transform .2s;
+  }
+  .lineup__item:hover .lineup__more,
+  .lineup__item:focus-visible .lineup__more{opacity:1;transform:none}
+
+  /* =================================================================
+     6 · YOU-MAY-LIKE — reuses shared .afisha / .event-card
+     ================================================================= */
+  .liked .afisha__track{padding-top:2px}
+
+  /* =================================================================
+     MODAL internals — comic bio sections (shared §12 .modal component)
+     ================================================================= */
+  .bio-sec{margin-top:22px}
+  .bio-sec__h{
+    font-family:var(--display);font-weight:700;font-size:.82rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--magenta);margin-bottom:10px;
+  }
+  .bio-ph{
+    color:var(--muted);font-size:.94rem;border:1px dashed var(--hairline-strong);
+    border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.02);
+  }
+  .bio-video{
+    display:flex;align-items:center;gap:14px;
+    border:1px solid var(--hairline);border-radius:12px;background:var(--ink-2);padding:14px 16px;
+  }
+  .bio-video__play{
+    width:46px;height:46px;flex:0 0 auto;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.06);border:1px solid var(--hairline-strong);color:#fff;
+  }
+  .bio-video__play svg{width:18px;height:18px;margin-left:3px}
+  .bio-video__txt{display:flex;flex-direction:column;gap:2px}
+  .bio-video__txt b{color:#fff;font-weight:600;font-size:.96rem}
+  .bio-video__txt span{color:var(--muted);font-size:.85rem}
+  .bio-social{display:flex;flex-wrap:wrap;gap:10px}
+  .bio-shows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+  .bio-shows li{
+    display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+    padding:11px 0;border-top:1px solid var(--hairline);
+  }
+  .bio-shows li:first-child{border-top:0}
+  .bio-shows a{color:#fff;font-weight:600}
+  .bio-shows a:hover{color:var(--magenta)}
+  .bio-shows span{color:var(--muted);font-size:.85rem}
+
+  /* =================================================================
+     RESPONSIVE
+     ================================================================= */
+  @media (max-width:900px){
+    .show-hero__grid{grid-template-columns:1fr}
+    .show-poster{max-width:420px;margin-inline:auto}
+    .present__grid{grid-template-columns:1fr}
+    .lineup{grid-template-columns:repeat(3,1fr)}
+  }
+  @media (max-width:560px){
+    .lineup{grid-template-columns:repeat(2,1fr)}
+    .sched-row__meta{flex-basis:100%}
+    .sched-row .book-btn{width:100%;min-width:0}
+    .event-meta{gap:12px 22px}
+    .show-cta-row .btn{flex:1 1 auto;text-align:center;justify-content:center}
+  }
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================================
+     SITE HEADER  (reused verbatim on every sub-page · no active nav item)
+     ===================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container site-header__inner">
+
+    <!-- logo lockup: КЛУБ / НОМЕР / ОДИН · CLUB · [1] -->
+    <a class="logo" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+      <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+    </a>
+
+    <!-- primary navigation -->
+    <nav class="main-nav" aria-label="Основная навигация">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="index.html">Главная</a></li>
+        <li><a class="main-nav__link" href="komiki.html">Комики</a></li>
+        <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
+        <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
+        <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
+        <li><a class="main-nav__link" href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary" href="#dates">Купить билет</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile drawer -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
+    <a class="main-nav__link" href="index.html">Главная</a>
+    <a class="main-nav__link" href="komiki.html">Комики</a>
+    <a class="main-nav__link" href="formaty.html">Форматы</a>
+    <a class="main-nav__link" href="eda.html">Еда и напитки</a>
+    <a class="main-nav__link" href="o-klube.html">О клубе</a>
+    <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
+    <div class="mobile-menu__foot">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary btn--block" href="#dates">Купить билет</a>
+    </div>
+  </nav>
+</header>
+
+
+<main class="container" id="main">
+
+  <!-- =================================================================
+       1 · HERO — Обложка (афиша) + Краткая информация + кнопки
+       ================================================================= -->
+  <section class="show-hero" aria-labelledby="show-title">
+    <div class="glow glow--mag show-hero__glow-a" aria-hidden="true"></div>
+    <div class="glow glow--pur show-hero__glow-b" aria-hidden="true"></div>
+
+    <div class="show-hero__grid">
+
+      <!-- LEFT · Обложка — poster built from the shared .poster component -->
+      <div class="show-poster">
+        <div class="poster poster--mag">
+          <img class="poster__photo" src="assets/comics/dedishchev.jpg" alt="" aria-hidden="true" loading="eager" width="900" height="900">
+          <div class="poster__tint"></div>
+          <div class="poster__badge">03.07<small>19:30</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>От опытных</span><b>комиков</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+      </div>
+
+      <!-- RIGHT · title, Краткая информация, кнопки -->
+      <div class="show-facts">
+        <p class="eyebrow">Регулярное шоу · стендап</p>
+        <h1 class="show-title" id="show-title">Stand up от опытных комиков</h1>
+
+        <!-- Краткая информация: длительность · сбор гостей · стоимость -->
+        <div class="event-meta">
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            1 час
+          </span>
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16"/><path d="M6 21V4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v17"/><path d="M12 12h.01"/></svg>
+            </span>
+            Сбор гостей за 30 минут
+          </span>
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">₽</span>
+            1000–2500 ₽
+          </span>
+        </div>
+
+        <!-- Краткое описание -->
+        <p class="show-lede">Вечер стендапа, где на сцену выходят комики с опытом за плечами. Три артиста и ведущий сменяют друг друга у микрофона — от знакомых по ТНТ и YouTube лиц до тех, кого вы откроете для себя впервые.</p>
+        <p class="show-lede"><b>Составы и шутки всегда разные</b> — двух одинаковых вечеров не бывает.</p>
+
+        <!-- Кнопка подробнее + Кнопка покупки -->
+        <div class="show-cta-row">
+          <a class="btn btn--ghost" href="#about">Подробнее о шоу</a>
+          <a class="btn btn--primary" href="#dates">Купить билет</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       2 · Перечень шоу и кнопки покупки по датам и времени
+       ================================================================= -->
+  <section class="show-section" id="dates" aria-labelledby="dates-title">
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="dates-title">Расписание и билеты</h2>
+      <p class="section-sub">Ближайшие показы шоу «Stand up от опытных комиков». Выберите дату в календаре, чтобы отфильтровать список, и берите билет на удобный вечер.</p>
+    </div>
+
+    <!-- DATEBAR (shared §12 component) — filters the list below by дате -->
+    <div class="datebar schedule__bar" data-datebar>
+      <span class="datebar__month">Июль</span>
+      <div class="datebar__days" role="group" aria-label="Выберите дату">
+        <button class="datebar__day" type="button" data-date="all" aria-pressed="true"><b>Все</b><span>даты</span></button>
+        <button class="datebar__day" type="button" data-date="2026-07-03"><b>03</b><span>Пт</span></button>
+        <button class="datebar__day" type="button" data-date="2026-07-04" disabled><b>04</b><span>Сб</span></button>
+        <button class="datebar__day" type="button" data-date="2026-07-05"><b>05</b><span>Вс</span></button>
+        <button class="datebar__day" type="button" data-date="2026-07-10"><b>10</b><span>Пт</span></button>
+        <button class="datebar__day" type="button" data-date="2026-07-11"><b>11</b><span>Сб</span></button>
+        <button class="datebar__day" type="button" data-date="2026-07-12"><b>12</b><span>Вс</span></button>
+        <button class="datebar__day" type="button" data-date="2026-07-17"><b>17</b><span>Пт</span></button>
+        <button class="datebar__day" type="button" data-date="2026-07-18"><b>18</b><span>Сб</span></button>
+      </div>
+    </div>
+
+    <div class="schedule__list" id="scheduleList">
+
+      <div class="sched-row" data-date="2026-07-03">
+        <span class="sched-row__meta">
+          <span class="sched-row__cell sched-row__cell--day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            3 июля, Пт
+          </span>
+          <span class="sched-row__cell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            19:30
+          </span>
+        </span>
+        <a class="btn book-btn" href="#">Купить билет</a>
+      </div>
+
+      <div class="sched-row" data-date="2026-07-04">
+        <span class="sched-row__meta">
+          <span class="sched-row__cell sched-row__cell--day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            4 июля, Сб
+          </span>
+          <span class="sched-row__cell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            19:30
+          </span>
+        </span>
+        <button class="btn book-btn" type="button" disabled>Мест нет</button>
+      </div>
+
+      <div class="sched-row" data-date="2026-07-05">
+        <span class="sched-row__meta">
+          <span class="sched-row__cell sched-row__cell--day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            5 июля, Вс
+          </span>
+          <span class="sched-row__cell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            18:00
+          </span>
+        </span>
+        <a class="btn book-btn" href="#">Купить билет</a>
+      </div>
+
+      <div class="sched-row" data-date="2026-07-10">
+        <span class="sched-row__meta">
+          <span class="sched-row__cell sched-row__cell--day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            10 июля, Пт
+          </span>
+          <span class="sched-row__cell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            19:30
+          </span>
+        </span>
+        <a class="btn book-btn" href="#">Купить билет</a>
+      </div>
+
+      <div class="sched-row" data-date="2026-07-11">
+        <span class="sched-row__meta">
+          <span class="sched-row__cell sched-row__cell--day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            11 июля, Сб
+          </span>
+          <span class="sched-row__cell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            19:30
+          </span>
+        </span>
+        <a class="btn book-btn" href="#">Купить билет</a>
+      </div>
+
+      <div class="sched-row" data-date="2026-07-12">
+        <span class="sched-row__meta">
+          <span class="sched-row__cell sched-row__cell--day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            12 июля, Вс
+          </span>
+          <span class="sched-row__cell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            18:00
+          </span>
+        </span>
+        <a class="btn book-btn" href="#">Купить билет</a>
+      </div>
+
+      <div class="sched-row" data-date="2026-07-17">
+        <span class="sched-row__meta">
+          <span class="sched-row__cell sched-row__cell--day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            17 июля, Пт
+          </span>
+          <span class="sched-row__cell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            20:00
+          </span>
+        </span>
+        <a class="btn book-btn" href="#">Купить билет</a>
+      </div>
+
+      <div class="sched-row" data-date="2026-07-18">
+        <span class="sched-row__meta">
+          <span class="sched-row__cell sched-row__cell--day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            18 июля, Сб
+          </span>
+          <span class="sched-row__cell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            19:30
+          </span>
+        </span>
+        <a class="btn book-btn" href="#">Купить билет</a>
+      </div>
+
+    </div>
+
+    <p class="sched-note">Цена билета зависит от места в зале и даты показа. Возврат — по условиям продажи, раздел «Возврат билетов» в подвале.</p>
+  </section>
+
+
+  <!-- =================================================================
+       3 · Подробная информация о шоу
+       ================================================================= -->
+  <section class="show-section" id="about" aria-labelledby="present-title">
+    <div class="present__grid">
+
+      <div class="present__copy">
+        <div class="section-head">
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="section-title" id="present-title">CLUB№1 представляет<br><span class="present__show">«STAND UP ОТ ОПЫТНЫХ КОМИКОВ»</span></h2>
+        </div>
+
+        <p>Вас ждут самые опытные комики столицы — те, кто разделит с вами свои лучшие шутки. В составе три комика и ведущий, за плечами которых сотни концертов и открытых микрофонов. Возможно, вы уже видели их на ТНТ, Первом канале или в YouTube.</p>
+        <p>Эти ребята не развлекают вполсилы. Они играют со словами, придумывают образы на ходу и держат зал в нескончаемом потоке смеха. Вечер получится таким, что о нём захочется рассказать друзьям.</p>
+        <p><b>Составы комиков и шутки всегда разные</b> — двух одинаковых вечеров не бывает. Программа идёт около часа, сбор гостей — за 30 минут до начала.</p>
+        <p>Вас ждут удобные места за столиками. На площадке работают бар и кухня — заказать можно прямо во время шоу.</p>
+      </div>
+
+      <figure class="stage-card">
+        <img src="assets/comics/evdokimov.jpg" alt="Выступление комика на сцене Клуба №1" loading="lazy" width="900" height="900">
+        <figcaption class="stage-card__tag">Живой зал · Новый Арбат, 21</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       4 · Видео с нарезкой моментов из шоу (placeholder)
+       ================================================================= -->
+  <section class="show-section" aria-labelledby="video-title">
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="video-title">Видео с нарезкой моментов из шоу</h2>
+      <p class="section-sub">Смонтированная нарезка ярких моментов с прошлых вечеров — чтобы увидеть атмосферу зала до похода на шоу.</p>
+    </div>
+
+    <div class="video-ph" role="img" aria-label="Видео появится позже">
+      <span class="video-ph__play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+      <span class="video-ph__label">Видео появится позже</span>
+      <span class="video-ph__hint">Мы готовим нарезку лучших моментов. Загляните сюда чуть позже — или приходите на ближайший показ.</span>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       5 · Комики на сцене — headshots open the bio POP-UP (shared modal)
+       ================================================================= -->
+  <section class="show-section" aria-labelledby="lineup-title">
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="lineup-title">Комики на сцене</h2>
+      <p class="section-sub">Состав меняется от вечера к вечеру. Нажмите на комика, чтобы открыть профиль — регалии, видео, соцсети и другие его шоу на нашей площадке.</p>
+    </div>
+
+    <div class="lineup">
+
+      <button class="lineup__item" type="button" data-modal-open="bio-dedishchev" aria-label="Открыть профиль комика Павла Дедищева">
+        <span class="lineup__photo"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="lazy" width="900" height="900"></span>
+        <span class="lineup__name">Павел Дедищев</span>
+        <span class="lineup__role">хедлайнер</span>
+        <span class="lineup__more">Профиль комика →</span>
+      </button>
+
+      <button class="lineup__item" type="button" data-modal-open="bio-chabdarov" aria-label="Открыть профиль комика Расула Чабдарова">
+        <span class="lineup__photo"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></span>
+        <span class="lineup__name">Расул Чабдаров</span>
+        <span class="lineup__role">стендап</span>
+        <span class="lineup__more">Профиль комика →</span>
+      </button>
+
+      <button class="lineup__item" type="button" data-modal-open="bio-chebatkov" aria-label="Открыть профиль комика Дениса Чебаткова">
+        <span class="lineup__photo"><img src="assets/comics/chebatkov.jpg" alt="Комик Денис Чебатков" loading="lazy" width="900" height="900"></span>
+        <span class="lineup__name">Денис Чебатков</span>
+        <span class="lineup__role">стендап</span>
+        <span class="lineup__more">Профиль комика →</span>
+      </button>
+
+      <button class="lineup__item" type="button" data-modal-open="bio-raevskiy" aria-label="Открыть профиль комика Ильи Раевского">
+        <span class="lineup__photo"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></span>
+        <span class="lineup__name">Илья Раевский</span>
+        <span class="lineup__role">стендап</span>
+        <span class="lineup__more">Профиль комика →</span>
+      </button>
+
+      <button class="lineup__item" type="button" data-modal-open="bio-rodina" aria-label="Открыть профиль ведущей Маргариты Родиной">
+        <span class="lineup__photo"><img src="assets/comics/rodina.jpg" alt="Комик и ведущая Маргарита Родина" loading="lazy" width="900" height="900"></span>
+        <span class="lineup__name">Маргарита Родина</span>
+        <span class="lineup__role">ведущая</span>
+        <span class="lineup__more">Профиль комика →</span>
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       6 · Вам может понравиться — afisha cards (shared markup)
+       ================================================================= -->
+  <section class="show-section afisha liked" aria-labelledby="liked-title">
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="liked-title">Вам может понравиться</h2>
+    </div>
+
+    <div class="afisha__track" id="afishaTrack" role="list">
+
+      <!-- Стас Старовойтов (gradient poster, фото отсутствует) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--cyan">
+          <div class="poster__badge">25.07<small>20:00</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Стас</span><b>Старовойтов</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Стас Старовойтов</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="show.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+      <!-- Расул Чабдаров (фото есть) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--mag">
+          <img class="poster__photo" src="assets/comics/chabdarov.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
+          <div class="poster__tint"></div>
+          <div class="poster__badge">11.07<small>18:30</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Расул</span><b>Чабдаров</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Расул Чабдаров</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="show.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+      <!-- Илья Раевский (фото есть) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--pur">
+          <img class="poster__photo" src="assets/comics/raevskiy.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
+          <div class="poster__tint"></div>
+          <div class="poster__badge">24.07<small>19:30</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Илья</span><b>Раевский</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Илья Раевский</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="show.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+      <!-- Денис Чебатков (фото есть) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--green">
+          <img class="poster__photo" src="assets/comics/chebatkov.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
+          <div class="poster__tint"></div>
+          <div class="poster__badge">25.07<small>18:30</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Денис</span><b>Чебатков</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Денис Чебатков</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="show.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+    </div>
+
+    <button class="slider-arrow slider-arrow--next" data-slider="afisha" data-dir="1" aria-label="Показать ещё концерты">›</button>
+  </section>
+
+
+  <!-- =================================================================
+       COMIC BIO POP-UPS — shared §12 .modal component (one per headshot)
+       Content per «структура»: регалии/проекты · видео · соцсети · шоу
+       ================================================================= -->
+
+  <!-- Павел Дедищев -->
+  <div class="modal" id="bio-dedishchev" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-dedishchev-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Хедлайнер</p>
+      <h2 class="modal__title" id="bio-dedishchev-title">Павел Дедищев</h2>
+      <div class="modal__body">
+        <p>Хедлайнер вечера и один из самых узнаваемых артистов состава. Ведёт <b>сольные программы</b> и импровизацию, постоянно выходит на сцену Клуба №1.</p>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Регалии и проекты</p>
+          <p class="bio-ph">Список проектов, релизов и регалий появится позже.</p>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Видео со смешными моментами</p>
+          <div class="bio-video">
+            <span class="bio-video__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="bio-video__txt"><b>Видео появится позже</b><span>Нарезка выступлений комика</span></span>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Аккаунты в соцсетях</p>
+          <div class="bio-social">
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">ВКонтакте</a>
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">Telegram</a>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Шоу с участием комика</p>
+          <ul class="bio-shows">
+            <li><a href="show.html">Stand up от опытных комиков</a><span>регулярное шоу</span></li>
+            <li><a href="index.html#afisha">Ближайшие концерты в афише</a><span>Клуб №1</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Расул Чабдаров -->
+  <div class="modal" id="bio-chabdarov" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-chabdarov-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Стендап</p>
+      <h2 class="modal__title" id="bio-chabdarov-title">Расул Чабдаров</h2>
+      <div class="modal__body">
+        <p>Стендап-комик с плотным гастрольным графиком. Работает в жанре <b>наблюдательного юмора</b> и историй из жизни.</p>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Регалии и проекты</p>
+          <p class="bio-ph">Список проектов, релизов и регалий появится позже.</p>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Видео со смешными моментами</p>
+          <div class="bio-video">
+            <span class="bio-video__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="bio-video__txt"><b>Видео появится позже</b><span>Нарезка выступлений комика</span></span>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Аккаунты в соцсетях</p>
+          <div class="bio-social">
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">ВКонтакте</a>
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">Telegram</a>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Шоу с участием комика</p>
+          <ul class="bio-shows">
+            <li><a href="show.html">Stand up от опытных комиков</a><span>регулярное шоу</span></li>
+            <li><a href="index.html#afisha">Ближайшие концерты в афише</a><span>Клуб №1</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Денис Чебатков -->
+  <div class="modal" id="bio-chebatkov" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-chebatkov-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Стендап</p>
+      <h2 class="modal__title" id="bio-chebatkov-title">Денис Чебатков</h2>
+      <div class="modal__body">
+        <p>Комик, соединяющий абсурд и точные бытовые наблюдения. Частый гость <b>открытых микрофонов</b> и сборных концертов.</p>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Регалии и проекты</p>
+          <p class="bio-ph">Список проектов, релизов и регалий появится позже.</p>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Видео со смешными моментами</p>
+          <div class="bio-video">
+            <span class="bio-video__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="bio-video__txt"><b>Видео появится позже</b><span>Нарезка выступлений комика</span></span>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Аккаунты в соцсетях</p>
+          <div class="bio-social">
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">ВКонтакте</a>
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">Telegram</a>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Шоу с участием комика</p>
+          <ul class="bio-shows">
+            <li><a href="show.html">Stand up от опытных комиков</a><span>регулярное шоу</span></li>
+            <li><a href="index.html#afisha">Ближайшие концерты в афише</a><span>Клуб №1</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Илья Раевский -->
+  <div class="modal" id="bio-raevskiy" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-raevskiy-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Стендап</p>
+      <h2 class="modal__title" id="bio-raevskiy-title">Илья Раевский</h2>
+      <div class="modal__body">
+        <p>Стендап-комик и автор сольных программ. Строит выступления на <b>диалоге с залом</b> и импровизации.</p>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Регалии и проекты</p>
+          <p class="bio-ph">Список проектов, релизов и регалий появится позже.</p>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Видео со смешными моментами</p>
+          <div class="bio-video">
+            <span class="bio-video__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="bio-video__txt"><b>Видео появится позже</b><span>Нарезка выступлений комика</span></span>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Аккаунты в соцсетях</p>
+          <div class="bio-social">
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">ВКонтакте</a>
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">Telegram</a>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Шоу с участием комика</p>
+          <ul class="bio-shows">
+            <li><a href="show.html">Stand up от опытных комиков</a><span>регулярное шоу</span></li>
+            <li><a href="index.html#afisha">Ближайшие концерты в афише</a><span>Клуб №1</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Маргарита Родина -->
+  <div class="modal" id="bio-rodina" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-rodina-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Ведущая</p>
+      <h2 class="modal__title" id="bio-rodina-title">Маргарита Родина</h2>
+      <div class="modal__body">
+        <p>Ведущая вечера и комик. Держит темп программы и <b>связывает выступления</b> артистов между собой.</p>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Регалии и проекты</p>
+          <p class="bio-ph">Список проектов, релизов и регалий появится позже.</p>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Видео со смешными моментами</p>
+          <div class="bio-video">
+            <span class="bio-video__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="bio-video__txt"><b>Видео появится позже</b><span>Нарезка выступлений комика</span></span>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Аккаунты в соцсетях</p>
+          <div class="bio-social">
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">ВКонтакте</a>
+            <a class="btn btn--ghost btn--sm" href="#" rel="noopener">Telegram</a>
+          </div>
+        </div>
+
+        <div class="bio-sec">
+          <p class="bio-sec__h">Шоу с участием комика</p>
+          <ul class="bio-shows">
+            <li><a href="show.html">Stand up от опытных комиков</a><span>регулярное шоу</span></li>
+            <li><a href="index.html#afisha">Ближайшие концерты в афише</a><span>Клуб №1</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+
+<!-- =====================================================================
+     SITE FOOTER  (reused verbatim on every sub-page)
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+
+    <div class="footer-brand">
+      <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+        <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+      </a>
+      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Контакты</h3>
+      <ul>
+        <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:hello@club1.ru">hello@club1.ru</a></li>
+        <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
+      </ul>
+      <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Информация</h3>
+      <ul>
+        <li><a href="#">Возврат билетов</a></li>
+        <li><a href="#">Политика конфиденциальности</a></li>
+        <li><a href="#">Договор оферты</a></li>
+        <li><a href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-social-col">
+      <h3>Мы в соцсетях</h3>
+      <div class="social">
+        <a class="social-btn" href="https://vk.com/" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+        </a>
+        <a class="social-btn" href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- shared interactive components (modal / tabs / slideshow / datebar) -->
+<script src="script.js" defer></script>
+
+<script>
+/* ---------------------------------------------------------------------
+   Club №1 — show.html per-page interactions (subset of the foundation):
+   1. header ink-on-scroll   2. burger drawer   3. «Вам может понравиться» rail
+   These use their own attribute names and never collide with script.js.
+   --------------------------------------------------------------------- */
+(function(){
+  "use strict";
+
+  /* 1 · sticky header goes ink once the page scrolls */
+  var header = document.getElementById('siteHeader');
+  var onScroll = function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* 2 · burger / mobile drawer */
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mobileMenu');
+  var setMenu = function(open){
+    menu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', function(){
+    setMenu(!menu.classList.contains('is-open'));
+  });
+  menu.addEventListener('click', function(e){
+    if (e.target.closest('a')) setMenu(false);
+  });
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+  });
+
+  /* 3 · horizontal slider ("Вам может понравиться") */
+  var tracks = { afisha: document.getElementById('afishaTrack') };
+  document.querySelectorAll('[data-slider]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var track = tracks[btn.dataset.slider];
+      if (!track) return;
+      var dir  = parseInt(btn.dataset.dir, 10) || 1;
+      var step = Math.max(track.clientWidth * 0.8, 260);
+      track.scrollBy({left: dir * step, behavior: 'smooth'});
+    });
+  });
+
+  /* 4 · schedule datebar → filter the dated rows (reacts to the shared
+        datebar:change event fired by script.js; "all" shows everything) */
+  var bar = document.querySelector('[data-datebar]');
+  if (bar) {
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.sched-row[data-date]'));
+    bar.addEventListener('datebar:change', function(e){
+      var d = e.detail && e.detail.date;
+      rows.forEach(function(r){
+        r.hidden = !(!d || d === 'all' || r.getAttribute('data-date') === d);
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

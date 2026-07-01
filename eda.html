@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Еда и напитки · Клуб №1 — бар и кухня во время шоу на Новом Арбате</title>
+
+<meta name="description" content="Бар и кухня Клуба №1 работают весь вечер: авторские коктейли, вино, крафтовое пиво, горячее и закуски. Удобная посадка за столами, заказ приносят к вашему месту. Новый Арбат, 21.">
+<meta name="theme-color" content="#0a0810">
+<link rel="canonical" href="https://club1.ru/eda.html">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Клуб №1 · CLUB 1">
+<meta property="og:title" content="Еда и напитки — бар и кухня Клуба №1">
+<meta property="og:description" content="Авторские коктейли, вино и крафт, горячее и закуски — весь вечер, пока идёт шоу. Удобная посадка за столами в центре Москвы, Новый Арбат, 21.">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://club1.ru/eda.html">
+<meta property="og:image" content="assets/comics/dedishchev.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- =====================================================================
+     PAGE-SPECIFIC CSS — «Еда и напитки»
+     Menu-style layout built on top of the shared design system. Scoped to
+     this page only (inline) so the shared styles.css stays untouched.
+     Reuses: .container .eyebrow .rule .glow .badge1 .btn .site-header .site-footer
+     ===================================================================== -->
+<style>
+  /* ---- hero ------------------------------------------------------- */
+  .eda-hero{position:relative;padding:44px 0 12px}
+  .eda-hero__glow-a{width:520px;height:520px;top:-170px;left:-190px}
+  .eda-hero__glow-b{width:420px;height:420px;top:-70px;right:-170px}
+  .eda-hero__inner{position:relative;z-index:1;max-width:860px}
+  .eda-hero__kicker{display:flex;align-items:center;gap:16px}
+  .eda-hero h1{
+    font-family:var(--display);font-weight:900;
+    font-size:clamp(2.4rem,8vw,4.8rem);line-height:.92;
+    text-transform:uppercase;letter-spacing:-.015em;margin-top:20px;
+  }
+  .eda-lede{
+    font-size:clamp(1.05rem,2.2vw,1.32rem);line-height:1.5;
+    color:var(--muted);max-width:680px;margin-top:22px;
+  }
+  .eda-lede b{color:var(--text);font-weight:600}
+
+  /* hero facts — three quick promises */
+  .eda-facts{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+  .eda-fact{
+    flex:1 1 210px;min-width:0;
+    background:var(--panel);border:1px solid var(--hairline);
+    border-radius:var(--r);padding:18px 20px;
+  }
+  .eda-fact__k{
+    font-family:var(--display);font-weight:700;font-size:.72rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);
+  }
+  .eda-fact__v{font-size:1.04rem;color:var(--text);margin-top:8px;font-weight:600}
+  .eda-fact__d{font-size:.88rem;color:var(--muted);margin-top:4px;line-height:1.4}
+
+  /* ---- «sample menu» callout ------------------------------------- */
+  .eda-callout{
+    display:flex;align-items:flex-start;gap:18px;
+    background:var(--panel-2);border:1px solid var(--hairline-strong);
+    border-radius:var(--r);padding:20px 24px;margin:36px 0 6px;
+  }
+  .eda-callout__bar{
+    flex:0 0 auto;width:8px;align-self:stretch;border-radius:3px;
+    background:var(--grad);transform:skewX(var(--skew));
+  }
+  .eda-callout__t{font-family:var(--display);font-weight:700;font-size:.98rem;
+    text-transform:uppercase;letter-spacing:.03em;color:#fff}
+  .eda-callout__p{font-size:.95rem;color:var(--muted);margin-top:6px;line-height:1.5;max-width:64ch}
+
+  /* ---- menu categories ------------------------------------------- */
+  .eda-menu{display:flex;flex-direction:column;gap:26px;padding:22px 0 8px}
+  .menu-cat{
+    background:var(--panel);border:1px solid var(--hairline);
+    border-radius:var(--r);padding:clamp(22px,4vw,40px);
+  }
+  .menu-cat__head{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
+  .menu-cat__head h2{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(1.5rem,4vw,2.2rem);line-height:1;
+    text-transform:uppercase;letter-spacing:-.01em;
+  }
+  .menu-cat__tag{
+    font-family:var(--body);font-weight:600;font-size:.68rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold-soft);
+    border:1px solid rgba(255,194,75,.42);border-radius:999px;
+    padding:.32em .8em;line-height:1;
+  }
+  .menu-cat__sub{width:100%;color:var(--muted);font-size:.98rem;margin-top:2px}
+  .menu-cat__rule{margin-top:18px}
+
+  .menu-list{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:48px;row-gap:2px;margin-top:16px;
+  }
+  .menu-item{padding:13px 0;border-top:1px solid var(--hairline)}
+  .menu-item__row{display:flex;align-items:baseline;gap:10px}
+  .menu-item__name{font-weight:600;font-size:1.04rem;color:var(--text);min-width:0}
+  .menu-item__lead{
+    flex:1 1 auto;min-width:14px;height:0;align-self:center;
+    border-bottom:1px dotted var(--hairline-strong);transform:translateY(3px);
+  }
+  .menu-item__price{
+    flex:0 0 auto;white-space:nowrap;color:var(--gold);
+    font-family:var(--display);font-weight:700;font-size:.9rem;letter-spacing:.01em;
+  }
+  .menu-item__desc{margin-top:4px;color:var(--muted);font-size:.86rem;line-height:1.4;max-width:38ch}
+
+  /* ---- tabbed menu  (Бар / Кухня  →  категории) ------------------ */
+  /* Two nested levels of the shared .tabs component. The top level's
+     panels live as siblings AFTER the top [data-tabs] wrapper (linked
+     by aria-controls id), so the top group only owns its two tabs and
+     the inner category [data-tabs] groups stay self-contained. */
+  .eda-menu-tabs{padding:22px 0 8px}
+  .menu-shell{
+    background:var(--panel);border:1px solid var(--hairline);
+    border-radius:var(--r);padding:clamp(22px,4vw,40px);
+  }
+  /* top level (Бар / Кухня) reads a touch louder than the category level */
+  .eda-tabs--top{margin-top:20px}
+  .eda-tabs--top .tab{
+    font-family:var(--display);font-weight:700;font-size:.92rem;
+    letter-spacing:.04em;text-transform:uppercase;padding:.72em 1.6em;
+  }
+  /* each top panel drops its own category tabs a little lower */
+  .eda-toppanel{margin-top:24px}
+  .eda-toppanel > .tabs{gap:18px}
+  .eda-toppanel .menu-list{margin-top:8px}
+  .eda-cat-note{color:var(--muted);font-size:.92rem;line-height:1.45;margin:-4px 0 2px;max-width:60ch}
+  @media (max-width:640px){
+    .eda-tabs--top .tab{font-size:.82rem;padding:.66em 1.15em}
+  }
+
+  /* ---- atmosphere band ------------------------------------------- */
+  .eda-atmos{
+    position:relative;overflow:hidden;border-radius:var(--r);
+    background:
+      radial-gradient(120% 130% at 88% -10%, rgba(180,70,255,.22), transparent 58%),
+      radial-gradient(100% 120% at 0% 110%, rgba(255,47,109,.20), transparent 60%),
+      var(--ink-2);
+    border:1px solid var(--hairline);
+    padding:clamp(28px,5vw,58px);margin:16px 0 8px;
+  }
+  .eda-atmos__inner{position:relative;z-index:1;max-width:640px}
+  .eda-atmos h2{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(1.5rem,4.4vw,2.4rem);line-height:1.02;
+    text-transform:uppercase;letter-spacing:-.01em;margin-top:14px;
+  }
+  .eda-atmos p{font-size:clamp(1rem,2vw,1.14rem);line-height:1.55;color:var(--muted);margin-top:16px}
+  .eda-atmos p b{color:var(--text);font-weight:600}
+  .eda-atmos__mark{
+    position:absolute;right:clamp(-30px,-2vw,-10px);bottom:-40px;z-index:0;
+    --s:220px;opacity:.10;
+  }
+
+  /* ---- closing note: full menu at the venue ---------------------- */
+  .eda-endnote{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    gap:18px 24px;border-top:1px solid var(--hairline);
+    margin-top:18px;padding:28px 0 6px;
+  }
+  .eda-endnote__t{font-family:var(--display);font-weight:700;font-size:1.06rem;color:#fff;max-width:34ch}
+  .eda-endnote__d{font-size:.9rem;color:var(--muted);margin-top:8px;max-width:52ch;line-height:1.5}
+  .eda-endnote__cta{flex:0 0 auto}
+
+  /* ---- responsive ------------------------------------------------- */
+  @media (max-width:720px){
+    .menu-list{grid-template-columns:1fr;column-gap:0}
+    .eda-callout{padding:18px 18px;gap:14px}
+    .eda-atmos__mark{--s:150px;bottom:-30px;opacity:.08}
+    .eda-endnote__cta{width:100%}
+    .eda-endnote__cta .btn{width:100%}
+  }
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================================
+     SITE HEADER  (reused verbatim on every sub-page)
+     Left: logo lockup · Centre: primary nav · Right: phone + CTA / burger
+     ===================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container site-header__inner">
+
+    <!-- logo lockup: КЛУБ / НОМЕР / ОДИН · CLUB · [1] -->
+    <a class="logo" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+      <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+    </a>
+
+    <!-- primary navigation -->
+    <nav class="main-nav" aria-label="Основная навигация">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="index.html">Главная</a></li>
+        <li><a class="main-nav__link" href="komiki.html">Комики</a></li>
+        <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
+        <li><a class="main-nav__link" href="eda.html" aria-current="page">Еда и напитки</a></li>
+        <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
+        <li><a class="main-nav__link" href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary" href="index.html#afisha">Купить билет</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile drawer -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
+    <a class="main-nav__link" href="index.html">Главная</a>
+    <a class="main-nav__link" href="komiki.html">Комики</a>
+    <a class="main-nav__link" href="formaty.html">Форматы</a>
+    <a class="main-nav__link" href="eda.html" aria-current="page">Еда и напитки</a>
+    <a class="main-nav__link" href="o-klube.html">О клубе</a>
+    <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
+    <div class="mobile-menu__foot">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary btn--block" href="index.html#afisha">Купить билет</a>
+    </div>
+  </nav>
+</header>
+
+
+<main class="container" id="main">
+
+  <!-- =================================================================
+       HERO — Еда и напитки
+       ================================================================= -->
+  <section class="eda-hero" aria-labelledby="page-title">
+    <div class="glow glow--mag eda-hero__glow-a" aria-hidden="true"></div>
+    <div class="glow glow--pur eda-hero__glow-b" aria-hidden="true"></div>
+
+    <div class="eda-hero__inner">
+      <div class="eda-hero__kicker">
+        <span class="badge1" aria-hidden="true" style="--s:44px"><b>1</b></span>
+        <span class="eyebrow">Бар · Кухня</span>
+      </div>
+
+      <h1 id="page-title">Еда и напитки</h1>
+
+      <p class="eda-lede">
+        Наш бар и кухня открыты <b>весь вечер — до, во время и после шоу</b>.
+        Можно взять коктейль к выступлению, разделить закуски на компанию или
+        поужинать перед сольником. Заказ приносят прямо к столику, так что
+        уходить со своего места не придётся.
+      </p>
+
+      <div class="eda-facts">
+        <div class="eda-fact">
+          <div class="eda-fact__k">Бар</div>
+          <div class="eda-fact__v">Работает весь вечер</div>
+          <div class="eda-fact__d">Открыт до последнего гостя</div>
+        </div>
+        <div class="eda-fact">
+          <div class="eda-fact__k">Кухня</div>
+          <div class="eda-fact__v">Горячее и закуски</div>
+          <div class="eda-fact__d">Приём заказов до 23:00</div>
+        </div>
+        <div class="eda-fact">
+          <div class="eda-fact__k">За столом</div>
+          <div class="eda-fact__v">Обслуживание к месту</div>
+          <div class="eda-fact__d">Официант подойдёт к вашему столику</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       SAMPLE-MENU CALLOUT
+       ================================================================= -->
+  <div class="eda-callout" role="note">
+    <span class="eda-callout__bar" aria-hidden="true"></span>
+    <div>
+      <div class="eda-callout__t">Пример меню</div>
+      <p class="eda-callout__p">
+        Ниже — ориентир по позициям и порядку цен, чтобы вы понимали, чего ждать.
+        Полная барная карта и меню кухни, а также актуальные цены — в клубе;
+        состав и предложения могут меняться от сезона к сезону.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- =================================================================
+       MENU — вкладки «Бар / Кухня» → категории (пример)
+       Two nested levels of the shared .tabs component. The top-level
+       panels (#panel-bar / #panel-kitchen) are placed as siblings AFTER
+       the top [data-tabs] wrapper and linked by aria-controls, so the
+       top group owns only its two tabs and each inner category [data-tabs]
+       stays self-contained (no descendant-tab bleed).
+       ================================================================= -->
+  <section class="eda-menu-tabs" aria-labelledby="menu-title">
+    <div class="menu-shell">
+
+      <header class="menu-cat__head">
+        <h2 id="menu-title">Меню</h2>
+        <span class="menu-cat__tag">Пример меню</span>
+        <p class="menu-cat__sub">Выберите бар или кухню, затем — категорию</p>
+      </header>
+      <div class="rule menu-cat__rule" aria-hidden="true"></div>
+
+      <!-- ── TOP LEVEL: Бар / Кухня ── -->
+      <div class="tabs eda-tabs eda-tabs--top" data-tabs>
+        <div class="tabs__list" role="tablist" aria-label="Бар или кухня">
+          <button class="tab" id="tab-bar" role="tab" aria-controls="panel-bar" aria-selected="true">Бар</button>
+          <button class="tab" id="tab-kitchen" role="tab" aria-controls="panel-kitchen">Кухня</button>
+        </div>
+      </div>
+
+      <!-- ── TOP PANEL: Бар ──  (sibling of the top [data-tabs], linked by id) -->
+      <div class="tab-panel eda-toppanel" id="panel-bar" role="tabpanel" aria-labelledby="tab-bar">
+        <p class="eda-cat-note">Бар работает весь вечер — заказ приносят прямо к столику.</p>
+
+        <div class="tabs eda-tabs" data-tabs>
+          <div class="tabs__list" role="tablist" aria-label="Категории бара">
+            <button class="tab" id="tab-cocktails" role="tab" aria-controls="panel-cocktails" aria-selected="true">Коктейли</button>
+            <button class="tab" id="tab-drinks" role="tab" aria-controls="panel-drinks">Напитки</button>
+          </div>
+          <div class="tabs__panels">
+
+            <!-- Коктейли -->
+            <div class="tab-panel" id="panel-cocktails" role="tabpanel" aria-labelledby="tab-cocktails">
+              <ul class="menu-list">
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">«Сцена»</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 690 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">джин, лайм, ягодный биттер — фирменный, цвета магенты</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">«Первый номер»</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 720 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">бурбон, вермут, апельсиновая цедра</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Негрони</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 650 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">джин, кампари, красный вермут</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Апероль Шприц</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 620 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">апероль, игристое, содовая</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Виски сауэр</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 640 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">бурбон, лимон, сахарный сироп</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Маргарита</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 630 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">текила, трипл-сек, лайм</p>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Напитки -->
+            <div class="tab-panel" id="panel-drinks" role="tabpanel" aria-labelledby="tab-drinks" hidden>
+              <ul class="menu-list">
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Крафтовое пиво, разлив</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 390 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">светлое, тёмное, IPA — бокал 0,33 / 0,5 л</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Бокал вина</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 490 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">красное, белое, игристое</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Безалкогольные коктейли</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 420 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">освежающие миксы без градуса</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Домашние лимонады</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 320 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">облепиха, цитрус, тархун — графин</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Кофе</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 200 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">эспрессо, американо, капучино</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Чай в чайнике</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 350 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">чёрный, зелёный, травяной — на компанию</p>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TOP PANEL: Кухня ──  (sibling of the top [data-tabs], linked by id) -->
+      <div class="tab-panel eda-toppanel" id="panel-kitchen" role="tabpanel" aria-labelledby="tab-kitchen" hidden>
+        <p class="eda-cat-note">Кухня принимает заказы до 23:00 — от лёгких закусок до горячего.</p>
+
+        <div class="tabs eda-tabs" data-tabs>
+          <div class="tabs__list" role="tablist" aria-label="Категории кухни">
+            <button class="tab" id="tab-snacks" role="tab" aria-controls="panel-snacks" aria-selected="true">Закуски</button>
+            <button class="tab" id="tab-hot" role="tab" aria-controls="panel-hot">Горячее</button>
+          </div>
+          <div class="tabs__panels">
+
+            <!-- Закуски -->
+            <div class="tab-panel" id="panel-snacks" role="tabpanel" aria-labelledby="tab-snacks">
+              <ul class="menu-list">
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Начос с сыром и сальсой</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 520 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">чтобы было чем занять руки во время шоу</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Брускетты, сет 4 шт.</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 480 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">томаты, лосось, ростбиф, грибы</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Сырная и мясная тарелка</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 780 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">ассорти на компанию, к вину</p>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Горячее -->
+            <div class="tab-panel" id="panel-hot" role="tabpanel" aria-labelledby="tab-hot" hidden>
+              <ul class="menu-list">
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Куриные крылышки в глазури</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 590 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">острые или медово-соевые, с соусом</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Луковые кольца</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 390 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">в хрустящей панировке, с соусом</p>
+                </li>
+                <li class="menu-item">
+                  <div class="menu-item__row">
+                    <span class="menu-item__name">Бургер с говядиной и фри</span>
+                    <span class="menu-item__lead" aria-hidden="true"></span>
+                    <span class="menu-item__price">от 690 ₽</span>
+                  </div>
+                  <p class="menu-item__desc">котлета из мраморной говядины, картофель фри</p>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       ATMOSPHERE — посадка за столами
+       ================================================================= -->
+  <section class="eda-atmos" aria-labelledby="atmos-title">
+    <span class="badge1 eda-atmos__mark" aria-hidden="true"><b>1</b></span>
+    <div class="eda-atmos__inner">
+      <span class="eyebrow">Атмосфера</span>
+      <h2 id="atmos-title">За столом, а не в очереди</h2>
+      <p>
+        В зале — <b>удобная посадка за столами</b>: вы садитесь на весь вечер,
+        а не стоите у стойки. Компанию рассадим вместе, заказ принесут прямо
+        к месту, и во время выступления не придётся никуда идти. Приходите
+        заранее, займите стол, возьмите что-нибудь к началу — и оставайтесь
+        до финального номера.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       CLOSING NOTE — полное меню в клубе
+       ================================================================= -->
+  <div class="eda-endnote">
+    <div>
+      <div class="eda-endnote__t">Полное меню — в клубе</div>
+      <p class="eda-endnote__d">
+        Актуальная барная карта, меню кухни и цены — на месте, на Новом Арбате, 21.
+        Хотите сесть компанией — забронируйте стол заранее. 18+, приём заказов до закрытия;
+        пожалуйста, соблюдайте меру.
+      </p>
+    </div>
+    <div class="eda-endnote__cta">
+      <a class="btn btn--gold" href="index.html#afisha">Выбрать вечер и стол</a>
+    </div>
+  </div>
+
+</main>
+
+
+<!-- =====================================================================
+     SITE FOOTER  (reused verbatim on every sub-page)
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+
+    <div class="footer-brand">
+      <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+        <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+      </a>
+      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Контакты</h3>
+      <ul>
+        <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:hello@club1.ru">hello@club1.ru</a></li>
+        <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
+      </ul>
+      <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Информация</h3>
+      <ul>
+        <li><a href="#">Возврат билетов</a></li>
+        <li><a href="#">Политика конфиденциальности</a></li>
+        <li><a href="#">Договор оферты</a></li>
+        <li><a href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-social-col">
+      <h3>Мы в соцсетях</h3>
+      <div class="social">
+        <a class="social-btn" href="https://vk.com/" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+        </a>
+        <a class="social-btn" href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+/* ---------------------------------------------------------------------
+   Club №1 — foundation interactions (vanilla, no deps)
+   1. header ink-on-scroll   2. burger drawer
+   Shared with index.html; slider/filter blocks are guarded and simply
+   no-op on pages (like this one) that don't contain those components.
+   --------------------------------------------------------------------- */
+(function(){
+  "use strict";
+
+  /* 1 · sticky header goes ink once the page scrolls */
+  var header = document.getElementById('siteHeader');
+  var onScroll = function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* 2 · burger / mobile drawer */
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mobileMenu');
+  var setMenu = function(open){
+    menu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', function(){
+    setMenu(!menu.classList.contains('is-open'));
+  });
+  menu.addEventListener('click', function(e){
+    if (e.target.closest('a')) setMenu(false);
+  });
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+  });
+})();
+</script>
+
+<!-- shared interactive components (tabs used on this page) -->
+<script src="script.js" defer></script>
+
+</body>
+</html>

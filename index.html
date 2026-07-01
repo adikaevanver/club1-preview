@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Клуб №1 · CLUB 1 — стендап-клуб на Новом Арбате · афиша и билеты</title>
+
+<meta name="description" content="Клуб №1 (CLUB 1) — комедийный клуб в центре Москвы на Новом Арбате, 21. Сольные концерты федеральных комиков, импровизация, бурлеск-шоу. Афиша и билеты на сайте.">
+<meta name="theme-color" content="#0a0810">
+<link rel="canonical" href="https://club1.ru/">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Клуб №1 · CLUB 1">
+<meta property="og:title" content="Клуб №1 — стендап-клуб на Новом Арбате">
+<meta property="og:description" content="Сольные концерты федеральных комиков, импровизация и бурлеск-шоу. Живой зал в центре Москвы, Новый Арбат, 21.">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://club1.ru/">
+<meta property="og:image" content="assets/comics/dedishchev.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- =====================================================================
+     SITE HEADER  (reused verbatim on every sub-page)
+     Left: logo lockup · Centre: primary nav · Right: phone + CTA / burger
+     ===================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container site-header__inner">
+
+    <!-- logo lockup: КЛУБ / НОМЕР / ОДИН · CLUB · [1] -->
+    <a class="logo" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+      <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+    </a>
+
+    <!-- primary navigation -->
+    <nav class="main-nav" aria-label="Основная навигация">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="index.html" aria-current="page">Главная</a></li>
+        <li><a class="main-nav__link" href="komiki.html">Комики</a></li>
+        <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
+        <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
+        <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
+        <li><a class="main-nav__link" href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary" href="#afisha">Купить билет</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile drawer -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
+    <a class="main-nav__link" href="index.html" aria-current="page">Главная</a>
+    <a class="main-nav__link" href="komiki.html">Комики</a>
+    <a class="main-nav__link" href="formaty.html">Форматы</a>
+    <a class="main-nav__link" href="eda.html">Еда и напитки</a>
+    <a class="main-nav__link" href="o-klube.html">О клубе</a>
+    <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
+    <div class="mobile-menu__foot">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary btn--block" href="#afisha">Купить билет</a>
+    </div>
+  </nav>
+</header>
+
+
+<main class="container" id="main">
+  <h1 class="sr-only">Клуб №1 — стендап-клуб на Новом Арбате. Афиша сольных концертов и билеты</h1>
+
+  <!-- =================================================================
+       HERO — HEADLINER STRIP
+       ================================================================= -->
+  <section class="hero" aria-labelledby="hero-title">
+    <h2 id="hero-title" class="sr-only">Хедлайнеры клуба</h2>
+
+    <div class="glow glow--mag hero__glow-a" aria-hidden="true"></div>
+    <div class="glow glow--pur hero__glow-b" aria-hidden="true"></div>
+
+    <div class="headliners">
+      <button class="slider-arrow slider-arrow--prev" data-slider="headliners" data-dir="-1" aria-label="Предыдущие хедлайнеры">‹</button>
+
+      <div class="headliners__track" id="headlinersTrack" role="list">
+
+        <!-- 1 · Павел Дедищев -->
+        <figure class="headliner" role="listitem">
+          <div class="headliner__frame"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="eager" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Павел</span><b>Дедищев</b></figcaption>
+        </figure>
+
+        <!-- 2 · Виктор Комаров — TODO: настоящее фото Комарова отсутствует, временно butakov.jpg -->
+        <figure class="headliner" role="listitem">
+          <div class="headliner__frame"><img src="assets/comics/butakov.jpg" alt="Комик Виктор Комаров" loading="lazy" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Виктор</span><b>Комаров</b></figcaption>
+        </figure>
+
+        <!-- 3 · Стас Старовойтов — TODO: настоящее фото Старовойтова отсутствует, временно evdokimov.jpg -->
+        <figure class="headliner" role="listitem">
+          <div class="headliner__frame"><img src="assets/comics/evdokimov.jpg" alt="Комик Стас Старовойтов" loading="lazy" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Стас</span><b>Старовойтов</b></figcaption>
+        </figure>
+
+        <!-- 4 · Илья Раевский -->
+        <figure class="headliner" role="listitem">
+          <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Илья</span><b>Раевский</b></figcaption>
+        </figure>
+
+        <!-- 5 · Маргарита Родина -->
+        <figure class="headliner" role="listitem">
+          <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик Маргарита Родина" loading="lazy" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Маргарита</span><b>Родина</b></figcaption>
+        </figure>
+
+        <!-- 6 · Гурам Амарян — TODO: настоящее фото Амаряна отсутствует, временно atlas.jpg -->
+        <figure class="headliner" role="listitem">
+          <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Гурам Амарян" loading="lazy" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Гурам</span><b>Амарян</b></figcaption>
+        </figure>
+
+        <!-- 7 · Расул Чабдаров -->
+        <figure class="headliner" role="listitem">
+          <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Расул</span><b>Чабдаров</b></figcaption>
+        </figure>
+
+        <!-- closing outline panel -->
+        <figure class="headliner headliner--outro" role="listitem" aria-hidden="true">
+          <div class="headliner__frame">
+            <span class="outro__text"><span class="su">STANDUP</span><span class="sc">Сольный концерт</span></span>
+          </div>
+        </figure>
+
+      </div>
+
+      <button class="slider-arrow slider-arrow--next" data-slider="headliners" data-dir="1" aria-label="Следующие хедлайнеры">›</button>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       FILTER BAR — days + formats
+       ================================================================= -->
+  <section class="filters" aria-labelledby="filters-title">
+    <h2 id="filters-title" class="sr-only">Фильтр афиши по датам, дням недели и форматам</h2>
+
+    <!-- по датам — calendar strip (shared DATEBAR component, see script.js) -->
+    <div class="datebar" data-datebar>
+      <span class="datebar__month">Апрель</span>
+      <div class="datebar__days" role="group" aria-label="Выберите дату">
+        <button class="datebar__day" data-date="2026-04-03" disabled type="button"><b>03</b><span>Пт</span></button>
+        <button class="datebar__day" data-date="2026-04-04" type="button"><b>04</b><span>Сб</span></button>
+        <button class="datebar__day" data-date="2026-04-10" type="button"><b>10</b><span>Пт</span></button>
+        <button class="datebar__day" data-date="2026-04-11" aria-pressed="true" type="button"><b>11</b><span>Сб</span></button>
+        <button class="datebar__day" data-date="2026-04-17" type="button"><b>17</b><span>Пт</span></button>
+        <button class="datebar__day" data-date="2026-04-24" type="button"><b>24</b><span>Пт</span></button>
+        <button class="datebar__day" data-date="2026-04-25" type="button"><b>25</b><span>Сб</span></button>
+      </div>
+    </div>
+
+    <div class="filters__row filters__row--days" role="group" aria-label="Дни недели">
+      <button class="pill pill--lead" data-action="calendar" type="button">Календарь</button>
+      <button class="pill" data-filter="day" aria-pressed="false" type="button">Понедельник</button>
+      <button class="pill" data-filter="day" aria-pressed="false" type="button">Вторник</button>
+      <button class="pill" data-filter="day" aria-pressed="false" type="button">Среда</button>
+      <button class="pill" data-filter="day" aria-pressed="false" type="button">Четверг</button>
+      <button class="pill" data-filter="day" aria-pressed="false" type="button">Пятница</button>
+      <button class="pill" data-filter="day" aria-pressed="false" type="button">Суббота</button>
+      <button class="pill" data-filter="day" aria-pressed="false" type="button">Воскресенье</button>
+    </div>
+
+    <div class="filters__row filters__row--formats" role="group" aria-label="Форматы">
+      <button class="pill" data-filter="format" aria-pressed="true" type="button">Сольники</button>
+      <button class="pill" data-filter="format" aria-pressed="false" type="button">От опытных комиков</button>
+      <button class="pill" data-filter="format" aria-pressed="false" type="button">В большом городе</button>
+      <button class="pill" data-filter="format" aria-pressed="false" type="button">Давай переиграем</button>
+      <button class="pill" data-filter="format" aria-pressed="false" type="button">Комьюнити</button>
+      <button class="pill" data-filter="format" aria-pressed="false" type="button">Burlesque &amp; Stand Up</button>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       AFISHA — event cards with CSS-built posters
+       ================================================================= -->
+  <section class="afisha" id="afisha" aria-labelledby="afisha-title">
+    <h2 id="afisha-title" class="sr-only">Афиша ближайших сольных концертов</h2>
+
+    <div class="afisha__track" id="afishaTrack" role="list">
+
+      <!-- Card 1 · Стас Старовойтов (gradient poster, фото отсутствует) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--cyan">
+          <div class="poster__badge">25.03<small>20:00</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Стас</span><b>Старовойтов</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Стас Старовойтов</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+      <!-- Card 2 · Гурам Амарян (gradient poster, фото отсутствует) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--gold">
+          <div class="poster__badge">27.03<small>19:30</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Гурам</span><b>Амарян</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Гурам Амарян</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+      <!-- Card 3 · Расул Чабдаров (фото есть) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--mag">
+          <img class="poster__photo" src="assets/comics/chabdarov.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
+          <div class="poster__tint"></div>
+          <div class="poster__badge">11.04<small>18:30</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Расул</span><b>Чабдаров</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Расул Чабдаров</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+      <!-- Card 4 · Илья Раевский (фото есть) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--pur">
+          <img class="poster__photo" src="assets/comics/raevskiy.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
+          <div class="poster__tint"></div>
+          <div class="poster__badge">24.04<small>19:30</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Илья</span><b>Раевский</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Илья Раевский</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+      <!-- Card 5 · Денис Чебатков (фото есть) -->
+      <article class="event-card" role="listitem">
+        <div class="poster poster--green">
+          <img class="poster__photo" src="assets/comics/chebatkov.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
+          <div class="poster__tint"></div>
+          <div class="poster__badge">25.04<small>18:30</small></div>
+          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
+          <div class="poster__name"><span>Денис</span><b>Чебатков</b></div>
+          <span class="poster__age">18+</span>
+        </div>
+        <h3 class="event-card__title">Денис Чебатков</h3>
+        <div class="event-card__actions">
+          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
+          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
+        </div>
+      </article>
+
+    </div>
+
+    <button class="slider-arrow slider-arrow--next" data-slider="afisha" data-dir="1" aria-label="Показать ещё концерты">›</button>
+  </section>
+</main>
+
+
+<!-- =====================================================================
+     SITE FOOTER  (reused verbatim on every sub-page)
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+
+    <div class="footer-brand">
+      <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+        <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+      </a>
+      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Контакты</h3>
+      <ul>
+        <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:hello@club1.ru">hello@club1.ru</a></li>
+        <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
+      </ul>
+      <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Информация</h3>
+      <ul>
+        <li><a href="#">Возврат билетов</a></li>
+        <li><a href="#">Политика конфиденциальности</a></li>
+        <li><a href="#">Договор оферты</a></li>
+        <li><a href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-social-col">
+      <h3>Мы в соцсетях</h3>
+      <div class="social">
+        <a class="social-btn" href="https://vk.com/" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+        </a>
+        <a class="social-btn" href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+/* ---------------------------------------------------------------------
+   Club №1 — foundation interactions (vanilla, no deps)
+   1. header ink-on-scroll   2. burger drawer
+   3. horizontal sliders     4. day/format filter pills
+   --------------------------------------------------------------------- */
+(function(){
+  "use strict";
+
+  /* 1 · sticky header goes ink once the page scrolls */
+  var header = document.getElementById('siteHeader');
+  var onScroll = function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* 2 · burger / mobile drawer */
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mobileMenu');
+  var setMenu = function(open){
+    menu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', function(){
+    setMenu(!menu.classList.contains('is-open'));
+  });
+  menu.addEventListener('click', function(e){
+    if (e.target.closest('a')) setMenu(false);
+  });
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+  });
+
+  /* 3 · horizontal sliders (hero + afisha) */
+  var tracks = {
+    headliners: document.getElementById('headlinersTrack'),
+    afisha:     document.getElementById('afishaTrack')
+  };
+  document.querySelectorAll('[data-slider]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var track = tracks[btn.dataset.slider];
+      if (!track) return;
+      var dir  = parseInt(btn.dataset.dir, 10) || 1;
+      var step = Math.max(track.clientWidth * 0.8, 260);
+      track.scrollBy({left: dir * step, behavior: 'smooth'});
+    });
+  });
+
+  /* 4 · filter pills — single-select within each row group */
+  document.querySelectorAll('.filters__row').forEach(function(row){
+    row.addEventListener('click', function(e){
+      var pill = e.target.closest('.pill[data-filter]');
+      if (!pill || !row.contains(pill)) return;
+      row.querySelectorAll('.pill[data-filter]').forEach(function(p){
+        p.setAttribute('aria-pressed', String(p === pill));
+      });
+    });
+  });
+})();
+</script>
+
+<!-- shared interactive components (datebar filter) -->
+<script src="script.js" defer></script>
+
+</body>
+</html>

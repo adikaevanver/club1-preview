@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Комики · Клуб №1 · CLUB 1 — стендап на Новом Арбате</title>
+
+<meta name="description" content="Комики Клуба №1 на Новом Арбате: Павел Дедищев, Денис Чебатков, Расул Чабдаров, Илья Раевский и другие резиденты. Нажмите на карточку комика, чтобы открыть биографию, регалии, видео и соцсети.">
+<meta name="theme-color" content="#0a0810">
+<link rel="canonical" href="https://club1.ru/komiki.html">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Клуб №1 · CLUB 1">
+<meta property="og:title" content="Комики Клуба №1 — резиденты и хедлайнеры">
+<meta property="og:description" content="Федеральные хедлайнеры и резиденты открытых микрофонов. Сольные концерты, импровизация и стендап-вечера в центре Москвы, Новый Арбат, 21.">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://club1.ru/komiki.html">
+<meta property="og:image" content="assets/comics/dedishchev.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- =====================================================================
+     PAGE-SPECIFIC CSS  ·  Комики (roster listing + bio pop-ups)
+     Only this page's layout lives here; everything shared comes from
+     styles.css — tokens, header, footer, buttons, eyebrow, rule, glow,
+     and §12 (the modal look this page fills with content).
+     ===================================================================== -->
+<style>
+  /* ---- page hero ------------------------------------------------- */
+  .roster-hero{position:relative;padding:52px 0 10px}
+  .roster-hero__glow-a{width:520px;height:520px;top:-150px;left:-180px}
+  .roster-hero__glow-b{width:440px;height:440px;top:-90px;right:-180px}
+  .roster-hero__head{position:relative;z-index:1;max-width:720px}
+  .roster-hero__title{
+    font-family:var(--display);font-weight:900;
+    font-size:clamp(2.6rem,8vw,5.4rem);line-height:.9;letter-spacing:-.015em;
+    text-transform:uppercase;margin-top:14px;
+  }
+  .roster-hero .rule{margin-top:24px}
+  .roster-hero__lede{
+    margin-top:24px;max-width:600px;color:var(--muted);
+    font-size:clamp(1rem,1.4vw,1.15rem);line-height:1.55;
+  }
+  .roster-hero__lede b{color:var(--text);font-weight:600}
+
+  /* ---- roster grid ---------------------------------------------- */
+  .roster-section{padding:44px 0 76px}
+  .roster{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));   /* 4-up desktop */
+    gap:clamp(20px,2.4vw,32px);
+  }
+  .roster>li{display:flex;min-width:0}
+
+  /* one comedian — now a BUTTON that opens the bio pop-up (no navigation).
+     Reset native button chrome, then reuse the frame + name treatment. */
+  button.comic-card{
+    width:100%;padding:0;margin:0;font:inherit;text-align:left;
+    background:none;border:0;color:inherit;cursor:pointer;min-width:0;
+    display:flex;flex-direction:column;gap:15px;
+  }
+  .comic-card__frame{
+    position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:6px;
+    background:#151019;
+    /* parallelogram crop (skew read, zero horizontal overflow) */
+    clip-path:polygon(14% 0, 100% 0, 86% 100%, 0 100%);
+  }
+  .comic-card__frame img{
+    width:100%;height:100%;object-fit:cover;object-position:50% 20%;
+    transition:transform .55s var(--ease);
+  }
+  .comic-card:hover .comic-card__frame img,
+  .comic-card:focus-visible .comic-card__frame img{transform:scale(1.07)}
+  /* magenta index tab in the corner — the club's skewed parallelogram mark */
+  .comic-card__frame::after{
+    content:"";position:absolute;left:0;bottom:0;z-index:2;
+    width:34px;height:9px;background:var(--grad);
+    clip-path:polygon(16% 0,100% 0,84% 100%,0 100%);
+    opacity:.9;
+  }
+
+  .comic-card__meta{display:flex;flex-direction:column;gap:9px}
+  .comic-card__name{font-family:var(--display);text-transform:uppercase;line-height:1.04}
+  .comic-card__name .fn{
+    display:block;font-weight:500;font-size:.72rem;letter-spacing:.06em;color:var(--muted);
+  }
+  .comic-card__name .ln{
+    display:block;font-weight:800;font-size:clamp(.92rem,1.05vw,1.06rem);
+    margin-top:3px;letter-spacing:.01em;color:#fff;
+    overflow-wrap:anywhere;transition:color .18s;
+  }
+  .comic-card:hover .comic-card__name .ln,
+  .comic-card:focus-visible .comic-card__name .ln{color:var(--magenta)}
+
+  .comic-card__bar{
+    height:3px;width:34px;background:var(--grad);border-radius:3px;
+    transform:skewX(var(--skew));transition:width .3s var(--ease);
+  }
+  .comic-card:hover .comic-card__bar,
+  .comic-card:focus-visible .comic-card__bar{width:62px}
+
+  .comic-card__tag{
+    font-family:var(--body);font-weight:500;font-size:.84rem;letter-spacing:.03em;
+    color:var(--muted);
+  }
+  /* subtle "открыть" affordance so the card reads as clickable, not a link */
+  .comic-card__more{
+    display:inline-flex;align-items:center;gap:.4em;
+    font-family:var(--body);font-weight:600;font-size:.78rem;letter-spacing:.02em;
+    color:var(--magenta);opacity:.85;transition:gap .2s var(--ease),opacity .18s;
+  }
+  .comic-card__more::after{content:"\2192"}
+  .comic-card:hover .comic-card__more,
+  .comic-card:focus-visible .comic-card__more{opacity:1;gap:.75em}
+
+  /* ---- bio pop-up internals (fills the shared .modal / §12) ------- */
+  .bio__section{margin-top:26px}
+  .bio__label{
+    font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted-2);margin-bottom:14px;
+  }
+  /* регалии и проекты — skewed magenta bullet dashes */
+  .bio__list{display:flex;flex-direction:column;gap:10px}
+  .bio__list li{
+    position:relative;padding-left:20px;color:var(--muted);
+    font-size:.95rem;line-height:1.5;
+  }
+  .bio__list li::before{
+    content:"";position:absolute;left:0;top:.5em;width:10px;height:8px;
+    background:var(--grad);border-radius:2px;transform:skewX(var(--skew));
+  }
+  .bio__note{margin-top:12px;font-size:.82rem;color:var(--muted-2);font-style:italic}
+
+  /* видео — clearly a placeholder, not a real embed */
+  .bio__video{
+    position:relative;aspect-ratio:16/9;border-radius:var(--r-sm);overflow:hidden;
+    background:linear-gradient(150deg,var(--panel-2),var(--ink-2));
+    border:1px solid var(--hairline);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;
+  }
+  .bio__play{
+    width:54px;height:54px;border-radius:50%;flex:0 0 auto;
+    background:rgba(255,255,255,.05);border:1.5px solid var(--hairline-strong);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .bio__play::before{
+    content:"";display:block;margin-left:4px;
+    border-style:solid;border-width:9px 0 9px 15px;
+    border-color:transparent transparent transparent var(--magenta);
+  }
+  .bio__video-note{font-size:.86rem;color:var(--muted-2);letter-spacing:.02em}
+
+  /* соцсети — VK / TG / Instagram icon links */
+  .bio__social{display:flex;gap:12px}
+  .bio__soc{
+    width:44px;height:44px;border-radius:12px;flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--panel-2);border:1px solid var(--hairline);color:#fff;
+    transition:background .18s,border-color .18s,transform .18s;
+  }
+  .bio__soc:hover{background:var(--magenta);border-color:var(--magenta);transform:translateY(-2px)}
+  .bio__soc svg{width:20px;height:20px;fill:currentColor}
+
+  /* шоу с участием — links to the solo-show page */
+  .bio__shows{display:flex;flex-direction:column;gap:10px}
+  .bio__show{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:13px 16px;border-radius:var(--r-sm);
+    background:var(--panel-2);border:1px solid var(--hairline);
+    color:var(--text);transition:border-color .18s,background .18s,transform .18s;
+  }
+  .bio__show:hover{border-color:var(--magenta);background:rgba(255,47,109,.06);transform:translateX(3px)}
+  .bio__show-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .bio__show-main b{font-weight:600;font-size:.96rem;color:var(--text);overflow-wrap:anywhere}
+  .bio__show-date{font-size:.82rem;color:var(--muted)}
+  .bio__show-go{color:var(--magenta);font-size:1.15rem;flex:0 0 auto;transition:transform .18s}
+  .bio__show:hover .bio__show-go{transform:translateX(3px)}
+
+  /* ---- responsive ------------------------------------------------ */
+  @media (max-width:1000px){
+    .roster{grid-template-columns:repeat(3,minmax(0,1fr))}   /* tablet: 3-up */
+  }
+  @media (max-width:640px){
+    .roster-hero{padding:40px 0 6px}
+    .roster-section{padding:36px 0 60px}
+    .roster{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}  /* 2-up mobile */
+    button.comic-card{gap:12px}
+    .comic-card__frame{clip-path:polygon(10% 0,100% 0,90% 100%,0 100%)}
+    .comic-card__name .ln{font-size:.95rem}
+    .comic-card__more{display:none}   /* whole card is the tap target on phones */
+  }
+</style>
+</head>
+
+<body>
+
+<!-- inline icon sprite (VK / Telegram / Instagram) reused by every bio pop-up -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <symbol id="ic-vk" viewBox="0 0 24 24"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></symbol>
+  <symbol id="ic-tg" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></symbol>
+  <symbol id="ic-ig" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.42.56.21.96.47 1.38.89.42.42.68.82.89 1.38.17.43.37 1.06.42 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.42 2.23-.21.56-.47.96-.89 1.38-.42.42-.82.68-1.38.89-.43.17-1.06.37-2.23.42-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.42-.56-.21-.96-.47-1.38-.89-.42-.42-.68-.82-.89-1.38-.17-.43-.37-1.06-.42-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.42-2.23.21-.56.47-.96.89-1.38.42-.42.82-.68 1.38-.89.43-.17 1.06-.37 2.23-.42C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.4-.55.21-.94.47-1.36.89-.42.42-.68.81-.89 1.36-.16.42-.35 1.04-.4 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.4 2.19.21.55.47.94.89 1.36.42.42.81.68 1.36.89.42.16 1.04.35 2.19.4 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.4.55-.21.94-.47 1.36-.89.42-.42.68-.81.89-1.36.16-.42.35-1.04.4-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.4-2.19-.21-.55-.47-.94-.89-1.36-.42-.42-.81-.68-1.36-.89-.42-.16-1.04-.35-2.19-.4-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.46 5.46 0 1 1 0 10.92 5.46 5.46 0 0 1 0-10.92zm0 9a3.54 3.54 0 1 0 0-7.08 3.54 3.54 0 0 0 0 7.08zm6.96-9.24a1.27 1.27 0 1 1-2.54 0 1.27 1.27 0 0 1 2.54 0z"/></symbol>
+</svg>
+
+<!-- =====================================================================
+     SITE HEADER  (reused verbatim on every sub-page)
+     Left: logo lockup · Centre: primary nav · Right: phone + CTA / burger
+     ===================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container site-header__inner">
+
+    <!-- logo lockup: КЛУБ / НОМЕР / ОДИН · CLUB · [1] -->
+    <a class="logo" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+      <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+    </a>
+
+    <!-- primary navigation -->
+    <nav class="main-nav" aria-label="Основная навигация">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="index.html">Главная</a></li>
+        <li><a class="main-nav__link" href="komiki.html" aria-current="page">Комики</a></li>
+        <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
+        <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
+        <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
+        <li><a class="main-nav__link" href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary" href="index.html#afisha">Купить билет</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile drawer -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
+    <a class="main-nav__link" href="index.html">Главная</a>
+    <a class="main-nav__link" href="komiki.html" aria-current="page">Комики</a>
+    <a class="main-nav__link" href="formaty.html">Форматы</a>
+    <a class="main-nav__link" href="eda.html">Еда и напитки</a>
+    <a class="main-nav__link" href="o-klube.html">О клубе</a>
+    <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
+    <div class="mobile-menu__foot">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary btn--block" href="index.html#afisha">Купить билет</a>
+    </div>
+  </nav>
+</header>
+
+
+<main class="container" id="main">
+
+  <!-- =================================================================
+       PAGE HERO — eyebrow + H1 + lede
+       ================================================================= -->
+  <section class="roster-hero" aria-labelledby="page-title">
+    <div class="glow glow--mag roster-hero__glow-a" aria-hidden="true"></div>
+    <div class="glow glow--pur roster-hero__glow-b" aria-hidden="true"></div>
+
+    <div class="roster-hero__head">
+      <p class="eyebrow">Резиденты и хедлайнеры</p>
+      <h1 id="page-title" class="roster-hero__title">Комики</h1>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="roster-hero__lede">
+        От федеральных хедлайнеров до резидентов открытых микрофонов. Каждую неделю на сцене
+        Клуба №1 — <b>сольные концерты</b>, импровизация и стендап-вечера. Нажмите на карточку
+        комика — откроются регалии, видео и ближайшие шоу.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       ROSTER GRID — все комики (4-up desktop · 2-up mobile)
+       Каждая карточка — триггер pop-up'а (data-modal-open), а не ссылка.
+       ================================================================= -->
+  <section class="roster-section" aria-labelledby="roster-title">
+    <h2 id="roster-title" class="sr-only">Все комики клуба</h2>
+
+    <ul class="roster">
+
+      <!-- 1 · Павел Дедищев -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-dedishchev" aria-label="Павел Дедищев — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Павел</span><span class="ln">Дедищев</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Сольные концерты</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 2 · Денис Чебатков -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-chebatkov" aria-label="Денис Чебатков — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/chebatkov.jpg" alt="Комик Денис Чебатков" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Денис</span><span class="ln">Чебатков</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Сольные концерты</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 3 · Расул Чабдаров -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-chabdarov" aria-label="Расул Чабдаров — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Расул</span><span class="ln">Чабдаров</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Сольные концерты</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 4 · Илья Раевский -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-raevskiy" aria-label="Илья Раевский — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Илья</span><span class="ln">Раевский</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Сольные концерты</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 5 · Илья Атлас -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-atlas" aria-label="Илья Атлас — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Илья</span><span class="ln">Атлас</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Стендап-вечера</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 6 · Маргарита Родина -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-rodina" aria-label="Маргарита Родина — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/rodina.jpg" alt="Комик Маргарита Родина" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Маргарита</span><span class="ln">Родина</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Стендап и импровизация</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 7 · Нурлан Бутаков -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-butakov" aria-label="Нурлан Бутаков — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/butakov.jpg" alt="Комик Нурлан Бутаков" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Нурлан</span><span class="ln">Бутаков</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Сольные концерты</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 8 · Юлия Македонская -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-makedonskaya" aria-label="Юлия Македонская — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/makedonskaya.jpg" alt="Комик Юлия Македонская" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Юлия</span><span class="ln">Македонская</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Стендап-вечера</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 9 · Сергей Евдокимов -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-evdokimov" aria-label="Сергей Евдокимов — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/evdokimov.jpg" alt="Комик Сергей Евдокимов" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Сергей</span><span class="ln">Евдокимов</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Открытые микрофоны</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+      <!-- 10 · Иван Щербак -->
+      <li>
+        <button type="button" class="comic-card" data-modal-open="bio-shcherbak" aria-label="Иван Щербак — открыть информацию о комике">
+          <span class="comic-card__frame">
+            <img src="assets/comics/shcherbak.jpg" alt="Комик Иван Щербак" loading="lazy" width="900" height="900">
+          </span>
+          <span class="comic-card__meta">
+            <span class="comic-card__name"><span class="fn">Иван</span><span class="ln">Щербак</span></span>
+            <span class="comic-card__bar" aria-hidden="true"></span>
+            <span class="comic-card__tag">Импровизация</span>
+            <span class="comic-card__more" aria-hidden="true">Подробнее</span>
+          </span>
+        </button>
+      </li>
+
+    </ul>
+  </section>
+
+
+  <!-- =================================================================
+       BIO POP-UPS — one hidden modal per comic (shared §12 contract).
+       Each holds: имя+фамилия · Регалии и проекты · Видео-заглушка ·
+       Аккаунты в соцсетях · Шоу с участием (ссылки на solnik.html).
+       ================================================================= -->
+
+  <!-- 1 · Павел Дедищев -->
+  <div class="modal" id="bio-dedishchev" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-dedishchev-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Хедлайнер</p>
+      <h2 class="modal__title" id="bio-dedishchev-title">Павел Дедищев</h2>
+      <div class="modal__body">
+        <p>Один из самых узнаваемых стендап-комиков и частый гость сцены Клуба №1. Сольные концерты, импровизация и живые квартирники — почти каждую неделю.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Хедлайнер сольных концертов</li>
+            <li>Стендап и импровизация на одной сцене</li>
+            <li>Регулярные выступления в Клубе №1 на Новом Арбате</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Павла Дедищева"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Павла Дедищева"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Павла Дедищева"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сольный концерт</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сборный стендап-вечер</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 · Денис Чебатков -->
+  <div class="modal" id="bio-chebatkov" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-chebatkov-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Хедлайнер</p>
+      <h2 class="modal__title" id="bio-chebatkov-title">Денис Чебатков</h2>
+      <div class="modal__body">
+        <p>Хедлайнер с фирменной подачей и наблюдательным юмором. На сцене Клуба №1 — сольные программы и совместные вечера с другими резидентами.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Хедлайнер сольных программ</li>
+            <li>Наблюдательный разговорный стендап</li>
+            <li>Совместные вечера с резидентами клуба</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Дениса Чебаткова"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Дениса Чебаткова"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Дениса Чебаткова"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сольный концерт</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сборный стендап-вечер</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 · Расул Чабдаров -->
+  <div class="modal" id="bio-chabdarov" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-chabdarov-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Хедлайнер</p>
+      <h2 class="modal__title" id="bio-chabdarov-title">Расул Чабдаров</h2>
+      <div class="modal__body">
+        <p>Комик, который собирает залы по всей стране. В Клубе №1 — сольные концерты и импровизационные сеты без сценария.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Хедлайнер сольных концертов</li>
+            <li>Импровизационные сеты без сценария</li>
+            <li>Выступления на сцене на Новом Арбате</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Расула Чабдарова"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Расула Чабдарова"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Расула Чабдарова"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сольный концерт</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Вечер импровизации</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 · Илья Раевский -->
+  <div class="modal" id="bio-raevskiy" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-raevskiy-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Хедлайнер</p>
+      <h2 class="modal__title" id="bio-raevskiy-title">Илья Раевский</h2>
+      <div class="modal__body">
+        <p>Резидент и хедлайнер сольных программ. Тонкий разговорный стендап и лёгкая импровизация — на нашей сцене регулярно.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Хедлайнер сольных программ</li>
+            <li>Тонкий разговорный стендап</li>
+            <li>Постоянный участник вечеров клуба</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Ильи Раевского"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Ильи Раевского"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Ильи Раевского"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сольный концерт</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сборный стендап-вечер</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 · Илья Атлас -->
+  <div class="modal" id="bio-atlas" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-atlas-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Резидент</p>
+      <h2 class="modal__title" id="bio-atlas-title">Илья Атлас</h2>
+      <div class="modal__body">
+        <p>Постоянный участник стендап-вечеров Клуба №1. Свежий материал и обкатка новых шуток прямо в зале.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Резидент стендап-вечеров</li>
+            <li>Обкатка нового материала в зале</li>
+            <li>Регулярные сеты в Клубе №1</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Ильи Атласа"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Ильи Атласа"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Ильи Атласа"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Стендап-вечер</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Открытый микрофон</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 · Маргарита Родина -->
+  <div class="modal" id="bio-rodina" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-rodina-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Резидент</p>
+      <h2 class="modal__title" id="bio-rodina-title">Маргарита Родина</h2>
+      <div class="modal__body">
+        <p>Комик и импровизатор. В Клубе №1 ведёт стендап-вечера и участвует в импровизационных баттлах.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Комик и импровизатор</li>
+            <li>Ведущая стендап-вечеров</li>
+            <li>Участница импровизационных баттлов</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Маргариты Родиной"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Маргариты Родиной"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Маргариты Родиной"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Стендап-вечер</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Вечер импровизации</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 · Нурлан Бутаков -->
+  <div class="modal" id="bio-butakov" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-butakov-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Хедлайнер</p>
+      <h2 class="modal__title" id="bio-butakov-title">Нурлан Бутаков</h2>
+      <div class="modal__body">
+        <p>Хедлайнер сольных концертов. Плотный часовой стендап и живой контакт с залом.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Хедлайнер сольных концертов</li>
+            <li>Часовые стендап-программы</li>
+            <li>Живой контакт с залом</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Нурлана Бутакова"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Нурлана Бутакова"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Нурлана Бутакова"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сольный концерт</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сборный стендап-вечер</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 · Юлия Македонская -->
+  <div class="modal" id="bio-makedonskaya" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-makedonskaya-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Резидент</p>
+      <h2 class="modal__title" id="bio-makedonskaya-title">Юлия Македонская</h2>
+      <div class="modal__body">
+        <p>Резидент стендап-вечеров. Личные истории и острые наблюдения — в её фирменном стиле.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Резидент стендап-вечеров</li>
+            <li>Личные истории и острые наблюдения</li>
+            <li>Регулярные выступления на нашей сцене</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Юлии Македонской"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Юлии Македонской"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Юлии Македонской"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Стендап-вечер</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Открытый микрофон</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 · Сергей Евдокимов -->
+  <div class="modal" id="bio-evdokimov" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-evdokimov-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Резидент</p>
+      <h2 class="modal__title" id="bio-evdokimov-title">Сергей Евдокимов</h2>
+      <div class="modal__body">
+        <p>Ведущий и участник открытых микрофонов. Помогает новым комикам выйти на сцену Клуба №1.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Ведущий открытых микрофонов</li>
+            <li>Помогает новым комикам выйти на сцену</li>
+            <li>Постоянный участник вечеров клуба</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Сергея Евдокимова"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Сергея Евдокимова"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Сергея Евдокимова"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Открытый микрофон</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Сборный стендап-вечер</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 · Иван Щербак -->
+  <div class="modal" id="bio-shcherbak" data-modal hidden>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-shcherbak-title">
+      <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
+      <p class="eyebrow modal__eyebrow">Резидент</p>
+      <h2 class="modal__title" id="bio-shcherbak-title">Иван Щербак</h2>
+      <div class="modal__body">
+        <p>Импровизатор Клуба №1. Никакого сценария — только зал, партнёры по сцене и чистая реакция.</p>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Регалии и проекты</h3>
+          <ul class="bio__list">
+            <li>Импровизатор Клуба №1</li>
+            <li>Сеты без сценария</li>
+            <li>Импро-баттлы и совместные вечера</li>
+          </ul>
+          <p class="bio__note">Полная биография и список проектов появятся позже.</p>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Видео со смешными моментами</h3>
+          <div class="bio__video">
+            <span class="bio__play" aria-hidden="true"></span>
+            <span class="bio__video-note">Видео появится позже</span>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Аккаунты в соцсетях</h3>
+          <div class="bio__social">
+            <a class="bio__soc" href="#" aria-label="ВКонтакте Ивана Щербака"><svg aria-hidden="true"><use href="#ic-vk"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Telegram Ивана Щербака"><svg aria-hidden="true"><use href="#ic-tg"></use></svg></a>
+            <a class="bio__soc" href="#" aria-label="Instagram Ивана Щербака"><svg aria-hidden="true"><use href="#ic-ig"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="bio__section">
+          <h3 class="bio__label">Шоу с участием этого комика</h3>
+          <div class="bio__shows">
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Вечер импровизации</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="bio__show" href="solnik.html">
+              <span class="bio__show-main"><b>Импро-баттл</b><span class="bio__show-date">Дата уточняется · билеты скоро</span></span>
+              <span class="bio__show-go" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+
+<!-- =====================================================================
+     SITE FOOTER  (reused verbatim on every sub-page)
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+
+    <div class="footer-brand">
+      <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+        <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+      </a>
+      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Контакты</h3>
+      <ul>
+        <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:hello@club1.ru">hello@club1.ru</a></li>
+        <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
+      </ul>
+      <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Информация</h3>
+      <ul>
+        <li><a href="#">Возврат билетов</a></li>
+        <li><a href="#">Политика конфиденциальности</a></li>
+        <li><a href="#">Договор оферты</a></li>
+        <li><a href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-social-col">
+      <h3>Мы в соцсетях</h3>
+      <div class="social">
+        <a class="social-btn" href="https://vk.com/" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+        </a>
+        <a class="social-btn" href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+/* ---------------------------------------------------------------------
+   Club №1 — foundation interactions (vanilla, no deps)
+   Shared with index.html so header behaviour is identical across pages.
+   1. header ink-on-scroll   2. burger drawer
+   (bio pop-ups are handled by the shared script.js below)
+   --------------------------------------------------------------------- */
+(function(){
+  "use strict";
+
+  /* 1 · sticky header goes ink once the page scrolls */
+  var header = document.getElementById('siteHeader');
+  var onScroll = function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* 2 · burger / mobile drawer */
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mobileMenu');
+  var setMenu = function(open){
+    menu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', function(){
+    setMenu(!menu.classList.contains('is-open'));
+  });
+  menu.addEventListener('click', function(e){
+    if (e.target.closest('a')) setMenu(false);
+  });
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+  });
+})();
+</script>
+
+<!-- shared interactive components (modal bio pop-ups) -->
+<script src="script.js" defer></script>
+
+</body>
+</html>
