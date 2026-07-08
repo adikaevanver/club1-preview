@@ -97,12 +97,17 @@
     var cta = ev.buy
       ? '<a class="btn btn--primary btn--sm" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
       : '<a class="btn btn--primary btn--sm" href="#contacts">Узнать о старте продаж</a>';
+    var price = ev.priceFrom
+      ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽' +
+        '<small>+ сервисный сбор 10%</small></p>'
+      : '';
     return (
       '<article class="event-card" role="listitem">' +
         poster +
         '<h3 class="event-card__title">' + esc(ev.title) + '</h3>' +
         '<p class="event-card__meta">' + DAYS_FULL[dateOf(ev).getDay()] + ', ' + fmtShort(ev) +
           (ev.time ? ' · ' + esc(ev.time) : '') + ' · Новый Арбат, 21</p>' +
+        price +
         '<div class="event-card__actions">' +
           '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
         '</div>' +
@@ -120,9 +125,31 @@
     var daysWrap   = root.querySelector('[data-af-days]');
     var dowWrap    = root.querySelector('[data-af-dows]');
     var fmtWrap    = root.querySelector('[data-af-formats]');
+    var sortWrap   = root.querySelector('[data-af-sorts]');
     var track      = root.querySelector('[data-af-track]');
     var emptyBox   = root.querySelector('[data-af-empty]');
     if (!track) return;
+
+    var SORTS = [
+      { key: 'date',       label: 'Ближайшие сначала' },
+      { key: 'price-asc',  label: 'Цена: по возрастанию' },
+      { key: 'price-desc', label: 'Цена: по убыванию' }
+    ];
+    /* события без известной цены при ценовой сортировке уходят в конец
+       (цены сняты с открытых виджетов продаж, есть не у всех) */
+    function applySort(list, mode){
+      if (mode === 'price-asc' || mode === 'price-desc'){
+        var dir = mode === 'price-asc' ? 1 : -1;
+        return list.slice().sort(function(a, b){
+          if (a.priceFrom == null && b.priceFrom == null) return sortKey(a) < sortKey(b) ? -1 : 1;
+          if (a.priceFrom == null) return 1;
+          if (b.priceFrom == null) return -1;
+          if (a.priceFrom !== b.priceFrom) return (a.priceFrom - b.priceFrom) * dir;
+          return sortKey(a) < sortKey(b) ? -1 : 1;
+        });
+      }
+      return list;   /* 'date' — базовый порядок по дате */
+    }
 
     var events = upcoming();
     if (!events.length){
@@ -138,10 +165,11 @@
     });
 
     /* состояние фильтров; восстановление после возврата из карточки */
-    var state = { month: null, date: null, dow: null, format: null };
+    var state = { month: null, date: null, dow: null, format: null, sort: 'date' };
     try {
       var saved = JSON.parse(sessionStorage.getItem('club1-afisha') || 'null');
       if (saved && months.indexOf(saved.month) !== -1) state = saved;
+      if (!state.sort) state.sort = 'date';
     } catch (e) {}
     if (!state.month){
       var cur = monthKey(todayISO());
@@ -207,7 +235,15 @@
         fmtWrap.innerHTML = pills;
       }
 
-      var list = filtered();
+      /* сортировка */
+      if (sortWrap){
+        sortWrap.innerHTML = SORTS.map(function(s){
+          return '<button class="pill" type="button" data-sort="' + s.key + '"' +
+                 ' aria-pressed="' + String(state.sort === s.key) + '">' + s.label + '</button>';
+        }).join('');
+      }
+
+      var list = applySort(filtered(), state.sort);
       track.innerHTML = list.map(cardHTML).join('');
       if (emptyBox) emptyBox.hidden = list.length > 0;
       save();
@@ -242,9 +278,15 @@
       state.format = b.getAttribute('data-format') || null;
       render();
     });
+    if (sortWrap) sortWrap.addEventListener('click', function(e){
+      var b = e.target.closest('[data-sort]');
+      if (!b) return;
+      state.sort = b.getAttribute('data-sort');
+      render();
+    });
     root.addEventListener('click', function(e){
       if (e.target.closest('[data-af-reset]')){
-        state.date = null; state.dow = null; state.format = null;
+        state.date = null; state.dow = null; state.format = null; state.sort = 'date';
         render();
       }
     });

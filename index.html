@@ -96,21 +96,29 @@
     <div class="headliners">
       <button class="slider-arrow slider-arrow--prev" data-slider="headliners" data-dir="-1" aria-label="Предыдущие хедлайнеры">‹</button>
 
-      <!-- В ленте только комики, чьи настоящие фото есть в assets/comics
-           (соответствие имя↔файл — как на странице «Комики»). Гурам Амарян,
-           Виктор Комаров и Стас Старовойтов вернутся, когда придут их фото
-           от маркетинга. Первыми — комики с ближайшими датами. -->
+      <!-- В ленте только комики, чьи настоящие фото есть в assets/comics.
+           Фото Гурама — из галереи фотографа в таблице маркетинга. Виктор
+           Комаров и Стас Старовойтов вернутся, когда придут их портреты.
+           Первыми — комики с ближайшими датами. -->
       <div class="headliners__track" id="headlinersTrack" role="list">
 
-        <!-- 1 · Илья Раевский — ближайший концерт 25.07 -->
+        <!-- 1 · Гурам Амарян — ближайший концерт 09.07 (фото: галерея из таблицы маркетинга) -->
+        <figure class="headliner" role="listitem">
+          <a class="headliner__link" href="solnik.html" aria-label="Гурам Амарян — ближайший концерт">
+            <div class="headliner__frame"><img src="assets/comics/guram.jpg" alt="Комик Гурам Амарян" loading="eager" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Гурам</span><b>Амарян</b></figcaption>
+          </a>
+        </figure>
+
+        <!-- 2 · Илья Раевский — ближайший концерт 25.07 -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="solnik.html" aria-label="Илья Раевский — ближайший концерт">
-            <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="eager" width="900" height="900"></div>
+            <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></div>
             <figcaption class="headliner__name"><span>Илья</span><b>Раевский</b></figcaption>
           </a>
         </figure>
 
-        <!-- 2 · Расул Чабдаров — ближайший концерт 01.08 -->
+        <!-- 3 · Расул Чабдаров — ближайший концерт 01.08 -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="solnik.html" aria-label="Расул Чабдаров — ближайший концерт">
             <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></div>
@@ -126,11 +134,11 @@
           </a>
         </figure>
 
-        <!-- 4 · Денис Чебатков -->
+        <!-- 4 · Евгений Чебатков -->
         <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Денис Чебатков — о комике">
-            <div class="headliner__frame"><img src="assets/comics/chebatkov.jpg" alt="Комик Денис Чебатков" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Денис</span><b>Чебатков</b></figcaption>
+          <a class="headliner__link" href="komiki.html" aria-label="Евгений Чебатков — о комике">
+            <div class="headliner__frame"><img src="assets/comics/chebatkov.jpg" alt="Комик Евгений Чебатков" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Евгений</span><b>Чебатков</b></figcaption>
           </a>
         </figure>
 
@@ -193,6 +201,8 @@
       <div class="filters__row filters__row--days" data-af-dows role="group" aria-label="Дни недели"></div>
 
       <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
+
+      <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
     </section>
 
     <section class="afisha" id="afisha" aria-labelledby="afisha-title">
