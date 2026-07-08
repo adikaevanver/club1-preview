@@ -97,12 +97,17 @@
     var cta = ev.buy
       ? '<a class="btn btn--primary btn--sm" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
       : '<a class="btn btn--primary btn--sm" href="#contacts">Узнать о старте продаж</a>';
+    var price = ev.priceFrom
+      ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽' +
+        '<small>+ сервисный сбор 10%</small></p>'
+      : '';
     return (
       '<article class="event-card" role="listitem">' +
         poster +
         '<h3 class="event-card__title">' + esc(ev.title) + '</h3>' +
         '<p class="event-card__meta">' + DAYS_FULL[dateOf(ev).getDay()] + ', ' + fmtShort(ev) +
           (ev.time ? ' · ' + esc(ev.time) : '') + ' · Новый Арбат, 21</p>' +
+        price +
         '<div class="event-card__actions">' +
           '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
         '</div>' +

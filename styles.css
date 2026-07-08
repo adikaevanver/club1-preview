@@ -751,6 +751,16 @@ main.container{overflow-x:clip}
 /* строка даты и места под названием карточки */
 .event-card__meta{font-size:.8rem;color:var(--muted);text-align:center;margin-top:-6px}
 
+/* цена «от …» — известна не у всех событий (источник: открытые виджеты продаж) */
+.event-card__price{
+  font-family:var(--display);font-weight:700;font-size:.86rem;color:var(--gold);
+  text-align:center;margin-top:-8px;
+}
+.event-card__price small{
+  display:block;margin-top:2px;font-family:var(--body);font-weight:500;
+  font-size:.68rem;color:var(--muted-2);
+}
+
 /* пустой результат фильтра: сообщение + сброс.
    [hidden] обязан побеждать display:flex — как у .modal[hidden] */
 .afisha__empty{
