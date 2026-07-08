@@ -112,6 +112,11 @@
     color:var(--muted);
   }
   /* subtle "открыть" affordance so the card reads as clickable, not a link */
+  .comic-card__next{
+    font-family:var(--display);font-weight:600;font-size:.66rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--gold);
+  }
+  .modal__cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
   .comic-card__more{
     display:inline-flex;align-items:center;gap:.4em;
     font-family:var(--body);font-weight:600;font-size:.78rem;letter-spacing:.02em;
@@ -195,7 +200,12 @@
     button.comic-card{gap:12px}
     .comic-card__frame{clip-path:polygon(10% 0,100% 0,90% 100%,0 100%)}
     .comic-card__name .ln{font-size:.95rem}
-    .comic-card__more{display:none}   /* whole card is the tap target on phones */
+    .comic-card__next{
+    font-family:var(--display);font-weight:600;font-size:.66rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--gold);
+  }
+  .modal__cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+  .comic-card__more{display:none}   /* whole card is the tap target on phones */
   }
 </style>
 </head>
@@ -235,7 +245,7 @@
 
     <div class="header-actions">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="index.html#afisha">Купить билет</a>
+      <a class="btn btn--primary" href="index.html#afisha">Смотреть афишу</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -252,7 +262,7 @@
     <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary btn--block" href="index.html#afisha">Купить билет</a>
+      <a class="btn btn--primary btn--block" href="index.html#afisha">Смотреть афишу</a>
     </div>
   </nav>
 </header>
@@ -287,10 +297,10 @@
   <section class="roster-section" aria-labelledby="roster-title">
     <h2 id="roster-title" class="sr-only">Все комики клуба</h2>
 
-    <ul class="roster">
+    <ul class="roster" data-comics-grid>
 
       <!-- 1 · Павел Дедищев -->
-      <li>
+      <li data-comic="Павел Дедищев">
         <button type="button" class="comic-card" data-modal-open="bio-dedishchev" aria-label="Павел Дедищев — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="lazy" width="900" height="900">
@@ -305,7 +315,7 @@
       </li>
 
       <!-- 2 · Денис Чебатков -->
-      <li>
+      <li data-comic="Денис Чебатков">
         <button type="button" class="comic-card" data-modal-open="bio-chebatkov" aria-label="Денис Чебатков — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/chebatkov.jpg" alt="Комик Денис Чебатков" loading="lazy" width="900" height="900">
@@ -320,7 +330,7 @@
       </li>
 
       <!-- 3 · Расул Чабдаров -->
-      <li>
+      <li data-comic="Расул Чабдаров">
         <button type="button" class="comic-card" data-modal-open="bio-chabdarov" aria-label="Расул Чабдаров — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900">
@@ -335,7 +345,7 @@
       </li>
 
       <!-- 4 · Илья Раевский -->
-      <li>
+      <li data-comic="Илья Раевский">
         <button type="button" class="comic-card" data-modal-open="bio-raevskiy" aria-label="Илья Раевский — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900">
@@ -350,7 +360,7 @@
       </li>
 
       <!-- 5 · Илья Атлас -->
-      <li>
+      <li data-comic="Илья Атлас">
         <button type="button" class="comic-card" data-modal-open="bio-atlas" aria-label="Илья Атлас — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас" loading="lazy" width="900" height="900">
@@ -365,7 +375,7 @@
       </li>
 
       <!-- 6 · Маргарита Родина -->
-      <li>
+      <li data-comic="Маргарита Родина">
         <button type="button" class="comic-card" data-modal-open="bio-rodina" aria-label="Маргарита Родина — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/rodina.jpg" alt="Комик Маргарита Родина" loading="lazy" width="900" height="900">
@@ -380,7 +390,7 @@
       </li>
 
       <!-- 7 · Нурлан Бутаков -->
-      <li>
+      <li data-comic="Нурлан Бутаков">
         <button type="button" class="comic-card" data-modal-open="bio-butakov" aria-label="Нурлан Бутаков — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/butakov.jpg" alt="Комик Нурлан Бутаков" loading="lazy" width="900" height="900">
@@ -395,7 +405,7 @@
       </li>
 
       <!-- 8 · Юлия Македонская -->
-      <li>
+      <li data-comic="Юлия Македонская">
         <button type="button" class="comic-card" data-modal-open="bio-makedonskaya" aria-label="Юлия Македонская — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/makedonskaya.jpg" alt="Комик Юлия Македонская" loading="lazy" width="900" height="900">
@@ -410,7 +420,7 @@
       </li>
 
       <!-- 9 · Сергей Евдокимов -->
-      <li>
+      <li data-comic="Сергей Евдокимов">
         <button type="button" class="comic-card" data-modal-open="bio-evdokimov" aria-label="Сергей Евдокимов — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/evdokimov.jpg" alt="Комик Сергей Евдокимов" loading="lazy" width="900" height="900">
@@ -425,7 +435,7 @@
       </li>
 
       <!-- 10 · Иван Щербак -->
-      <li>
+      <li data-comic="Иван Щербак">
         <button type="button" class="comic-card" data-modal-open="bio-shcherbak" aria-label="Иван Щербак — открыть информацию о комике">
           <span class="comic-card__frame">
             <img src="assets/comics/shcherbak.jpg" alt="Комик Иван Щербак" loading="lazy" width="900" height="900">
@@ -992,10 +1002,10 @@
       <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
         <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
       </a>
-      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+      <p>Живой стендап в центре Москвы, на Новом Арбате, 21. Федеральные комики, камерный зал, настоящие эмоции.</p>
     </div>
 
-    <div class="footer-col">
+    <div class="footer-col" id="contacts">
       <h3>Контакты</h3>
       <ul>
         <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
@@ -1003,6 +1013,7 @@
         <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
       </ul>
       <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+      <p class="legal">К стоимости билета добавляется сервисный сбор 10%.</p>
     </div>
 
     <div class="footer-col">
@@ -1072,6 +1083,10 @@
 
 <!-- shared interactive components (modal bio pop-ups) -->
 <script src="script.js" defer></script>
+
+<!-- живая афиша: ближайшие концерты комиков -->
+<script src="assets/data/events.js" defer></script>
+<script src="afisha.js" defer></script>
 
 </body>
 </html>

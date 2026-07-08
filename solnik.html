@@ -16,7 +16,7 @@
 <meta property="og:description" content="Полтора часа живого стендапа. Сольная программа в камерном зале в центре Москвы, Новый Арбат, 21. Ближайшие даты и билеты на сайте.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://club1.ru/solnik.html">
-<meta property="og:image" content="assets/comics/dedishchev.jpg">
+<meta property="og:image" content="assets/posters/guram-0907-sq.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
@@ -83,7 +83,7 @@
   .meta-chip__ic svg{width:19px;height:19px;display:block}
   .meta-chip__price{color:var(--gold)}
 
-  /* Подробнее + Купить билет */
+  /* Подробнее + Бронировать места */
   .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:2px}
 
   /* date picker (shared .datebar) + booking */
@@ -100,6 +100,8 @@
   /* white booking CTA (matches show.html), built on the shared .btn base */
   .book-btn{background:#fff;color:var(--ink);box-shadow:0 8px 24px -14px rgba(255,255,255,.55)}
   .book-btn:hover{background:#ece9f5}
+  /* прозрачность по сбору — рядом с кнопкой брони (ТЗ 07-07) */
+  .datepick__fee{margin-top:10px;font-size:.8rem;color:var(--muted-2)}
 
   /* =================================================================
      2 · Подробное описание сольника
@@ -220,7 +222,7 @@
 
     <div class="header-actions">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="#dates">Купить билет</a>
+      <a class="btn btn--primary" href="#dates">Бронировать места</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -237,7 +239,7 @@
     <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary btn--block" href="#dates">Купить билет</a>
+      <a class="btn btn--primary btn--block" href="#dates">Бронировать места</a>
     </div>
   </nav>
 </header>
@@ -254,14 +256,11 @@
 
     <div class="solo-hero__grid">
 
-      <!-- LEFT · обложка: shared .poster component (gradient — фото Амаряна отсутствует) -->
+      <!-- LEFT · обложка: настоящая афиша концерта (дизайн клуба) -->
       <div class="solo-poster">
-        <div class="poster poster--gold">
-          <div class="poster__badge">27.03<small>19:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Гурам</span><b>Амарян</b></div>
-          <span class="poster__age">18+</span>
+        <div class="poster poster--art">
+          <img class="poster__full" src="assets/posters/guram-0907-sq.jpg" alt="Афиша: Гурам Амарян, сольный концерт 9 июля" width="800" height="800">
+          <div class="poster__badge">09.07<small>20:30</small></div>
         </div>
       </div>
 
@@ -276,7 +275,7 @@
             <span class="meta-chip__ic" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
             </span>
-            <span>27 марта<small>пятница, 19:30</small></span>
+            <span>9 июля<small>четверг, 20:30</small></span>
           </span>
 
           <span class="meta-chip">
@@ -295,14 +294,14 @@
 
           <span class="meta-chip">
             <span class="meta-chip__ic meta-chip__price" aria-hidden="true">₽</span>
-            <span>1500–3000 руб<small>стоимость билета</small></span>
+            <span>Билеты<small>цена — на странице бронирования</small></span>
           </span>
         </div>
 
         <!-- КНОПКА ПОДРОБНЕЕ + КНОПКА ПОКУПКИ -->
         <div class="hero-cta">
           <a class="btn btn--ghost" href="#about">Подробнее</a>
-          <a class="btn btn--primary" href="#dates">Купить билет</a>
+          <a class="btn btn--primary" href="#dates">Бронировать места</a>
         </div>
 
         <!-- выбор даты (shared DATEBAR) + бронирование -->
@@ -310,18 +309,16 @@
           <span class="datepick__label">Ближайшие даты сольника:</span>
 
           <div class="datebar" data-datebar>
-            <span class="datebar__month">Март</span>
+            <span class="datebar__month">Июль</span>
             <div class="datebar__days" role="group" aria-label="Выберите дату сольного концерта">
-              <button class="datebar__day" data-date="2026-03-14" disabled><b>14</b><span>Сб · аншлаг</span></button>
-              <button class="datebar__day" data-date="2026-03-20"><b>20</b><span>Пт</span></button>
-              <button class="datebar__day" data-date="2026-03-21"><b>21</b><span>Сб</span></button>
-              <button class="datebar__day" data-date="2026-03-27" aria-pressed="true"><b>27</b><span>Пт</span></button>
-              <button class="datebar__day" data-date="2026-03-28"><b>28</b><span>Сб</span></button>
+              <button class="datebar__day" data-date="2026-07-09" aria-pressed="true"><b>09</b><span>Чт</span></button>
+              <button class="datebar__day" data-date="2026-07-22"><b>22</b><span>Ср</span></button>
             </div>
           </div>
 
-          <p class="datepick__note">Выбрана дата: <b id="pickedDate">27 марта</b>, начало в 19:30.</p>
-          <a class="btn book-btn datepick__book" href="#">Забронировать место</a>
+          <p class="datepick__note">Выбрана дата: <b id="pickedDate">9 июля</b>, начало в 20:30.</p>
+          <a class="btn book-btn datepick__book" href="https://clubnaarbate21.ru/guram-amaryan-stand-up" target="_blank" rel="noopener">Бронировать места</a>
+          <p class="datepick__fee">К стоимости билета добавляется сервисный сбор 10%.</p>
         </div>
       </div>
 
@@ -470,171 +467,20 @@
 
 
   <!-- =================================================================
-       6 · ШОУ С УЧАСТИЕМ ЭТОГО КОМИКА НА НАШЕЙ ПЛОЩАДКЕ
-            И ПРОЧИЕ ЕГО СОЛЬНИКИ — afisha rail (shared markup)
+       6 · БЛИЖАЙШИЕ СОБЫТИЯ — живая рейка из assets/data/events.js;
+       события Гурама показываются первыми (страница артиста), дальше
+       остальные форматы по дате (ТЗ 07-07)
        ================================================================= -->
   <section class="sec rail afisha" aria-labelledby="more-title">
     <div class="section-head">
       <span class="rule" aria-hidden="true"></span>
-      <h2 class="section-title" id="more-title">Гурам у нас на площадке и другие его сольники</h2>
+      <h2 class="section-title" id="more-title">Ближайшие события на Новом Арбате</h2>
     </div>
 
     <button class="slider-arrow slider-arrow--prev" data-slider="railMore" data-dir="-1" aria-label="Предыдущие концерты">&lsaquo;</button>
-    <div class="afisha__track" id="railMore" role="list">
-
-      <!-- Сборный вечер с участием комика -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--pur">
-          <div class="poster__badge">08.03<small>18:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сборный концерт</span></div>
-          <div class="poster__name"><span>От опытных</span><b>комиков</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">От опытных комиков</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="show.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Другой сольник Гурама -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--gold">
-          <div class="poster__badge">24.04<small>19:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Гурам</span><b>Амарян</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Гурам Амарян</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Ещё один сольник Гурама -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--cyan">
-          <div class="poster__badge">15.05<small>20:00</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Гурам</span><b>Амарян</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Гурам Амарян</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Формат с участием комика -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--green">
-          <div class="poster__badge">30.04<small>19:00</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Стендап-вечер</span></div>
-          <div class="poster__name"><span>В большом</span><b>городе</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">В большом городе</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="show.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-    </div>
+    <div class="afisha__track" id="railMore" role="list"
+         data-upcoming data-upcoming-first="Гурам Амарян" data-upcoming-limit="8"></div>
     <button class="slider-arrow slider-arrow--next" data-slider="railMore" data-dir="1" aria-label="Следующие концерты">&rsaquo;</button>
-  </section>
-
-
-  <!-- =================================================================
-       7 · ВАМ МОЖЕТ ПОНРАВИТЬСЯ — afisha rail (shared markup)
-       ================================================================= -->
-  <section class="sec rail afisha" aria-labelledby="liked-title">
-    <div class="section-head">
-      <span class="rule" aria-hidden="true"></span>
-      <h2 class="section-title" id="liked-title">Вам может понравиться</h2>
-    </div>
-
-    <button class="slider-arrow slider-arrow--prev" data-slider="railLiked" data-dir="-1" aria-label="Предыдущие концерты">&lsaquo;</button>
-    <div class="afisha__track" id="railLiked" role="list">
-
-      <!-- Стас Старовойтов (gradient poster, фото отсутствует) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--cyan">
-          <div class="poster__badge">25.03<small>20:00</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Стас</span><b>Старовойтов</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Стас Старовойтов</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Расул Чабдаров (фото есть) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--mag">
-          <img class="poster__photo" src="assets/comics/chabdarov.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
-          <div class="poster__tint"></div>
-          <div class="poster__badge">11.04<small>18:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Расул</span><b>Чабдаров</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Расул Чабдаров</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Илья Раевский (фото есть) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--pur">
-          <img class="poster__photo" src="assets/comics/raevskiy.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
-          <div class="poster__tint"></div>
-          <div class="poster__badge">24.04<small>19:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Илья</span><b>Раевский</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Илья Раевский</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Денис Чебатков (фото есть) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--green">
-          <img class="poster__photo" src="assets/comics/chebatkov.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
-          <div class="poster__tint"></div>
-          <div class="poster__badge">25.04<small>18:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Денис</span><b>Чебатков</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Денис Чебатков</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-    </div>
-    <button class="slider-arrow slider-arrow--next" data-slider="railLiked" data-dir="1" aria-label="Следующие концерты">&rsaquo;</button>
   </section>
 </main>
 
@@ -649,10 +495,10 @@
       <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
         <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
       </a>
-      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+      <p>Живой стендап в центре Москвы, на Новом Арбате, 21. Федеральные комики, камерный зал, настоящие эмоции.</p>
     </div>
 
-    <div class="footer-col">
+    <div class="footer-col" id="contacts">
       <h3>Контакты</h3>
       <ul>
         <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
@@ -660,6 +506,7 @@
         <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
       </ul>
       <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+      <p class="legal">К стоимости билета добавляется сервисный сбор 10%.</p>
     </div>
 
     <div class="footer-col">
@@ -747,7 +594,7 @@
   if (bar && picked){
     bar.addEventListener('datebar:change', function(e){
       var day = e.detail.button && e.detail.button.querySelector('b');
-      if (day) picked.textContent = day.textContent + ' марта';
+      if (day) picked.textContent = parseInt(day.textContent, 10) + ' июля';
     });
   }
 })();
@@ -755,6 +602,10 @@
 
 <!-- shared interactive components (Modal · Tabs · Slideshow · Datebar) -->
 <script src="script.js" defer></script>
+
+<!-- живая афиша: данные + рендер рейки ближайших событий -->
+<script src="assets/data/events.js" defer></script>
+<script src="afisha.js" defer></script>
 
 </body>
 </html>

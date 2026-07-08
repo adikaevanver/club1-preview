@@ -56,7 +56,7 @@
 
     <div class="header-actions">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="#afisha">Купить билет</a>
+      <a class="btn btn--primary" href="#afisha">Бронировать места</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -73,7 +73,7 @@
     <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary btn--block" href="#afisha">Купить билет</a>
+      <a class="btn btn--primary btn--block" href="#afisha">Бронировать места</a>
     </div>
   </nav>
 </header>
@@ -91,51 +91,71 @@
     <div class="glow glow--mag hero__glow-a" aria-hidden="true"></div>
     <div class="glow glow--pur hero__glow-b" aria-hidden="true"></div>
 
+    <p class="hero__tagline">Стендап и шоу в центре Москвы — Новый Арбат, 21</p>
+
     <div class="headliners">
       <button class="slider-arrow slider-arrow--prev" data-slider="headliners" data-dir="-1" aria-label="Предыдущие хедлайнеры">‹</button>
 
+      <!-- В ленте только комики, чьи настоящие фото есть в assets/comics
+           (соответствие имя↔файл — как на странице «Комики»). Гурам Амарян,
+           Виктор Комаров и Стас Старовойтов вернутся, когда придут их фото
+           от маркетинга. Первыми — комики с ближайшими датами. -->
       <div class="headliners__track" id="headlinersTrack" role="list">
 
-        <!-- 1 · Павел Дедищев -->
+        <!-- 1 · Илья Раевский — ближайший концерт 25.07 -->
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="eager" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Павел</span><b>Дедищев</b></figcaption>
+          <a class="headliner__link" href="solnik.html" aria-label="Илья Раевский — ближайший концерт">
+            <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="eager" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Илья</span><b>Раевский</b></figcaption>
+          </a>
         </figure>
 
-        <!-- 2 · Виктор Комаров — TODO: настоящее фото Комарова отсутствует, временно butakov.jpg -->
+        <!-- 2 · Расул Чабдаров — ближайший концерт 01.08 -->
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/butakov.jpg" alt="Комик Виктор Комаров" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Виктор</span><b>Комаров</b></figcaption>
+          <a class="headliner__link" href="solnik.html" aria-label="Расул Чабдаров — ближайший концерт">
+            <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Расул</span><b>Чабдаров</b></figcaption>
+          </a>
         </figure>
 
-        <!-- 3 · Стас Старовойтов — TODO: настоящее фото Старовойтова отсутствует, временно evdokimov.jpg -->
+        <!-- 3 · Павел Дедищев -->
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/evdokimov.jpg" alt="Комик Стас Старовойтов" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Стас</span><b>Старовойтов</b></figcaption>
+          <a class="headliner__link" href="komiki.html" aria-label="Павел Дедищев — о комике">
+            <div class="headliner__frame"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Павел</span><b>Дедищев</b></figcaption>
+          </a>
         </figure>
 
-        <!-- 4 · Илья Раевский -->
+        <!-- 4 · Денис Чебатков -->
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Илья</span><b>Раевский</b></figcaption>
+          <a class="headliner__link" href="komiki.html" aria-label="Денис Чебатков — о комике">
+            <div class="headliner__frame"><img src="assets/comics/chebatkov.jpg" alt="Комик Денис Чебатков" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Денис</span><b>Чебатков</b></figcaption>
+          </a>
         </figure>
 
-        <!-- 5 · Маргарита Родина -->
+        <!-- 5 · Илья Атлас -->
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик Маргарита Родина" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Маргарита</span><b>Родина</b></figcaption>
+          <a class="headliner__link" href="komiki.html" aria-label="Илья Атлас — о комике">
+            <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Илья</span><b>Атлас</b></figcaption>
+          </a>
         </figure>
 
-        <!-- 6 · Гурам Амарян — TODO: настоящее фото Амаряна отсутствует, временно atlas.jpg -->
+        <!-- 6 · Маргарита Родина -->
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Гурам Амарян" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Гурам</span><b>Амарян</b></figcaption>
+          <a class="headliner__link" href="komiki.html" aria-label="Маргарита Родина — о комике">
+            <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик и ведущая Маргарита Родина" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Маргарита</span><b>Родина</b></figcaption>
+          </a>
         </figure>
 
-        <!-- 7 · Расул Чабдаров -->
+        <!-- 7 · Нурлан Бутаков -->
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Расул</span><b>Чабдаров</b></figcaption>
+          <a class="headliner__link" href="komiki.html" aria-label="Нурлан Бутаков — о комике">
+            <div class="headliner__frame"><img src="assets/comics/butakov.jpg" alt="Комик Нурлан Бутаков" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Нурлан</span><b>Бутаков</b></figcaption>
+          </a>
         </figure>
 
         <!-- closing outline panel -->
@@ -153,145 +173,45 @@
 
 
   <!-- =================================================================
-       FILTER BAR — days + formats
+       AFISHA — месяцы, дни, фильтры и карточки рендерятся из
+       assets/data/events.js силами afisha.js (см. [data-af-*] хуки)
        ================================================================= -->
-  <section class="filters" aria-labelledby="filters-title">
-    <h2 id="filters-title" class="sr-only">Фильтр афиши по датам, дням недели и форматам</h2>
+  <div data-afisha>
 
-    <!-- по датам — calendar strip (shared DATEBAR component, see script.js) -->
-    <div class="datebar" data-datebar>
-      <span class="datebar__month">Апрель</span>
-      <div class="datebar__days" role="group" aria-label="Выберите дату">
-        <button class="datebar__day" data-date="2026-04-03" disabled type="button"><b>03</b><span>Пт</span></button>
-        <button class="datebar__day" data-date="2026-04-04" type="button"><b>04</b><span>Сб</span></button>
-        <button class="datebar__day" data-date="2026-04-10" type="button"><b>10</b><span>Пт</span></button>
-        <button class="datebar__day" data-date="2026-04-11" aria-pressed="true" type="button"><b>11</b><span>Сб</span></button>
-        <button class="datebar__day" data-date="2026-04-17" type="button"><b>17</b><span>Пт</span></button>
-        <button class="datebar__day" data-date="2026-04-24" type="button"><b>24</b><span>Пт</span></button>
-        <button class="datebar__day" data-date="2026-04-25" type="button"><b>25</b><span>Сб</span></button>
+    <section class="filters" aria-labelledby="filters-title">
+      <h2 id="filters-title" class="sr-only">Фильтр афиши по датам, дням недели и форматам</h2>
+
+      <div class="datebar">
+        <div class="datebar__nav">
+          <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
+          <span class="datebar__month" data-af-month></span>
+          <button class="datebar__arrow" data-af-next type="button" aria-label="Следующий месяц">›</button>
+        </div>
+        <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
       </div>
-    </div>
 
-    <div class="filters__row filters__row--days" role="group" aria-label="Дни недели">
-      <button class="pill pill--lead" data-action="calendar" type="button">Календарь</button>
-      <button class="pill" data-filter="day" aria-pressed="false" type="button">Понедельник</button>
-      <button class="pill" data-filter="day" aria-pressed="false" type="button">Вторник</button>
-      <button class="pill" data-filter="day" aria-pressed="false" type="button">Среда</button>
-      <button class="pill" data-filter="day" aria-pressed="false" type="button">Четверг</button>
-      <button class="pill" data-filter="day" aria-pressed="false" type="button">Пятница</button>
-      <button class="pill" data-filter="day" aria-pressed="false" type="button">Суббота</button>
-      <button class="pill" data-filter="day" aria-pressed="false" type="button">Воскресенье</button>
-    </div>
+      <div class="filters__row filters__row--days" data-af-dows role="group" aria-label="Дни недели"></div>
 
-    <div class="filters__row filters__row--formats" role="group" aria-label="Форматы">
-      <button class="pill" data-filter="format" aria-pressed="true" type="button">Сольники</button>
-      <button class="pill" data-filter="format" aria-pressed="false" type="button">От опытных комиков</button>
-      <button class="pill" data-filter="format" aria-pressed="false" type="button">В большом городе</button>
-      <button class="pill" data-filter="format" aria-pressed="false" type="button">Давай переиграем</button>
-      <button class="pill" data-filter="format" aria-pressed="false" type="button">Комьюнити</button>
-      <button class="pill" data-filter="format" aria-pressed="false" type="button">Burlesque &amp; Stand Up</button>
-    </div>
-  </section>
+      <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
+    </section>
 
+    <section class="afisha" id="afisha" aria-labelledby="afisha-title">
+      <div class="afisha__head">
+        <h2 id="afisha-title" class="afisha__title">Ближайшие события на Новом Арбате</h2>
+        <div class="rule" aria-hidden="true"></div>
+      </div>
 
-  <!-- =================================================================
-       AFISHA — event cards with CSS-built posters
-       ================================================================= -->
-  <section class="afisha" id="afisha" aria-labelledby="afisha-title">
-    <h2 id="afisha-title" class="sr-only">Афиша ближайших сольных концертов</h2>
+      <div class="afisha__track" id="afishaTrack" data-af-track role="list"></div>
 
-    <div class="afisha__track" id="afishaTrack" role="list">
+      <div class="afisha__empty" data-af-empty hidden>
+        <p>По выбранным фильтрам событий нет.</p>
+        <button class="btn btn--ghost" type="button" data-af-reset>Сбросить фильтры</button>
+      </div>
 
-      <!-- Card 1 · Стас Старовойтов (gradient poster, фото отсутствует) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--cyan">
-          <div class="poster__badge">25.03<small>20:00</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Стас</span><b>Старовойтов</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Стас Старовойтов</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
+      <button class="slider-arrow slider-arrow--next" data-slider="afisha" data-dir="1" aria-label="Показать ещё концерты">›</button>
+    </section>
 
-      <!-- Card 2 · Гурам Амарян (gradient poster, фото отсутствует) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--gold">
-          <div class="poster__badge">27.03<small>19:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Гурам</span><b>Амарян</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Гурам Амарян</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Card 3 · Расул Чабдаров (фото есть) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--mag">
-          <img class="poster__photo" src="assets/comics/chabdarov.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
-          <div class="poster__tint"></div>
-          <div class="poster__badge">11.04<small>18:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Расул</span><b>Чабдаров</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Расул Чабдаров</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Card 4 · Илья Раевский (фото есть) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--pur">
-          <img class="poster__photo" src="assets/comics/raevskiy.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
-          <div class="poster__tint"></div>
-          <div class="poster__badge">24.04<small>19:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Илья</span><b>Раевский</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Илья Раевский</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-      <!-- Card 5 · Денис Чебатков (фото есть) -->
-      <article class="event-card" role="listitem">
-        <div class="poster poster--green">
-          <img class="poster__photo" src="assets/comics/chebatkov.jpg" alt="" aria-hidden="true" loading="lazy" width="900" height="900">
-          <div class="poster__tint"></div>
-          <div class="poster__badge">25.04<small>18:30</small></div>
-          <img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Денис</span><b>Чебатков</b></div>
-          <span class="poster__age">18+</span>
-        </div>
-        <h3 class="event-card__title">Денис Чебатков</h3>
-        <div class="event-card__actions">
-          <a class="btn btn--ghost btn--sm" href="solnik.html">Подробнее</a>
-          <a class="btn btn--primary btn--sm" href="#">Купить билет</a>
-        </div>
-      </article>
-
-    </div>
-
-    <button class="slider-arrow slider-arrow--next" data-slider="afisha" data-dir="1" aria-label="Показать ещё концерты">›</button>
-  </section>
+  </div>
 </main>
 
 
@@ -305,10 +225,10 @@
       <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
         <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
       </a>
-      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+      <p>Живой стендап в центре Москвы, на Новом Арбате, 21. Федеральные комики, камерный зал, настоящие эмоции.</p>
     </div>
 
-    <div class="footer-col">
+    <div class="footer-col" id="contacts">
       <h3>Контакты</h3>
       <ul>
         <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
@@ -316,6 +236,7 @@
         <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
       </ul>
       <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+      <p class="legal">К стоимости билета добавляется сервисный сбор 10%.</p>
     </div>
 
     <div class="footer-col">
@@ -410,6 +331,10 @@
 
 <!-- shared interactive components (datebar filter) -->
 <script src="script.js" defer></script>
+
+<!-- живая афиша: данные + рендер -->
+<script src="assets/data/events.js" defer></script>
+<script src="afisha.js" defer></script>
 
 </body>
 </html>

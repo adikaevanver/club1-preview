@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Клуб №1 · CLUB 1">
 <meta property="og:title" content="Форматы вечеров — Клуб №1 на Новом Арбате">
-<meta property="og:description" content="Сольники топ-комиков, импровизация, комьюнити-вечера и бурлеск-шоу. Семь форматов живого стендапа в центре Москвы.">
+<meta property="og:description" content="Сольники топ-комиков, импровизация, комьюнити-вечера и бурлеск-шоу. Форматы живого стендапа в центре Москвы, на Новом Арбате, 21.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://club1.ru/formaty.html">
 <meta property="og:image" content="assets/comics/raevskiy.jpg">
@@ -104,10 +104,36 @@
     margin-top:18px;max-width:54ch;
     font-size:clamp(1rem,1.4vw,1.08rem);line-height:1.62;color:var(--muted);
   }
-  .format-row__cta{margin-top:26px}
+  .format-row__date{margin-top:16px;font-family:var(--display);font-weight:600;font-size:.8rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--gold);min-height:1em}
+  .format-row__cta{margin-top:20px}
   .format-row__cta .btn{gap:.6em}
   .format-row__cta .btn svg{width:16px;height:16px;transition:transform .2s var(--ease)}
   .format-row__cta .btn:hover svg{transform:translateX(4px)}
+
+  /* фирменный CSS-постер для форматов, у которых пока нет настоящей афиши
+     (единая визуальная система вместо случайных портретов, ТЗ §1) */
+  .fmt-poster{
+    position:absolute;inset:-8% -18%;
+    transform:skewX(var(--unskew));
+    display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;
+    gap:8px;padding:9% 22% 12%;
+    background:
+      radial-gradient(120% 90% at 80% 0%, rgba(255,255,255,.12), transparent 55%),
+      linear-gradient(150deg, var(--p1,#16324a), var(--p2,#0b1622));
+  }
+  .fmt-poster--cyan{--p1:#1f6f8f;--p2:#0a1a26}
+  .fmt-poster--pur{--p1:#6b2fb0;--p2:#140a26}
+  .fmt-poster--green{--p1:#3f7d3a;--p2:#0e1a0d}
+  .fmt-poster--gold{--p1:#c9772a;--p2:#2a1608}
+  .fmt-poster__standup{
+    font-family:var(--display);font-weight:900;font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:.85;
+    letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.3px rgba(255,255,255,.9);
+  }
+  .fmt-poster__name{
+    font-family:var(--display);font-weight:900;font-size:clamp(1rem,1.9vw,1.45rem);line-height:1.02;
+    text-transform:uppercase;color:#fff;
+  }
 
   /* ---- closing call-to-action band ------------------------------- */
   .fmt-outro{
@@ -171,7 +197,7 @@
 
     <div class="header-actions">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="index.html#afisha">Купить билет</a>
+      <a class="btn btn--primary" href="index.html#afisha">Смотреть афишу</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -188,7 +214,7 @@
     <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary btn--block" href="index.html#afisha">Купить билет</a>
+      <a class="btn btn--primary btn--block" href="index.html#afisha">Смотреть афишу</a>
     </div>
   </nav>
 </header>
@@ -210,7 +236,7 @@
         В Клубе №1 каждый вечер устроен по-своему. <b>Сольные концерты федеральных
         хедлайнеров</b>, вечера проверенных имён, импровизация под подсказки зала,
         комьюнити-открытия и дерзкий микс бурлеска со стендапом. Выберите настроение —
-        под него уже собрана правильная сцена.
+        под него уже собрана правильная сцена — в самом центре Москвы, на Новом Арбате, 21.
       </p>
       <div class="rule" aria-hidden="true"></div>
     </div>
@@ -219,45 +245,23 @@
 
   <!-- =================================================================
        FORMATS — alternating photo / copy rows
+       Порядок и нумерация задаются данными: afisha.js сортирует ряды по
+       ближайшему событию формата и перенумеровывает [data-format-num];
+       здесь статически выставлен порядок на июль 2026. Визуалы — реальные
+       афиши дизайна клуба, где они есть; остальным — фото артистов.
        ================================================================= -->
-  <section class="formats" aria-label="Форматы вечеров">
+  <section class="formats" aria-label="Форматы вечеров" data-format-grid>
 
-    <!-- 01 · Сольники -->
-    <article class="format-row">
+    <!-- От опытных комиков · афиша «Проверка материала» -->
+    <article class="format-row" data-format-next="ok">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев на сольном концерте" loading="eager" width="900" height="900">
+          <img src="assets/posters/ok-wide.jpg" alt="Афиша: Проверка материала — Опытные комики" loading="eager" width="1600" height="900">
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
-        <p class="fmt-num">Формат 01</p>
-        <h2 class="format-row__title">Сольники</h2>
-        <p class="format-row__desc">
-          Сольные концерты топ-комиков: один артист, час-полтора отобранного и
-          обкатанного материала, полноценная программа вместо сборного вечера. На
-          сольниках выступают хедлайнеры федерального уровня — те, кого вы видели
-          в турах по стране и на больших сценах. Билеты на такие даты разбирают заранее.
-        </p>
-        <div class="format-row__cta">
-          <a class="btn btn--ghost" href="solnik.html">
-            Подробнее
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- 02 · От опытных комиков -->
-    <article class="format-row">
-      <div class="format-row__media">
-        <div class="fmt-frame">
-          <img src="assets/comics/evdokimov.jpg" alt="Опытный комик на сцене Клуба №1" loading="lazy" width="900" height="900">
-        </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
-      </div>
-      <div class="format-row__body">
-        <p class="fmt-num">Формат 02</p>
+        <p class="fmt-num" data-format-num>Формат 01</p>
         <h2 class="format-row__title">От опытных комиков</h2>
         <p class="format-row__desc">
           Проверенные имена московской сцены, у которых за плечами сотни выступлений.
@@ -265,25 +269,111 @@
           почти не случается. Формат для тех, кто идёт за гарантированным качеством
           и хочет смеяться весь вечер, а не ждать, пока комик разогреется.
         </p>
+        <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
-          <a class="btn btn--ghost" href="show.html">
-            Подробнее
+          <a class="btn btn--ghost" href="show.html" data-format-cta>
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
       </div>
     </article>
 
-    <!-- 03 · В большом городе -->
-    <article class="format-row">
+    <!-- Сольники · афиша сольника Гурама Амаряна -->
+    <article class="format-row" data-format-next="solniki">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров выступает со стендапом о жизни в мегаполисе" loading="lazy" width="900" height="900">
+          <img src="assets/posters/guram-0907-wide.jpg" alt="Афиша: Гурам Амарян — сольный концерт" loading="lazy" width="1600" height="900">
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
-        <p class="fmt-num">Формат 03</p>
+        <p class="fmt-num" data-format-num>Формат 02</p>
+        <h2 class="format-row__title">Сольники</h2>
+        <p class="format-row__desc">
+          Сольные концерты топ-комиков на сцене в центре Москвы, на Новом Арбате, 21:
+          один артист, час-полтора отобранного и обкатанного материала, полноценная
+          программа вместо сборного вечера. На сольниках выступают хедлайнеры
+          федерального уровня — те, кого вы видели в турах по стране и на больших
+          сценах. Билеты на такие даты разбирают заранее.
+        </p>
+        <p class="format-row__date" data-format-date></p>
+        <div class="format-row__cta">
+          <a class="btn btn--ghost" href="solnik.html" data-format-cta>
+            <span data-cta-label>Подробнее</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Burlesque & Stand Up · афиша шоу -->
+    <article class="format-row" data-format-next="burlesque">
+      <div class="format-row__media">
+        <div class="fmt-frame">
+          <img src="assets/posters/burlesk-1007-wide.jpg" alt="Афиша: Burlesque and Stand Up" loading="lazy" width="1600" height="900">
+        </div>
+        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
+      </div>
+      <div class="format-row__body">
+        <p class="fmt-num" data-format-num>Формат 03</p>
+        <h2 class="format-row__title">Burlesque <span class="amp">&amp;</span> Stand&nbsp;Up</h2>
+        <p class="format-row__desc">
+          Смелый вечерний микс: искромётный стендап чередуется с изящными бурлеск-номерами.
+          Провокационно, стильно и строго 18+ — формат для особого настроения и хорошей
+          компании. Приглушённый свет, коктейли и юмор на грани — вечер в центре Москвы,
+          который сложно спутать с обычным концертом.
+        </p>
+        <p class="format-row__date" data-format-date></p>
+        <div class="format-row__cta">
+          <a class="btn btn--ghost" href="razovoe.html" data-format-cta>
+            <span data-cta-label>Подробнее</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ВИА Ваши Краши · собственное регулярное шоу клуба -->
+    <article class="format-row" data-format-next="krashi">
+      <div class="format-row__media">
+        <div class="fmt-frame">
+          <img src="assets/posters/krashi-1007-wide.jpg" alt="Афиша: Александр Волобуев и ВИА Ваши Краши" loading="lazy" width="1600" height="900">
+        </div>
+        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
+      </div>
+      <div class="format-row__body">
+        <p class="fmt-num" data-format-num>Формат 04</p>
+        <h2 class="format-row__title">ВИА Ваши Краши</h2>
+        <p class="format-row__desc">
+          Музыкально-юмористическое шоу с Александром Волобуевым, резидентом Comedy Club,
+          и группой «ВИА Ваши Краши»: живая музыка, узнаваемые хиты в неожиданных
+          обработках и юмор между номерами. Вечер на сцене клуба на Новом Арбате, 21, где концерт и стендап меняются
+          местами быстрее, чем вы успеваете допить коктейль.
+        </p>
+        <p class="format-row__date" data-format-date></p>
+        <div class="format-row__cta">
+          <a class="btn btn--ghost" href="razovoe.html" data-format-cta>
+            <span data-cta-label>Подробнее</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- В большом городе -->
+    <article class="format-row" data-format-next="gorod">
+      <div class="format-row__media">
+        <div class="fmt-frame">
+          <div class="fmt-poster fmt-poster--cyan" role="img" aria-label="Фирменная афиша формата «В большом городе»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">В большом городе</b>
+          </div>
+        </div>
+        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
+      </div>
+      <div class="format-row__body">
+        <p class="fmt-num" data-format-num>Формат 05</p>
         <h2 class="format-row__title">В большом городе</h2>
         <p class="format-row__desc">
           Стендап про жизнь в мегаполисе: пробки на Садовом, съёмные квартиры,
@@ -291,25 +381,29 @@
           говорят о том, что близко каждому жителю города, — узнаваемо, злободневно
           и без прикрас. Выходишь с концерта с ощущением, что смеялись над твоей неделей.
         </p>
+        <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
-          <a class="btn btn--ghost" href="show.html">
-            Подробнее
+          <a class="btn btn--ghost" href="show.html" data-format-cta>
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
       </div>
     </article>
 
-    <!-- 04 · Давай переиграем -->
-    <article class="format-row">
+    <!-- Давай переиграем -->
+    <article class="format-row" data-format-next="pereigraem">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский на импровизационном шоу" loading="lazy" width="900" height="900">
+          <div class="fmt-poster fmt-poster--pur" role="img" aria-label="Фирменная афиша формата «Давай переиграем»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">Давай переиграем</b>
+          </div>
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
-        <p class="fmt-num">Формат 04</p>
+        <p class="fmt-num" data-format-num>Формат 06</p>
         <h2 class="format-row__title">Давай переиграем</h2>
         <p class="format-row__desc">
           Импровизационное шоу, где комики отыгрывают сценки по подсказкам зала,
@@ -317,87 +411,70 @@
           Ничего не отрепетировано заранее: сюжет задаёте вы, а артисты выкручиваются
           в прямом эфире. Двух одинаковых вечеров не бывает.
         </p>
+        <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
-          <a class="btn btn--ghost" href="show.html">
-            Подробнее
+          <a class="btn btn--ghost" href="show.html" data-format-cta>
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
       </div>
     </article>
 
-    <!-- 05 · Комьюнити -->
-    <article class="format-row">
+    <!-- Комьюнити -->
+    <article class="format-row" data-format-next="community">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/shcherbak.jpg" alt="Комик на комьюнити-вечере Клуба №1" loading="lazy" width="900" height="900">
+          <div class="fmt-poster fmt-poster--green" role="img" aria-label="Фирменная афиша формата «Комьюнити»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">Комьюнити</b>
+          </div>
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
-        <p class="fmt-num">Формат 05</p>
+        <p class="fmt-num" data-format-num>Формат 07</p>
         <h2 class="format-row__title">Комьюнити</h2>
         <p class="format-row__desc">
           Открытые вечера комьюнити клуба: новые лица, эксперименты и обкатка свежего
-          материала перед большой сценой. Демократичные цены, тёплая ламповая атмосфера
+          материала перед большой сценой. Демократичные цены, тёплая ламповая атмосфера на Новом Арбате
           и шанс увидеть будущих хедлайнеров, пока о них ещё никто не знает. Здесь рождаются
           шутки, которые через год будут звучать на сольниках.
         </p>
+        <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
-          <a class="btn btn--ghost" href="show.html">
-            Подробнее
+          <a class="btn btn--ghost" href="show.html" data-format-cta>
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
       </div>
     </article>
 
-    <!-- 06 · Burlesque & Stand Up -->
-    <article class="format-row">
+    <!-- Концерты и спецпроекты -->
+    <article class="format-row" data-format-next="special">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/makedonskaya.jpg" alt="Артистка вечера Burlesque and Stand Up" loading="lazy" width="900" height="900">
+          <div class="fmt-poster fmt-poster--gold" role="img" aria-label="Фирменная афиша формата «Концерты»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">Концерты</b>
+          </div>
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
-        <p class="fmt-num">Формат 06</p>
-        <h2 class="format-row__title">Burlesque <span class="amp">&amp;</span> Stand&nbsp;Up</h2>
+        <p class="fmt-num" data-format-num>Формат 08</p>
+        <h2 class="format-row__title">Концерты и спецпроекты</h2>
         <p class="format-row__desc">
-          Смелый вечерний микс: искромётный стендап чередуется с изящными бурлеск-номерами.
-          Провокационно, стильно и строго 18+ — формат для особого настроения и хорошей
-          компании. Приглушённый свет, коктейли и юмор на грани — вечер, который сложно
-          спутать с обычным концертом.
+          Большие сборные концерты, гастрольные программы и разовые спецпроекты —
+          от гастростендапа до тематических вечеров: несколько комиков в один
+          вечер, живая музыка и специальные гости. Идеальный формат для первого похода
+          на стендап в центре Москвы — за вечер вы увидите сразу несколько разных артистов.
         </p>
+        <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
-          <a class="btn btn--ghost" href="razovoe.html">
-            Подробнее
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- 07 · Концерты -->
-    <article class="format-row">
-      <div class="format-row__media">
-        <div class="fmt-frame">
-          <img src="assets/comics/atlas.jpg" alt="Сборный концерт нескольких комиков в Клубе №1" loading="lazy" width="900" height="900">
-        </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
-      </div>
-      <div class="format-row__body">
-        <p class="fmt-num">Формат 07</p>
-        <h2 class="format-row__title">Концерты</h2>
-        <p class="format-row__desc">
-          Большие сборные концерты и гастрольные программы: несколько комиков в один
-          вечер, живая музыка и специальные гости. Праздничные даты, юбилеи клуба
-          и события, которые собирают полный зал. Идеальный формат для первого похода
-          на стендап — за вечер вы увидите сразу несколько разных артистов.
-        </p>
-        <div class="format-row__cta">
-          <a class="btn btn--ghost" href="show.html">
-            Подробнее
+          <a class="btn btn--ghost" href="razovoe.html" data-format-cta>
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -438,10 +515,10 @@
       <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
         <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
       </a>
-      <p>Живой стендап в центре Москвы. Федеральные комики, камерный зал, настоящие эмоции.</p>
+      <p>Живой стендап в центре Москвы, на Новом Арбате, 21. Федеральные комики, камерный зал, настоящие эмоции.</p>
     </div>
 
-    <div class="footer-col">
+    <div class="footer-col" id="contacts">
       <h3>Контакты</h3>
       <ul>
         <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
@@ -449,6 +526,7 @@
         <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
       </ul>
       <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+      <p class="legal">К стоимости билета добавляется сервисный сбор 10%.</p>
     </div>
 
     <div class="footer-col">
@@ -514,6 +592,10 @@
   });
 })();
 </script>
+
+<!-- живая афиша: ближайшие даты форматов -->
+<script src="assets/data/events.js" defer></script>
+<script src="afisha.js" defer></script>
 
 </body>
 </html>
