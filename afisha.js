@@ -276,6 +276,14 @@
      сортирует карточки: с ближайшей датой раньше.
      ================================================================= */
   function initFormatCards(){
+    /* текст кнопки живёт в [data-cta-label], чтобы svg-стрелка внутри
+       кнопки переживала переименование (единые hover-состояния по ТЗ) */
+    function setCta(cta, label, href){
+      var labelEl = cta.querySelector('[data-cta-label]');
+      if (labelEl) labelEl.textContent = label;
+      else cta.textContent = label;
+      cta.setAttribute('href', href);
+    }
     var cards = Array.prototype.slice.call(document.querySelectorAll('[data-format-next]'));
     cards.forEach(function(card){
       var ev = nextForFormat(card.getAttribute('data-format-next'));
@@ -283,13 +291,11 @@
       var cta = card.querySelector('[data-format-cta]');
       if (ev){
         if (dateEl) dateEl.textContent = 'Ближайшее: ' + fmtHuman(ev) + (ev.time ? ' в ' + ev.time : '');
-        if (cta){
-          cta.textContent = 'Смотреть ближайшие даты';
-          cta.setAttribute('href', ev.page);
-        }
+        if (cta) setCta(cta, 'Смотреть ближайшие даты', ev.page);
         card.setAttribute('data-has-date', '1');
       } else {
         if (dateEl) dateEl.textContent = 'Дат пока нет — следите за афишей';
+        if (cta) setCta(cta, 'Смотреть афишу', 'index.html#afisha');
       }
     });
     document.querySelectorAll('[data-format-grid]').forEach(function(grid){

@@ -96,27 +96,21 @@
     <div class="headliners">
       <button class="slider-arrow slider-arrow--prev" data-slider="headliners" data-dir="-1" aria-label="Предыдущие хедлайнеры">‹</button>
 
-      <!-- порядок: сначала комики с ближайшими датами (Гурам 09.07, Раевский 25.07,
-           Чабдаров 01.08) — клик ведёт на ближайший концерт; остальные — на страницу комиков -->
+      <!-- В ленте только комики, чьи настоящие фото есть в assets/comics
+           (соответствие имя↔файл — как на странице «Комики»). Гурам Амарян,
+           Виктор Комаров и Стас Старовойтов вернутся, когда придут их фото
+           от маркетинга. Первыми — комики с ближайшими датами. -->
       <div class="headliners__track" id="headlinersTrack" role="list">
 
-        <!-- 1 · Гурам Амарян — ближайший концерт 09.07 · TODO: настоящее фото Амаряна отсутствует, временно atlas.jpg -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="solnik.html" aria-label="Гурам Амарян — ближайший концерт">
-            <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Гурам Амарян" loading="eager" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Гурам</span><b>Амарян</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- 2 · Илья Раевский — ближайший концерт 25.07 -->
+        <!-- 1 · Илья Раевский — ближайший концерт 25.07 -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="solnik.html" aria-label="Илья Раевский — ближайший концерт">
-            <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></div>
+            <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="eager" width="900" height="900"></div>
             <figcaption class="headliner__name"><span>Илья</span><b>Раевский</b></figcaption>
           </a>
         </figure>
 
-        <!-- 3 · Расул Чабдаров — ближайший концерт 01.08 -->
+        <!-- 2 · Расул Чабдаров — ближайший концерт 01.08 -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="solnik.html" aria-label="Расул Чабдаров — ближайший концерт">
             <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></div>
@@ -124,7 +118,7 @@
           </a>
         </figure>
 
-        <!-- 4 · Павел Дедищев — ближайших дат нет -->
+        <!-- 3 · Павел Дедищев -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="komiki.html" aria-label="Павел Дедищев — о комике">
             <div class="headliner__frame"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="lazy" width="900" height="900"></div>
@@ -132,27 +126,35 @@
           </a>
         </figure>
 
-        <!-- 5 · Виктор Комаров — ближайших дат нет · TODO: настоящее фото Комарова отсутствует, временно butakov.jpg -->
+        <!-- 4 · Денис Чебатков -->
         <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Виктор Комаров — о комике">
-            <div class="headliner__frame"><img src="assets/comics/butakov.jpg" alt="Комик Виктор Комаров" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Виктор</span><b>Комаров</b></figcaption>
+          <a class="headliner__link" href="komiki.html" aria-label="Денис Чебатков — о комике">
+            <div class="headliner__frame"><img src="assets/comics/chebatkov.jpg" alt="Комик Денис Чебатков" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Денис</span><b>Чебатков</b></figcaption>
           </a>
         </figure>
 
-        <!-- 6 · Стас Старовойтов — ближайших дат нет · TODO: настоящее фото Старовойтова отсутствует, временно evdokimov.jpg -->
+        <!-- 5 · Илья Атлас -->
         <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Стас Старовойтов — о комике">
-            <div class="headliner__frame"><img src="assets/comics/evdokimov.jpg" alt="Комик Стас Старовойтов" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Стас</span><b>Старовойтов</b></figcaption>
+          <a class="headliner__link" href="komiki.html" aria-label="Илья Атлас — о комике">
+            <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Илья</span><b>Атлас</b></figcaption>
           </a>
         </figure>
 
-        <!-- 7 · Маргарита Родина — ближайших дат нет -->
+        <!-- 6 · Маргарита Родина -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="komiki.html" aria-label="Маргарита Родина — о комике">
-            <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик Маргарита Родина" loading="lazy" width="900" height="900"></div>
+            <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик и ведущая Маргарита Родина" loading="lazy" width="900" height="900"></div>
             <figcaption class="headliner__name"><span>Маргарита</span><b>Родина</b></figcaption>
+          </a>
+        </figure>
+
+        <!-- 7 · Нурлан Бутаков -->
+        <figure class="headliner" role="listitem">
+          <a class="headliner__link" href="komiki.html" aria-label="Нурлан Бутаков — о комике">
+            <div class="headliner__frame"><img src="assets/comics/butakov.jpg" alt="Комик Нурлан Бутаков" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Нурлан</span><b>Бутаков</b></figcaption>
           </a>
         </figure>
 

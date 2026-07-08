@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Клуб №1 · CLUB 1">
 <meta property="og:title" content="Форматы вечеров — Клуб №1 на Новом Арбате">
-<meta property="og:description" content="Сольники топ-комиков, импровизация, комьюнити-вечера и бурлеск-шоу. Семь форматов живого стендапа в центре Москвы.">
+<meta property="og:description" content="Сольники топ-комиков, импровизация, комьюнити-вечера и бурлеск-шоу. Форматы живого стендапа в центре Москвы, на Новом Арбате, 21.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://club1.ru/formaty.html">
 <meta property="og:image" content="assets/comics/raevskiy.jpg">
@@ -111,6 +111,30 @@
   .format-row__cta .btn svg{width:16px;height:16px;transition:transform .2s var(--ease)}
   .format-row__cta .btn:hover svg{transform:translateX(4px)}
 
+  /* фирменный CSS-постер для форматов, у которых пока нет настоящей афиши
+     (единая визуальная система вместо случайных портретов, ТЗ §1) */
+  .fmt-poster{
+    position:absolute;inset:-8% -18%;
+    transform:skewX(var(--unskew));
+    display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;
+    gap:8px;padding:9% 22% 12%;
+    background:
+      radial-gradient(120% 90% at 80% 0%, rgba(255,255,255,.12), transparent 55%),
+      linear-gradient(150deg, var(--p1,#16324a), var(--p2,#0b1622));
+  }
+  .fmt-poster--cyan{--p1:#1f6f8f;--p2:#0a1a26}
+  .fmt-poster--pur{--p1:#6b2fb0;--p2:#140a26}
+  .fmt-poster--green{--p1:#3f7d3a;--p2:#0e1a0d}
+  .fmt-poster--gold{--p1:#c9772a;--p2:#2a1608}
+  .fmt-poster__standup{
+    font-family:var(--display);font-weight:900;font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:.85;
+    letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.3px rgba(255,255,255,.9);
+  }
+  .fmt-poster__name{
+    font-family:var(--display);font-weight:900;font-size:clamp(1rem,1.9vw,1.45rem);line-height:1.02;
+    text-transform:uppercase;color:#fff;
+  }
+
   /* ---- closing call-to-action band ------------------------------- */
   .fmt-outro{
     position:relative;overflow:hidden;border-radius:var(--r);
@@ -173,7 +197,7 @@
 
     <div class="header-actions">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="index.html#afisha">Бронировать места</a>
+      <a class="btn btn--primary" href="index.html#afisha">Смотреть афишу</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -190,7 +214,7 @@
     <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary btn--block" href="index.html#afisha">Бронировать места</a>
+      <a class="btn btn--primary btn--block" href="index.html#afisha">Смотреть афишу</a>
     </div>
   </nav>
 </header>
@@ -248,7 +272,7 @@
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
           <a class="btn btn--ghost" href="show.html" data-format-cta>
-            Подробнее
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -276,7 +300,7 @@
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
           <a class="btn btn--ghost" href="solnik.html" data-format-cta>
-            Подробнее
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -297,13 +321,13 @@
         <p class="format-row__desc">
           Смелый вечерний микс: искромётный стендап чередуется с изящными бурлеск-номерами.
           Провокационно, стильно и строго 18+ — формат для особого настроения и хорошей
-          компании. Приглушённый свет, коктейли и юмор на грани — вечер, который сложно
-          спутать с обычным концертом.
+          компании. Приглушённый свет, коктейли и юмор на грани — вечер в центре Москвы,
+          который сложно спутать с обычным концертом.
         </p>
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
           <a class="btn btn--ghost" href="razovoe.html" data-format-cta>
-            Подробнее
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -324,13 +348,13 @@
         <p class="format-row__desc">
           Музыкально-юмористическое шоу с Александром Волобуевым, резидентом Comedy Club,
           и группой «ВИА Ваши Краши»: живая музыка, узнаваемые хиты в неожиданных
-          обработках и юмор между номерами. Вечер, где концерт и стендап меняются
+          обработках и юмор между номерами. Вечер на сцене клуба на Новом Арбате, 21, где концерт и стендап меняются
           местами быстрее, чем вы успеваете допить коктейль.
         </p>
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
           <a class="btn btn--ghost" href="razovoe.html" data-format-cta>
-            Подробнее
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -341,7 +365,10 @@
     <article class="format-row" data-format-next="gorod">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров выступает со стендапом о жизни в мегаполисе" loading="lazy" width="900" height="900">
+          <div class="fmt-poster fmt-poster--cyan" role="img" aria-label="Фирменная афиша формата «В большом городе»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">В большом городе</b>
+          </div>
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
@@ -357,7 +384,7 @@
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
           <a class="btn btn--ghost" href="show.html" data-format-cta>
-            Подробнее
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -368,7 +395,10 @@
     <article class="format-row" data-format-next="pereigraem">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский на импровизационном шоу" loading="lazy" width="900" height="900">
+          <div class="fmt-poster fmt-poster--pur" role="img" aria-label="Фирменная афиша формата «Давай переиграем»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">Давай переиграем</b>
+          </div>
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
@@ -384,7 +414,7 @@
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
           <a class="btn btn--ghost" href="show.html" data-format-cta>
-            Подробнее
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -395,7 +425,10 @@
     <article class="format-row" data-format-next="community">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/shcherbak.jpg" alt="Комик на комьюнити-вечере Клуба №1" loading="lazy" width="900" height="900">
+          <div class="fmt-poster fmt-poster--green" role="img" aria-label="Фирменная афиша формата «Комьюнити»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">Комьюнити</b>
+          </div>
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
@@ -404,14 +437,14 @@
         <h2 class="format-row__title">Комьюнити</h2>
         <p class="format-row__desc">
           Открытые вечера комьюнити клуба: новые лица, эксперименты и обкатка свежего
-          материала перед большой сценой. Демократичные цены, тёплая ламповая атмосфера
+          материала перед большой сценой. Демократичные цены, тёплая ламповая атмосфера на Новом Арбате
           и шанс увидеть будущих хедлайнеров, пока о них ещё никто не знает. Здесь рождаются
           шутки, которые через год будут звучать на сольниках.
         </p>
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
           <a class="btn btn--ghost" href="show.html" data-format-cta>
-            Подробнее
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -422,7 +455,10 @@
     <article class="format-row" data-format-next="special">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/comics/atlas.jpg" alt="Сборный концерт нескольких комиков в Клубе №1" loading="lazy" width="900" height="900">
+          <div class="fmt-poster fmt-poster--gold" role="img" aria-label="Фирменная афиша формата «Концерты»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">Концерты</b>
+          </div>
         </div>
         <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
@@ -438,7 +474,7 @@
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
           <a class="btn btn--ghost" href="razovoe.html" data-format-cta>
-            Подробнее
+            <span data-cta-label>Подробнее</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
