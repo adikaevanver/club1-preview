@@ -98,8 +98,7 @@
       ? '<a class="btn btn--primary btn--sm" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
       : '<a class="btn btn--primary btn--sm" href="#contacts">Узнать о старте продаж</a>';
     var price = ev.priceFrom
-      ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽' +
-        '<small>+ сервисный сбор 10%</small></p>'
+      ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽</p>'
       : '';
     return (
       '<article class="event-card" role="listitem">' +
