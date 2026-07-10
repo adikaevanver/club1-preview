@@ -111,7 +111,7 @@ window.CLUB1_EVENTS = [
    poster:'assets/posters/ok-sq.jpg', photo:null, tone:'mono', page:'show.html',
    buy:'https://clubnaarbate21.ru/proverka-ot-opytnyh-komikov', age:'18+'},
   {date:'2026-07-25', time:'19:00', title:'Илья Раевский', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:'assets/posters/raevskiy-2507-sq.jpg', photo:null, tone:'gold', page:'solnik.html',
+   poster:'assets/posters/raevskiy-2507-sq.jpg', photo:null, tone:'gold', page:'raevskiy.html',
    buy:'https://clubnaarbate21.ru/ilya-raevsky-stand-up', age:'18+'},
   {date:'2026-07-25', time:null, title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
    poster:null, photo:null, tone:'cyan', page:'show.html',
@@ -128,7 +128,7 @@ window.CLUB1_EVENTS = [
    buy:'https://clubnaarbate21.ru/proverka-ot-opytnyh-komikov', age:'18+'},
 
   {date:'2026-07-31', time:'19:30', title:'Илья Раевский', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:'assets/posters/raevskiy-3107-sq.jpg', photo:null, tone:'green', page:'solnik.html',
+   poster:'assets/posters/raevskiy-3107-sq.jpg', photo:null, tone:'green', page:'raevskiy.html',
    buy:'https://clubnaarbate21.ru/ilya-raevsky-stand-up', age:'18+'},
   {date:'2026-07-31', time:'21:00', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
    poster:null, photo:null, tone:'cyan', page:'show.html',
