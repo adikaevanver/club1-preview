@@ -867,6 +867,45 @@ main.container{overflow-x:clip}
   body.has-sticky-cta{padding-bottom:78px}
 }
 
+/* social proof — реальные отзывы с Яндекс.Карт (карточка клуба 66983171570).
+   Цитаты приводятся выдержками, у каждой — автор, оценка и дата; агрегат
+   и ссылка на источник рядом, чтобы всё было проверяемо. */
+.proof{position:relative;padding:clamp(38px,5vw,64px) 0 clamp(10px,2vw,18px)}
+.proof__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 22px;margin-bottom:26px}
+.proof__title{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(1.15rem,2.6vw,1.7rem);line-height:1.08;
+  text-transform:uppercase;letter-spacing:.02em;color:#fff;
+}
+.proof__agg{display:inline-flex;align-items:center;gap:.5em;font-size:.92rem;color:var(--muted)}
+.proof__agg b{
+  font-family:var(--display);font-weight:800;font-size:1.05rem;color:var(--gold);
+}
+.proof__agg a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.proof__agg a:hover{color:#fff}
+.proof__grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(14px,1.8vw,22px);
+}
+.proof-card{
+  display:flex;flex-direction:column;gap:14px;
+  background:var(--panel);border:1px solid var(--hairline);
+  border-radius:var(--r);padding:clamp(20px,2.4vw,26px);
+}
+.proof-card__stars{color:var(--gold);font-size:.9rem;letter-spacing:.14em;line-height:1}
+.proof-card__text{color:var(--muted);font-size:.98rem;line-height:1.6;flex:1}
+.proof-card__who{
+  display:flex;flex-direction:column;gap:2px;
+  padding-top:12px;border-top:1px solid var(--hairline);
+}
+.proof-card__name{font-weight:600;font-size:.94rem;color:var(--text)}
+.proof-card__src{font-size:.78rem;color:var(--muted-2)}
+.proof__note{margin-top:16px;font-size:.8rem;color:var(--muted-2);line-height:1.5;max-width:70ch}
+
+@media (max-width:900px){
+  .proof__grid{grid-template-columns:1fr}
+}
+
 /* финальный CTA-блок перед футером */
 .cta-final{
   position:relative;border-top:1px solid var(--hairline);margin-top:24px;
