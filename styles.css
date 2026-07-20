@@ -838,6 +838,12 @@ main.container{overflow-x:clip}
   color:var(--gold);font-weight:600;font-size:inherit;cursor:pointer;
 }
 .fee-link:hover{text-decoration:underline}
+/* компактный вариант — под ценой на карточке афиши */
+.fee-link--sm{
+  display:block;margin-top:3px;
+  font-family:var(--body);font-weight:500;font-size:.68rem;color:var(--muted-2);
+}
+.fee-link--sm:hover{color:var(--gold)}
 
 /* модалка «Из чего складывается вечер» */
 .price-list{display:flex;flex-direction:column;gap:14px;margin:4px 0 2px}
@@ -865,6 +871,15 @@ main.container{overflow-x:clip}
 @media (max-width:720px){
   .sticky-cta{display:flex}
   body.has-sticky-cta{padding-bottom:78px}
+  /* тач-цели ≥44px на мобильном (v4 §3) */
+  .btn,.pill,.tab,.datebar__day,.slider-arrow{min-height:44px}
+  .datebar__arrow{width:44px;height:44px}
+}
+
+/* тег «Женский стендап» на карточках комиков (v4 §4) */
+.comic-card__wtag{
+  font-family:var(--display);font-weight:600;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold);
 }
 
 /* social proof — реальные отзывы с Яндекс.Карт (карточка клуба 66983171570).
@@ -901,6 +916,13 @@ main.container{overflow-x:clip}
 .proof-card__name{font-weight:600;font-size:.94rem;color:var(--text)}
 .proof-card__src{font-size:.78rem;color:var(--muted-2)}
 .proof__note{margin-top:16px;font-size:.8rem;color:var(--muted-2);line-height:1.5;max-width:70ch}
+/* строка микро-статистики под отзывами (v4) */
+.proof__stats{
+  margin-top:22px;font-size:.95rem;color:var(--muted);letter-spacing:.01em;
+}
+.proof__stats b{
+  font-family:var(--display);font-weight:800;font-size:1.05rem;color:var(--gold);
+}
 
 @media (max-width:900px){
   .proof__grid{grid-template-columns:1fr}

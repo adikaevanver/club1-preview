@@ -236,6 +236,10 @@
 
     </div>
 
+    <!-- микро-статистика (v4): 150+ — заявление клуба с живого сайта,
+         10 000+ — база гостей билетного оператора 2023–2026 -->
+    <p class="proof__stats"><b>150+</b> шоу в год · <b>10 000+</b> гостей в базе клуба · <b>2</b> зала, до 550 гостей</p>
+
     <p class="proof__note">Отзывы приведены выдержками, орфография авторов сохранена по смыслу. Полный список — на карточке клуба в Яндекс.Картах и в 2ГИС (4,4 из 5, 232 отзыва).</p>
   </section>
 
@@ -268,6 +272,8 @@
         <div class="filters__row filters__row--days" data-af-dows role="group" aria-label="Дни недели"></div>
 
         <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
+
+        <div class="filters__row filters__row--artists" data-af-artists role="group" aria-label="Артист или шоу"></div>
 
         <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
       </div>
@@ -304,6 +310,23 @@
   </section>
 </main>
 
+
+<!-- v4: модалка «Как считается цена» — открывается с любой карточки афиши -->
+<div class="modal" id="priceModal" data-modal hidden role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
+  <div class="modal__panel">
+    <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>
+    <p class="eyebrow modal__eyebrow">Прозрачная цена</p>
+    <h2 class="modal__title" id="priceModalTitle">Из чего складывается вечер</h2>
+    <div class="modal__body">
+      <ul class="price-list">
+        <li><b>Билет.</b> Цена фиксированная и указана в карточке события. Сервисным сбором не облагается.</li>
+        <li><b>Еда и напитки.</b> По желанию: кухня и бар работают весь вечер, заказ приносят к столику. Меню и цены — на странице «Еда и напитки».</li>
+        <li><b>Сервисный сбор.</b> 10% к счёту за еду и напитки. Добавляется в счёт автоматически, отдельно платить не нужно.</li>
+      </ul>
+      <p class="price-total">Цена, которую вы видите, и есть та, которую вы платите: билет — финальный, сбор касается только заказа за столом.</p>
+    </div>
+  </div>
+</div>
 
 <!-- =====================================================================
      SITE FOOTER  (reused verbatim on every sub-page)
