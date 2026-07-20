@@ -7,7 +7,7 @@
 
 <meta name="description" content="Клуб №1 (CLUB 1) — комедийный клуб в центре Москвы на Новом Арбате, 21. Сольные концерты федеральных комиков, импровизация, бурлеск-шоу. Афиша и билеты на сайте.">
 <meta name="theme-color" content="#0a0810">
-<link rel="canonical" href="https://club1.ru/">
+<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/">
 
 <!-- Open Graph / social -->
 <meta property="og:type" content="website">
@@ -15,7 +15,7 @@
 <meta property="og:title" content="Клуб №1 — стендап-клуб на Новом Арбате">
 <meta property="og:description" content="Сольные концерты федеральных комиков, импровизация и бурлеск-шоу. Живой зал в центре Москвы, Новый Арбат, 21.">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:url" content="https://club1.ru/">
+<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/">
 <meta property="og:image" content="assets/comics/dedishchev.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -91,7 +91,9 @@
     <div class="glow glow--mag hero__glow-a" aria-hidden="true"></div>
     <div class="glow glow--pur hero__glow-b" aria-hidden="true"></div>
 
-    <p class="hero__tagline">Стендап и шоу в центре Москвы — Новый Арбат, 21</p>
+    <!-- v4: магнит M1 «разгрузка» в лоб; локация уходит в саб-строку -->
+    <p class="hero__lead">Два часа не думать о работе</p>
+    <p class="hero__tagline">Стендап и шоу в двух шагах от вашего стола — Новый Арбат, 21</p>
 
     <div class="headliners">
       <button class="slider-arrow slider-arrow--prev" data-slider="headliners" data-dir="-1" aria-label="Предыдущие хедлайнеры">‹</button>
@@ -110,7 +112,15 @@
           </a>
         </figure>
 
-        <!-- 2 · Илья Раевский — ближайший концерт 25.07 -->
+        <!-- 2 · Маргарита Родина — женский стендап в верхней зоне карусели (v4) -->
+        <figure class="headliner" role="listitem">
+          <a class="headliner__link" href="komiki.html" aria-label="Маргарита Родина — о комике">
+            <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик и ведущая Маргарита Родина" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Маргарита</span><b>Родина</b></figcaption>
+          </a>
+        </figure>
+
+        <!-- 3 · Илья Раевский — ближайший концерт 25.07 -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="raevskiy.html" aria-label="Илья Раевский — ближайший концерт">
             <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></div>
@@ -134,7 +144,15 @@
           </a>
         </figure>
 
-        <!-- 4 · Евгений Чебатков -->
+        <!-- Юлия Македонская — вторая женская позиция в первой шестёрке (v4) -->
+        <figure class="headliner" role="listitem">
+          <a class="headliner__link" href="komiki.html" aria-label="Юлия Македонская — о комике">
+            <div class="headliner__frame"><img src="assets/comics/makedonskaya.jpg" alt="Комик Юлия Македонская" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Юлия</span><b>Македонская</b></figcaption>
+          </a>
+        </figure>
+
+        <!-- Евгений Чебатков -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="komiki.html" aria-label="Евгений Чебатков — о комике">
             <div class="headliner__frame"><img src="assets/comics/chebatkov.jpg" alt="Комик Евгений Чебатков" loading="lazy" width="900" height="900"></div>
@@ -147,14 +165,6 @@
           <a class="headliner__link" href="komiki.html" aria-label="Илья Атлас — о комике">
             <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас" loading="lazy" width="900" height="900"></div>
             <figcaption class="headliner__name"><span>Илья</span><b>Атлас</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- 6 · Маргарита Родина -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Маргарита Родина — о комике">
-            <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик и ведущая Маргарита Родина" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Маргарита</span><b>Родина</b></figcaption>
           </a>
         </figure>
 
@@ -189,20 +199,28 @@
     <section class="filters" aria-labelledby="filters-title">
       <h2 id="filters-title" class="sr-only">Фильтр афиши по датам, дням недели и форматам</h2>
 
-      <div class="datebar">
-        <div class="datebar__nav">
-          <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
-          <span class="datebar__month" data-af-month></span>
-          <button class="datebar__arrow" data-af-next type="button" aria-label="Следующий месяц">›</button>
+      <!-- v4: быстрые пресеты — один клик до «сегодня/завтра/выходные»;
+           расширенные фильтры свёрнуты за кнопкой «Ещё фильтры» -->
+      <div class="filters__row filters__row--presets" data-af-presets role="group" aria-label="Быстрый выбор даты"></div>
+
+      <button class="filters__more" type="button" data-af-more aria-expanded="false" aria-controls="afishaAdvanced">Ещё фильтры</button>
+
+      <div class="filters__advanced" id="afishaAdvanced" data-af-advanced hidden>
+        <div class="datebar">
+          <div class="datebar__nav">
+            <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
+            <span class="datebar__month" data-af-month></span>
+            <button class="datebar__arrow" data-af-next type="button" aria-label="Следующий месяц">›</button>
+          </div>
+          <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
         </div>
-        <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
+
+        <div class="filters__row filters__row--days" data-af-dows role="group" aria-label="Дни недели"></div>
+
+        <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
+
+        <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
       </div>
-
-      <div class="filters__row filters__row--days" data-af-dows role="group" aria-label="Дни недели"></div>
-
-      <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
-
-      <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
     </section>
 
     <section class="afisha" id="afisha" aria-labelledby="afisha-title">
@@ -222,6 +240,18 @@
     </section>
 
   </div>
+
+  <!-- =================================================================
+       ФИНАЛЬНЫЙ CTA (v4) — перед футером
+       ================================================================= -->
+  <section class="cta-final" aria-labelledby="cta-final-title">
+    <h2 class="cta-final__title" id="cta-final-title">Готовы к вечеру?</h2>
+    <p class="cta-final__sub">Два часа не думать. Только смеяться и хорошо ужинать.</p>
+    <div class="cta-final__actions">
+      <a class="btn btn--primary" href="#afisha">Смотреть афишу</a>
+      <a class="btn btn--ghost" href="tel:+74996869111">Позвонить · +7 (499) 686 91 11</a>
+    </div>
+  </section>
 </main>
 
 
@@ -242,19 +272,19 @@
       <h3>Контакты</h3>
       <ul>
         <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
-        <li><span class="muted">Электронная почта</span><br><a href="mailto:hello@club1.ru">hello@club1.ru</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:Club1promo@yandex.ru">Club1promo@yandex.ru</a></li>
         <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
       </ul>
-      <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+      <p class="legal">ООО «Продюсерский центр Клуб Номер Один» · ИНН 9704127352</p>
       <p class="legal">В клубе к счёту за еду и напитки добавляется сервисный сбор 10%.</p>
     </div>
 
     <div class="footer-col">
       <h3>Информация</h3>
       <ul>
-        <li><a href="#">Возврат билетов</a></li>
-        <li><a href="#">Политика конфиденциальности</a></li>
-        <li><a href="#">Договор оферты</a></li>
+        <li><a href="https://clubnaarbate21.ru/return" target="_blank" rel="noopener">Возврат билетов</a></li>
+        <li><a href="https://clubnaarbate21.ru/privacy-policy" target="_blank" rel="noopener">Политика конфиденциальности</a></li>
+        <li><a href="https://clubnaarbate21.ru/public-offer" target="_blank" rel="noopener">Договор оферты</a></li>
         <li><a href="arenda.html">Аренда площадки</a></li>
       </ul>
     </div>

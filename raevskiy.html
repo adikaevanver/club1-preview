@@ -7,7 +7,7 @@
 
 <meta name="description" content="Сольный концерт Ильи Раевского в Клубе №1 на Новом Арбате: полтора часа живого стендапа, ближайшие даты и билеты. Сбор гостей за 30 минут до начала, 18+.">
 <meta name="theme-color" content="#0a0810">
-<link rel="canonical" href="https://club1.ru/raevskiy.html">
+<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/raevskiy.html">
 
 <!-- Open Graph / social -->
 <meta property="og:type" content="website">
@@ -15,7 +15,7 @@
 <meta property="og:title" content="Илья Раевский — сольный концерт в Клубе №1">
 <meta property="og:description" content="Полтора часа живого стендапа. Сольная программа в камерном зале в центре Москвы, Новый Арбат, 21. Ближайшие даты и билеты на сайте.">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:url" content="https://club1.ru/raevskiy.html">
+<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/raevskiy.html">
 <meta property="og:image" content="assets/posters/raevskiy-2507-sq.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -193,7 +193,7 @@
 </style>
 </head>
 
-<body>
+<body class="has-sticky-cta">
 
 <!-- =====================================================================
      SITE HEADER  (reused verbatim on every sub-page)
@@ -296,6 +296,14 @@
             <span class="meta-chip__ic meta-chip__price" aria-hidden="true">₽</span>
             <span>от 1 500 ₽<small>стоимость билета</small></span>
           </span>
+
+          <!-- v4: доступность локации прямо в строке данных события -->
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <span>Новый Арбат, 21<small>м. «Смоленская» · 5–7 мин пешком · <a href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%9D%D0%BE%D0%B2%D1%8B%D0%B9%20%D0%90%D1%80%D0%B1%D0%B0%D1%82%2C%2021" target="_blank" rel="noopener">маршрут</a></small></span>
+          </span>
         </div>
 
         <!-- КНОПКА ПОДРОБНЕЕ + КНОПКА ПОКУПКИ -->
@@ -318,7 +326,8 @@
 
           <p class="datepick__note">Выбрана дата: <b id="pickedDate">25 июля</b>, начало в <b id="pickedTime">19:00</b>.</p>
           <a class="btn book-btn datepick__book" href="https://clubnaarbate21.ru/ilya-raevsky-stand-up" target="_blank" rel="noopener">Бронировать места</a>
-          <p class="datepick__fee">В клубе к счёту за еду и напитки добавляется сервисный сбор 10%.</p>
+          <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
+          <p class="datepick__fee">Билет — от 1 500 ₽, сбором не облагается. В клубе за столом к счёту за еду и напитки добавляется сервисный сбор 10% — он уже в счёте, отдельно платить не нужно. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
         </div>
       </div>
 
@@ -485,6 +494,32 @@
 </main>
 
 
+<!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения -->
+<div class="sticky-cta">
+  <span class="sticky-cta__info">
+    <span class="sticky-cta__date" id="stickyDate">25 июля · 19:00</span>
+    <span class="sticky-cta__price">от 1 500 ₽</span>
+  </span>
+  <a class="btn btn--primary" href="https://clubnaarbate21.ru/ilya-raevsky-stand-up" target="_blank" rel="noopener">Бронировать</a>
+</div>
+
+<!-- v4: модалка «Как считается цена» (открывается из строки про сбор) -->
+<div class="modal" id="priceModal" data-modal hidden role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
+  <div class="modal__panel">
+    <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>
+    <p class="eyebrow modal__eyebrow">Прозрачная цена</p>
+    <h2 class="modal__title" id="priceModalTitle">Из чего складывается вечер</h2>
+    <div class="modal__body">
+      <ul class="price-list">
+        <li><b>Билет.</b> Цена фиксированная и указана в карточке события. Сервисным сбором не облагается.</li>
+        <li><b>Еда и напитки.</b> По желанию: кухня и бар работают весь вечер, заказ приносят к столику. Меню и цены — на странице «Еда и напитки».</li>
+        <li><b>Сервисный сбор.</b> 10% к счёту за еду и напитки. Добавляется в счёт автоматически, отдельно платить не нужно.</li>
+      </ul>
+      <p class="price-total">Цена, которую вы видите, и есть та, которую вы платите: билет — финальный, сбор касается только заказа за столом.</p>
+    </div>
+  </div>
+</div>
+
 <!-- =====================================================================
      SITE FOOTER  (reused verbatim on every sub-page)
      ===================================================================== -->
@@ -502,19 +537,19 @@
       <h3>Контакты</h3>
       <ul>
         <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
-        <li><span class="muted">Электронная почта</span><br><a href="mailto:hello@club1.ru">hello@club1.ru</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:Club1promo@yandex.ru">Club1promo@yandex.ru</a></li>
         <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
       </ul>
-      <p class="legal">ООО «Клуб Номер Один» · ИНН 7700000000<br>Юридическая информация</p>
+      <p class="legal">ООО «Продюсерский центр Клуб Номер Один» · ИНН 9704127352</p>
       <p class="legal">В клубе к счёту за еду и напитки добавляется сервисный сбор 10%.</p>
     </div>
 
     <div class="footer-col">
       <h3>Информация</h3>
       <ul>
-        <li><a href="#">Возврат билетов</a></li>
-        <li><a href="#">Политика конфиденциальности</a></li>
-        <li><a href="#">Договор оферты</a></li>
+        <li><a href="https://clubnaarbate21.ru/return" target="_blank" rel="noopener">Возврат билетов</a></li>
+        <li><a href="https://clubnaarbate21.ru/privacy-policy" target="_blank" rel="noopener">Политика конфиденциальности</a></li>
+        <li><a href="https://clubnaarbate21.ru/public-offer" target="_blank" rel="noopener">Договор оферты</a></li>
         <li><a href="arenda.html">Аренда площадки</a></li>
       </ul>
     </div>
@@ -593,6 +628,7 @@
   var bar        = document.querySelector('[data-datebar]');
   var picked     = document.getElementById('pickedDate');
   var pickedTime = document.getElementById('pickedTime');
+  var stickyDate = document.getElementById('stickyDate');
   if (bar && picked){
     bar.addEventListener('datebar:change', function(e){
       var btn = e.detail.button;
@@ -600,6 +636,9 @@
       var day = btn.querySelector('b');
       if (day) picked.textContent = parseInt(day.textContent, 10) + ' июля';
       if (pickedTime && btn.dataset.time) pickedTime.textContent = btn.dataset.time;
+      /* v4: sticky-CTA показывает выбранную дату и время */
+      if (stickyDate && day) stickyDate.textContent =
+        parseInt(day.textContent, 10) + ' июля' + (btn.dataset.time ? ' · ' + btn.dataset.time : '');
     });
   }
 })();

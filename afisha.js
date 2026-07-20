@@ -42,6 +42,11 @@
   }
   function monthKey(iso){ return iso.slice(0, 7); }          // 'YYYY-MM'
   function sortKey(ev){ return ev.date + 'T' + (ev.time || '23:00'); }
+  function shiftISO(days){
+    var d = new Date();
+    d.setDate(d.getDate() + days);
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
 
   function upcoming(){
     var t = todayISO();
@@ -76,6 +81,17 @@
     var badge = '<div class="poster__badge">' + fmtShort(ev) +
                 '<small>' + (ev.time ? esc(ev.time) : DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
     var age = ev.age ? '<span class="poster__age">' + esc(ev.age) + '</span>' : '';
+    /* бейдж срочности — только из реальных данных: дата события или
+       подтверждённый sold-out; никаких выдуманных «мест осталось мало» */
+    var when = '';
+    if (ev.soldOut){
+      when = '<span class="poster__when poster__when--soldout">Билеты закончились</span>';
+    } else if (ev.date === todayISO()){
+      when = '<span class="poster__when">Сегодня' + (ev.time ? ' в ' + esc(ev.time) : '') + '</span>';
+    } else if (ev.date === shiftISO(1)){
+      when = '<span class="poster__when">Завтра' + (ev.time ? ' в ' + esc(ev.time) : '') + '</span>';
+    }
+    badge += when;
     var poster;
     if (ev.poster){
       poster =
@@ -94,9 +110,14 @@
           age +
         '</div>';
     }
-    var cta = ev.buy
-      ? '<a class="btn btn--primary btn--sm" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
-      : '<a class="btn btn--primary btn--sm" href="#contacts">Узнать о старте продаж</a>';
+    var cta;
+    if (ev.soldOut){
+      cta = '<a class="btn btn--ghost btn--sm" href="#contacts">Узнать о доп. датах</a>';
+    } else if (ev.buy){
+      cta = '<a class="btn btn--primary btn--sm" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>';
+    } else {
+      cta = '<a class="btn btn--primary btn--sm" href="#contacts">Узнать о старте продаж</a>';
+    }
     var price = ev.priceFrom
       ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽</p>'
       : '';
@@ -127,7 +148,42 @@
     var sortWrap   = root.querySelector('[data-af-sorts]');
     var track      = root.querySelector('[data-af-track]');
     var emptyBox   = root.querySelector('[data-af-empty]');
+    var presetWrap = root.querySelector('[data-af-presets]');
+    var moreBtn    = root.querySelector('[data-af-more]');
+    var advWrap    = root.querySelector('[data-af-advanced]');
     if (!track) return;
+
+    /* быстрые пресеты дат (импульсная аудитория): диапазон [от, до] */
+    var PRESETS = [
+      { key: 'today',    label: 'Сегодня' },
+      { key: 'tomorrow', label: 'Завтра' },
+      { key: 'weekend',  label: 'В эти выходные' },
+      { key: 'nextweek', label: 'На следующей неделе' }
+    ];
+    function presetRange(key){
+      var base = new Date(todayISO() + 'T00:00:00');
+      function iso(d){ return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+      if (key === 'today')    return [todayISO(), todayISO()];
+      if (key === 'tomorrow') return [shiftISO(1), shiftISO(1)];
+      if (key === 'weekend'){
+        var dow = base.getDay();                  /* 0=Вс … 6=Сб */
+        if (dow === 0) return [todayISO(), todayISO()];   /* вс: последний день выходных */
+        var sat = new Date(base); sat.setDate(sat.getDate() + (6 - dow));
+        var sun = new Date(sat); sun.setDate(sun.getDate() + 1);
+        return [iso(sat), iso(sun)];
+      }
+      if (key === 'nextweek'){
+        var dw = base.getDay();
+        var mon = new Date(base); mon.setDate(mon.getDate() + ((( 8 - dw) % 7) || 7));
+        var sun2 = new Date(mon); sun2.setDate(sun2.getDate() + 6);
+        return [iso(mon), iso(sun2)];
+      }
+      return null;
+    }
+    function inPreset(ev, key){
+      var r = presetRange(key);
+      return r ? (ev.date >= r[0] && ev.date <= r[1]) : true;
+    }
 
     var SORTS = [
       { key: 'date',       label: 'Ближайшие сначала' },
@@ -164,22 +220,44 @@
     });
 
     /* состояние фильтров; восстановление после возврата из карточки */
-    var state = { month: null, date: null, dow: null, format: null, sort: 'date' };
+    var state = { month: null, date: null, dow: null, format: null, sort: 'date', preset: null };
     try {
       var saved = JSON.parse(sessionStorage.getItem('club1-afisha') || 'null');
       if (saved && months.indexOf(saved.month) !== -1) state = saved;
       if (!state.sort) state.sort = 'date';
+      if (!('preset' in state)) state.preset = null;
     } catch (e) {}
     if (!state.month){
       var cur = monthKey(todayISO());
       state.month = months.indexOf(cur) !== -1 ? cur : months[0];
     }
 
+    /* расширенные фильтры (дата · день недели · формат · сортировка)
+       свёрнуты по умолчанию; раскрыты, если в них уже что-то выбрано */
+    var advOpen = !!(state.date || state.dow !== null || state.format || state.sort !== 'date');
+    function renderAdv(){
+      if (advWrap) advWrap.hidden = !advOpen;
+      if (moreBtn) moreBtn.setAttribute('aria-expanded', String(advOpen));
+    }
+    if (moreBtn) moreBtn.addEventListener('click', function(){
+      advOpen = !advOpen;
+      renderAdv();
+    });
+
     function save(){
       try { sessionStorage.setItem('club1-afisha', JSON.stringify(state)); } catch (e) {}
     }
 
     function filtered(){
+      /* активный пресет заменяет собой месяц/дату/день недели,
+         формат продолжает работать поверх */
+      if (state.preset){
+        return events.filter(function(ev){
+          if (!inPreset(ev, state.preset)) return false;
+          if (state.format && ev.format !== state.format) return false;
+          return true;
+        });
+      }
       return events.filter(function(ev){
         if (monthKey(ev.date) !== state.month) return false;
         if (state.date && ev.date !== state.date) return false;
@@ -190,6 +268,16 @@
     }
 
     function render(){
+      /* пресеты: пилюля гаснет, если в диапазоне нет ни одного события */
+      if (presetWrap){
+        presetWrap.innerHTML = PRESETS.map(function(p){
+          var n = events.filter(function(ev){ return inPreset(ev, p.key); }).length;
+          return '<button class="pill" type="button" data-preset="' + p.key + '"' +
+                 (n ? '' : ' disabled title="Событий нет"') +
+                 ' aria-pressed="' + String(state.preset === p.key) + '">' + p.label + '</button>';
+        }).join('');
+      }
+
       var mi = months.indexOf(state.month);
       if (monthLabel){
         monthLabel.textContent = MONTHS_NOM[parseInt(state.month.slice(5), 10) - 1];
@@ -248,19 +336,27 @@
       save();
     }
 
+    if (presetWrap) presetWrap.addEventListener('click', function(e){
+      var b = e.target.closest('[data-preset]');
+      if (!b || b.disabled) return;
+      var key = b.getAttribute('data-preset');
+      state.preset = state.preset === key ? null : key;
+      if (state.preset){ state.date = null; state.dow = null; }   /* пресет заменяет ручные даты */
+      render();
+    });
     if (monthPrev) monthPrev.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
-      if (mi > 0){ state.month = months[mi - 1]; state.date = null; render(); }
+      if (mi > 0){ state.month = months[mi - 1]; state.date = null; state.preset = null; render(); }
     });
     if (monthNext) monthNext.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
-      if (mi < months.length - 1){ state.month = months[mi + 1]; state.date = null; render(); }
+      if (mi < months.length - 1){ state.month = months[mi + 1]; state.date = null; state.preset = null; render(); }
     });
     if (daysWrap) daysWrap.addEventListener('click', function(e){
       var b = e.target.closest('[data-date]');
       if (!b) return;
       state.date = state.date === b.getAttribute('data-date') ? null : b.getAttribute('data-date');
-      if (state.date) state.dow = null;      /* дата и день недели вместе не имеют смысла */
+      if (state.date){ state.dow = null; state.preset = null; }  /* дата и день недели вместе не имеют смысла */
       render();
     });
     if (dowWrap) dowWrap.addEventListener('click', function(e){
@@ -268,7 +364,7 @@
       if (!b) return;
       var dow = parseInt(b.getAttribute('data-dow'), 10);
       state.dow = state.dow === dow ? null : dow;
-      if (state.dow !== null) state.date = null;
+      if (state.dow !== null){ state.date = null; state.preset = null; }
       render();
     });
     if (fmtWrap) fmtWrap.addEventListener('click', function(e){
@@ -285,11 +381,12 @@
     });
     root.addEventListener('click', function(e){
       if (e.target.closest('[data-af-reset]')){
-        state.date = null; state.dow = null; state.format = null; state.sort = 'date';
+        state.date = null; state.dow = null; state.format = null; state.sort = 'date'; state.preset = null;
         render();
       }
     });
 
+    renderAdv();
     render();
   }
 
