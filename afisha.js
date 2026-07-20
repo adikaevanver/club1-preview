@@ -81,13 +81,30 @@
     var badge = '<div class="poster__badge">' + fmtShort(ev) +
                 '<small>' + (ev.time ? esc(ev.time) : DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
     var age = ev.age ? '<span class="poster__age">' + esc(ev.age) + '</span>' : '';
-    /* бейдж срочности — только из реальных данных: дата события или
-       подтверждённый sold-out; никаких выдуманных «мест осталось мало» */
+    /* бейдж срочности — только из реальных данных: дата/время события,
+       подтверждённый sold-out или объявленный перенос (ev.moved = ISO-дата);
+       никаких выдуманных «мест осталось мало» */
     var when = '';
     if (ev.soldOut){
       when = '<span class="poster__when poster__when--soldout">Билеты закончились</span>';
+    } else if (ev.moved){
+      when = '<span class="poster__when poster__when--soldout">Перенесено на ' +
+             ev.moved.slice(8, 10) + '.' + ev.moved.slice(5, 7) + '</span>';
     } else if (ev.date === todayISO()){
-      when = '<span class="poster__when">Сегодня' + (ev.time ? ' в ' + esc(ev.time) : '') + '</span>';
+      if (ev.time){
+        var mins = Math.round((new Date(ev.date + 'T' + ev.time + ':00') - new Date()) / 60000);
+        if (mins <= 0){
+          when = '<span class="poster__when">Идёт сейчас</span>';
+        } else if (mins <= 180){
+          var h = Math.floor(mins / 60), m = mins % 60;
+          when = '<span class="poster__when">Через ' +
+                 (h ? h + ' ч' + (m ? ' ' + m + ' мин' : '') : m + ' мин') + '</span>';
+        } else {
+          when = '<span class="poster__when">Сегодня в ' + esc(ev.time) + '</span>';
+        }
+      } else {
+        when = '<span class="poster__when">Сегодня</span>';
+      }
     } else if (ev.date === shiftISO(1)){
       when = '<span class="poster__when">Завтра' + (ev.time ? ' в ' + esc(ev.time) : '') + '</span>';
     }
@@ -113,13 +130,21 @@
     var cta;
     if (ev.soldOut){
       cta = '<a class="btn btn--ghost btn--sm" href="#contacts">Узнать о доп. датах</a>';
+    } else if (ev.moved){
+      cta = '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Смотреть новую дату</a>';
     } else if (ev.buy){
       cta = '<a class="btn btn--primary btn--sm" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>';
     } else {
       cta = '<a class="btn btn--primary btn--sm" href="#contacts">Узнать о старте продаж</a>';
     }
+    /* ссылка «Как считается цена» открывает модалку #priceModal, если она
+       есть на странице (делегированный Modal из script.js) */
     var price = ev.priceFrom
-      ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽</p>'
+      ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽' +
+        (document.getElementById('priceModal')
+          ? ' <button class="fee-link fee-link--sm" type="button" data-modal-open="priceModal">как считается цена</button>'
+          : '') +
+        '</p>'
       : '';
     return (
       '<article class="event-card" role="listitem">' +
@@ -151,6 +176,7 @@
     var presetWrap = root.querySelector('[data-af-presets]');
     var moreBtn    = root.querySelector('[data-af-more]');
     var advWrap    = root.querySelector('[data-af-advanced]');
+    var artWrap    = root.querySelector('[data-af-artists]');
     if (!track) return;
 
     /* быстрые пресеты дат (импульсная аудитория): диапазон [от, до] */
@@ -219,22 +245,30 @@
       if (months.indexOf(k) === -1) months.push(k);
     });
 
+    /* артисты и шоу — уникальные названия будущих событий,
+       в порядке ближайшей даты */
+    var artists = [];
+    events.forEach(function(ev){
+      if (artists.indexOf(ev.title) === -1) artists.push(ev.title);
+    });
+
     /* состояние фильтров; восстановление после возврата из карточки */
-    var state = { month: null, date: null, dow: null, format: null, sort: 'date', preset: null };
+    var state = { month: null, date: null, dow: null, format: null, sort: 'date', preset: null, artist: null };
     try {
       var saved = JSON.parse(sessionStorage.getItem('club1-afisha') || 'null');
       if (saved && months.indexOf(saved.month) !== -1) state = saved;
       if (!state.sort) state.sort = 'date';
       if (!('preset' in state)) state.preset = null;
+      if (!('artist' in state)) state.artist = null;
     } catch (e) {}
     if (!state.month){
       var cur = monthKey(todayISO());
       state.month = months.indexOf(cur) !== -1 ? cur : months[0];
     }
 
-    /* расширенные фильтры (дата · день недели · формат · сортировка)
+    /* расширенные фильтры (дата · день недели · формат · артист · сортировка)
        свёрнуты по умолчанию; раскрыты, если в них уже что-то выбрано */
-    var advOpen = !!(state.date || state.dow !== null || state.format || state.sort !== 'date');
+    var advOpen = !!(state.date || state.dow !== null || state.format || state.artist || state.sort !== 'date');
     function renderAdv(){
       if (advWrap) advWrap.hidden = !advOpen;
       if (moreBtn) moreBtn.setAttribute('aria-expanded', String(advOpen));
@@ -255,6 +289,7 @@
         return events.filter(function(ev){
           if (!inPreset(ev, state.preset)) return false;
           if (state.format && ev.format !== state.format) return false;
+          if (state.artist && ev.title !== state.artist) return false;
           return true;
         });
       }
@@ -263,6 +298,7 @@
         if (state.date && ev.date !== state.date) return false;
         if (state.dow !== null && dateOf(ev).getDay() !== state.dow) return false;
         if (state.format && ev.format !== state.format) return false;
+        if (state.artist && ev.title !== state.artist) return false;
         return true;
       });
     }
@@ -322,6 +358,17 @@
         fmtWrap.innerHTML = pills;
       }
 
+      /* артист или шоу */
+      if (artWrap){
+        var apills = '<button class="pill" type="button" data-artist=""' +
+                     ' aria-pressed="' + String(!state.artist) + '">Все артисты и шоу</button>';
+        artists.forEach(function(a){
+          apills += '<button class="pill" type="button" data-artist="' + esc(a) + '"' +
+                    ' aria-pressed="' + String(state.artist === a) + '">' + esc(a) + '</button>';
+        });
+        artWrap.innerHTML = apills;
+      }
+
       /* сортировка */
       if (sortWrap){
         sortWrap.innerHTML = SORTS.map(function(s){
@@ -379,9 +426,15 @@
       state.sort = b.getAttribute('data-sort');
       render();
     });
+    if (artWrap) artWrap.addEventListener('click', function(e){
+      var b = e.target.closest('[data-artist]');
+      if (!b) return;
+      state.artist = b.getAttribute('data-artist') || null;
+      render();
+    });
     root.addEventListener('click', function(e){
       if (e.target.closest('[data-af-reset]')){
-        state.date = null; state.dow = null; state.format = null; state.sort = 'date'; state.preset = null;
+        state.date = null; state.dow = null; state.format = null; state.sort = 'date'; state.preset = null; state.artist = null;
         render();
       }
     });
