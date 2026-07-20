@@ -28,7 +28,10 @@ window.CLUB1_FORMATS = {
   community: 'Комьюнити',
   burlesque: 'Burlesque & Stand Up',
   krashi:    'ВИА Ваши Краши',
-  special:   'Спецпроекты'
+  special:   'Спецпроекты',
+  /* женский стендап — фильтр появится в афише сам, как только у события
+     будет format:'zhensky' (решение о формате «Подруги» за арт-отделом) */
+  zhensky:   'Женский стендап'
 };
 
 window.CLUB1_EVENTS = [
