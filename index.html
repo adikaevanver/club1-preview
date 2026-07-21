@@ -46,7 +46,6 @@
     <nav class="main-nav" aria-label="Основная навигация">
       <ul class="main-nav__list">
         <li><a class="main-nav__link" href="index.html" aria-current="page">Главная</a></li>
-        <li><a class="main-nav__link" href="komiki.html">Комики</a></li>
         <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
         <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
         <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
@@ -66,7 +65,6 @@
   <!-- mobile drawer -->
   <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
     <a class="main-nav__link" href="index.html" aria-current="page">Главная</a>
-    <a class="main-nav__link" href="komiki.html">Комики</a>
     <a class="main-nav__link" href="formaty.html">Форматы</a>
     <a class="main-nav__link" href="eda.html">Еда и напитки</a>
     <a class="main-nav__link" href="o-klube.html">О клубе</a>
@@ -83,164 +81,25 @@
   <h1 class="sr-only">Клуб №1 — стендап-клуб на Новом Арбате. Афиша сольных концертов и билеты</h1>
 
   <!-- =================================================================
-       HERO — HEADLINER STRIP
+       HERO — БИЛЛБОРД-АФИША (правки созвона 2026-07-21)
+       Большая афиша на весь экран с автопрокруткой; слайды рендерит
+       afisha.js из events.js (продукты в приоритете продаж).
        ================================================================= -->
-  <section class="hero" aria-labelledby="hero-title">
-    <h2 id="hero-title" class="sr-only">Хедлайнеры клуба</h2>
-
-    <div class="glow glow--mag hero__glow-a" aria-hidden="true"></div>
-    <div class="glow glow--pur hero__glow-b" aria-hidden="true"></div>
+  <section class="hero-billboard" data-hero-slider aria-labelledby="hero-title">
+    <h2 id="hero-title" class="sr-only">Главные события клуба</h2>
 
     <!-- v4: магнит M1 «разгрузка» в лоб; локация уходит в саб-строку -->
     <p class="hero__lead">Два часа не думать о работе</p>
     <p class="hero__tagline">Стендап и шоу в двух шагах от вашего стола — Новый Арбат, 21</p>
 
-    <div class="headliners">
-      <button class="slider-arrow slider-arrow--prev" data-slider="headliners" data-dir="-1" aria-label="Предыдущие хедлайнеры">‹</button>
-
-      <!-- В ленте только комики, чьи настоящие фото есть в assets/comics.
-           Фото Гурама — из галереи фотографа в таблице маркетинга. Виктор
-           Комаров и Стас Старовойтов вернутся, когда придут их портреты.
-           Первыми — комики с ближайшими датами. -->
-      <div class="headliners__track" id="headlinersTrack" role="list">
-
-        <!-- 1 · Гурам Амарян — ближайший концерт 09.07 (фото: галерея из таблицы маркетинга) -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="solnik.html" aria-label="Гурам Амарян — ближайший концерт">
-            <div class="headliner__frame"><img src="assets/comics/guram.jpg" alt="Комик Гурам Амарян" loading="eager" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Гурам</span><b>Амарян</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- 2 · Маргарита Родина — женский стендап в верхней зоне карусели (v4) -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Маргарита Родина — о комике">
-            <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик и ведущая Маргарита Родина" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Маргарита</span><b>Родина</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- 3 · Илья Раевский — ближайший концерт 25.07 -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="raevskiy.html" aria-label="Илья Раевский — ближайший концерт">
-            <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Илья</span><b>Раевский</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- 3 · Расул Чабдаров — ближайший концерт 01.08 -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="solnik.html" aria-label="Расул Чабдаров — ближайший концерт">
-            <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Расул</span><b>Чабдаров</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- 3 · Павел Дедищев -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Павел Дедищев — о комике">
-            <div class="headliner__frame"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Павел</span><b>Дедищев</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- Юлия Македонская — вторая женская позиция в первой шестёрке (v4) -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Юлия Македонская — о комике">
-            <div class="headliner__frame"><img src="assets/comics/makedonskaya.jpg" alt="Комик Юлия Македонская" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Юлия</span><b>Македонская</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- Евгений Чебатков -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Евгений Чебатков — о комике">
-            <div class="headliner__frame"><img src="assets/comics/chebatkov.jpg" alt="Комик Евгений Чебатков" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Евгений</span><b>Чебатков</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- 5 · Илья Атлас -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Илья Атлас — о комике">
-            <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Илья</span><b>Атлас</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- 7 · Нурлан Бутаков -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="komiki.html" aria-label="Нурлан Бутаков — о комике">
-            <div class="headliner__frame"><img src="assets/comics/butakov.jpg" alt="Комик Нурлан Бутаков" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Нурлан</span><b>Бутаков</b></figcaption>
-          </a>
-        </figure>
-
-        <!-- closing outline panel -->
-        <figure class="headliner headliner--outro" role="listitem" aria-hidden="true">
-          <div class="headliner__frame">
-            <span class="outro__text"><span class="su">STANDUP</span><span class="sc">Сольный концерт</span></span>
-          </div>
-        </figure>
-
+    <div class="billboard">
+      <div class="billboard__viewport">
+        <div class="billboard__track" data-hb-track></div>
       </div>
-
-      <button class="slider-arrow slider-arrow--next" data-slider="headliners" data-dir="1" aria-label="Следующие хедлайнеры">›</button>
+      <button class="slider-arrow slider-arrow--prev billboard__arrow billboard__arrow--prev" type="button" data-hb-dir="-1" aria-label="Предыдущее событие">‹</button>
+      <button class="slider-arrow slider-arrow--next billboard__arrow billboard__arrow--next" type="button" data-hb-dir="1" aria-label="Следующее событие">›</button>
+      <div class="billboard__dots" data-hb-dots role="group" aria-label="Переход к слайду"></div>
     </div>
-  </section>
-
-
-  <!-- =================================================================
-       SOCIAL PROOF (v4) — живые отзывы гостей.
-       Источник: карточка клуба на Яндекс.Картах (org 66983171570,
-       телефон и сайт сверены с клубом). Цитаты — выдержки, у каждой
-       автор, оценка и дата; агрегат и ссылка рядом для проверки.
-       ================================================================= -->
-  <section class="proof" aria-labelledby="proof-title">
-    <div class="proof__head">
-      <h2 class="proof__title" id="proof-title">Что пишут о вечерах</h2>
-      <span class="proof__agg">
-        <b>4,3</b> из 5 · 725 отзывов на
-        <a href="https://yandex.ru/maps/org/club_1/66983171570/reviews/" target="_blank" rel="noopener">Яндекс.Картах</a>
-      </span>
-    </div>
-
-    <div class="proof__grid">
-
-      <article class="proof-card">
-        <span class="proof-card__stars" aria-label="Оценка 4 из 5">★★★★☆</span>
-        <p class="proof-card__text">«Забежала одна после рабочего дня и отлично переключилась. Обновлённый зал, качественный звук, уверенные выступления. Публика активно реагировала. Формат понравился, твёрдая четвёрка».</p>
-        <span class="proof-card__who">
-          <span class="proof-card__name">Екатерина Чумакова</span>
-          <span class="proof-card__src">Яндекс.Карты · январь 2026</span>
-        </span>
-      </article>
-
-      <article class="proof-card">
-        <span class="proof-card__stars" aria-label="Оценка 4 из 5">★★★★☆</span>
-        <p class="proof-card__text">«Искренне рада, что Club #1 в строю. После ремонта внутри стало заметно приятнее. Уровень выступлений высокий, несмотря на разницу стилей».</p>
-        <span class="proof-card__who">
-          <span class="proof-card__name">Марина Величко</span>
-          <span class="proof-card__src">Яндекс.Карты · январь 2026</span>
-        </span>
-      </article>
-
-      <article class="proof-card">
-        <span class="proof-card__stars" aria-label="Оценка 5 из 5">★★★★★</span>
-        <p class="proof-card__text">«Персонал приветливый, отзывчивый, улыбчивый. Зал очень просторный. Своя кухня, бар. Выступающих было слышно… впечатление осталось очень даже хорошее».</p>
-        <span class="proof-card__who">
-          <span class="proof-card__name">Мария Шатских</span>
-          <span class="proof-card__src">Яндекс.Карты · март 2026</span>
-        </span>
-      </article>
-
-    </div>
-
-    <!-- микро-статистика (v4): 150+ — заявление клуба с живого сайта,
-         10 000+ — база гостей билетного оператора 2023–2026 -->
-    <p class="proof__stats"><b>150+</b> шоу в год · <b>10 000+</b> гостей в базе клуба · <b>2</b> зала, до 550 гостей</p>
-
-    <p class="proof__note">Отзывы приведены выдержками, орфография авторов сохранена по смыслу. Полный список — на карточке клуба в Яндекс.Картах и в 2ГИС (4,4 из 5, 232 отзыва).</p>
   </section>
 
 
@@ -296,6 +155,169 @@
     </section>
 
   </div>
+
+  <!-- =================================================================
+       АРТИСТЫ — слайдер (созвон 21.07: блок спущен ниже, страница
+       «Комики» на стопе; карточки без своей страницы — без ссылок)
+       ================================================================= -->
+  <section class="hero artists-strip" aria-labelledby="artists-title">
+    <div class="glow glow--mag hero__glow-a" aria-hidden="true"></div>
+    <div class="glow glow--pur hero__glow-b" aria-hidden="true"></div>
+
+    <div class="afisha__head">
+      <h2 id="artists-title" class="afisha__title">Артисты клуба</h2>
+      <div class="rule" aria-hidden="true"></div>
+    </div>
+
+    <div class="headliners">
+      <button class="slider-arrow slider-arrow--prev" data-slider="headliners" data-dir="-1" aria-label="Предыдущие артисты">‹</button>
+
+      <!-- В ленте только комики, чьи настоящие фото есть в assets/comics.
+           Фото Гурама — из галереи фотографа в таблице маркетинга. Виктор
+           Комаров и Стас Старовойтов вернутся, когда придут их портреты.
+           Первыми — комики с ближайшими датами. -->
+      <div class="headliners__track" id="headlinersTrack" role="list">
+
+        <!-- 1 · Гурам Амарян — ближайший концерт 09.07 (фото: галерея из таблицы маркетинга) -->
+        <figure class="headliner" role="listitem">
+          <a class="headliner__link" href="solnik.html" aria-label="Гурам Амарян — ближайший концерт">
+            <div class="headliner__frame"><img src="assets/comics/guram.jpg" alt="Комик Гурам Амарян" loading="eager" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Гурам</span><b>Амарян</b></figcaption>
+          </a>
+        </figure>
+
+        <!-- 2 · Маргарита Родина — женский стендап в верхней зоне карусели (v4) -->
+        <figure class="headliner" role="listitem">
+          <span class="headliner__link" aria-label="Маргарита Родина — о комике">
+            <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик и ведущая Маргарита Родина" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Маргарита</span><b>Родина</b></figcaption>
+          </span>
+        </figure>
+
+        <!-- 3 · Илья Раевский — ближайший концерт 25.07 -->
+        <figure class="headliner" role="listitem">
+          <a class="headliner__link" href="raevskiy.html" aria-label="Илья Раевский — ближайший концерт">
+            <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Илья</span><b>Раевский</b></figcaption>
+          </a>
+        </figure>
+
+        <!-- 3 · Расул Чабдаров — ближайший концерт 01.08 -->
+        <figure class="headliner" role="listitem">
+          <a class="headliner__link" href="solnik.html" aria-label="Расул Чабдаров — ближайший концерт">
+            <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Расул</span><b>Чабдаров</b></figcaption>
+          </a>
+        </figure>
+
+        <!-- 3 · Павел Дедищев -->
+        <figure class="headliner" role="listitem">
+          <span class="headliner__link" aria-label="Павел Дедищев — о комике">
+            <div class="headliner__frame"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Павел</span><b>Дедищев</b></figcaption>
+          </span>
+        </figure>
+
+        <!-- Юлия Македонская — вторая женская позиция в первой шестёрке (v4) -->
+        <figure class="headliner" role="listitem">
+          <span class="headliner__link" aria-label="Юлия Македонская — о комике">
+            <div class="headliner__frame"><img src="assets/comics/makedonskaya.jpg" alt="Комик Юлия Македонская" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Юлия</span><b>Македонская</b></figcaption>
+          </span>
+        </figure>
+
+        <!-- Евгений Чебатков -->
+        <figure class="headliner" role="listitem">
+          <span class="headliner__link" aria-label="Евгений Чебатков — о комике">
+            <div class="headliner__frame"><img src="assets/comics/chebatkov.jpg" alt="Комик Евгений Чебатков" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Евгений</span><b>Чебатков</b></figcaption>
+          </span>
+        </figure>
+
+        <!-- 5 · Илья Атлас -->
+        <figure class="headliner" role="listitem">
+          <span class="headliner__link" aria-label="Илья Атлас — о комике">
+            <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Илья</span><b>Атлас</b></figcaption>
+          </span>
+        </figure>
+
+        <!-- 7 · Нурлан Бутаков -->
+        <figure class="headliner" role="listitem">
+          <span class="headliner__link" aria-label="Нурлан Бутаков — о комике">
+            <div class="headliner__frame"><img src="assets/comics/butakov.jpg" alt="Комик Нурлан Бутаков" loading="lazy" width="900" height="900"></div>
+            <figcaption class="headliner__name"><span>Нурлан</span><b>Бутаков</b></figcaption>
+          </span>
+        </figure>
+
+        <!-- closing outline panel -->
+        <figure class="headliner headliner--outro" role="listitem" aria-hidden="true">
+          <div class="headliner__frame">
+            <span class="outro__text"><span class="su">STANDUP</span><span class="sc">Сольный концерт</span></span>
+          </div>
+        </figure>
+
+      </div>
+
+      <button class="slider-arrow slider-arrow--next" data-slider="headliners" data-dir="1" aria-label="Следующие хедлайнеры">›</button>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       SOCIAL PROOF — живые отзывы гостей.
+       Источник: карточка клуба на Яндекс.Картах (org 66983171570,
+       телефон и сайт сверены с клубом). Созвон 21.07: блок в конце
+       страницы, агрегатный рейтинг не показываем, первым — отзыв 5★;
+       свежие пятёрки из Карт/2ГИС доберёт Сергей — подменить тексты.
+       ================================================================= -->
+  <section class="proof" aria-labelledby="proof-title">
+    <div class="proof__head">
+      <h2 class="proof__title" id="proof-title">Что пишут о вечерах</h2>
+      <span class="proof__agg">
+        отзывы гостей на
+        <a href="https://yandex.ru/maps/org/club_1/66983171570/reviews/" target="_blank" rel="noopener">Яндекс.Картах</a>
+      </span>
+    </div>
+
+    <div class="proof__grid">
+
+      <article class="proof-card">
+        <span class="proof-card__stars" aria-label="Оценка 5 из 5">★★★★★</span>
+        <p class="proof-card__text">«Персонал приветливый, отзывчивый, улыбчивый. Зал очень просторный. Своя кухня, бар. Выступающих было слышно… впечатление осталось очень даже хорошее».</p>
+        <span class="proof-card__who">
+          <span class="proof-card__name">Мария Шатских</span>
+          <span class="proof-card__src">Яндекс.Карты · март 2026</span>
+        </span>
+      </article>
+
+      <article class="proof-card">
+        <span class="proof-card__stars" aria-label="Оценка 4 из 5">★★★★☆</span>
+        <p class="proof-card__text">«Забежала одна после рабочего дня и отлично переключилась. Обновлённый зал, качественный звук, уверенные выступления. Публика активно реагировала. Формат понравился, твёрдая четвёрка».</p>
+        <span class="proof-card__who">
+          <span class="proof-card__name">Екатерина Чумакова</span>
+          <span class="proof-card__src">Яндекс.Карты · январь 2026</span>
+        </span>
+      </article>
+
+      <article class="proof-card">
+        <span class="proof-card__stars" aria-label="Оценка 4 из 5">★★★★☆</span>
+        <p class="proof-card__text">«Искренне рада, что Club #1 в строю. После ремонта внутри стало заметно приятнее. Уровень выступлений высокий, несмотря на разницу стилей».</p>
+        <span class="proof-card__who">
+          <span class="proof-card__name">Марина Величко</span>
+          <span class="proof-card__src">Яндекс.Карты · январь 2026</span>
+        </span>
+      </article>
+
+    </div>
+
+    <!-- микро-статистика: 150+ — заявление клуба с живого сайта; строка
+         «гостей в базе» снята по созвону 21.07 (цифра для спонсоров) -->
+    <p class="proof__stats"><b>150+</b> шоу в год · <b>2</b> зала, до 550 гостей</p>
+
+    <p class="proof__note">Отзывы приведены выдержками, орфография авторов сохранена по смыслу. Полный список — на карточке клуба в Яндекс.Картах и в 2ГИС.</p>
+  </section>
+
 
   <!-- =================================================================
        ФИНАЛЬНЫЙ CTA (v4) — перед футером

@@ -126,6 +126,8 @@
   .fmt-poster--pur{--p1:#6b2fb0;--p2:#140a26}
   .fmt-poster--green{--p1:#3f7d3a;--p2:#0e1a0d}
   .fmt-poster--gold{--p1:#c9772a;--p2:#2a1608}
+  .fmt-poster--mag{--p1:#b02f63;--p2:#260a14}
+  .fmt-poster--sky{--p1:#2f7fb0;--p2:#0a1626}
   .fmt-poster__standup{
     font-family:var(--display);font-weight:900;font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:.85;
     letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.3px rgba(255,255,255,.9);
@@ -187,7 +189,6 @@
     <nav class="main-nav" aria-label="Основная навигация">
       <ul class="main-nav__list">
         <li><a class="main-nav__link" href="index.html">Главная</a></li>
-        <li><a class="main-nav__link" href="komiki.html">Комики</a></li>
         <li><a class="main-nav__link" href="formaty.html" aria-current="page">Форматы</a></li>
         <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
         <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
@@ -207,7 +208,6 @@
   <!-- mobile drawer -->
   <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
     <a class="main-nav__link" href="index.html">Главная</a>
-    <a class="main-nav__link" href="komiki.html">Комики</a>
     <a class="main-nav__link" href="formaty.html" aria-current="page">Форматы</a>
     <a class="main-nav__link" href="eda.html">Еда и напитки</a>
     <a class="main-nav__link" href="o-klube.html">О клубе</a>
@@ -256,9 +256,11 @@
     <article class="format-row" data-format-next="ok">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/posters/ok-wide.jpg" alt="Афиша: Проверка материала — Опытные комики" loading="eager" width="1600" height="900">
+          <div class="fmt-poster fmt-poster--sky" role="img" aria-label="Фирменная афиша формата «От опытных комиков»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">От опытных комиков</b>
+          </div>
         </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 01</p>
@@ -283,9 +285,11 @@
     <article class="format-row" data-format-next="solniki">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/posters/guram-0907-wide.jpg" alt="Афиша: Гурам Амарян — сольный концерт" loading="lazy" width="1600" height="900">
+          <div class="fmt-poster fmt-poster--mag" role="img" aria-label="Фирменная афиша формата «Сольники»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">Сольники</b>
+          </div>
         </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 02</p>
@@ -311,9 +315,11 @@
     <article class="format-row" data-format-next="burlesque">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/posters/burlesk-1007-wide.jpg" alt="Афиша: Burlesque and Stand Up" loading="lazy" width="1600" height="900">
+          <div class="fmt-poster fmt-poster--pur" role="img" aria-label="Фирменная афиша формата «Burlesque & Stand Up»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">Burlesque & Stand Up</b>
+          </div>
         </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 03</p>
@@ -338,9 +344,11 @@
     <article class="format-row" data-format-next="krashi">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <img src="assets/posters/krashi-1007-wide.jpg" alt="Афиша: Александр Волобуев и ВИА Ваши Краши" loading="lazy" width="1600" height="900">
+          <div class="fmt-poster fmt-poster--gold" role="img" aria-label="Фирменная афиша формата «ВИА Ваши Краши»">
+            <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
+            <b class="fmt-poster__name">ВИА Ваши Краши</b>
+          </div>
         </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 04</p>
@@ -370,7 +378,6 @@
             <b class="fmt-poster__name">В большом городе</b>
           </div>
         </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 05</p>
@@ -401,7 +408,6 @@
             <b class="fmt-poster__name">Давай переиграем</b>
           </div>
         </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 06</p>
@@ -432,7 +438,6 @@
             <b class="fmt-poster__name">Комьюнити</b>
           </div>
         </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 07</p>
@@ -462,7 +467,6 @@
             <b class="fmt-poster__name">Концерты</b>
           </div>
         </div>
-        <span class="badge1 fmt-badge" aria-hidden="true"><b>1</b></span>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 08</p>

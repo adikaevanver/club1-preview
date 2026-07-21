@@ -161,6 +161,133 @@
   }
 
   /* =================================================================
+     0 · Хиро-биллборд  [data-hero-slider]  (правки созвона 2026-07-21)
+     ----------------------------------------------------------------
+     Большая афиша на весь экран с автопрокруткой вместо ленты фото.
+     Слайды — продукты, которые продаём в первую очередь: ближайшие
+     события всех форматов, кроме проверок материала («Опытные комики»),
+     по одному на продукт (dedup по названию), максимум 6. Настоящая
+     афиша → картинка + её же размытая подложка; нет афиши → фирменный
+     CSS-постер. Дату, время и 18+ рисует сайт (афиши приходят чистыми).
+     Автопрокрутка 6 с; пауза на hover/фокусе/касании; при
+     prefers-reduced-motion автопрокрутки нет.
+     ================================================================= */
+  function heroEvents(){
+    var seen = {}, out = [];
+    upcoming().forEach(function(ev){
+      if (ev.format === 'ok') return;          /* проверки — не хиро-продукт */
+      if (ev.soldOut || ev.moved) return;
+      if (seen[ev.title]) return;
+      seen[ev.title] = true;
+      out.push(ev);
+    });
+    /* сольники — первыми (созвон: крупные продукты в приоритете),
+       внутри групп порядок по дате сохраняется */
+    var solo   = out.filter(function(ev){ return ev.format === 'solniki'; });
+    var others = out.filter(function(ev){ return ev.format !== 'solniki'; });
+    return solo.concat(others).slice(0, 6);
+  }
+
+  function heroSlideHTML(ev, i){
+    var art;
+    if (ev.poster){
+      art = '<img class="bb-slide__poster" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '"' +
+            (i ? ' loading="lazy"' : '') + ' width="800" height="800">';
+    } else {
+      art =
+        '<div class="poster poster--' + esc(ev.tone || 'mag') + ' bb-slide__cssposter">' +
+          (ev.photo ? '<img class="poster__photo" src="' + esc(ev.photo) + '" alt="" aria-hidden="true" loading="lazy" width="900" height="900"><div class="poster__tint"></div>' : '') +
+          '<img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">' +
+          '<div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">' + esc(ev.kind || '') + '</span></div>' +
+          '<div class="poster__name"><b>' + esc(ev.title) + '</b></div>' +
+        '</div>';
+    }
+    var bg = ev.poster
+      ? '<div class="bb-slide__bg" style="background-image:url(\'' + esc(ev.poster) + '\')" aria-hidden="true"></div>'
+      : '<div class="bb-slide__bg bb-slide__bg--brand" aria-hidden="true"></div>';
+    var when = fmtHuman(ev) + (ev.time ? ' · ' + esc(ev.time) : '') + ' · Новый Арбат, 21';
+    var age = ev.age ? '<span class="bb-slide__age">' + esc(ev.age) + '</span>' : '';
+    var price = ev.priceFrom
+      ? '<p class="bb-slide__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽</p>'
+      : '';
+    var cta = ev.buy
+      ? '<a class="btn btn--primary" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
+      : '<a class="btn btn--primary" href="#contacts">Узнать о старте продаж</a>';
+    return (
+      '<article class="bb-slide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
+        bg +
+        '<div class="bb-slide__inner">' +
+          '<div class="bb-slide__info">' +
+            '<p class="bb-slide__kind">' + esc(FORMATS[ev.format] || ev.kind || '') + '</p>' +
+            '<h3 class="bb-slide__title">' + esc(ev.title) + '</h3>' +
+            '<p class="bb-slide__when">' + when + age + '</p>' +
+            price +
+            '<div class="bb-slide__actions">' + cta +
+              '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' +
+            '</div>' +
+          '</div>' +
+          '<div class="bb-slide__art">' + art + '</div>' +
+        '</div>' +
+      '</article>'
+    );
+  }
+
+  function initHeroSlider(root){
+    var list = heroEvents();
+    if (!list.length){ root.hidden = true; return; }
+
+    var track = root.querySelector('[data-hb-track]');
+    var dots  = root.querySelector('[data-hb-dots]');
+    if (!track) return;
+    track.innerHTML = list.map(heroSlideHTML).join('');
+    if (dots){
+      dots.innerHTML = list.map(function(ev, i){
+        return '<button class="bb-dot" type="button" data-hb-goto="' + i + '"' +
+               ' aria-label="Слайд ' + (i + 1) + ': ' + esc(ev.title) + '"' +
+               ' aria-pressed="' + String(i === 0) + '"></button>';
+      }).join('');
+    }
+
+    var idx = 0, timer = null, paused = false;
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(i){
+      idx = (i + list.length) % list.length;
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      if (dots){
+        Array.prototype.forEach.call(dots.children, function(d, j){
+          d.setAttribute('aria-pressed', String(j === idx));
+        });
+      }
+    }
+    function tick(){ if (!paused) show(idx + 1); }
+    function play(){
+      if (reduceMotion || list.length < 2 || timer) return;
+      timer = setInterval(tick, 6000);
+    }
+    function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+
+    root.addEventListener('click', function(e){
+      var go = e.target.closest('[data-hb-goto]');
+      if (go){ show(parseInt(go.getAttribute('data-hb-goto'), 10)); return; }
+      var arrow = e.target.closest('[data-hb-dir]');
+      if (arrow){ show(idx + parseInt(arrow.getAttribute('data-hb-dir'), 10)); }
+    });
+    ['mouseenter', 'focusin', 'touchstart'].forEach(function(evName){
+      root.addEventListener(evName, function(){ paused = true; }, {passive: true});
+    });
+    ['mouseleave', 'focusout'].forEach(function(evName){
+      root.addEventListener(evName, function(){ paused = false; });
+    });
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) stop(); else play();
+    });
+
+    show(0);
+    play();
+  }
+
+  /* =================================================================
      1 · Полная афиша с фильтрами  [data-afisha]
      ================================================================= */
   function initAfisha(root){
@@ -559,6 +686,7 @@
 
   /* --- boot ---------------------------------------------------------- */
   function boot(){
+    document.querySelectorAll('[data-hero-slider]').forEach(initHeroSlider);
     document.querySelectorAll('[data-afisha]').forEach(initAfisha);
     document.querySelectorAll('[data-upcoming]').forEach(initUpcoming);
     initFormatCards();
