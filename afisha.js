@@ -80,7 +80,8 @@
   function cardHTML(ev){
     var badge = '<div class="poster__badge">' + fmtShort(ev) +
                 '<small>' + (ev.time ? esc(ev.time) : DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
-    var age = ev.age ? '<span class="poster__age">' + esc(ev.age) + '</span>' : '';
+    /* 18+ рисует сайт на каждой афише (созвон 21.07: алкоголь ⇒ всё 18+) */
+    var age = '<span class="poster__age">' + esc(ev.age || '18+') + '</span>';
     /* бейдж срочности — только из реальных данных: дата/время события,
        подтверждённый sold-out или объявленный перенос (ev.moved = ISO-дата);
        никаких выдуманных «мест осталось мало» */
@@ -108,20 +109,21 @@
     } else if (ev.date === shiftISO(1)){
       when = '<span class="poster__when">Завтра' + (ev.time ? ' в ' + esc(ev.time) : '') + '</span>';
     }
-    badge += when;
+    /* дата — слева сверху, «завтра/сегодня» — справа сверху, 18+ — справа
+       снизу; логотип на CSS-постер не ставим (решение созвона 21.07: афиши
+       чистые, служебное рисует сайт) */
     var poster;
     if (ev.poster){
       poster =
         '<div class="poster poster--art">' +
           '<img class="poster__full" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '" loading="lazy" width="800" height="800">' +
-          badge +
+          badge + when + age +
         '</div>';
     } else {
       poster =
         '<div class="poster poster--' + esc(ev.tone || 'mag') + '">' +
           (ev.photo ? '<img class="poster__photo" src="' + esc(ev.photo) + '" alt="" aria-hidden="true" loading="lazy" width="900" height="900"><div class="poster__tint"></div>' : '') +
-          badge +
-          '<img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">' +
+          badge + when +
           '<div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">' + esc(ev.kind || '') + '</span></div>' +
           '<div class="poster__name"><b>' + esc(ev.title) + '</b></div>' +
           age +
@@ -197,7 +199,6 @@
       art =
         '<div class="poster poster--' + esc(ev.tone || 'mag') + ' bb-slide__cssposter">' +
           (ev.photo ? '<img class="poster__photo" src="' + esc(ev.photo) + '" alt="" aria-hidden="true" loading="lazy" width="900" height="900"><div class="poster__tint"></div>' : '') +
-          '<img class="poster__logo" src="assets/logo-white.svg" alt="" aria-hidden="true">' +
           '<div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">' + esc(ev.kind || '') + '</span></div>' +
           '<div class="poster__name"><b>' + esc(ev.title) + '</b></div>' +
         '</div>';
