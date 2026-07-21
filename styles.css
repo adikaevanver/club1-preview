@@ -60,7 +60,7 @@
   --r:16px;                  /* card radius */
   --r-sm:10px;               /* control radius */
   --header-h:88px;
-  --maxw:1320px;
+  --maxw:1440px;
   --gutter:clamp(18px, 5vw, 64px);
 
   --ease:cubic-bezier(.22,.61,.36,1);
@@ -960,7 +960,9 @@ main.container{overflow-x:clip}
 
 /* ---- hero billboard ------------------------------------------------ */
 .hero-billboard{position:relative;padding-top:26px;padding-bottom:8px}
-.billboard{position:relative;margin-top:18px;border-radius:var(--r);overflow:hidden;background:var(--ink-2)}
+/* фидбек 21.07: биллборд от края до края экрана — большие мониторы
+   больше не показывают пустые поля вокруг главной афиши */
+.billboard{position:relative;margin-top:18px;overflow:hidden;background:var(--ink-2)}
 .billboard__viewport{overflow:hidden}
 .billboard__track{display:flex;transition:transform .55s var(--ease);will-change:transform}
 
@@ -979,6 +981,7 @@ main.container{overflow-x:clip}
 }
 .bb-slide__inner{
   position:relative;z-index:1;
+  max-width:var(--maxw);margin-inline:auto;
   display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,440px);
   gap:clamp(20px,4vw,56px);align-items:center;
   padding:clamp(24px,4vw,54px) clamp(20px,4.5vw,60px);
