@@ -249,19 +249,40 @@
       }).join('');
     }
 
+    /* трек — нативный горизонтальный скролл со снапом: свайп пальцем на
+       телефоне и двумя пальцами по трекпаду работают сами; стрелки, точки
+       и автопрокрутка ездят через scrollTo по тому же скроллу */
     var idx = 0, timer = null, paused = false;
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function show(i){
-      idx = (i + list.length) % list.length;
-      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
-      if (dots){
-        Array.prototype.forEach.call(dots.children, function(d, j){
-          d.setAttribute('aria-pressed', String(j === idx));
-        });
-      }
+    function syncDots(){
+      if (!dots) return;
+      Array.prototype.forEach.call(dots.children, function(d, j){
+        d.setAttribute('aria-pressed', String(j === idx));
+      });
     }
-    function tick(){ if (!paused) show(idx + 1); }
+    function goTo(i, instant){
+      idx = (i + list.length) % list.length;
+      track.scrollTo({
+        left: idx * track.clientWidth,
+        behavior: (instant || reduceMotion) ? 'auto' : 'smooth'
+      });
+      syncDots();
+    }
+
+    /* индекс следует за живым скроллом (свайп/трекпад), точки не отстают */
+    var scrollT = null;
+    track.addEventListener('scroll', function(){
+      if (scrollT) clearTimeout(scrollT);
+      scrollT = setTimeout(function(){
+        var i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+        idx = Math.max(0, Math.min(list.length - 1, i));
+        syncDots();
+      }, 80);
+    }, {passive: true});
+    window.addEventListener('resize', function(){ goTo(idx, true); });
+
+    function tick(){ if (!paused) goTo(idx + 1); }
     function play(){
       if (reduceMotion || list.length < 2 || timer) return;
       timer = setInterval(tick, 6000);
@@ -270,11 +291,12 @@
 
     root.addEventListener('click', function(e){
       var go = e.target.closest('[data-hb-goto]');
-      if (go){ show(parseInt(go.getAttribute('data-hb-goto'), 10)); return; }
+      if (go){ goTo(parseInt(go.getAttribute('data-hb-goto'), 10)); return; }
       var arrow = e.target.closest('[data-hb-dir]');
-      if (arrow){ show(idx + parseInt(arrow.getAttribute('data-hb-dir'), 10)); }
+      if (arrow){ goTo(idx + parseInt(arrow.getAttribute('data-hb-dir'), 10)); }
     });
-    ['mouseenter', 'focusin', 'touchstart'].forEach(function(evName){
+    /* руками начали листать — автопрокрутка не дёргает обратно */
+    ['mouseenter', 'focusin', 'touchstart', 'pointerdown', 'wheel'].forEach(function(evName){
       root.addEventListener(evName, function(){ paused = true; }, {passive: true});
     });
     ['mouseleave', 'focusout'].forEach(function(evName){
@@ -284,7 +306,7 @@
       if (document.hidden) stop(); else play();
     });
 
-    show(0);
+    goTo(0, true);
     play();
   }
 

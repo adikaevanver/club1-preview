@@ -964,9 +964,16 @@ main.container{overflow-x:clip}
    больше не показывают пустые поля вокруг главной афиши */
 .billboard{position:relative;margin-top:18px;overflow:hidden;background:var(--ink-2)}
 .billboard__viewport{overflow:hidden}
-.billboard__track{display:flex;transition:transform .55s var(--ease);will-change:transform}
+/* нативный скролл со снапом: свайп на телефоне и трекпад на маке */
+.billboard__track{
+  display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.billboard__track::-webkit-scrollbar{display:none}
 
-.bb-slide{position:relative;flex:0 0 100%;min-width:0;overflow:hidden;isolation:isolate}
+.bb-slide{position:relative;flex:0 0 100%;min-width:0;overflow:hidden;isolation:isolate;
+  scroll-snap-align:start;scroll-snap-stop:always}
 .bb-slide__bg{
   position:absolute;inset:-44px;z-index:0;
   background-size:cover;background-position:center 30%;
@@ -1036,9 +1043,6 @@ main.container{overflow-x:clip}
   .billboard__arrow{width:38px;height:38px;top:32%}
   .billboard__arrow--prev{left:8px}
   .billboard__arrow--next{right:8px}
-}
-@media (prefers-reduced-motion:reduce){
-  .billboard__track{transition:none}
 }
 
 /* ---- артисты ниже афиши -------------------------------------------- */
