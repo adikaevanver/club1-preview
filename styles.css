@@ -1075,19 +1075,26 @@ html{overflow-x:clip}
   html{overflow-x:hidden}
 }
 
-/* ---- служебные страницы (возврат / конфиденциальность / оферта) ---- */
-.legal{max-width:820px;padding-top:clamp(28px,5vw,64px);padding-bottom:64px}
-.legal h1{
+/* ---- служебные страницы (возврат / конфиденциальность / оферта) ----
+   класс .legal-page, не .legal: p.legal в футере — другой компонент,
+   коллизия классов растягивала футер (фидбек Анвера 21.07 вечер) */
+.legal-page{max-width:820px;padding-top:clamp(28px,5vw,64px);padding-bottom:64px}
+.legal-page h1{
   font-family:var(--display);font-weight:800;text-transform:uppercase;
   font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.05;
 }
-.legal h2{
+.legal-page h2{
   margin-top:34px;font-family:var(--display);font-weight:700;
   text-transform:uppercase;font-size:clamp(1rem,2vw,1.25rem);
 }
-.legal p, .legal li{margin-top:12px;color:var(--muted);line-height:1.6}
-.legal li{padding-left:18px;position:relative}
-.legal li::before{content:"—";position:absolute;left:0;color:var(--muted-2)}
-.legal a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
-.legal .rule{margin:22px 0 6px}
-.legal .legal-note{font-size:.85rem;color:var(--muted-2)}
+.legal-page p, .legal-page li{margin-top:12px;color:var(--muted);line-height:1.6}
+.legal-page li{padding-left:18px;position:relative}
+.legal-page li::before{content:"—";position:absolute;left:0;color:var(--muted-2)}
+.legal-page a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.legal-page .rule{margin:22px 0 6px}
+.legal-page .legal-note{font-size:.85rem;color:var(--muted-2)}
+
+/* нижняя полоска футера: реквизиты и сбор одной мелкой строкой,
+   колонка «Контакты» больше не тянется вниз */
+.footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid var(--hairline)}
+.footer-bottom p{font-size:.78rem;color:var(--muted-2);line-height:1.55}
