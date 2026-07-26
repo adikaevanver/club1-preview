@@ -1122,6 +1122,10 @@ html{overflow-x:clip}
 .afisha__head--section{margin:44px 0 0;scroll-margin-top:calc(var(--header-h) + 12px)}
 .afisha__head--section + .filters{padding-top:22px}
 
+/* самостоятельная страница афиши: заголовок-h1 крупнее, отступ от шапки */
+.afisha__head--page{margin-top:clamp(28px,4vw,52px)}
+.afisha__head--page .afisha__title{font-size:clamp(1.35rem,3.2vw,2.15rem)}
+
 /* верхний ряд фильтров: пресеты слева, поиск справа */
 .filters__row--top{justify-content:space-between}
 .filters__presets{display:flex;align-items:center;gap:14px;flex-wrap:wrap}

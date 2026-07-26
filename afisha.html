@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
+<title>Афиша — Клуб №1 · CLUB 1 на Новом Арбате · билеты на стендап</title>
+
+<meta name="description" content="Афиша стендап-клуба Клуб №1 (CLUB 1) на Новом Арбате, 21: сольные концерты, Stand Up в большом городе, Burlesque & Stand Up и спецпроекты. Даты, цены и билеты онлайн.">
+<meta name="theme-color" content="#0a0810">
+<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/afisha.html">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Клуб №1 · CLUB 1">
+<meta property="og:title" content="Афиша Клуба №1 — стендап на Новом Арбате">
+<meta property="og:description" content="Сольные концерты, сборные шоу и спецпроекты в центре Москвы. Выбирайте дату и бронируйте места.">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/afisha.html">
+<meta property="og:image" content="assets/comics/guram.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- бегущая строка для отмен/переносов: включается в assets/data/events.js
+     (CLUB1_TICKER), рендерит afisha.js; выключена — остаётся скрытой -->
+<div class="ticker" data-ticker hidden aria-live="polite"></div>
+
+<!-- =====================================================================
+     SITE HEADER  (reused verbatim on every sub-page)
+     ===================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container site-header__inner">
+
+    <a class="logo" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+      <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+    </a>
+
+    <nav class="main-nav" aria-label="Основная навигация">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="index.html">Главная</a></li>
+        <li><a class="main-nav__link" href="afisha.html" aria-current="page">Афиша</a></li>
+        <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
+        <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
+        <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
+        <li><a class="main-nav__link" href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary" href="#afisha">Смотреть афишу</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
+    <a class="main-nav__link" href="index.html">Главная</a>
+    <a class="main-nav__link" href="afisha.html" aria-current="page">Афиша</a>
+    <a class="main-nav__link" href="formaty.html">Форматы</a>
+    <a class="main-nav__link" href="eda.html">Еда и напитки</a>
+    <a class="main-nav__link" href="o-klube.html">О клубе</a>
+    <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
+    <div class="mobile-menu__foot">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary btn--block" href="#afisha">Смотреть афишу</a>
+    </div>
+  </nav>
+</header>
+
+
+<main id="main">
+  <div class="container">
+
+  <!-- =================================================================
+       АФИША — самостоятельная страница (дополнительная правка Саши,
+       24.07): открывается по прямой ссылке, живёт независимо от блока
+       на главной. Заголовок выше фильтров; карточки ведут прямыми
+       ссылками на страницы событий. Данные и рендер — events.js +
+       afisha.js, те же, что на главной.
+       ================================================================= -->
+  <div data-afisha>
+
+    <div class="afisha__head afisha__head--section afisha__head--page" id="afisha">
+      <h1 id="afisha-title" class="afisha__title">Афиша Клуба №1 на Новом Арбате</h1>
+      <div class="rule" aria-hidden="true"></div>
+    </div>
+
+    <section class="filters" aria-labelledby="filters-title">
+      <h2 id="filters-title" class="sr-only">Поиск и фильтр афиши по датам и форматам</h2>
+
+      <div class="filters__row filters__row--top">
+        <div class="filters__presets" data-af-presets role="group" aria-label="Быстрый выбор даты"></div>
+        <label class="af-search">
+          <input type="search" data-af-search placeholder="Поиск по мероприятиям" aria-label="Поиск по мероприятиям" autocomplete="off">
+        </label>
+      </div>
+
+      <div class="datebar">
+        <div class="datebar__nav">
+          <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
+          <span class="datebar__month" data-af-month></span>
+          <button class="datebar__arrow" data-af-next type="button" aria-label="Следующий месяц">›</button>
+        </div>
+        <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
+      </div>
+
+      <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
+
+      <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
+    </section>
+
+    <section class="afisha" aria-labelledby="afisha-title">
+      <div class="afisha__track afisha__track--grid" id="afishaTrack" data-af-track role="list"></div>
+
+      <div class="afisha__empty" data-af-empty hidden>
+        <p>По выбранным фильтрам событий нет.</p>
+        <button class="btn btn--ghost" type="button" data-af-reset>Сбросить фильтры</button>
+      </div>
+
+      <div class="afisha__more">
+        <button class="btn btn--ghost" type="button" data-af-load hidden>Загрузить ещё</button>
+      </div>
+    </section>
+
+  </div>
+
+  </div><!-- /.container -->
+</main>
+
+
+<!-- =====================================================================
+     SITE FOOTER  (reused verbatim on every sub-page)
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+
+    <div class="footer-brand">
+      <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+        <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+      </a>
+      <p>Живой стендап в центре Москвы, на Новом Арбате, 21. Федеральные комики, камерный зал, настоящие эмоции.</p>
+    </div>
+
+    <div class="footer-col" id="contacts">
+      <h3>Контакты</h3>
+      <ul>
+        <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:Club1promo@yandex.ru">Club1promo@yandex.ru</a></li>
+        <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Информация</h3>
+      <ul>
+        <li><a href="vozvrat.html">Возврат билетов</a></li>
+        <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        <li><a href="oferta.html">Договор оферты</a></li>
+        <li><a href="arenda.html">Аренда площадки</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-social-col">
+      <h3>Мы в соцсетях</h3>
+      <div class="social">
+        <a class="social-btn" href="https://vk.com/" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+        </a>
+        <a class="social-btn" href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+    <p>ООО «Продюсерский центр Клуб Номер Один» · ИНН 9704127352 · К счёту за еду и напитки добавляется сервисный сбор 10%, билеты сбором не облагаются.</p>
+  </div>
+</footer>
+
+
+<script>
+/* ---------------------------------------------------------------------
+   Club №1 — foundation interactions (vanilla, no deps)
+   1. header ink-on-scroll   2. burger drawer
+   --------------------------------------------------------------------- */
+(function(){
+  "use strict";
+
+  /* 1 · sticky header goes ink once the page scrolls */
+  var header = document.getElementById('siteHeader');
+  var onScroll = function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* 2 · burger / mobile drawer */
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mobileMenu');
+  var setMenu = function(open){
+    menu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', function(){
+    setMenu(!menu.classList.contains('is-open'));
+  });
+  menu.addEventListener('click', function(e){
+    if (e.target.closest('a')) setMenu(false);
+  });
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+  });
+})();
+</script>
+
+<!-- shared interactive components -->
+<script src="script.js" defer></script>
+
+<!-- живая афиша: данные + рендер -->
+<script src="assets/data/events.js" defer></script>
+<script src="afisha.js" defer></script>
+
+</body>
+</html>
