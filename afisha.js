@@ -29,6 +29,8 @@
 
   var MONTHS_NOM = ['Январь','Февраль','Март','Апрель','Май','Июнь',
                     'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+  var MONTHS_GEN = ['января','февраля','марта','апреля','мая','июня',
+                    'июля','августа','сентября','октября','ноября','декабря'];
   var DAYS_SHORT = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
   var DAYS_FULL  = ['Воскресенье','Понедельник','Вторник','Среда',
                     'Четверг','Пятница','Суббота'];
@@ -184,9 +186,33 @@
 
   /* макет Максима 22.07 (ранний вариант выбран на созвоне 24.07 как
      основа): текст рядом с афишей не дублируется — афиша сама несёт
-     информацию, на слайде остаются даты, маркировка 18+ и кнопки */
+     информацию, на слайде остаются даты, маркировка 18+ и кнопки.
+     Есть широкая афиша (ev.wide) → она фоном всего слайда, как в
+     референсе; нет — квадратная афиша по центру на размытой подложке */
   function heroSlideHTML(item, i){
     var ev = item.ev;
+    var chips = item.dates.slice(0, 2).map(function(d){
+      return '<span class="bb-chip"><b>' + fmtShort(d) + '</b>' +
+             (d.time ? '<small>' + esc(d.time) + '</small>' : '') + '</span>';
+    }).join('');
+    var cta = ev.buy
+      ? '<a class="btn btn--primary" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
+      : '<a class="btn btn--primary" href="#contacts">Узнать о старте продаж</a>';
+    var actions = '<div class="bb-slide__actions">' +
+                    '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
+                  '</div>';
+    if (ev.wide){
+      return (
+        '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
+          '<div class="bb-slide__bg bb-slide__bg--wide" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
+          '<div class="bb-slide__stage">' +
+            '<div class="bb-slide__chips">' + chips + '</div>' +
+            '<span class="bb-slide__age bb-slide__age--corner">' + esc(ev.age || '18+') + '</span>' +
+            actions +
+          '</div>' +
+        '</article>'
+      );
+    }
     var art;
     if (ev.poster){
       art = '<img class="bb-slide__poster" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '"' +
@@ -202,28 +228,87 @@
     var bg = ev.poster
       ? '<div class="bb-slide__bg" style="background-image:url(\'' + esc(ev.poster) + '\')" aria-hidden="true"></div>'
       : '<div class="bb-slide__bg bb-slide__bg--brand" aria-hidden="true"></div>';
-    var chips = item.dates.slice(0, 2).map(function(d){
-      return '<span class="bb-chip"><b>' + fmtShort(d) + '</b>' +
-             (d.time ? '<small>' + esc(d.time) + '</small>' : '') + '</span>';
-    }).join('');
     /* 18+ — в нижнем левом углу самой афиши (рамка), не сцены слайда */
     var age = '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>';
     art = '<div class="bb-slide__frame">' + art + age + '</div>';
-    var cta = ev.buy
-      ? '<a class="btn btn--primary" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
-      : '<a class="btn btn--primary" href="#contacts">Узнать о старте продаж</a>';
     return (
       '<article class="bb-slide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
         bg +
         '<div class="bb-slide__stage">' +
           '<div class="bb-slide__chips">' + chips + '</div>' +
           '<div class="bb-slide__art">' + art + '</div>' +
-          '<div class="bb-slide__actions">' +
-            '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
-          '</div>' +
+          actions +
         '</div>' +
       '</article>'
     );
+  }
+
+  /* =================================================================
+     0б · Живое расписание шоу  [data-schedule="Название"]
+     ----------------------------------------------------------------
+     Для повторяющихся шоу (Опытные комики, В большом городе): рендерит
+     календарь дат и строки «дата · время · Бронировать места» из
+     events.js — виджет-ссылка у каждого сеанса своя. Статичные списки
+     сеансов в HTML больше не протухают. Разметка повторяет .sched-row
+     из постраничного CSS show.html.
+     ================================================================= */
+  var SVG_CAL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>';
+  var SVG_CLK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+
+  function initSchedule(){
+    document.querySelectorAll('[data-schedule]').forEach(function(root){
+      var title  = root.getAttribute('data-schedule');
+      var daysEl = root.querySelector('[data-sched-days]');
+      var listEl = root.querySelector('[data-sched-list]');
+      var monEl  = root.querySelector('[data-sched-month]');
+      if (!listEl) return;
+      var list = upcoming().filter(function(ev){ return ev.title === title && ev.buy; });
+      if (!list.length){ root.hidden = true; return; }
+
+      function humanDay(isoDate){
+        var d = new Date(isoDate + 'T00:00:00');
+        return d.getDate() + ' ' + MONTHS_GEN[d.getMonth()] + ', ' + DAYS_SHORT[d.getDay()];
+      }
+      if (monEl){
+        var mons = [];
+        list.forEach(function(ev){
+          var m = MONTHS_NOM[parseInt(ev.date.slice(5, 7), 10) - 1];
+          if (mons.indexOf(m) === -1) mons.push(m);
+        });
+        monEl.textContent = mons.length > 1 ? mons[0] + ' — ' + mons[mons.length - 1] : mons[0];
+      }
+      if (daysEl){
+        var dates = [];
+        list.forEach(function(ev){ if (dates.indexOf(ev.date) === -1) dates.push(ev.date); });
+        daysEl.innerHTML =
+          '<button class="datebar__day" type="button" data-date="all" aria-pressed="true"><b>Все</b><span>даты</span></button>' +
+          dates.map(function(d){
+            var dt = new Date(d + 'T00:00:00');
+            return '<button class="datebar__day" type="button" data-date="' + d + '" aria-pressed="false">' +
+                   '<b>' + d.slice(8, 10) + '</b><span>' + DAYS_SHORT[dt.getDay()] + '</span></button>';
+          }).join('');
+        daysEl.addEventListener('click', function(e){
+          var b = e.target.closest('[data-date]');
+          if (!b) return;
+          Array.prototype.forEach.call(daysEl.querySelectorAll('[data-date]'), function(x){
+            x.setAttribute('aria-pressed', String(x === b));
+          });
+          var pick = b.getAttribute('data-date');
+          Array.prototype.forEach.call(listEl.children, function(row){
+            row.hidden = pick !== 'all' && row.getAttribute('data-date') !== pick;
+          });
+        });
+      }
+      listEl.innerHTML = list.map(function(ev){
+        return '<div class="sched-row" data-date="' + ev.date + '">' +
+                 '<span class="sched-row__meta">' +
+                   '<span class="sched-row__cell sched-row__cell--day">' + SVG_CAL + ' ' + humanDay(ev.date) + '</span>' +
+                   '<span class="sched-row__cell">' + SVG_CLK + ' ' + esc(ev.time || '') + '</span>' +
+                 '</span>' +
+                 '<a class="btn book-btn" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>' +
+               '</div>';
+      }).join('');
+    });
   }
 
   function initHeroSlider(root){
@@ -729,6 +814,7 @@
     document.querySelectorAll('[data-hero-slider]').forEach(initHeroSlider);
     document.querySelectorAll('[data-afisha]').forEach(initAfisha);
     document.querySelectorAll('[data-upcoming]').forEach(initUpcoming);
+    initSchedule();
     initFormatCards();
     initComics();
   }
