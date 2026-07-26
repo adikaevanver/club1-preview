@@ -16,7 +16,7 @@
 <meta property="og:description" content="Живой стендап и импровизация без сценария. Сольная программа в центре Москвы, Новый Арбат, 21. Ближайшие даты и билеты на сайте.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://adikaevanver.github.io/club1-preview/chabdarov.html">
-<meta property="og:image" content="assets/comics/chabdarov.jpg">
+<meta property="og:image" content="assets/posters/chabdarov-sq.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=260727">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS  ·  Страница сольника (solo-concert detail)
@@ -259,13 +259,9 @@
       <!-- LEFT · обложка: настоящей афиши от дизайна пока нет — фирменный
            CSS-постер с фото артиста (данные events.js, ближайшая дата 01.08) -->
       <div class="solo-poster">
-        <div class="poster poster--mag">
-          <img class="poster__photo" src="assets/comics/chabdarov.jpg" alt="" aria-hidden="true" loading="eager" width="900" height="900">
-          <div class="poster__tint"></div>
+        <div class="poster poster--art">
+          <img class="poster__full" src="assets/posters/chabdarov-sq.jpg" alt="Афиша: Расул Чабдаров, сольный концерт" width="1080" height="1080">
           <div class="poster__badge">01.08<small>19:00</small></div>
-          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Сольный концерт</span></div>
-          <div class="poster__name"><span>Расул</span><b>Чабдаров</b></div>
-          <span class="poster__age">18+</span>
         </div>
       </div>
 
@@ -317,15 +313,15 @@
           <div class="datebar" data-datebar>
             <span class="datebar__month">Август — Сентябрь</span>
             <div class="datebar__days" role="group" aria-label="Выберите дату сольного концерта">
-              <button class="datebar__day" data-date="2026-08-01" data-label="1 августа" aria-pressed="true"><b>01</b><span>Сб</span></button>
-              <button class="datebar__day" data-date="2026-08-08" data-label="8 августа" aria-pressed="false"><b>08</b><span>Сб</span></button>
-              <button class="datebar__day" data-date="2026-09-12" data-label="12 сентября" aria-pressed="false"><b>12</b><span>Сб</span></button>
-              <button class="datebar__day" data-date="2026-09-19" data-label="19 сентября" aria-pressed="false"><b>19</b><span>Сб</span></button>
+              <button class="datebar__day" data-date="2026-08-01" data-label="1 августа" data-time="19:00" data-buy="https://iframeab-pre7764.intickets.ru/seance/72656521/" aria-pressed="true"><b>01</b><span>Сб</span></button>
+              <button class="datebar__day" data-date="2026-08-08" data-label="8 августа" data-time="19:00" data-buy="https://iframeab-pre7764.intickets.ru/seance/72656523/" aria-pressed="false"><b>08</b><span>Сб</span></button>
+              <button class="datebar__day" data-date="2026-09-12" data-label="12 сентября" data-time="19:00" data-buy="https://iframeab-pre7764.intickets.ru/seance/72656525/" aria-pressed="false"><b>12</b><span>Сб</span></button>
+              <button class="datebar__day" data-date="2026-09-19" data-label="19 сентября" data-time="19:00" data-buy="https://iframeab-pre7764.intickets.ru/seance/72656527/" aria-pressed="false"><b>19</b><span>Сб</span></button>
             </div>
           </div>
 
-          <p class="datepick__note">Выбрана дата: <b id="pickedDate">1 августа</b>, начало в 19:00.</p>
-          <a class="btn book-btn datepick__book" href="https://clubnaarbate21.ru/rasul-chabdarov-stand-up" target="_blank" rel="noopener">Бронировать места</a>
+          <p class="datepick__note">Выбрана дата: <b id="pickedDate">1 августа</b>, начало в <b id="pickedTime">19:00</b>.</p>
+          <a class="btn book-btn datepick__book" id="pickedBook" href="https://iframeab-pre7764.intickets.ru/seance/72656521/" target="_blank" rel="noopener">Бронировать места</a>
           <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
           <p class="datepick__fee">Билет — от 1 500 ₽, сбором не облагается. В клубе за столом к счёту за еду и напитки добавляется сервисный сбор 10% — он уже в счёте, отдельно платить не нужно. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
         </div>
@@ -504,7 +500,7 @@
     <span class="sticky-cta__date">1 августа · 19:00</span>
     <span class="sticky-cta__price">от 1 500 ₽</span>
   </span>
-  <a class="btn btn--primary" href="https://clubnaarbate21.ru/rasul-chabdarov-stand-up" target="_blank" rel="noopener">Бронировать</a>
+  <a class="btn btn--primary" href="https://iframeab-pre7764.intickets.ru/seance/72656521/" target="_blank" rel="noopener">Бронировать</a>
 </div>
 
 <!-- v4: модалка «Как считается цена» (открывается из строки про сбор) -->
@@ -635,18 +631,21 @@
   if (bar && picked){
     bar.addEventListener('datebar:change', function(e){
       var b = e.detail.button;
-      if (b && b.dataset.label) picked.textContent = b.dataset.label;
+      if (!b) return;
+      if (b.dataset.label) picked.textContent = b.dataset.label;
+      var bk = document.getElementById('pickedBook');
+      if (bk && b.dataset.buy) bk.setAttribute('href', b.dataset.buy);
     });
   }
 })();
 </script>
 
 <!-- shared interactive components (Modal · Tabs · Slideshow · Datebar) -->
-<script src="script.js" defer></script>
+<script src="script.js?v=260727" defer></script>
 
 <!-- живая афиша: данные + рендер рейки ближайших событий -->
-<script src="assets/data/events.js" defer></script>
-<script src="afisha.js" defer></script>
+<script src="assets/data/events.js?v=260727" defer></script>
+<script src="afisha.js?v=260727" defer></script>
 
 </body>
 </html>
