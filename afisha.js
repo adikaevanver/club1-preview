@@ -206,7 +206,9 @@
       return '<span class="bb-chip"><b>' + fmtShort(d) + '</b>' +
              (d.time ? '<small>' + esc(d.time) + '</small>' : '') + '</span>';
     }).join('');
+    /* 18+ — в нижнем левом углу самой афиши (рамка), не сцены слайда */
     var age = '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>';
+    art = '<div class="bb-slide__frame">' + art + age + '</div>';
     var cta = ev.buy
       ? '<a class="btn btn--primary" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
       : '<a class="btn btn--primary" href="#contacts">Узнать о старте продаж</a>';
@@ -216,7 +218,6 @@
         '<div class="bb-slide__stage">' +
           '<div class="bb-slide__chips">' + chips + '</div>' +
           '<div class="bb-slide__art">' + art + '</div>' +
-          age +
           '<div class="bb-slide__actions">' +
             '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
           '</div>' +
@@ -389,14 +390,18 @@
       if (months.indexOf(k) === -1) months.push(k);
     });
 
-    /* состояние фильтров; восстановление после возврата из карточки */
-    var state = { month: null, date: null, format: null, sort: 'date', preset: null, q: '' };
+    /* состояние фильтров; восстановление после возврата из карточки.
+       all:true — базовый режим «все ближайшие» сквозь месяцы: иначе к
+       концу месяца список почти пуст, а август прячется за переключателем
+       (находка ревизии); месяц включается навигацией по календарю */
+    var state = { month: null, all: true, date: null, format: null, sort: 'date', preset: null, q: '' };
     try {
       var saved = JSON.parse(sessionStorage.getItem('club1-afisha') || 'null');
       if (saved && months.indexOf(saved.month) !== -1) state = saved;
       if (!state.sort) state.sort = 'date';
       if (!('preset' in state)) state.preset = null;
       if (typeof state.q !== 'string') state.q = '';
+      if (!('all' in state)) state.all = !state.date;
       delete state.dow; delete state.artist;   /* фильтры прошлой схемы */
     } catch (e) {}
     if (!state.month){
@@ -427,6 +432,7 @@
         if (state.format && ev.format !== state.format) return false;
         if (state.q) return true;
         if (state.preset) return inPreset(ev, state.preset);
+        if (state.all) return true;
         if (monthKey(ev.date) !== state.month) return false;
         if (state.date && ev.date !== state.date) return false;
         return true;
@@ -521,17 +527,18 @@
     });
     if (monthPrev) monthPrev.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
-      if (mi > 0){ state.month = months[mi - 1]; state.date = null; state.preset = null; rerender(); }
+      if (mi > 0){ state.month = months[mi - 1]; state.date = null; state.preset = null; state.all = false; rerender(); }
     });
     if (monthNext) monthNext.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
-      if (mi < months.length - 1){ state.month = months[mi + 1]; state.date = null; state.preset = null; rerender(); }
+      if (mi < months.length - 1){ state.month = months[mi + 1]; state.date = null; state.preset = null; state.all = false; rerender(); }
     });
     if (daysWrap) daysWrap.addEventListener('click', function(e){
       var b = e.target.closest('[data-date]');
       if (!b) return;
       state.date = state.date === b.getAttribute('data-date') ? null : b.getAttribute('data-date');
-      if (state.date){ state.preset = null; }
+      if (state.date){ state.preset = null; state.all = false; }
+      else if (!state.preset){ state.all = true; }   /* сняли дату — снова все ближайшие */
       rerender();
     });
     if (fmtWrap) fmtWrap.addEventListener('click', function(e){
@@ -562,10 +569,20 @@
     });
     root.addEventListener('click', function(e){
       if (e.target.closest('[data-af-reset]')){
-        state.date = null; state.format = null; state.sort = 'date'; state.preset = null; state.q = '';
+        state.date = null; state.format = null; state.sort = 'date'; state.preset = null; state.q = ''; state.all = true;
         if (searchBox) searchBox.value = '';
         rerender();
       }
+    });
+
+    /* смена ширины окна меняет число колонок — пока «Загрузить ещё» не
+       нажимали, первый экран пересчитывается под новые два ряда */
+    var loadedMore = false, resizeT = null;
+    if (loadBtn) loadBtn.addEventListener('click', function(){ loadedMore = true; });
+    window.addEventListener('resize', function(){
+      if (loadedMore) return;
+      if (resizeT) clearTimeout(resizeT);
+      resizeT = setTimeout(rerender, 150);
     });
 
     render();

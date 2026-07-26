@@ -999,6 +999,9 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   padding:clamp(56px,7vw,76px) clamp(20px,4.5vw,60px) clamp(64px,8vw,88px);
 }
 .bb-slide__art{min-width:0;display:flex;justify-content:center}
+/* рамка вокруг афиши: 18+ позиционируется от неё, а не от сцены слайда —
+   иначе бейдж повисал в пустоте левее постера (находка ревизии) */
+.bb-slide__frame{position:relative;display:inline-flex}
 .bb-slide__poster{
   display:block;width:auto;max-width:100%;height:auto;
   max-height:clamp(300px,52vh,480px);object-fit:contain;border-radius:12px;
@@ -1022,7 +1025,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 .bb-chip small{display:block;margin-top:3px;font-size:.74em;font-weight:700;opacity:.95}
 
 .bb-slide__age{
-  position:absolute;left:clamp(20px,4.5vw,60px);bottom:clamp(20px,3.5vw,44px);z-index:4;
+  position:absolute;left:12px;bottom:12px;z-index:4;
   font-weight:600;font-size:.72rem;padding:3px 7px;border-radius:5px;
   border:1px solid rgba(255,255,255,.55);color:#fff;background:rgba(0,0,0,.28);
 }
@@ -1047,9 +1050,8 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 
 @media (max-width:760px){
   .bb-slide__stage{flex-direction:column;min-height:0;padding:16px 16px 22px;gap:14px}
-  .bb-slide__chips,.bb-slide__age,.bb-slide__actions{position:static}
+  .bb-slide__chips,.bb-slide__actions{position:static}
   .bb-slide__chips{align-self:flex-start}
-  .bb-slide__age{align-self:flex-start}
   .bb-slide__actions{width:100%;justify-content:center}
   .bb-slide__poster{max-height:none}
   .bb-slide__poster,
@@ -1151,20 +1153,28 @@ html{overflow-x:clip}
   background:var(--muted);transform:rotate(45deg);pointer-events:none;
 }
 
-/* сетка афиши: два ряда на первом экране, дальше «Загрузить ещё» */
+/* сетка афиши: два ряда на первом экране, дальше «Загрузить ещё».
+   Минимум колонки 290px — пара кнопок карточки занимает ~285px и при
+   более узкой колонке налезала на соседнюю карточку (находка ревизии) */
 .afisha__track--grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
   gap:30px 22px;overflow:visible;scroll-snap-type:none;padding:6px 2px 8px;
 }
 .afisha__track--grid .event-card{width:auto}
+/* страховка: если кнопки всё же шире карточки — переносятся, не наезжают */
+.afisha__track--grid .event-card__actions{flex-wrap:wrap}
 /* фирменный арт CSS-постера в плотной сетке чуть мельче, чтобы не резался */
 .afisha__track--grid .poster__standup{font-size:2.35rem}
 .afisha__more{display:flex;justify-content:center;padding:26px 0 0}
 /* [hidden] обязан побеждать display:inline-flex кнопки */
 .afisha__more .btn[hidden]{display:none}
 
-/* афиша целиком кликабельна — ведёт на «Подробнее» */
+/* карточка и афиша целиком кликабельны — ведут на «Подробнее»: ссылка
+   постера растянута на всю карточку, кнопки лежат слоем выше */
+.event-card{position:relative}
 .poster-link{display:block;border-radius:12px}
+.poster-link::after{content:"";position:absolute;inset:0}
+.event-card__actions{position:relative;z-index:2}
 .poster-link .poster{transition:transform .3s var(--ease), box-shadow .3s var(--ease)}
 .poster-link:hover .poster{transform:translateY(-3px);box-shadow:0 20px 44px -18px rgba(0,0,0,.75)}
 

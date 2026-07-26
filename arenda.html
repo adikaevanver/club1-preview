@@ -222,6 +222,12 @@
   .field textarea{resize:vertical;min-height:96px}
   .req-form__note{font-size:.8rem;color:var(--muted-2);line-height:1.5}
   .req-form__note a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .field--consent{
+    flex-direction:row;align-items:flex-start;gap:10px;cursor:pointer;
+  }
+  .field--consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--magenta);flex:0 0 auto}
+  .field--consent span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
   .form-status{
     display:none;align-items:flex-start;gap:12px;
     background:rgba(255,47,109,.10);border:1px solid rgba(255,47,109,.35);
@@ -643,11 +649,19 @@
             <textarea id="f-comment" name="comment" placeholder="Формат, число гостей, пожелания по меню и программе"></textarea>
           </div>
 
+          <!-- правки 24.07: добровольное согласие на рассылку — отдельный
+               чекбокс, НЕ проставлен заранее; финальные юридические
+               формулировки пришлёт Сергей, ссылка ведёт на свою страницу -->
+          <label class="field field--consent">
+            <input type="checkbox" name="mailing-consent" value="yes">
+            <span>Хочу получать анонсы и специальные предложения клуба (необязательно)</span>
+          </label>
+
           <button class="btn btn--primary btn--block" type="submit">Отправить заявку</button>
 
           <p class="req-form__note">
             Нажимая «Отправить», вы соглашаетесь с
-            <a href="https://clubnaarbate21.ru/privacy-policy" target="_blank" rel="noopener">политикой конфиденциальности</a>. Поля со звёздочкой обязательны.
+            <a href="privacy.html">политикой конфиденциальности</a>. Поля со звёздочкой обязательны.
           </p>
         </form>
 
