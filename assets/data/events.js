@@ -150,15 +150,15 @@ window.CLUB1_EVENTS = [
    buy:'https://clubnaarbate21.ru/proverka-ot-opytnyh-komikov', age:'18+'},
 
   {date:'2026-08-01', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'mag', page:'solnik.html',
+   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'mag', page:'chabdarov.html',
    buy:'https://clubnaarbate21.ru/rasul-chabdarov-stand-up', age:null},
   {date:'2026-08-08', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'pur', page:'solnik.html',
+   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'pur', page:'chabdarov.html',
    buy:'https://clubnaarbate21.ru/rasul-chabdarov-stand-up', age:null},
   {date:'2026-09-12', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'mag', page:'solnik.html',
+   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'mag', page:'chabdarov.html',
    buy:'https://clubnaarbate21.ru/rasul-chabdarov-stand-up', age:null},
   {date:'2026-09-19', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'pur', page:'solnik.html',
+   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'pur', page:'chabdarov.html',
    buy:'https://clubnaarbate21.ru/rasul-chabdarov-stand-up', age:null}
 ];
