@@ -512,7 +512,10 @@ ul{list-style:none}
   background:var(--panel);border:1px solid var(--hairline);color:#fff;
   transition:background .18s, border-color .18s, transform .18s;
 }
-.social-btn:hover{background:var(--magenta);border-color:var(--magenta);transform:translateY(-2px)}
+/* правки 24.07: при наведении иконка «исчезала» — .footer-col a:hover
+   красил её в мадженту поверх маджентового фона; a.social-btn:hover
+   перевешивает то правило и держит иконку белой */
+a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#fff;transform:translateY(-2px)}
 .social-btn svg{width:22px;height:22px;fill:currentColor}
 
 
@@ -1154,7 +1157,11 @@ html{overflow-x:clip}
   gap:30px 22px;overflow:visible;scroll-snap-type:none;padding:6px 2px 8px;
 }
 .afisha__track--grid .event-card{width:auto}
+/* фирменный арт CSS-постера в плотной сетке чуть мельче, чтобы не резался */
+.afisha__track--grid .poster__standup{font-size:2.35rem}
 .afisha__more{display:flex;justify-content:center;padding:26px 0 0}
+/* [hidden] обязан побеждать display:inline-flex кнопки */
+.afisha__more .btn[hidden]{display:none}
 
 /* афиша целиком кликабельна — ведёт на «Подробнее» */
 .poster-link{display:block;border-radius:12px}
