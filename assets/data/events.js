@@ -133,7 +133,7 @@ window.CLUB1_EVENTS = [
    buy:'https://clubnaarbate21.ru/proverka-ot-opytnyh-komikov', age:'18+'},
 
   {date:'2026-07-30', time:'19:00', title:'Эйчар стендап', kind:'Спецпроект', format:'special', priceFrom:2500,
-   poster:null, photo:null, tone:'sky', page:'razovoe.html',
+   poster:null, photo:null, tone:'sky', page:'hr-standup.html',
    buy:'https://clubnaarbate21.ru/hr-stand-up-30-07', age:null},
   {date:'2026-07-30', time:'20:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
    poster:'assets/posters/ok-sq.jpg', photo:null, tone:'mono', page:'show.html',
