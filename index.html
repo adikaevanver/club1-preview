@@ -16,7 +16,7 @@
 <meta property="og:description" content="Сольные концерты федеральных комиков, импровизация и бурлеск-шоу. Живой зал в центре Москвы, Новый Арбат, 21.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://adikaevanver.github.io/club1-preview/">
-<meta property="og:image" content="assets/comics/dedishchev.jpg">
+<meta property="og:image" content="assets/comics/guram.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
@@ -29,6 +29,10 @@
 </head>
 
 <body>
+
+<!-- бегущая строка для отмен/переносов: включается в assets/data/events.js
+     (CLUB1_TICKER), рендерит afisha.js; выключена — остаётся скрытой -->
+<div class="ticker" data-ticker hidden aria-live="polite"></div>
 
 <!-- =====================================================================
      SITE HEADER  (reused verbatim on every sub-page)
@@ -46,6 +50,7 @@
     <nav class="main-nav" aria-label="Основная навигация">
       <ul class="main-nav__list">
         <li><a class="main-nav__link" href="index.html" aria-current="page">Главная</a></li>
+        <li><a class="main-nav__link" href="afisha.html">Афиша</a></li>
         <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
         <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
         <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
@@ -55,7 +60,9 @@
 
     <div class="header-actions">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="#afisha">Бронировать места</a>
+      <!-- правки 24.07: «Бронировать места» в шапке дублировала кнопки
+           карточек — CTA шапки ведёт к афише -->
+      <a class="btn btn--primary" href="#afisha">Смотреть афишу</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -65,13 +72,14 @@
   <!-- mobile drawer -->
   <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
     <a class="main-nav__link" href="index.html" aria-current="page">Главная</a>
+    <a class="main-nav__link" href="afisha.html">Афиша</a>
     <a class="main-nav__link" href="formaty.html">Форматы</a>
     <a class="main-nav__link" href="eda.html">Еда и напитки</a>
     <a class="main-nav__link" href="o-klube.html">О клубе</a>
     <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary btn--block" href="#afisha">Бронировать места</a>
+      <a class="btn btn--primary btn--block" href="#afisha">Смотреть афишу</a>
     </div>
   </nav>
 </header>
@@ -88,10 +96,10 @@
   <section class="hero-billboard" data-hero-slider aria-labelledby="hero-title">
     <h2 id="hero-title" class="sr-only">Главные события клуба</h2>
 
-    <!-- v4: магнит M1 «разгрузка» в лоб; локация уходит в саб-строку -->
+    <!-- правки 24.07 (макет Максима): текст у слайдера не дублирует афишу —
+         над биллбордом остаётся только строка-локация -->
     <div class="container">
-      <p class="hero__lead">Два часа не думать о работе</p>
-      <p class="hero__tagline">Стендап и шоу в двух шагах от вашего стола — Новый Арбат, 21</p>
+      <p class="hero__tagline">Стендап и шоу в центре Москвы — Новый Арбат, 21</p>
     </div>
 
     <div class="billboard">
@@ -102,6 +110,12 @@
       <button class="slider-arrow slider-arrow--next billboard__arrow billboard__arrow--next" type="button" data-hb-dir="1" aria-label="Следующее событие">›</button>
       <div class="billboard__dots" data-hb-dots role="group" aria-label="Переход к слайду"></div>
     </div>
+
+    <!-- мобильный указатель вниз: с первого экрана видно, что страница
+         продолжается (правки 24.07) -->
+    <a class="scroll-hint" href="#afisha" aria-label="Смотреть афишу ниже">
+      <span class="scroll-hint__chev" aria-hidden="true"></span>
+    </a>
   </section>
 
   <div class="container">
@@ -110,51 +124,52 @@
        AFISHA — месяцы, дни, фильтры и карточки рендерятся из
        assets/data/events.js силами afisha.js (см. [data-af-*] хуки)
        ================================================================= -->
+  <!-- Перестройка 24.07: заголовок раздела над фильтрами; календарь всегда
+       на виду; дни недели и фамилии артистов из фильтров убраны, вместо
+       фамилий — поисковая строка; список карточек — сетка в два ряда
+       с кнопкой «Загрузить ещё» -->
   <div data-afisha>
 
+    <div class="afisha__head afisha__head--section" id="afisha">
+      <h2 id="afisha-title" class="afisha__title">Ближайшие события на Новом Арбате</h2>
+      <div class="rule" aria-hidden="true"></div>
+    </div>
+
     <section class="filters" aria-labelledby="filters-title">
-      <h2 id="filters-title" class="sr-only">Фильтр афиши по датам, дням недели и форматам</h2>
+      <h2 id="filters-title" class="sr-only">Поиск и фильтр афиши по датам и форматам</h2>
 
-      <!-- v4: быстрые пресеты — один клик до «сегодня/завтра/выходные»;
-           расширенные фильтры свёрнуты за кнопкой «Ещё фильтры» -->
-      <div class="filters__row filters__row--presets" data-af-presets role="group" aria-label="Быстрый выбор даты"></div>
-
-      <button class="filters__more" type="button" data-af-more aria-expanded="false" aria-controls="afishaAdvanced">Ещё фильтры</button>
-
-      <div class="filters__advanced" id="afishaAdvanced" data-af-advanced hidden>
-        <div class="datebar">
-          <div class="datebar__nav">
-            <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
-            <span class="datebar__month" data-af-month></span>
-            <button class="datebar__arrow" data-af-next type="button" aria-label="Следующий месяц">›</button>
-          </div>
-          <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
-        </div>
-
-        <div class="filters__row filters__row--days" data-af-dows role="group" aria-label="Дни недели"></div>
-
-        <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
-
-        <div class="filters__row filters__row--artists" data-af-artists role="group" aria-label="Артист или шоу"></div>
-
-        <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
+      <div class="filters__row filters__row--top">
+        <div class="filters__presets" data-af-presets role="group" aria-label="Быстрый выбор даты"></div>
+        <label class="af-search">
+          <input type="search" data-af-search placeholder="Поиск по мероприятиям" aria-label="Поиск по мероприятиям" autocomplete="off">
+        </label>
       </div>
+
+      <div class="datebar">
+        <div class="datebar__nav">
+          <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
+          <span class="datebar__month" data-af-month></span>
+          <button class="datebar__arrow" data-af-next type="button" aria-label="Следующий месяц">›</button>
+        </div>
+        <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
+      </div>
+
+      <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
+
+      <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
     </section>
 
-    <section class="afisha" id="afisha" aria-labelledby="afisha-title">
-      <div class="afisha__head">
-        <h2 id="afisha-title" class="afisha__title">Ближайшие события на Новом Арбате</h2>
-        <div class="rule" aria-hidden="true"></div>
-      </div>
-
-      <div class="afisha__track" id="afishaTrack" data-af-track role="list"></div>
+    <section class="afisha" aria-labelledby="afisha-title">
+      <div class="afisha__track afisha__track--grid" id="afishaTrack" data-af-track role="list"></div>
 
       <div class="afisha__empty" data-af-empty hidden>
         <p>По выбранным фильтрам событий нет.</p>
         <button class="btn btn--ghost" type="button" data-af-reset>Сбросить фильтры</button>
       </div>
 
-      <button class="slider-arrow slider-arrow--next" data-slider="afisha" data-dir="1" aria-label="Показать ещё концерты">›</button>
+      <div class="afisha__more">
+        <button class="btn btn--ghost" type="button" data-af-load hidden>Загрузить ещё</button>
+      </div>
     </section>
 
   </div>
@@ -176,8 +191,9 @@
       <button class="slider-arrow slider-arrow--prev" data-slider="headliners" data-dir="-1" aria-label="Предыдущие артисты">‹</button>
 
       <!-- В ленте только комики, чьи настоящие фото есть в assets/comics.
-           Фото Гурама — из галереи фотографа в таблице маркетинга. Виктор
-           Комаров и Стас Старовойтов вернутся, когда придут их портреты.
+           Состав по правкам 24.07: Дедищев и Раевский сняты; Виктор
+           Комаров и Артём Винокур появятся, когда придут их портреты
+           (правило: без настоящего фото в ленту не ставим).
            Первыми — комики с ближайшими датами. -->
       <div class="headliners__track" id="headlinersTrack" role="list">
 
@@ -197,28 +213,12 @@
           </span>
         </figure>
 
-        <!-- 3 · Илья Раевский — ближайший концерт 25.07 -->
-        <figure class="headliner" role="listitem">
-          <a class="headliner__link" href="raevskiy.html" aria-label="Илья Раевский — ближайший концерт">
-            <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Илья</span><b>Раевский</b></figcaption>
-          </a>
-        </figure>
-
         <!-- 3 · Расул Чабдаров — ближайший концерт 01.08 -->
         <figure class="headliner" role="listitem">
           <a class="headliner__link" href="solnik.html" aria-label="Расул Чабдаров — ближайший концерт">
             <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров" loading="lazy" width="900" height="900"></div>
             <figcaption class="headliner__name"><span>Расул</span><b>Чабдаров</b></figcaption>
           </a>
-        </figure>
-
-        <!-- 3 · Павел Дедищев -->
-        <figure class="headliner" role="listitem">
-          <span class="headliner__link" aria-label="Павел Дедищев — о комике">
-            <div class="headliner__frame"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев" loading="lazy" width="900" height="900"></div>
-            <figcaption class="headliner__name"><span>Павел</span><b>Дедищев</b></figcaption>
-          </span>
         </figure>
 
         <!-- Юлия Македонская — вторая женская позиция в первой шестёрке (v4) -->
@@ -338,22 +338,8 @@
 </main>
 
 
-<!-- v4: модалка «Как считается цена» — открывается с любой карточки афиши -->
-<div class="modal" id="priceModal" data-modal hidden role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
-  <div class="modal__panel">
-    <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>
-    <p class="eyebrow modal__eyebrow">Прозрачная цена</p>
-    <h2 class="modal__title" id="priceModalTitle">Из чего складывается вечер</h2>
-    <div class="modal__body">
-      <ul class="price-list">
-        <li><b>Билет.</b> Цена фиксированная и указана в карточке события. Сервисным сбором не облагается.</li>
-        <li><b>Еда и напитки.</b> По желанию: кухня и бар работают весь вечер, заказ приносят к столику. Меню и цены — на странице «Еда и напитки».</li>
-        <li><b>Сервисный сбор.</b> 10% к счёту за еду и напитки. Добавляется в счёт автоматически, отдельно платить не нужно.</li>
-      </ul>
-      <p class="price-total">Цена, которую вы видите, и есть та, которую вы платите: билет — финальный, сбор касается только заказа за столом.</p>
-    </div>
-  </div>
-</div>
+<!-- правки 24.07: попап «Как считается цена» с главной снят — подробности
+     о цене остаются на страницах мероприятий -->
 
 <!-- =====================================================================
      SITE FOOTER  (reused verbatim on every sub-page)
