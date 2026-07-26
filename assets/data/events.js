@@ -20,19 +20,28 @@
      buy    живая страница с билетным виджетом | null → продажи не открыты
      age    возрастная маркировка | null (не подтверждена)
    ===================================================================== */
+/* Единый словарь категорий (правки 24.07): без повторов, партнёрские и
+   разовые форматы живут в «Спецпроектах». «Сольные концерты» — выбранный
+   вариант переименования «Сольников» (второй кандидат был «Сольные
+   стендапы»); название используется последовательно на всём сайте. */
 window.CLUB1_FORMATS = {
-  solniki:   'Сольники',
-  ok:        'От опытных комиков',
-  gorod:     'В большом городе',
+  solniki:   'Сольные концерты',
+  ok:        'Stand Up от опытных комиков',
+  gorod:     'Stand Up в большом городе',
   pereigraem:'Давай переиграем',
   community: 'Комьюнити',
   burlesque: 'Burlesque & Stand Up',
-  krashi:    'ВИА Ваши Краши',
+  krashi:    'Концерты',
   special:   'Спецпроекты',
   /* женский стендап — фильтр появится в афише сам, как только у события
      будет format:'zhensky' (решение о формате «Подруги» за арт-отделом) */
   zhensky:   'Женский стендап'
 };
+
+/* Бегущая строка для сообщений об отмене или переносе (правки 24.07):
+   enabled:true + text — полоска появляется над шапкой на всех страницах,
+   где есть [data-ticker]. Выключена по умолчанию. */
+window.CLUB1_TICKER = { enabled:false, text:'' };
 
 window.CLUB1_EVENTS = [
   {date:'2026-07-09', time:'18:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
@@ -124,7 +133,7 @@ window.CLUB1_EVENTS = [
    buy:'https://clubnaarbate21.ru/proverka-ot-opytnyh-komikov', age:'18+'},
 
   {date:'2026-07-30', time:'19:00', title:'Эйчар стендап', kind:'Спецпроект', format:'special', priceFrom:2500,
-   poster:null, photo:null, tone:'sky', page:'razovoe.html',
+   poster:null, photo:null, tone:'sky', page:'hr-standup.html',
    buy:'https://clubnaarbate21.ru/hr-stand-up-30-07', age:null},
   {date:'2026-07-30', time:'20:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
    poster:'assets/posters/ok-sq.jpg', photo:null, tone:'mono', page:'show.html',
@@ -141,15 +150,15 @@ window.CLUB1_EVENTS = [
    buy:'https://clubnaarbate21.ru/proverka-ot-opytnyh-komikov', age:'18+'},
 
   {date:'2026-08-01', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'mag', page:'solnik.html',
+   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'mag', page:'chabdarov.html',
    buy:'https://clubnaarbate21.ru/rasul-chabdarov-stand-up', age:null},
   {date:'2026-08-08', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'pur', page:'solnik.html',
+   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'pur', page:'chabdarov.html',
    buy:'https://clubnaarbate21.ru/rasul-chabdarov-stand-up', age:null},
   {date:'2026-09-12', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'mag', page:'solnik.html',
+   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'mag', page:'chabdarov.html',
    buy:'https://clubnaarbate21.ru/rasul-chabdarov-stand-up', age:null},
   {date:'2026-09-19', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'pur', page:'solnik.html',
+   poster:null, photo:'assets/comics/chabdarov.jpg', tone:'pur', page:'chabdarov.html',
    buy:'https://clubnaarbate21.ru/rasul-chabdarov-stand-up', age:null}
 ];

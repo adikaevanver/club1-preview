@@ -108,10 +108,9 @@ ul{list-style:none}
   margin-inline:auto;
   padding-inline:var(--gutter);
 }
-/* keep decorative glows / bleed from ever creating a horizontal scrollbar;
-   `clip` (not `hidden`) so it never becomes a scroll container that would
-   break the sticky header, and the gutter leaves room for the slider arrows */
-main.container{overflow-x:clip}
+/* правки 24.07: обрезку свечений на границе контейнера убрали — на широких
+   экранах бордовый градиент обрывался вертикальной линией на всех страницах.
+   От горизонтального скролла страницу страхует overflow-x:clip на html. */
 
 /* visually hidden but exposed to assistive tech */
 .sr-only{
@@ -513,7 +512,10 @@ main.container{overflow-x:clip}
   background:var(--panel);border:1px solid var(--hairline);color:#fff;
   transition:background .18s, border-color .18s, transform .18s;
 }
-.social-btn:hover{background:var(--magenta);border-color:var(--magenta);transform:translateY(-2px)}
+/* правки 24.07: при наведении иконка «исчезала» — .footer-col a:hover
+   красил её в мадженту поверх маджентового фона; a.social-btn:hover
+   перевешивает то правило и держит иконку белой */
+a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#fff;transform:translateY(-2px)}
 .social-btn svg{width:22px;height:22px;fill:currentColor}
 
 
@@ -986,41 +988,52 @@ main.container{overflow-x:clip}
     radial-gradient(85% 110% at 92% 100%, rgba(180,70,255,.28), transparent 62%),
     var(--ink-2);
 }
-.bb-slide__inner{
+/* Слайд по макету Максима 22.07 (ранний вариант выбран на созвоне 24.07):
+   афиша в центре сцены, текст рядом с ней не дублируется — поверх только
+   плашки дат (первая маджента, вторая приглушённая), 18+ и кнопки */
+.bb-slide__stage{
   position:relative;z-index:1;
   max-width:var(--maxw);margin-inline:auto;
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,440px);
-  gap:clamp(20px,4vw,56px);align-items:center;
-  padding:clamp(24px,4vw,54px) clamp(20px,4.5vw,60px);
+  display:flex;align-items:center;justify-content:center;
   min-height:clamp(420px,62vh,600px);
+  padding:clamp(56px,7vw,76px) clamp(20px,4.5vw,60px) clamp(64px,8vw,88px);
 }
-.bb-slide__kind{
-  font-family:var(--display);font-weight:600;font-size:.72rem;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+.bb-slide__art{min-width:0;display:flex;justify-content:center}
+/* рамка вокруг афиши: 18+ позиционируется от неё, а не от сцены слайда —
+   иначе бейдж повисал в пустоте левее постера (находка ревизии) */
+.bb-slide__frame{position:relative;display:inline-flex}
+.bb-slide__poster{
+  display:block;width:auto;max-width:100%;height:auto;
+  max-height:clamp(300px,52vh,480px);object-fit:contain;border-radius:12px;
+  box-shadow:0 28px 64px -26px rgba(0,0,0,.85);
 }
-.bb-slide__title{
-  margin-top:10px;font-family:var(--display);font-weight:900;
-  font-size:clamp(1.65rem,4.2vw,3.2rem);line-height:1.02;
-  text-transform:uppercase;color:#fff;overflow-wrap:anywhere;
+.bb-slide__cssposter{width:clamp(260px,34vw,400px)}
+
+.bb-slide__chips{
+  position:absolute;left:clamp(20px,4.5vw,60px);top:clamp(20px,3.5vw,44px);
+  z-index:4;display:flex;gap:10px;
 }
-.bb-slide__when{
-  margin-top:14px;color:var(--muted);font-size:1rem;
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+.bb-chip{
+  background:var(--magenta);color:#fff;text-align:left;
+  font-family:var(--display);font-weight:800;font-size:1.02rem;line-height:1.05;
+  padding:10px 20px 10px 14px;letter-spacing:.02em;
+  clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);
+  box-shadow:0 10px 26px -12px rgba(255,47,109,.9);
 }
+.bb-chip + .bb-chip{background:#3a3440;box-shadow:none}
+.bb-chip b{display:block}
+.bb-chip small{display:block;margin-top:3px;font-size:.74em;font-weight:700;opacity:.95}
+
 .bb-slide__age{
+  position:absolute;left:12px;bottom:12px;z-index:4;
   font-weight:600;font-size:.72rem;padding:3px 7px;border-radius:5px;
   border:1px solid rgba(255,255,255,.55);color:#fff;background:rgba(0,0,0,.28);
 }
-.bb-slide__price{margin-top:8px;color:var(--gold);font-weight:700;font-size:1.15rem}
-.bb-slide__actions{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
-
-.bb-slide__art{min-width:0}
-.bb-slide__poster{
-  display:block;width:100%;height:auto;max-height:clamp(300px,54vh,500px);
-  object-fit:contain;border-radius:12px;margin-left:auto;
-  box-shadow:0 28px 64px -26px rgba(0,0,0,.85);
+.bb-slide__actions{
+  position:absolute;right:clamp(20px,4.5vw,60px);bottom:clamp(20px,3.5vw,44px);z-index:4;
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;
 }
-.bb-slide__cssposter{max-width:clamp(280px,36vw,420px);margin-left:auto}
+.bb-slide__actions .btn--ghost{background:rgba(10,8,16,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 
 .billboard__arrow--prev{left:14px}
 .billboard__arrow--next{right:14px}
@@ -1036,10 +1049,13 @@ main.container{overflow-x:clip}
 .bb-dot[aria-pressed="true"]{background:var(--magenta);transform:scale(1.3)}
 
 @media (max-width:760px){
-  .bb-slide__inner{grid-template-columns:1fr;min-height:0;padding:20px 18px 48px;gap:18px}
-  .bb-slide__art{order:-1}
+  .bb-slide__stage{flex-direction:column;min-height:0;padding:16px 16px 22px;gap:14px}
+  .bb-slide__chips,.bb-slide__actions{position:static}
+  .bb-slide__chips{align-self:flex-start}
+  .bb-slide__actions{width:100%;justify-content:center}
+  .bb-slide__poster{max-height:none}
   .bb-slide__poster,
-  .bb-slide__cssposter{max-width:min(100%,420px);max-height:none;margin:0 auto}
+  .bb-slide__cssposter{width:100%;max-width:min(100%,420px);margin:0 auto}
   .billboard__arrow{width:38px;height:38px;top:32%}
   .billboard__arrow--prev{left:8px}
   .billboard__arrow--next{right:8px}
@@ -1098,3 +1114,110 @@ html{overflow-x:clip}
    колонка «Контакты» больше не тянется вниз */
 .footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid var(--hairline)}
 .footer-bottom p{font-size:.78rem;color:var(--muted-2);line-height:1.55}
+
+
+/* =====================================================================
+   ПРАВКИ 24.07 — сводный документ Сергея
+   Заголовок раздела над фильтрами, поиск, сетка в два ряда + «Загрузить
+   ещё», кликабельные афиши 4:5, плашки без времени, бегущая строка,
+   мобильный указатель вниз.
+   ===================================================================== */
+
+/* заголовок раздела стоит над фильтрами (был между фильтрами и списком) */
+.afisha__head--section{margin:44px 0 0;scroll-margin-top:calc(var(--header-h) + 12px)}
+.afisha__head--section + .filters{padding-top:22px}
+
+/* самостоятельная страница афиши: заголовок-h1 крупнее, отступ от шапки */
+.afisha__head--page{margin-top:clamp(28px,4vw,52px)}
+.afisha__head--page .afisha__title{font-size:clamp(1.35rem,3.2vw,2.15rem)}
+
+/* верхний ряд фильтров: пресеты слева, поиск справа */
+.filters__row--top{justify-content:space-between}
+.filters__presets{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.af-search{position:relative;flex:1 1 240px;max-width:340px;display:flex;margin-left:auto}
+.af-search input{
+  width:100%;font:inherit;font-size:.95rem;color:var(--text);
+  background:transparent;border:1.5px solid var(--hairline-strong);border-radius:var(--r-sm);
+  padding:.6em 1.1em .6em 2.6em;outline:none;
+  transition:border-color .18s, background .18s;
+}
+.af-search input::placeholder{color:var(--muted-2)}
+.af-search input:focus{border-color:var(--white);background:rgba(255,255,255,.04)}
+/* лупа: кольцо + ручка, рисуются рамкой — без внешних иконок */
+.af-search::before{
+  content:"";position:absolute;left:13px;top:calc(50% - 8px);width:11px;height:11px;
+  border:1.6px solid var(--muted);border-radius:50%;pointer-events:none;
+}
+.af-search::after{
+  content:"";position:absolute;left:23px;top:calc(50% + 4px);width:7px;height:1.6px;
+  background:var(--muted);transform:rotate(45deg);pointer-events:none;
+}
+
+/* сетка афиши: два ряда на первом экране, дальше «Загрузить ещё».
+   Минимум колонки 290px — пара кнопок карточки занимает ~285px и при
+   более узкой колонке налезала на соседнюю карточку (находка ревизии) */
+.afisha__track--grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:30px 22px;overflow:visible;scroll-snap-type:none;padding:6px 2px 8px;
+}
+.afisha__track--grid .event-card{width:auto}
+/* страховка: если кнопки всё же шире карточки — переносятся, не наезжают */
+.afisha__track--grid .event-card__actions{flex-wrap:wrap}
+/* фирменный арт CSS-постера в плотной сетке чуть мельче, чтобы не резался */
+.afisha__track--grid .poster__standup{font-size:2.35rem}
+.afisha__more{display:flex;justify-content:center;padding:26px 0 0}
+/* [hidden] обязан побеждать display:inline-flex кнопки */
+.afisha__more .btn[hidden]{display:none}
+
+/* карточка и афиша целиком кликабельны — ведут на «Подробнее»: ссылка
+   постера растянута на всю карточку, кнопки лежат слоем выше */
+.event-card{position:relative}
+.poster-link{display:block;border-radius:12px}
+.poster-link::after{content:"";position:absolute;inset:0}
+.event-card__actions{position:relative;z-index:2}
+.poster-link .poster{transition:transform .3s var(--ease), box-shadow .3s var(--ease)}
+.poster-link:hover .poster{transform:translateY(-3px);box-shadow:0 20px 44px -18px rgba(0,0,0,.75)}
+
+/* вертикальный формат афиш 1080×1350 (4:5); квадратные 1080×1080 до
+   ресайзов Максима встают по центру на тёмной подложке без обрезки */
+.poster{aspect-ratio:4/5}
+.poster--art{--p1:#241c2e;--p2:#0d0a12}
+.poster--art .poster__full{object-fit:contain}
+/* на CSS-постере карточки название не дублируется — заголовок стоит под
+   афишей, поэтому фирменный арт опускается к нижнему краю */
+.poster--noname .poster__art{bottom:18px}
+
+/* дата-бейдж: строка времени крупнее и жирнее, воздух между строками */
+.poster__badge{padding:9px 16px 9px 12px}
+.poster__badge small{font-size:.84em;font-weight:800;opacity:1;margin-top:3px}
+
+/* бегущая строка отмен/переносов (включается в events.js) */
+.ticker{position:relative;z-index:101;background:var(--gold);color:#20160a;overflow:hidden}
+.ticker[hidden]{display:none}
+.ticker__track{display:inline-flex;white-space:nowrap;padding:8px 0;animation:c1-ticker 36s linear infinite}
+.ticker__item{padding-inline:36px;font-weight:600;font-size:.9rem}
+@keyframes c1-ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* мобильный указатель вниз под биллбордом */
+.scroll-hint{display:none}
+@media (max-width:760px){
+  .scroll-hint{
+    display:flex;align-items:center;justify-content:center;
+    width:44px;height:44px;margin:12px auto 2px;border-radius:50%;
+    border:1px solid var(--hairline-strong);
+    animation:c1-bounce 2.2s var(--ease) infinite;
+  }
+  .scroll-hint__chev{
+    width:10px;height:10px;margin-top:-3px;
+    border-right:2px solid var(--text);border-bottom:2px solid var(--text);
+    transform:rotate(45deg);
+  }
+}
+@keyframes c1-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+@media (max-width:640px){
+  .afisha__track--grid{grid-template-columns:1fr;gap:26px}
+  .afisha__track--grid .event-card{width:auto;max-width:none}
+  .af-search{flex-basis:100%;max-width:none}
+  .afisha__head--section{margin-top:34px}
+}

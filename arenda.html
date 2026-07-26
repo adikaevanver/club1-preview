@@ -16,7 +16,7 @@
 <meta property="og:description" content="Два зала в центре Москвы под корпоративы, частные мероприятия, съёмки и стендап-вечера. Сцена, звук, свет, бар и кухня — под ключ.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://adikaevanver.github.io/club1-preview/arenda.html">
-<meta property="og:image" content="assets/comics/dedishchev.jpg">
+<meta property="og:image" content="assets/comics/guram.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
@@ -77,9 +77,11 @@
     border-radius:12px;padding:14px 22px;
   }
   .stat > span{display:block;transform:skewX(var(--unskew))}
+  /* правки 24.07: цифры наклонены как фирменная «1» (были контр-скошены
+     дважды и заваливались в обратную сторону) */
   .stat b{
     display:block;font-family:var(--display);font-weight:800;font-size:1.5rem;
-    color:#fff;line-height:1;transform:skewX(var(--unskew));
+    color:#fff;line-height:1;transform:skewX(var(--skew));
   }
   .stat em{
     display:block;font-style:normal;margin-top:6px;
@@ -220,6 +222,12 @@
   .field textarea{resize:vertical;min-height:96px}
   .req-form__note{font-size:.8rem;color:var(--muted-2);line-height:1.5}
   .req-form__note a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .field--consent{
+    flex-direction:row;align-items:flex-start;gap:10px;cursor:pointer;
+  }
+  .field--consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--magenta);flex:0 0 auto}
+  .field--consent span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
   .form-status{
     display:none;align-items:flex-start;gap:12px;
     background:rgba(255,47,109,.10);border:1px solid rgba(255,47,109,.35);
@@ -262,6 +270,7 @@
     <nav class="main-nav" aria-label="Основная навигация">
       <ul class="main-nav__list">
         <li><a class="main-nav__link" href="index.html">Главная</a></li>
+        <li><a class="main-nav__link" href="afisha.html">Афиша</a></li>
         <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
         <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
         <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
@@ -281,6 +290,7 @@
   <!-- mobile drawer -->
   <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
     <a class="main-nav__link" href="index.html">Главная</a>
+    <a class="main-nav__link" href="afisha.html">Афиша</a>
     <a class="main-nav__link" href="formaty.html">Форматы</a>
     <a class="main-nav__link" href="eda.html">Еда и напитки</a>
     <a class="main-nav__link" href="o-klube.html">О клубе</a>
@@ -317,10 +327,14 @@
         <a class="btn btn--ghost" href="tel:+74996869111">Позвонить: +7 (499) 686 91 11</a>
       </div>
 
+      <!-- правки 24.07: вместимость и площадь не смешиваем — люди отдельно,
+           метры отдельно. Площади — данные команды от 23.07: большой зал
+           (2 этаж) 661 м², каминный зал (1 этаж) около 150 м² -->
       <ul class="stats" aria-label="Ключевые параметры площадки">
         <li class="stat"><span><b>2</b><em>зала</em></span></li>
-        <li class="stat"><span><b>550</b><em>гостей</em></span></li>
-        <li class="stat"><span><b>350&nbsp;м²</b><em>площадь</em></span></li>
+        <li class="stat"><span><b>550</b><em>гостей · театральная посадка</em></span></li>
+        <li class="stat"><span><b>350</b><em>гостей · столовая посадка</em></span></li>
+        <li class="stat"><span><b>661&nbsp;м²</b><em>площадь большого зала</em></span></li>
         <li class="stat"><span><b>5–7&nbsp;мин</b><em>пешком от м. «Смоленская»</em></span></li>
       </ul>
     </div>
@@ -360,6 +374,7 @@
           <ul class="hall__caps">
             <li><b>350</b><span>за столами</span></li>
             <li><b>550</b><span>театральная рассадка</span></li>
+            <li><b>661&nbsp;м²</b><span>площадь зала</span></li>
           </ul>
           <p class="hall__fit"><span>Подходит для:</span> корпоративов, концертов, презентаций и стендап-вечеров.</p>
         </div>
@@ -380,6 +395,7 @@
           </p>
           <ul class="hall__caps">
             <li><b>120</b><span>гостей за столами</span></li>
+            <li><b>≈150&nbsp;м²</b><span>площадь зала</span></li>
           </ul>
           <p class="hall__fit"><span>Подходит для:</span> частных праздников, дней рождения, съёмок и камерных встреч.</p>
         </div>
@@ -533,8 +549,8 @@
       <div class="headliners__track" id="galleryTrack" role="list">
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/dedishchev.jpg" alt="Комик Павел Дедищев на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Сольный концерт</span><b>Дедищев</b></figcaption>
+          <div class="headliner__frame"><img src="assets/comics/guram.jpg" alt="Комик Гурам Амарян на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Сольный концерт</span><b>Амарян</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
@@ -553,8 +569,8 @@
         </figure>
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/raevskiy.jpg" alt="Комик Илья Раевский на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Стендап-вечер</span><b>Раевский</b></figcaption>
+          <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
+          <figcaption class="headliner__name"><span>Стендап-вечер</span><b>Атлас</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
@@ -636,11 +652,19 @@
             <textarea id="f-comment" name="comment" placeholder="Формат, число гостей, пожелания по меню и программе"></textarea>
           </div>
 
+          <!-- правки 24.07: добровольное согласие на рассылку — отдельный
+               чекбокс, НЕ проставлен заранее; финальные юридические
+               формулировки пришлёт Сергей, ссылка ведёт на свою страницу -->
+          <label class="field field--consent">
+            <input type="checkbox" name="mailing-consent" value="yes">
+            <span>Хочу получать анонсы и специальные предложения клуба (необязательно)</span>
+          </label>
+
           <button class="btn btn--primary btn--block" type="submit">Отправить заявку</button>
 
           <p class="req-form__note">
             Нажимая «Отправить», вы соглашаетесь с
-            <a href="https://clubnaarbate21.ru/privacy-policy" target="_blank" rel="noopener">политикой конфиденциальности</a>. Поля со звёздочкой обязательны.
+            <a href="privacy.html">политикой конфиденциальности</a>. Поля со звёздочкой обязательны.
           </p>
         </form>
 

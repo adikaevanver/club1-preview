@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
 <title>Форматы · Клуб №1 · CLUB 1 — стендап-клуб на Новом Арбате</title>
 
-<meta name="description" content="Форматы вечеров в Клубе №1: сольные концерты топ-комиков, стендап от опытных комиков, «В большом городе», импровизация «Давай переиграем», комьюнити-вечера, Burlesque & Stand Up и сборные концерты. Новый Арбат, 21.">
+<meta name="description" content="Форматы вечеров в Клубе №1: сольные концерты топ-комиков, стендап от опытных комиков, «Stand Up в большом городе», импровизация «Давай переиграем», комьюнити-вечера, Burlesque & Stand Up и сборные концерты. Новый Арбат, 21.">
 <meta name="theme-color" content="#0a0810">
 <link rel="canonical" href="https://adikaevanver.github.io/club1-preview/formaty.html">
 
@@ -13,10 +13,10 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Клуб №1 · CLUB 1">
 <meta property="og:title" content="Форматы вечеров — Клуб №1 на Новом Арбате">
-<meta property="og:description" content="Сольники топ-комиков, импровизация, комьюнити-вечера и бурлеск-шоу. Форматы живого стендапа в центре Москвы, на Новом Арбате, 21.">
+<meta property="og:description" content="Сольные концерты топ-комиков, импровизация, комьюнити-вечера и бурлеск-шоу. Форматы живого стендапа в центре Москвы, на Новом Арбате, 21.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://adikaevanver.github.io/club1-preview/formaty.html">
-<meta property="og:image" content="assets/comics/raevskiy.jpg">
+<meta property="og:image" content="assets/comics/guram.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
@@ -87,10 +87,12 @@
 
   /* copy column */
   .format-row__body{min-width:0}
+  /* правки 24.07: нумерация курсивом в стилистике логотипа (наклон «1») */
   .fmt-num{
     display:inline-flex;align-items:center;gap:.7em;
     font-family:var(--display);font-weight:700;font-size:.78rem;
     letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+    transform:skewX(var(--skew));transform-origin:left bottom;
   }
   .fmt-num::before{content:"";width:26px;height:3px;background:var(--gold);
     border-radius:2px;transform:skewX(var(--skew))}
@@ -189,6 +191,7 @@
     <nav class="main-nav" aria-label="Основная навигация">
       <ul class="main-nav__list">
         <li><a class="main-nav__link" href="index.html">Главная</a></li>
+        <li><a class="main-nav__link" href="afisha.html">Афиша</a></li>
         <li><a class="main-nav__link" href="formaty.html" aria-current="page">Форматы</a></li>
         <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
         <li><a class="main-nav__link" href="o-klube.html">О клубе</a></li>
@@ -198,7 +201,7 @@
 
     <div class="header-actions">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="index.html#afisha">Смотреть афишу</a>
+      <a class="btn btn--primary" href="afisha.html">Смотреть афишу</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -208,13 +211,14 @@
   <!-- mobile drawer -->
   <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
     <a class="main-nav__link" href="index.html">Главная</a>
+    <a class="main-nav__link" href="afisha.html">Афиша</a>
     <a class="main-nav__link" href="formaty.html" aria-current="page">Форматы</a>
     <a class="main-nav__link" href="eda.html">Еда и напитки</a>
     <a class="main-nav__link" href="o-klube.html">О клубе</a>
     <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary btn--block" href="index.html#afisha">Смотреть афишу</a>
+      <a class="btn btn--primary btn--block" href="afisha.html">Смотреть афишу</a>
     </div>
   </nav>
 </header>
@@ -256,18 +260,18 @@
     <article class="format-row" data-format-next="ok">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <div class="fmt-poster fmt-poster--sky" role="img" aria-label="Фирменная афиша формата «От опытных комиков»">
+          <div class="fmt-poster fmt-poster--sky" role="img" aria-label="Фирменная афиша формата «Stand Up от опытных комиков»">
             <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
-            <b class="fmt-poster__name">От опытных комиков</b>
+            <b class="fmt-poster__name">Stand Up от опытных комиков</b>
           </div>
         </div>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 01</p>
-        <h2 class="format-row__title">От опытных комиков</h2>
+        <h2 class="format-row__title">Stand Up от опытных комиков</h2>
         <p class="format-row__desc">
-          Сборные вечера с проверенными именами московской сцены — <b>Павел Дедищев,
-          Евгений Чебатков, Илья Атлас, Маргарита Родина</b>, у каждого за плечами
+          Сборные вечера с проверенными именами московской сцены — <b>Евгений Чебатков,
+          Илья Атлас, Маргарита Родина</b>, у каждого за плечами
           сотни выступлений и свой блок программы. Номера отточены на публике,
           тайминг выверен до секунды, ждать, пока комик разогреется, не придётся.
         </p>
@@ -285,19 +289,19 @@
     <article class="format-row" data-format-next="solniki">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <div class="fmt-poster fmt-poster--mag" role="img" aria-label="Фирменная афиша формата «Сольники»">
+          <div class="fmt-poster fmt-poster--mag" role="img" aria-label="Фирменная афиша формата «Сольные концерты»">
             <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
-            <b class="fmt-poster__name">Сольники</b>
+            <b class="fmt-poster__name">Сольные концерты</b>
           </div>
         </div>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 02</p>
-        <h2 class="format-row__title">Сольники</h2>
+        <h2 class="format-row__title">Сольные концерты</h2>
         <p class="format-row__desc">
           Один артист, час-полтора отобранного и обкатанного материала — полноценная
-          программа вместо сборного вечера. У нас сольники ставят <b>Гурам Амарян,
-          Илья Раевский, Расул Чабдаров, Павел Дедищев, Евгений Чебатков, Нурлан
+          программа вместо сборного вечера. У нас сольные концерты играют <b>Гурам Амарян,
+          Расул Чабдаров, Артём Винокур, Евгений Чебатков, Нурлан
           Бутаков</b> — те, кого знают по турам и YouTube. Билеты на такие даты
           разбирают заранее.
         </p>
@@ -373,15 +377,15 @@
     <article class="format-row" data-format-next="gorod">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <div class="fmt-poster fmt-poster--cyan" role="img" aria-label="Фирменная афиша формата «В большом городе»">
+          <div class="fmt-poster fmt-poster--cyan" role="img" aria-label="Фирменная афиша формата «Stand Up в большом городе»">
             <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
-            <b class="fmt-poster__name">В большом городе</b>
+            <b class="fmt-poster__name">Stand Up в большом городе</b>
           </div>
         </div>
       </div>
       <div class="format-row__body">
         <p class="fmt-num" data-format-num>Формат 05</p>
-        <h2 class="format-row__title">В большом городе</h2>
+        <h2 class="format-row__title">Stand Up в большом городе</h2>
         <p class="format-row__desc">
           Стендап про то, что вы прожили на этой неделе: пробки на Садовом, съёмные
           квартиры, дедлайны, свидания из приложений. Смеются над вашей жизнью —
@@ -458,11 +462,11 @@
       </div>
     </article>
 
-    <!-- Концерты и спецпроекты -->
+    <!-- Спецпроекты -->
     <article class="format-row" data-format-next="special">
       <div class="format-row__media">
         <div class="fmt-frame">
-          <div class="fmt-poster fmt-poster--gold" role="img" aria-label="Фирменная афиша формата «Концерты»">
+          <div class="fmt-poster fmt-poster--gold" role="img" aria-label="Фирменная афиша формата «Спецпроекты»">
             <span class="fmt-poster__standup" aria-hidden="true">STANDUP</span>
             <b class="fmt-poster__name">Концерты</b>
           </div>
@@ -503,7 +507,7 @@
       </p>
     </div>
     <div class="fmt-outro__cta">
-      <a class="btn btn--primary" href="index.html#afisha">Смотреть афишу</a>
+      <a class="btn btn--primary" href="afisha.html">Смотреть афишу</a>
       <a class="btn btn--ghost" href="tel:+74996869111">+7 (499) 686 91 11</a>
     </div>
   </section>
