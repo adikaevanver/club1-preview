@@ -476,18 +476,19 @@
     });
 
     /* состояние фильтров; восстановление после возврата из карточки.
-       all:true — базовый режим «все ближайшие» сквозь месяцы: иначе к
-       концу месяца список почти пуст, а август прячется за переключателем
-       (находка ревизии); месяц включается навигацией по календарю */
-    var state = { month: null, all: true, date: null, format: null, sort: 'date', preset: null, q: '' };
+       Правило месяцев (Анвер, 26.07): выбран ТЕКУЩИЙ месяц — показываем
+       все ближайшие события сквозь месяцы; перелистнул на другой месяц —
+       только события этого месяца. Правило выводится из state.month на
+       каждом рендере, отдельного флага нет — протухать нечему, и после
+       перезагрузки на текущем месяце список снова полный */
+    var state = { month: null, date: null, format: null, sort: 'date', preset: null, q: '' };
     try {
       var saved = JSON.parse(sessionStorage.getItem('club1-afisha') || 'null');
       if (saved && months.indexOf(saved.month) !== -1) state = saved;
       if (!state.sort) state.sort = 'date';
       if (!('preset' in state)) state.preset = null;
       if (typeof state.q !== 'string') state.q = '';
-      if (!('all' in state)) state.all = !state.date;
-      delete state.dow; delete state.artist;   /* фильтры прошлой схемы */
+      delete state.dow; delete state.artist; delete state.all;   /* прошлые схемы */
     } catch (e) {}
     if (!state.month){
       var cur = monthKey(todayISO());
@@ -512,15 +513,16 @@
     function filtered(){
       /* поиск ищет по всей афише (не только по выбранному месяцу);
          активный пресет заменяет собой месяц и дату, формат — поверх */
+      var curMonth = monthKey(todayISO());
       return events.filter(function(ev){
         if (!matchesQuery(ev)) return false;
         if (state.format && ev.format !== state.format) return false;
         if (state.q) return true;
         if (state.preset) return inPreset(ev, state.preset);
-        if (state.all) return true;
-        if (monthKey(ev.date) !== state.month) return false;
-        if (state.date && ev.date !== state.date) return false;
-        return true;
+        if (state.date) return ev.date === state.date;
+        /* текущий месяц = все ближайшие; другой месяц = только он */
+        if (state.month === curMonth) return true;
+        return monthKey(ev.date) === state.month;
       });
     }
 
@@ -612,18 +614,17 @@
     });
     if (monthPrev) monthPrev.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
-      if (mi > 0){ state.month = months[mi - 1]; state.date = null; state.preset = null; state.all = false; rerender(); }
+      if (mi > 0){ state.month = months[mi - 1]; state.date = null; state.preset = null; rerender(); }
     });
     if (monthNext) monthNext.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
-      if (mi < months.length - 1){ state.month = months[mi + 1]; state.date = null; state.preset = null; state.all = false; rerender(); }
+      if (mi < months.length - 1){ state.month = months[mi + 1]; state.date = null; state.preset = null; rerender(); }
     });
     if (daysWrap) daysWrap.addEventListener('click', function(e){
       var b = e.target.closest('[data-date]');
       if (!b) return;
       state.date = state.date === b.getAttribute('data-date') ? null : b.getAttribute('data-date');
-      if (state.date){ state.preset = null; state.all = false; }
-      else if (!state.preset){ state.all = true; }   /* сняли дату — снова все ближайшие */
+      if (state.date){ state.preset = null; }
       rerender();
     });
     if (fmtWrap) fmtWrap.addEventListener('click', function(e){
@@ -654,7 +655,8 @@
     });
     root.addEventListener('click', function(e){
       if (e.target.closest('[data-af-reset]')){
-        state.date = null; state.format = null; state.sort = 'date'; state.preset = null; state.q = ''; state.all = true;
+        state.date = null; state.format = null; state.sort = 'date'; state.preset = null; state.q = '';
+        state.month = monthKey(todayISO());
         if (searchBox) searchBox.value = '';
         rerender();
       }

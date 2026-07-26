@@ -1206,10 +1206,14 @@ html{overflow-x:clip}
 
 /* CSS-постеры — вертикальные 4:5 под будущие 1080×1350; настоящая афиша
    задаёт пропорцию сама (сейчас артворк живого сайта квадратный, придут
-   ресайзы 1080×1350 — карточки перестроятся без правок) */
+   ресайзы 1080×1350 — карточки перестроятся без правок).
+   ВАЖНО: у img position:relative + z-index:2 — не-позиционированная
+   картинка уходила под дуотон-градиент .poster::before (z-index:1),
+   и карточки выглядели пустыми тёмными плитками */
 .poster{aspect-ratio:4/5}
-.poster--art{--p1:#241c2e;--p2:#0d0a12;aspect-ratio:auto}
-.poster--art .poster__full{position:static;width:100%;height:auto}
+.poster--art{aspect-ratio:auto}
+.poster--art::before{display:none}
+.poster--art .poster__full{position:relative;z-index:2;display:block;width:100%;height:auto}
 /* на CSS-постере карточки название не дублируется — заголовок стоит под
    афишей, поэтому фирменный арт опускается к нижнему краю */
 .poster--noname .poster__art{bottom:18px}
