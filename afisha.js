@@ -133,8 +133,11 @@
        прямо под афишей); афиша целиком кликабельна на «Подробнее» */
     var poster;
     if (ev.poster){
+      /* рамка 4:5; пока арт квадратный, поля добивает размытая подложка
+         из той же картинки — портретный ресайз закроет рамку целиком */
       poster =
         '<div class="poster poster--art">' +
+          '<img class="poster__backfill" src="' + esc(ev.poster) + '" alt="" aria-hidden="true" loading="lazy" width="800" height="800">' +
           '<img class="poster__full" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '" loading="lazy" width="800" height="800">' +
           badge + when + age +
         '</div>';

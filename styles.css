@@ -1225,16 +1225,26 @@ html{overflow-x:clip}
 .poster-link .poster{transition:transform .3s var(--ease), box-shadow .3s var(--ease)}
 .poster-link:hover .poster{transform:translateY(-3px);box-shadow:0 20px 44px -18px rgba(0,0,0,.75)}
 
-/* CSS-постеры — вертикальные 4:5 под будущие 1080×1350; настоящая афиша
-   задаёт пропорцию сама (сейчас артворк живого сайта квадратный, придут
-   ресайзы 1080×1350 — карточки перестроятся без правок).
-   ВАЖНО: у img position:relative + z-index:2 — не-позиционированная
-   картинка уходила под дуотон-градиент .poster::before (z-index:1),
-   и карточки выглядели пустыми тёмными плитками */
+/* Карточки — вертикальные 4:5 под ресайзы 1080×1350 (правка Максима
+   06.08, включена до прихода артов по слову Анвера). Настоящая афиша
+   лежит в рамке object-fit:contain: квадратный арт живого сайта встаёт
+   по центру, поля заполняет размытая подложка из той же картинки
+   (.poster__backfill из cardHTML); портретный 1080×1350 заполнит рамку
+   целиком без правок кода. Страничные хиро держат свой 1:1 селекторами
+   .solo-poster/.show-poster — их это не трогает.
+   ВАЖНО: у img z-index:2 — не-позиционированная картинка уходила под
+   дуотон-градиент .poster::before (z-index:1), и карточки выглядели
+   пустыми тёмными плитками */
 .poster{aspect-ratio:4/5}
-.poster--art{aspect-ratio:auto}
+.poster--art{aspect-ratio:4/5}
 .poster--art::before{display:none}
-.poster--art .poster__full{position:relative;z-index:2;display:block;width:100%;height:auto}
+.poster--art .poster__full{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2;
+}
+.poster__backfill{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  filter:blur(26px) brightness(.45) saturate(1.1);transform:scale(1.15);
+}
 /* на CSS-постере карточки название не дублируется — заголовок стоит под
    афишей, поэтому фирменный арт опускается к нижнему краю */
 .poster--noname .poster__art{bottom:18px}
@@ -1268,8 +1278,12 @@ html{overflow-x:clip}
 @keyframes c1-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
 @media (max-width:640px){
-  .afisha__track--grid{grid-template-columns:1fr;gap:26px}
+  /* мобильная сетка — два столбца портретных карточек (макет Максима 06.08) */
+  .afisha__track--grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
   .afisha__track--grid .event-card{width:auto;max-width:none}
+  .afisha__track--grid .event-card__title{font-size:1rem}
+  .afisha__track--grid .event-card__meta{font-size:.78rem}
+  .afisha__track--grid .btn--sm{padding:.55em .9em;font-size:.82rem}
   .af-search{flex-basis:100%;max-width:none}
   .afisha__head--section{margin-top:34px}
 }
