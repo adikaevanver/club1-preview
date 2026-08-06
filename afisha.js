@@ -232,10 +232,16 @@
     var actions = '<div class="bb-slide__actions">' +
                     '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
                   '</div>';
+    /* клик по самой афише ведёт на страницу события (просьба Анвера
+       06.08): ссылка-подложка на весь слайд; сцена поверх неё прозрачна
+       для кликов (pointer-events), кнопки остаются кликабельными */
+    var slideLink = '<a class="bb-slide__link" href="' + esc(ev.page) +
+                    '" aria-label="' + esc(ev.title) + ' — подробнее о событии"></a>';
     if (ev.wide){
       return (
         '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
           '<div class="bb-slide__bg bb-slide__bg--wide" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
+          slideLink +
           '<div class="bb-slide__stage">' +
             '<div class="bb-slide__chips">' + chips + '</div>' +
             '<span class="bb-slide__age bb-slide__age--corner">' + esc(ev.age || '18+') + '</span>' +
@@ -265,6 +271,7 @@
     return (
       '<article class="bb-slide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
         bg +
+        slideLink +
         '<div class="bb-slide__stage">' +
           '<div class="bb-slide__chips">' + chips + '</div>' +
           '<div class="bb-slide__art">' + art + '</div>' +
@@ -408,15 +415,22 @@
     }
 
     /* свайп пальцем: порог 40px, вертикальный скролл не трогаем
-       (touch-action:pan-y в CSS); клики по кнопкам слайда дают dx≈0 */
-    var downX = null;
-    track.addEventListener('pointerdown', function(e){ downX = e.clientX; });
+       (touch-action:pan-y в CSS); клики по кнопкам слайда дают dx≈0.
+       Слайд целиком — ссылка на событие (.bb-slide__link), поэтому жест
+       с заметным смещением гасит последующий click — свайп не должен
+       уводить на страницу */
+    var downX = null, swiped = false;
+    track.addEventListener('pointerdown', function(e){ downX = e.clientX; swiped = false; });
     track.addEventListener('pointerup', function(e){
       if (downX === null) return;
       var dx = e.clientX - downX;
       downX = null;
+      if (Math.abs(dx) > 8) swiped = true;
       if (Math.abs(dx) > 40) goTo(idx + (dx < 0 ? 1 : -1));
     });
+    track.addEventListener('click', function(e){
+      if (swiped){ e.preventDefault(); e.stopPropagation(); swiped = false; }
+    }, true);
     track.addEventListener('pointercancel', function(){ downX = null; });
     track.addEventListener('dragstart', function(e){ e.preventDefault(); });
 

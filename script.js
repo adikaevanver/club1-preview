@@ -285,12 +285,30 @@
   })();
 
 
+  /* --- StickyCta ----------------------------------------------------
+     Мобильная плашка брони прячется, пока герой-кнопки брони видны на
+     экране (аудит 06.08: на короткой шапке Комарова плашка перекрывала
+     кнопки целиком). Без IntersectionObserver — поведение прежнее. */
+  var StickyCta = (function () {
+    function init() {
+      var sticky  = document.querySelector('.sticky-cta');
+      var heroCta = document.querySelector('.hero-cta, .cta-row');
+      if (!sticky || !heroCta || !('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        sticky.classList.toggle('is-suppressed', entries[0].isIntersecting);
+      }, { threshold: 0.4 });
+      io.observe(heroCta);
+    }
+    return { init: init };
+  })();
+
   /* --- boot --------------------------------------------------------- */
   function boot() {
     Modal.init();
     Tabs.init();
     Slideshow.init();
     Datebar.init();
+    StickyCta.init();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
