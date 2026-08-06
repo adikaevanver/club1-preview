@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=260806">
+<link rel="stylesheet" href="styles.css?v=2608062">
 </head>
 
 <body>
@@ -79,7 +79,7 @@
     <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary btn--block" href="#afisha">Смотреть афишу</a>
+      <!-- «Смотреть афишу» из мобильного меню снята (макет Максима 06.08) -->
     </div>
   </nav>
 </header>
@@ -138,13 +138,9 @@
     <section class="filters" aria-labelledby="filters-title">
       <h2 id="filters-title" class="sr-only">Поиск и фильтр афиши по датам и форматам</h2>
 
-      <div class="filters__row filters__row--top">
-        <div class="filters__presets" data-af-presets role="group" aria-label="Быстрый выбор даты"></div>
-        <label class="af-search">
-          <input type="search" data-af-search placeholder="Поиск по мероприятиям" aria-label="Поиск по мероприятиям" autocomplete="off">
-        </label>
-      </div>
-
+      <!-- Правки Максима 06.08 (PDF): календарь месяца сразу под заголовком,
+           ниже — строка пресетов с «Все мероприятия», «Ещё фильтры» и
+           поиском; форматы и сортировка живут под раскрывашкой -->
       <div class="datebar">
         <div class="datebar__nav">
           <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
@@ -154,9 +150,19 @@
         <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
       </div>
 
-      <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
+      <div class="filters__row filters__row--top">
+        <div class="filters__presets" data-af-presets role="group" aria-label="Быстрый выбор даты"></div>
+        <button class="pill filters__more" type="button" data-af-more aria-expanded="false">Ещё фильтры <span class="filters__more-chev" aria-hidden="true">⌄</span></button>
+        <label class="af-search">
+          <input type="search" data-af-search placeholder="Поиск по мероприятиям" aria-label="Поиск по мероприятиям" autocomplete="off">
+        </label>
+      </div>
 
-      <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
+      <div class="filters__extra" data-af-extra hidden>
+        <div class="filters__row filters__row--formats" data-af-formats role="group" aria-label="Форматы"></div>
+
+        <div class="filters__row filters__row--sorts" data-af-sorts role="group" aria-label="Сортировка"></div>
+      </div>
     </section>
 
     <section class="afisha" aria-labelledby="afisha-title">
@@ -477,11 +483,11 @@
 </script>
 
 <!-- shared interactive components (datebar filter) -->
-<script src="script.js?v=260806" defer></script>
+<script src="script.js?v=2608062" defer></script>
 
 <!-- живая афиша: данные + рендер -->
-<script src="assets/data/events.js?v=260806" defer></script>
-<script src="afisha.js?v=260806" defer></script>
+<script src="assets/data/events.js?v=2608062" defer></script>
+<script src="afisha.js?v=2608062" defer></script>
 
 </body>
 </html>

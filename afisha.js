@@ -382,9 +382,11 @@
       }).join('');
     }
 
-    /* трек — нативный горизонтальный скролл со снапом: свайп пальцем на
-       телефоне и двумя пальцами по трекпаду работают сами; стрелки, точки
-       и автопрокрутка ездят через scrollTo по тому же скроллу */
+    /* Правки Максима 06.08 (PDF): смена слайдов — fade in/fade out.
+       Слайды лежат стопкой (grid-area 1/1), активный получает .is-active
+       и кроссфейдится по opacity. Свайп остаётся (просьба команды): жест
+       ловим pointer-событиями, горизонтальный жест трекпада — по wheel;
+       стрелки, точки и автопрокрутка ходят через тот же goTo */
     var idx = 0, timer = null, paused = false;
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -394,26 +396,37 @@
         d.setAttribute('aria-pressed', String(j === idx));
       });
     }
-    function goTo(i, instant){
+    function goTo(i){
       idx = (i + list.length) % list.length;
-      track.scrollTo({
-        left: idx * track.clientWidth,
-        behavior: (instant || reduceMotion) ? 'auto' : 'smooth'
+      Array.prototype.forEach.call(track.children, function(s, j){
+        s.classList.toggle('is-active', j === idx);
       });
       syncDots();
     }
 
-    /* индекс следует за живым скроллом (свайп/трекпад), точки не отстают */
-    var scrollT = null;
-    track.addEventListener('scroll', function(){
-      if (scrollT) clearTimeout(scrollT);
-      scrollT = setTimeout(function(){
-        var i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
-        idx = Math.max(0, Math.min(list.length - 1, i));
-        syncDots();
-      }, 80);
-    }, {passive: true});
-    window.addEventListener('resize', function(){ goTo(idx, true); });
+    /* свайп пальцем: порог 40px, вертикальный скролл не трогаем
+       (touch-action:pan-y в CSS); клики по кнопкам слайда дают dx≈0 */
+    var downX = null;
+    track.addEventListener('pointerdown', function(e){ downX = e.clientX; });
+    track.addEventListener('pointerup', function(e){
+      if (downX === null) return;
+      var dx = e.clientX - downX;
+      downX = null;
+      if (Math.abs(dx) > 40) goTo(idx + (dx < 0 ? 1 : -1));
+    });
+    track.addEventListener('pointercancel', function(){ downX = null; });
+    track.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+    /* горизонтальный жест трекпада: один щелчок листания на жест */
+    var wheelLock = 0;
+    track.addEventListener('wheel', function(e){
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      var now = Date.now();
+      if (now - wheelLock < 500 || Math.abs(e.deltaX) < 12) return;
+      wheelLock = now;
+      goTo(idx + (e.deltaX > 0 ? 1 : -1));
+    }, {passive: false});
 
     function tick(){ if (!paused) goTo(idx + 1); }
     function play(){
@@ -439,7 +452,7 @@
       if (document.hidden) stop(); else play();
     });
 
-    goTo(0, true);
+    goTo(0);
     play();
   }
 
@@ -462,6 +475,8 @@
     var presetWrap = root.querySelector('[data-af-presets]');
     var searchBox  = root.querySelector('[data-af-search]');
     var loadBtn    = root.querySelector('[data-af-load]');
+    var moreBtn    = root.querySelector('[data-af-more]');
+    var extraWrap  = root.querySelector('[data-af-extra]');
     if (!track) return;
 
     /* быстрые пресеты дат (импульсная аудитория): диапазон [от, до] */
@@ -594,14 +609,19 @@
     }
 
     function render(){
-      /* пресеты: пилюля гаснет, если в диапазоне нет ни одного события */
+      /* пресеты: пилюля гаснет, если в диапазоне нет ни одного события.
+         «Все мероприятия» (макет Максима 06.08) — активна, пока не выбран
+         пресет или конкретный день; клик сбрасывает и то и другое */
       if (presetWrap){
-        presetWrap.innerHTML = PRESETS.map(function(p){
-          var n = events.filter(function(ev){ return inPreset(ev, p.key); }).length;
-          return '<button class="pill" type="button" data-preset="' + p.key + '"' +
-                 (n ? '' : ' disabled title="Событий нет"') +
-                 ' aria-pressed="' + String(state.preset === p.key) + '">' + p.label + '</button>';
-        }).join('');
+        presetWrap.innerHTML =
+          '<button class="pill" type="button" data-preset="all"' +
+          ' aria-pressed="' + String(!state.preset && !state.date) + '">Все мероприятия</button>' +
+          PRESETS.map(function(p){
+            var n = events.filter(function(ev){ return inPreset(ev, p.key); }).length;
+            return '<button class="pill" type="button" data-preset="' + p.key + '"' +
+                   (n ? '' : ' disabled title="Событий нет"') +
+                   ' aria-pressed="' + String(state.preset === p.key) + '">' + p.label + '</button>';
+          }).join('');
       }
 
       var mi = months.indexOf(state.month);
@@ -664,10 +684,31 @@
       var b = e.target.closest('[data-preset]');
       if (!b || b.disabled) return;
       var key = b.getAttribute('data-preset');
+      if (key === 'all'){                       /* «Все мероприятия» = сброс дат */
+        state.preset = null; state.date = null;
+        rerender();
+        return;
+      }
       state.preset = state.preset === key ? null : key;
       if (state.preset){ state.date = null; }   /* пресет заменяет ручные даты */
       rerender();
     });
+    /* «Ещё фильтры» (макет Максима 06.08): форматы и сортировка спрятаны
+       в раскрывашку; активный фильтр из sessionStorage раскрывает её сам,
+       чтобы применённое не оказалось невидимым */
+    function openExtra(open){
+      if (!extraWrap) return;
+      extraWrap.hidden = !open;
+      if (moreBtn){
+        moreBtn.setAttribute('aria-expanded', String(open));
+        moreBtn.classList.toggle('is-open', open);
+      }
+    }
+    if (moreBtn && extraWrap){
+      moreBtn.addEventListener('click', function(){ openExtra(extraWrap.hidden); });
+      if (state.format || state.sort !== 'date') openExtra(true);
+    }
+
     if (monthPrev) monthPrev.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
       if (mi > 0){ state.month = months[mi - 1]; state.date = null; state.preset = null; rerender(); }

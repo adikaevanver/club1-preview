@@ -973,16 +973,18 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   margin-inline:auto;border-radius:var(--r);
 }
 .billboard__viewport{overflow:hidden}
-/* нативный скролл со снапом: свайп на телефоне и трекпад на маке */
-.billboard__track{
-  display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
-  overscroll-behavior-x:contain;
-  scrollbar-width:none;-ms-overflow-style:none;
-}
-.billboard__track::-webkit-scrollbar{display:none}
+/* Правки Максима 06.08: смена слайдов — fade in/fade out. Слайды лежат
+   стопкой в одной grid-ячейке, активный проявляется по opacity; свайп и
+   трекпад обрабатывает afisha.js (touch-action:pan-y отдаёт вертикальный
+   скролл странице, горизонтальный жест — слайдеру) */
+.billboard__track{display:grid;touch-action:pan-y}
 
-.bb-slide{position:relative;flex:0 0 100%;min-width:0;overflow:hidden;isolation:isolate;
-  scroll-snap-align:start;scroll-snap-stop:always}
+.bb-slide{position:relative;grid-area:1/1;width:100%;min-width:0;overflow:hidden;
+  isolation:isolate;opacity:0;transition:opacity .55s ease;pointer-events:none;z-index:0}
+.bb-slide.is-active{opacity:1;pointer-events:auto;z-index:1}
+@media (prefers-reduced-motion: reduce){
+  .bb-slide{transition:none}
+}
 .bb-slide__bg{
   position:absolute;inset:-44px;z-index:0;
   background-size:cover;background-position:center 30%;
@@ -1000,8 +1002,11 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   filter:none;transform:none;inset:0;
   background-size:cover;background-position:center;
 }
+/* Пропорция окна слайдера — жёсткая 12:5 (1440×600): под неё Максим
+   готовит панорамные ресайзы, картинка видна целиком на любой ширине
+   (раньше 16:9 с потолком 600px кропил арт по вертикали) */
 .bb-slide--wide .bb-slide__stage{
-  aspect-ratio:16/9;min-height:0;max-height:min(62vh,600px);width:100%;
+  aspect-ratio:12/5;min-height:0;width:100%;
   padding:clamp(18px,2.5vw,32px) clamp(18px,3vw,44px);
 }
 .bb-slide__age--corner{position:absolute;left:clamp(18px,3vw,44px);bottom:clamp(18px,2.5vw,32px)}
@@ -1169,6 +1174,13 @@ html{overflow-x:clip}
 /* верхний ряд фильтров: пресеты слева, поиск справа */
 .filters__row--top{justify-content:space-between}
 .filters__presets{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+
+/* «Ещё фильтры» (макет Максима 06.08): форматы и сортировка в раскрывашке */
+.filters__more{gap:.45em;color:var(--muted)}
+.filters__more-chev{display:inline-block;line-height:1;transition:transform .18s}
+.filters__more.is-open .filters__more-chev{transform:rotate(180deg)}
+.filters__extra{display:flex;flex-direction:column;gap:4px}
+.filters__extra[hidden]{display:none}
 .af-search{position:relative;flex:1 1 240px;max-width:340px;display:flex;margin-left:auto}
 .af-search input{
   width:100%;font:inherit;font-size:.95rem;color:var(--text);
