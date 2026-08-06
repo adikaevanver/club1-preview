@@ -269,7 +269,9 @@ ul{list-style:none}
 
 /* mobile drawer */
 .mobile-menu{
-  position:fixed;inset:var(--header-h) 0 0 0;z-index:99;
+  /* выше .sticky-cta (120): открытое меню перекрывает плашку брони
+     целиком (аудит 06.08); шапку меню не трогает — начинается под ней */
+  position:fixed;inset:var(--header-h) 0 0 0;z-index:130;
   background:rgba(7,5,9,.97);backdrop-filter:blur(10px);
   padding:24px var(--gutter) 48px;
   display:flex;flex-direction:column;gap:6px;
@@ -871,9 +873,17 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   border-top:1px solid var(--hairline);
 }
 .sticky-cta__info{display:flex;flex-direction:column;line-height:1.3;min-width:0}
-.sticky-cta__date{font-family:var(--display);font-weight:700;font-size:.82rem;color:#fff;white-space:nowrap}
+.sticky-cta__date{font-family:var(--display);font-weight:700;font-size:.82rem;color:#fff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sticky-cta__price{font-size:.78rem;color:var(--gold);font-weight:600}
 .sticky-cta .btn{flex:0 0 auto}
+
+/* «Краткая информация»: нечётная последняя карточка растягивается на всю
+   строку — двухколоночная сетка без дыры справа (аудит 06.08) */
+.quickfacts .fact:last-child:nth-child(odd){grid-column:1/-1}
+
+/* плашка спит, пока герой-кнопки брони на экране (script.js StickyCta) */
+.sticky-cta.is-suppressed{display:none}
 @media (max-width:720px){
   .sticky-cta{display:flex}
   body.has-sticky-cta{padding-bottom:78px}
@@ -982,6 +992,15 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 .bb-slide{position:relative;grid-area:1/1;width:100%;min-width:0;overflow:hidden;
   isolation:isolate;opacity:0;transition:opacity .55s ease;pointer-events:none;z-index:0}
 .bb-slide.is-active{opacity:1;pointer-events:auto;z-index:1}
+
+/* клик по афише слайда → страница события: ссылка-подложка на весь слайд.
+   z-index:1 при более раннем месте в DOM держит её ПОД сценой (у сцены
+   тот же z-index:1, но она позже) — сцена прозрачна для кликов
+   (pointer-events:none), клики ловят либо кнопки (pointer-events:auto),
+   либо ссылка под ними */
+.bb-slide__link{position:absolute;inset:0;z-index:1}
+.bb-slide__stage{pointer-events:none}
+.bb-slide__actions{pointer-events:auto}
 @media (prefers-reduced-motion: reduce){
   .bb-slide{transition:none}
 }
@@ -1065,9 +1084,14 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 }
 .billboard__arrow--prev{left:22px}
 .billboard__arrow--next{right:22px}
+/* точки — в капсуле-подложке, чтобы не терялись на тексте артворка
+   (аудит 06.08: активная точка ложилась прямо на буквы названия) */
 .billboard__dots{
-  position:absolute;left:0;right:0;bottom:14px;z-index:3;
+  position:absolute;left:50%;transform:translateX(-50%);bottom:12px;z-index:3;
   display:flex;justify-content:center;gap:8px;
+  padding:7px 12px;border-radius:999px;
+  background:rgba(10,8,16,.55);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
 }
 .bb-dot{
   width:9px;height:9px;border-radius:50%;border:0;padding:0;cursor:pointer;
@@ -1099,6 +1123,13 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   .billboard__arrow{width:38px;height:38px;top:32%}
   .billboard__arrow--prev{left:8px}
   .billboard__arrow--next{right:8px}
+  /* на мобиле кнопки слайда уезжают к нижнему краю — точки выходят из
+     наложения и встают строкой ПОД слайдом (аудит 06.08: точки лежали
+     поверх «Бронировать места») */
+  .billboard__dots{
+    position:static;transform:none;margin:12px auto 2px;width:max-content;
+    background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;
+  }
 }
 
 /* ---- артисты ниже афиши -------------------------------------------- */
@@ -1138,6 +1169,9 @@ html{overflow-x:clip}
 .legal-page h1{
   font-family:var(--display);font-weight:800;text-transform:uppercase;
   font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.05;
+  /* «КОНФИДЕНЦИАЛЬНОСТИ» шире мобильного экрана — переносим внутри
+     слова, а не режем краем (аудит 06.08) */
+  overflow-wrap:break-word;hyphens:auto;
 }
 .legal-page h2{
   margin-top:34px;font-family:var(--display);font-weight:700;
@@ -1175,10 +1209,10 @@ html{overflow-x:clip}
 .filters__row--top{justify-content:space-between}
 .filters__presets{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 
-/* «Ещё фильтры» (макет Максима 06.08): форматы и сортировка в раскрывашке */
+/* «Ещё фильтры» (макет Максима 06.08): форматы и сортировка в раскрывашке.
+   Стрелку рисует ТОЛЬКО легаси-псевдоэлемент .filters__more::after по
+   aria-expanded — второй шеврон-спан задваивал её (аудит 06.08) */
 .filters__more{gap:.45em;color:var(--muted)}
-.filters__more-chev{display:inline-block;line-height:1;transition:transform .18s}
-.filters__more.is-open .filters__more-chev{transform:rotate(180deg)}
 .filters__extra{display:flex;flex-direction:column;gap:4px}
 .filters__extra[hidden]{display:none}
 .af-search{position:relative;flex:1 1 240px;max-width:340px;display:flex;margin-left:auto}
