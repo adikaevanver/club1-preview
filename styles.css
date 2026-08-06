@@ -973,16 +973,18 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   margin-inline:auto;border-radius:var(--r);
 }
 .billboard__viewport{overflow:hidden}
-/* нативный скролл со снапом: свайп на телефоне и трекпад на маке */
-.billboard__track{
-  display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
-  overscroll-behavior-x:contain;
-  scrollbar-width:none;-ms-overflow-style:none;
-}
-.billboard__track::-webkit-scrollbar{display:none}
+/* Правки Максима 06.08: смена слайдов — fade in/fade out. Слайды лежат
+   стопкой в одной grid-ячейке, активный проявляется по opacity; свайп и
+   трекпад обрабатывает afisha.js (touch-action:pan-y отдаёт вертикальный
+   скролл странице, горизонтальный жест — слайдеру) */
+.billboard__track{display:grid;touch-action:pan-y}
 
-.bb-slide{position:relative;flex:0 0 100%;min-width:0;overflow:hidden;isolation:isolate;
-  scroll-snap-align:start;scroll-snap-stop:always}
+.bb-slide{position:relative;grid-area:1/1;width:100%;min-width:0;overflow:hidden;
+  isolation:isolate;opacity:0;transition:opacity .55s ease;pointer-events:none;z-index:0}
+.bb-slide.is-active{opacity:1;pointer-events:auto;z-index:1}
+@media (prefers-reduced-motion: reduce){
+  .bb-slide{transition:none}
+}
 .bb-slide__bg{
   position:absolute;inset:-44px;z-index:0;
   background-size:cover;background-position:center 30%;
@@ -1000,8 +1002,11 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   filter:none;transform:none;inset:0;
   background-size:cover;background-position:center;
 }
+/* Пропорция окна слайдера — жёсткая 12:5 (1440×600): под неё Максим
+   готовит панорамные ресайзы, картинка видна целиком на любой ширине
+   (раньше 16:9 с потолком 600px кропил арт по вертикали) */
 .bb-slide--wide .bb-slide__stage{
-  aspect-ratio:16/9;min-height:0;max-height:min(62vh,600px);width:100%;
+  aspect-ratio:12/5;min-height:0;width:100%;
   padding:clamp(18px,2.5vw,32px) clamp(18px,3vw,44px);
 }
 .bb-slide__age--corner{position:absolute;left:clamp(18px,3vw,44px);bottom:clamp(18px,2.5vw,32px)}
@@ -1169,6 +1174,13 @@ html{overflow-x:clip}
 /* верхний ряд фильтров: пресеты слева, поиск справа */
 .filters__row--top{justify-content:space-between}
 .filters__presets{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+
+/* «Ещё фильтры» (макет Максима 06.08): форматы и сортировка в раскрывашке */
+.filters__more{gap:.45em;color:var(--muted)}
+.filters__more-chev{display:inline-block;line-height:1;transition:transform .18s}
+.filters__more.is-open .filters__more-chev{transform:rotate(180deg)}
+.filters__extra{display:flex;flex-direction:column;gap:4px}
+.filters__extra[hidden]{display:none}
 .af-search{position:relative;flex:1 1 240px;max-width:340px;display:flex;margin-left:auto}
 .af-search input{
   width:100%;font:inherit;font-size:.95rem;color:var(--text);
@@ -1213,16 +1225,26 @@ html{overflow-x:clip}
 .poster-link .poster{transition:transform .3s var(--ease), box-shadow .3s var(--ease)}
 .poster-link:hover .poster{transform:translateY(-3px);box-shadow:0 20px 44px -18px rgba(0,0,0,.75)}
 
-/* CSS-постеры — вертикальные 4:5 под будущие 1080×1350; настоящая афиша
-   задаёт пропорцию сама (сейчас артворк живого сайта квадратный, придут
-   ресайзы 1080×1350 — карточки перестроятся без правок).
-   ВАЖНО: у img position:relative + z-index:2 — не-позиционированная
-   картинка уходила под дуотон-градиент .poster::before (z-index:1),
-   и карточки выглядели пустыми тёмными плитками */
+/* Карточки — вертикальные 4:5 под ресайзы 1080×1350 (правка Максима
+   06.08, включена до прихода артов по слову Анвера). Настоящая афиша
+   лежит в рамке object-fit:contain: квадратный арт живого сайта встаёт
+   по центру, поля заполняет размытая подложка из той же картинки
+   (.poster__backfill из cardHTML); портретный 1080×1350 заполнит рамку
+   целиком без правок кода. Страничные хиро держат свой 1:1 селекторами
+   .solo-poster/.show-poster — их это не трогает.
+   ВАЖНО: у img z-index:2 — не-позиционированная картинка уходила под
+   дуотон-градиент .poster::before (z-index:1), и карточки выглядели
+   пустыми тёмными плитками */
 .poster{aspect-ratio:4/5}
-.poster--art{aspect-ratio:auto}
+.poster--art{aspect-ratio:4/5}
 .poster--art::before{display:none}
-.poster--art .poster__full{position:relative;z-index:2;display:block;width:100%;height:auto}
+.poster--art .poster__full{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2;
+}
+.poster__backfill{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  filter:blur(26px) brightness(.45) saturate(1.1);transform:scale(1.15);
+}
 /* на CSS-постере карточки название не дублируется — заголовок стоит под
    афишей, поэтому фирменный арт опускается к нижнему краю */
 .poster--noname .poster__art{bottom:18px}
@@ -1256,8 +1278,12 @@ html{overflow-x:clip}
 @keyframes c1-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
 @media (max-width:640px){
-  .afisha__track--grid{grid-template-columns:1fr;gap:26px}
+  /* мобильная сетка — два столбца портретных карточек (макет Максима 06.08) */
+  .afisha__track--grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
   .afisha__track--grid .event-card{width:auto;max-width:none}
+  .afisha__track--grid .event-card__title{font-size:1rem}
+  .afisha__track--grid .event-card__meta{font-size:.78rem}
+  .afisha__track--grid .btn--sm{padding:.55em .9em;font-size:.82rem}
   .af-search{flex-basis:100%;max-width:none}
   .afisha__head--section{margin-top:34px}
 }
