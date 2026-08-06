@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=260729">
+<link rel="stylesheet" href="styles.css?v=260806">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS  ·  Страница сольника (solo-concert detail)
@@ -346,7 +346,7 @@
     </div>
 
     <div class="about-copy">
-      <p>Гурам Амарян выходит на сцену Клуба №1 с сольной программой — полтора часа стендапа без разогрева и долгих пауз. Только комик, микрофон и зал, который отвечает смехом. Это не сборный концерт: весь вечер держит один артист, и материал выстроен как цельная история, а не набор случайных шуток.</p>
+      <p>Гурам Амарян выходит на сцену Клуба №1 с сольной программой — полтора часа стендапа от первой шутки до финала. Только комик, микрофон и зал, который отвечает смехом. Весь вечер держит один артист, и материал выстроен как цельная история.</p>
       <p>В программу вошёл материал, который Гурам обкатывал на открытых микрофонах и сборных вечерах: наблюдения о жизни в большом городе, отношениях, работе и семье. Манера — разговорная: комик много импровизирует, реагирует на зал и не боится уводить номер в сторону, если ситуация того просит. <b>Двух одинаковых вечеров не бывает.</b></p>
       <p>Концерт идёт единым блоком, <b>18+</b>. Сбор гостей — за 30 минут до начала. На площадке работают бар и кухня, места — за столиками, так что вечер можно провести спокойно и с компанией.</p>
 
@@ -403,7 +403,10 @@
        4 · ВИДЕО СО СМЕШНЫМИ МОМЕНТАМИ / ПРИМЕР ВЫСТУПЛЕНИЯ
        (placeholder video block · shared SLIDESHOW)
        ================================================================= -->
-  <section class="sec" aria-labelledby="video-title">
+  <!-- Видео-блок скрыт по правкам Фигмы 31.07/04.08 (Сергей, #9/#10/#14/#16:
+       контента пока нет, плейсхолдер выглядит пусто). Вернуть, когда появятся
+       нарезки или ссылки на целые материалы/рилсы: снять hidden. -->
+  <section class="sec" aria-labelledby="video-title" hidden>
     <div class="section-head">
       <span class="rule" aria-hidden="true"></span>
       <h2 class="section-title" id="video-title">Видео и смешные моменты</h2>
@@ -493,7 +496,7 @@
 
     <button class="slider-arrow slider-arrow--prev" data-slider="railMore" data-dir="-1" aria-label="Предыдущие концерты">&lsaquo;</button>
     <div class="afisha__track" id="railMore" role="list"
-         data-upcoming data-upcoming-first="Гурам Амарян" data-upcoming-limit="8"></div>
+         data-upcoming data-upcoming-except="Гурам Амарян" data-upcoming-limit="8"></div>
     <button class="slider-arrow slider-arrow--next" data-slider="railMore" data-dir="1" aria-label="Следующие концерты">&rsaquo;</button>
   </section>
 </main>
@@ -535,7 +538,7 @@
       <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
         <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
       </a>
-      <p>Живой стендап в центре Москвы, на Новом Арбате, 21. Федеральные комики, камерный зал, настоящие эмоции.</p>
+      <p>Клуб стендапа на Новом Арбате, 21. Здесь выступают известные комики и те, о ком скоро будут говорить все.</p>
     </div>
 
     <div class="footer-col" id="contacts">
@@ -648,11 +651,11 @@
 </script>
 
 <!-- shared interactive components (Modal · Tabs · Slideshow · Datebar) -->
-<script src="script.js?v=260729" defer></script>
+<script src="script.js?v=260806" defer></script>
 
 <!-- живая афиша: данные + рендер рейки ближайших событий -->
-<script src="assets/data/events.js?v=260729" defer></script>
-<script src="afisha.js?v=260729" defer></script>
+<script src="assets/data/events.js?v=260806" defer></script>
+<script src="afisha.js?v=260806" defer></script>
 
 </body>
 </html>

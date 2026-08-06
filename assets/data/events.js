@@ -22,9 +22,11 @@
      age    возрастная маркировка | null (не подтверждена)
    ===================================================================== */
 /* Единый словарь категорий (правки 24.07): без повторов, партнёрские и
-   разовые форматы живут в «Спецпроектах». «Сольные концерты» — выбранный
-   вариант переименования «Сольников» (второй кандидат был «Сольные
-   стендапы»); название используется последовательно на всём сайте. */
+   разовые форматы живут в «Других шоу» (до правок Фигмы 31.07 —
+   «Спецпроекты»: слово гостю непонятно, замену дал Сергей). «Сольные
+   концерты» — выбранный вариант переименования «Сольников» (второй
+   кандидат был «Сольные стендапы»); название используется
+   последовательно на всём сайте. */
 window.CLUB1_FORMATS = {
   solniki:   'Сольные концерты',
   ok:        'Stand Up от опытных комиков',
@@ -33,7 +35,7 @@ window.CLUB1_FORMATS = {
   community: 'Комьюнити',
   burlesque: 'Burlesque & Stand Up',
   krashi:    'Концерты',
-  special:   'Спецпроекты',
+  special:   'Другие шоу',
   /* женский стендап — фильтр появится в афише сам, как только у события
      будет format:'zhensky' (решение о формате «Подруги» за арт-отделом) */
   zhensky:   'Женский стендап'
@@ -54,7 +56,7 @@ window.CLUB1_EVENTS = [
   {date:'2026-07-26', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
    poster:'assets/posters/ok2-sq.jpg', wide:'assets/posters/ok2-wide.jpg', photo:null, tone:'mono', page:'show.html',
    buy:'https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8NjY2NTc3fDEyMzY1MzczfDE3ODUwODg4MDAwMDA=?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
-  {date:'2026-07-30', time:'19:00', title:'Эйчар стендап', kind:'Спецпроект', format:'special', priceFrom:2500,
+  {date:'2026-07-30', time:'19:00', title:'Эйчар стендап', kind:'Шоу', format:'special', priceFrom:2500,
    poster:'assets/posters/hr-sq.jpg', wide:'assets/posters/hr-wide.jpg', photo:null, tone:'sky', page:'hr-standup.html',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73241619/', age:'18+'},
   {date:'2026-07-30', time:'20:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
@@ -114,7 +116,7 @@ window.CLUB1_EVENTS = [
   {date:'2026-08-08', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
    poster:'assets/posters/ok2-sq.jpg', wide:'assets/posters/ok2-wide.jpg', photo:null, tone:'mono', page:'show.html',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@68548503?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
-  {date:'2026-08-13', time:'19:00', title:'Медицинский стендап', kind:'Спецпроект', format:'special',
+  {date:'2026-08-13', time:'19:00', title:'Медицинский стендап', kind:'Шоу', format:'special',
    poster:'assets/posters/med-sq.jpg', wide:'assets/posters/med-wide.jpg', photo:null, tone:'green', page:'med-standup.html',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73469460/', age:'18+'},
   {date:'2026-08-13', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
@@ -153,7 +155,7 @@ window.CLUB1_EVENTS = [
   {date:'2026-08-20', time:'18:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
    poster:'assets/posters/ok2-sq.jpg', wide:'assets/posters/ok2-wide.jpg', photo:null, tone:'mono', page:'show.html',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@68548515?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
-  {date:'2026-08-20', time:'19:00', title:'Риэлторский стендап', kind:'Спецпроект', format:'special',
+  {date:'2026-08-20', time:'19:00', title:'Риэлторский стендап', kind:'Шоу', format:'special',
    poster:'assets/posters/realty-sq.jpg', wide:'assets/posters/realty-wide.jpg', photo:null, tone:'gold', page:'realty-standup.html',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73295697/', age:'18+'},
   {date:'2026-08-20', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
