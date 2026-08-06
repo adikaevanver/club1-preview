@@ -647,6 +647,9 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 }
 .tab-panel{animation:c1-fade .32s var(--ease)}
 .tab-panel[hidden]{display:none}
+
+/* кнопка развёртки расписания сеансов (правка Фигмы #7, initSchedule) */
+.sched-more{margin-top:16px}
 @keyframes c1-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ---- 12.3 SLIDESHOW (horizontal photo slider) ---------------------- */
@@ -1049,8 +1052,14 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 }
 .bb-slide__actions .btn--ghost{background:rgba(10,8,16,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 
-.billboard__arrow--prev{left:14px}
-.billboard__arrow--next{right:14px}
+/* Правка Фигмы 31.07 (#11): стрелки заметнее — Сергей их не увидел на
+   макете. Крупнее и плотнее базовых .slider-arrow, отступ от края больше. */
+.billboard__arrow{
+  width:56px;height:56px;font-size:1.9rem;
+  background:rgba(10,8,16,.78);border-color:rgba(255,255,255,.38);
+}
+.billboard__arrow--prev{left:22px}
+.billboard__arrow--next{right:22px}
 .billboard__dots{
   position:absolute;left:0;right:0;bottom:14px;z-index:3;
   display:flex;justify-content:center;gap:8px;

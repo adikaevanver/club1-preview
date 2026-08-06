@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=260729">
+<link rel="stylesheet" href="styles.css?v=260806">
 </head>
 
 <body>
@@ -178,7 +178,11 @@
        АРТИСТЫ — слайдер (созвон 21.07: блок спущен ниже, страница
        «Комики» на стопе; карточки без своей страницы — без ссылок)
        ================================================================= -->
-  <section class="hero artists-strip" aria-labelledby="artists-title">
+  <!-- Слайдер артистов скрыт по правкам Фигмы 31.07 (#3, Сергей: «давайте
+       пока скроем») + созвон 05.08 («артистов убираем, описания шоу
+       оставляем»). Вернуть, когда фото приведут к единому стандарту:
+       снять hidden ниже. -->
+  <section class="hero artists-strip" aria-labelledby="artists-title" hidden>
     <div class="glow glow--mag hero__glow-a" aria-hidden="true"></div>
     <div class="glow glow--pur hero__glow-b" aria-hidden="true"></div>
 
@@ -291,7 +295,7 @@
        ================================================================= -->
   <section class="proof" aria-labelledby="proof-title">
     <div class="proof__head">
-      <h2 class="proof__title" id="proof-title">Что пишут о вечерах</h2>
+      <h2 class="proof__title" id="proof-title">Что о нас пишут</h2>
       <span class="proof__agg">
         отзывы гостей на
         <a href="https://yandex.ru/maps/org/club_1/66983171570/reviews/" target="_blank" rel="noopener">Яндекс.Картах</a>
@@ -342,7 +346,7 @@
        ================================================================= -->
   <section class="cta-final" aria-labelledby="cta-final-title">
     <h2 class="cta-final__title" id="cta-final-title">Готовы к вечеру?</h2>
-    <p class="cta-final__sub">Два часа не думать. Только смеяться и хорошо ужинать.</p>
+    <p class="cta-final__sub">Выбирайте шоу и бронируйте стол.</p>
     <div class="cta-final__actions">
       <a class="btn btn--primary" href="#afisha">Смотреть афишу</a>
       <a class="btn btn--ghost" href="tel:+74996869111">Позвонить · +7 (499) 686 91 11</a>
@@ -366,7 +370,7 @@
       <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
         <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
       </a>
-      <p>Живой стендап в центре Москвы, на Новом Арбате, 21. Федеральные комики, камерный зал, настоящие эмоции.</p>
+      <p>Клуб стендапа на Новом Арбате, 21. Здесь выступают известные комики и те, о ком скоро будут говорить все.</p>
     </div>
 
     <div class="footer-col" id="contacts">
@@ -473,11 +477,11 @@
 </script>
 
 <!-- shared interactive components (datebar filter) -->
-<script src="script.js?v=260729" defer></script>
+<script src="script.js?v=260806" defer></script>
 
 <!-- живая афиша: данные + рендер -->
-<script src="assets/data/events.js?v=260729" defer></script>
-<script src="afisha.js?v=260729" defer></script>
+<script src="assets/data/events.js?v=260806" defer></script>
+<script src="afisha.js?v=260806" defer></script>
 
 </body>
 </html>

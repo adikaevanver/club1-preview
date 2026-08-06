@@ -10,8 +10,12 @@
                             сохраняется в sessionStorage и переживает
                             переход в карточку и назад.
      2. [data-upcoming]   — рейка «ближайшие события» (страницы событий).
-                            data-upcoming-first="Имя" — события этого
-                            артиста первыми; data-upcoming-limit="8".
+                            data-upcoming-except="Имя" — события этого
+                            артиста НЕ показывать: гость уже на его
+                            странице, рейка зовёт на другие мероприятия
+                            (правка Фигмы 31.07, #15 — до неё артист
+                            стоял первым и рейка выглядела дублями);
+                            data-upcoming-limit="8".
      3. [data-format-next]— на карточку формата дописывает ближайшую дату
                             и ведёт кнопку на неё; сортирует карточки
                             внутри [data-format-grid] по ближайшей дате.
@@ -56,6 +60,27 @@
       .filter(function(ev){ return ev.date >= t; })
       .sort(function(a, b){ return sortKey(a) < sortKey(b) ? -1 : 1; });
   }
+  /* Сетка «день = шоу» (правки Фигмы 04.08, #17 + #11 «дубли перебор»):
+     два сеанса одного шоу в один день — одна карточка, времена копятся
+     в ev.times («16:00 и 18:30»). Кнопка брони ведёт на ранний сеанс,
+     остальные выбираются на странице шоу. Слияние делает копию события,
+     исходные данные не трогает. */
+  function dedupeSameDay(list){
+    var seen = {}, out = [];
+    list.forEach(function(ev){
+      var k = ev.date + '|' + ev.title;
+      if (seen[k]){
+        if (ev.time) seen[k].times.push(ev.time);
+        return;
+      }
+      var copy = Object.assign({}, ev);
+      copy.times = ev.time ? [ev.time] : [];
+      seen[k] = copy;
+      out.push(copy);
+    });
+    return out;
+  }
+
   function nextForFormat(key){
     return upcoming().filter(function(ev){ return ev.format === key; })[0] || null;
   }
@@ -138,12 +163,15 @@
     var price = ev.priceFrom
       ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽</p>'
       : '';
+    /* слитая карточка (dedupeSameDay) несёт все времена дня: «16:00 и 18:30» */
+    var times = (ev.times && ev.times.length ? ev.times : (ev.time ? [ev.time] : []))
+                  .map(esc).join(' и ');
     return (
       '<article class="event-card" role="listitem">' +
         poster +
         '<h3 class="event-card__title">' + esc(ev.title) + '</h3>' +
         '<p class="event-card__meta">' + DAYS_FULL[dateOf(ev).getDay()] + ', ' + fmtShort(ev) +
-          (ev.time ? ' · ' + esc(ev.time) : '') + ' · Новый Арбат, 21</p>' +
+          (times ? ' · ' + times : '') + ' · Новый Арбат, 21</p>' +
         price +
         '<div class="event-card__actions">' +
           '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
@@ -293,10 +321,8 @@
           Array.prototype.forEach.call(daysEl.querySelectorAll('[data-date]'), function(x){
             x.setAttribute('aria-pressed', String(x === b));
           });
-          var pick = b.getAttribute('data-date');
-          Array.prototype.forEach.call(listEl.children, function(row){
-            row.hidden = pick !== 'all' && row.getAttribute('data-date') !== pick;
-          });
+          curPick = b.getAttribute('data-date');
+          applyCollapse();
         });
       }
       listEl.innerHTML = list.map(function(ev){
@@ -308,6 +334,35 @@
                  '<a class="btn book-btn" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>' +
                '</div>';
       }).join('');
+
+      /* Правка Фигмы 31.07 (#7): простыня сеансов свёрнута — первые три
+         строки, дальше кнопка «Показать все даты (N)». Выбор дня в
+         датапике показывает его сеансы целиком независимо от свёртки. */
+      var curPick  = 'all';
+      var expanded = list.length <= 3;
+      var moreBtn  = null;
+      function applyCollapse(){
+        var shown = 0;
+        Array.prototype.forEach.call(listEl.children, function(row){
+          var byDay  = curPick !== 'all' && row.getAttribute('data-date') !== curPick;
+          var byFold = !expanded && curPick === 'all' && shown >= 3;
+          row.hidden = byDay || byFold;
+          if (!byDay) shown++;
+        });
+        if (moreBtn) moreBtn.hidden = expanded || curPick !== 'all';
+      }
+      if (!expanded){
+        moreBtn = document.createElement('button');
+        moreBtn.type = 'button';
+        moreBtn.className = 'btn btn--ghost sched-more';
+        moreBtn.textContent = 'Показать все даты (' + list.length + ')';
+        moreBtn.addEventListener('click', function(){
+          expanded = true;
+          applyCollapse();
+        });
+        listEl.parentNode.insertBefore(moreBtn, listEl.nextSibling);
+        applyCollapse();
+      }
     });
   }
 
@@ -593,7 +648,8 @@
         }).join('');
       }
 
-      var list = applySort(filtered(), state.sort);
+      /* «день = шоу»: повторные сеансы дня схлопнуты в одну карточку */
+      var list = dedupeSameDay(applySort(filtered(), state.sort));
       if (!visible) visible = batchSize();
       track.innerHTML = list.slice(0, visible).map(cardHTML).join('');
       if (loadBtn) loadBtn.hidden = list.length <= visible;
@@ -679,15 +735,13 @@
      2 · Рейка ближайших событий  [data-upcoming]
      ================================================================= */
   function initUpcoming(el){
-    var first = el.getAttribute('data-upcoming-first');
-    var limit = parseInt(el.getAttribute('data-upcoming-limit'), 10) || 8;
-    var list = upcoming();
-    if (first){
-      var mine   = list.filter(function(ev){ return ev.title === first; });
-      var others = list.filter(function(ev){ return ev.title !== first; });
-      list = mine.concat(others);
+    var except = el.getAttribute('data-upcoming-except');
+    var limit  = parseInt(el.getAttribute('data-upcoming-limit'), 10) || 8;
+    var list   = upcoming();
+    if (except){
+      list = list.filter(function(ev){ return ev.title !== except; });
     }
-    el.innerHTML = list.slice(0, limit).map(cardHTML).join('');
+    el.innerHTML = dedupeSameDay(list).slice(0, limit).map(cardHTML).join('');
   }
 
   /* =================================================================

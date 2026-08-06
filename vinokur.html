@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=260729">
+<link rel="stylesheet" href="styles.css?v=260806">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS  ·  Страница сольника (solo-concert detail)
@@ -395,7 +395,10 @@
        4 · ВИДЕО СО СМЕШНЫМИ МОМЕНТАМИ / ПРИМЕР ВЫСТУПЛЕНИЯ
        (placeholder video block · shared SLIDESHOW)
        ================================================================= -->
-  <section class="sec" aria-labelledby="video-title">
+  <!-- Видео-блок скрыт по правкам Фигмы 31.07/04.08 (Сергей, #9/#10/#14/#16:
+       контента пока нет, плейсхолдер выглядит пусто). Вернуть, когда появятся
+       нарезки или ссылки на целые материалы/рилсы: снять hidden. -->
+  <section class="sec" aria-labelledby="video-title" hidden>
     <div class="section-head">
       <span class="rule" aria-hidden="true"></span>
       <h2 class="section-title" id="video-title">Видео и смешные моменты</h2>
@@ -485,7 +488,7 @@
 
     <button class="slider-arrow slider-arrow--prev" data-slider="railMore" data-dir="-1" aria-label="Предыдущие концерты">&lsaquo;</button>
     <div class="afisha__track" id="railMore" role="list"
-         data-upcoming data-upcoming-first="Артём Винокур" data-upcoming-limit="8"></div>
+         data-upcoming data-upcoming-except="Артём Винокур" data-upcoming-limit="8"></div>
     <button class="slider-arrow slider-arrow--next" data-slider="railMore" data-dir="1" aria-label="Следующие концерты">&rsaquo;</button>
   </section>
 </main>
@@ -527,7 +530,7 @@
       <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
         <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
       </a>
-      <p>Живой стендап в центре Москвы, на Новом Арбате, 21. Федеральные комики, камерный зал, настоящие эмоции.</p>
+      <p>Клуб стендапа на Новом Арбате, 21. Здесь выступают известные комики и те, о ком скоро будут говорить все.</p>
     </div>
 
     <div class="footer-col" id="contacts">
@@ -638,11 +641,11 @@
 </script>
 
 <!-- shared interactive components (Modal · Tabs · Slideshow · Datebar) -->
-<script src="script.js?v=260729" defer></script>
+<script src="script.js?v=260806" defer></script>
 
 <!-- живая афиша: данные + рендер рейки ближайших событий -->
-<script src="assets/data/events.js?v=260729" defer></script>
-<script src="afisha.js?v=260729" defer></script>
+<script src="assets/data/events.js?v=260806" defer></script>
+<script src="afisha.js?v=260806" defer></script>
 
 </body>
 </html>
