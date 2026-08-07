@@ -116,7 +116,7 @@ window.CLUB1_EVENTS = [
   {date:'2026-08-08', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
    poster:'assets/posters/ok2-sq.jpg', wide:'assets/posters/ok2-wide.jpg', photo:null, tone:'mono', page:'show.html',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@68548503?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
-  {date:'2026-08-13', time:'19:00', title:'Медицинский стендап', kind:'Шоу', format:'special',
+  {date:'2026-08-13', time:'19:00', title:'Медицинский стендап', kind:'Шоу', format:'special', priceFrom:2200,
    poster:'assets/posters/med-sq.jpg', wide:'assets/posters/med-wide.jpg', photo:null, tone:'green', page:'med-standup.html',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73469460/', age:'18+'},
   {date:'2026-08-13', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
@@ -212,7 +212,7 @@ window.CLUB1_EVENTS = [
   {date:'2026-08-30', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:590,
    poster:'assets/posters/ok2-sq.jpg', wide:'assets/posters/ok2-wide.jpg', photo:null, tone:'mono', page:'show.html',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@68548535?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
-  {date:'2026-09-06', time:'19:00', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki',
+  {date:'2026-09-06', time:'19:00', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/komarov-sq.jpg', wide:'assets/posters/komarov-wide.jpg', photo:null, tone:'sky', page:'komarov.html',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73420327/', age:'18+'},
   {date:'2026-09-12', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
@@ -221,7 +221,7 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-19', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/chabdarov-sq.jpg', wide:'assets/posters/chabdarov-wide.jpg', photo:null, tone:'mag', page:'chabdarov.html',
    buy:'https://iframeab-pre7764.intickets.ru/seance/72656527/', age:'18+'},
-  {date:'2026-10-03', time:'18:30', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki',
+  {date:'2026-10-03', time:'18:30', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/komarov-sq.jpg', wide:'assets/posters/komarov-wide.jpg', photo:null, tone:'sky', page:'komarov.html',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73420338/', age:'18+'}
 ];
