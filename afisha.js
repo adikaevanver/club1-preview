@@ -830,7 +830,7 @@
         card.setAttribute('data-has-date', '1');
       } else {
         if (dateEl) dateEl.textContent = 'Дат пока нет — следите за афишей';
-        if (cta) setCta(cta, 'Смотреть афишу', 'afisha.html');
+        if (cta) setCta(cta, 'Смотреть афишу', 'afisha');
       }
     });
     document.querySelectorAll('[data-format-grid]').forEach(function(grid){
