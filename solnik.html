@@ -35,7 +35,7 @@
      ===================================================================== -->
 <style>
   /* ---- generic section rhythm (mirrors show.html) ----------------- */
-  .sec{position:relative;padding:clamp(44px,6vw,80px) 0}
+  .sec{position:relative;padding:var(--section-y) 0}
   .sec + .sec{border-top:1px solid var(--hairline)}
   .section-head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(26px,4vw,42px)}
   .section-title{
@@ -47,7 +47,7 @@
   /* =================================================================
      1 · HERO — poster (left) · краткая информация + CTA (right)
      ================================================================= */
-  .solo-hero{position:relative;padding:clamp(24px,4vw,46px) 0 clamp(36px,5vw,60px)}
+  .solo-hero{position:relative;padding:var(--section-y) 0 var(--sp-6)}
   .solo-hero__glow-a{width:520px;height:520px;top:-120px;left:-180px}
   .solo-hero__glow-b{width:440px;height:440px;top:30px;right:-180px}
 
@@ -328,7 +328,7 @@
           <p class="datepick__note">Выбрана дата: <b id="pickedDate">15 августа</b>, начало в <b id="pickedTime">20:30</b>.</p>
           <a class="btn book-btn datepick__book" id="pickedBook" href="https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODY4MTUwMDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button15_08&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce" target="_blank" rel="noopener">Бронировать места</a>
           <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
-          <p class="datepick__fee">Билет — от 2 000 ₽, сбором не облагается. В клубе за столом к счёту за еду и напитки добавляется сервисный сбор 10% — он уже в счёте, отдельно платить не нужно. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
+          <p class="datepick__fee">Билет — от 2 000 ₽, сбором не облагается. К счёту за еду и напитки в зале добавляется сервисный сбор 10%. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
         </div>
       </div>
 
@@ -521,7 +521,7 @@
       <ul class="price-list">
         <li><b>Билет.</b> Цена фиксированная и указана в карточке события. Сервисным сбором не облагается.</li>
         <li><b>Еда и напитки.</b> По желанию: кухня и бар работают весь вечер, заказ приносят к столику. Меню и цены — на странице «Еда и напитки».</li>
-        <li><b>Сервисный сбор.</b> 10% к счёту за еду и напитки. Добавляется в счёт автоматически, отдельно платить не нужно.</li>
+        <li><b>Сервисный сбор.</b> 10% к счёту за еду и напитки. Билеты сбором не облагаются.</li>
       </ul>
       <p class="price-total">Цена, которую вы видите, и есть та, которую вы платите: билет — финальный, сбор касается только заказа за столом.</p>
     </div>

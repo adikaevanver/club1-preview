@@ -63,6 +63,28 @@
   --maxw:1440px;
   --gutter:clamp(18px, 5vw, 64px);
 
+  /* ── вертикальный ритм ──────────────────────────────────────────────
+     Одна шкала на весь сайт. До неё каждая страница задавала отступы
+     руками: 77 разных значений на 152 объявления, зазор между соседними
+     секциями гулял от 48px до 172px. Новые отступы берутся ТОЛЬКО отсюда.
+
+       --sp-1 … --sp-6   внутренние отступы: карточки, стопки, сетки
+       --section-y       padding-block каждой крупной секции
+                         (соседние секции дают 60–104px, а не 168)
+       --head-gap        заголовок секции → её содержимое
+       --cta-gap         абзац текста → кнопка под ним
+  */
+  --sp-1:8px;
+  --sp-2:12px;
+  --sp-3:16px;
+  --sp-4:clamp(18px, 2.2vw, 24px);
+  --sp-5:clamp(22px, 2.8vw, 32px);
+  --sp-6:clamp(28px, 3.6vw, 48px);
+
+  --section-y:clamp(28px, 3.4vw, 48px);
+  --head-gap:clamp(20px, 2.4vw, 30px);
+  --cta-gap:clamp(22px, 2.6vw, 32px);
+
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 
@@ -293,6 +315,14 @@ ul{list-style:none}
 .hero__glow-a{width:520px;height:520px;top:-140px;left:-160px}
 .hero__glow-b{width:460px;height:460px;top:-60px;right:-180px}
 
+/* Абзац → кнопка под ним. Раньше кнопка вставала вплотную к последней
+   строке текста (у .btn нет своего margin), и стык читался как ошибка
+   вёрстки. Один отступ на все такие пары по сайту. */
+p + .btn,
+p + .btn-row,
+p + .hero__cta,
+.section__lede + .btn{margin-top:var(--cta-gap)}
+
 .headliners{position:relative;border-radius:var(--r);overflow:hidden;background:var(--ink-2)}
 
 /* scroll viewport — becomes swipeable on narrow screens */
@@ -360,7 +390,7 @@ ul{list-style:none}
 /* =====================================================================
    8. FILTER BAR
    ===================================================================== */
-.filters{padding:38px 0 30px;display:flex;flex-direction:column;gap:16px}
+.filters{padding:var(--sp-6) 0 var(--sp-5);display:flex;flex-direction:column;gap:16px}
 .filters__row{
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
 }
@@ -387,7 +417,7 @@ ul{list-style:none}
 /* =====================================================================
    9. AFISHA — EVENT CARDS + CSS POSTERS
    ===================================================================== */
-.afisha{position:relative;padding-bottom:64px}
+.afisha{position:relative;padding-bottom:var(--section-y)}
 .afisha__track{
   display:flex;gap:22px;
   overflow-x:auto;scroll-snap-type:x proximity;
@@ -901,7 +931,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 /* social proof — реальные отзывы с Яндекс.Карт (карточка клуба 66983171570).
    Цитаты приводятся выдержками, у каждой — автор, оценка и дата; агрегат
    и ссылка на источник рядом, чтобы всё было проверяемо. */
-.proof{position:relative;padding:clamp(38px,5vw,64px) 0 clamp(10px,2vw,18px)}
+.proof{position:relative;padding:var(--section-y) 0 var(--sp-4)}
 .proof__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 22px;margin-bottom:26px}
 .proof__title{
   font-family:var(--display);font-weight:800;
@@ -947,7 +977,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 /* финальный CTA-блок перед футером */
 .cta-final{
   position:relative;border-top:1px solid var(--hairline);margin-top:24px;
-  padding:clamp(44px,6vw,84px) 0 clamp(52px,7vw,92px);
+  padding:var(--section-y) 0 clamp(52px,7vw,92px);
 }
 .cta-final__title{
   font-family:var(--display);font-weight:800;
@@ -974,7 +1004,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
    ===================================================================== */
 
 /* ---- hero billboard ------------------------------------------------ */
-.hero-billboard{position:relative;padding-top:26px;padding-bottom:8px}
+.hero-billboard{position:relative;padding-top:26px;padding-bottom:var(--sp-6)}
 /* правки 26.07 (референс Максима): слайдер НЕ на всю ширину экрана —
    блок в ширину контента с полями по бокам и скруглением */
 .billboard{
@@ -1198,7 +1228,7 @@ html{overflow-x:clip}
    ===================================================================== */
 
 /* заголовок раздела стоит над фильтрами (был между фильтрами и списком) */
-.afisha__head--section{margin:44px 0 0;scroll-margin-top:calc(var(--header-h) + 12px)}
+.afisha__head--section{margin:var(--section-y) 0 0;scroll-margin-top:calc(var(--header-h) + 12px)}
 .afisha__head--section + .filters{padding-top:22px}
 
 /* самостоятельная страница афиши: заголовок-h1 крупнее, отступ от шапки */
@@ -1246,7 +1276,7 @@ html{overflow-x:clip}
 .afisha__track--grid .event-card__actions{flex-wrap:wrap}
 /* фирменный арт CSS-постера в плотной сетке чуть мельче, чтобы не резался */
 .afisha__track--grid .poster__standup{font-size:2.35rem}
-.afisha__more{display:flex;justify-content:center;padding:26px 0 0}
+.afisha__more{display:flex;justify-content:center;padding:var(--sp-5) 0 0}
 /* [hidden] обязан побеждать display:inline-flex кнопки */
 .afisha__more .btn[hidden]{display:none}
 

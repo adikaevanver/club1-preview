@@ -35,7 +35,7 @@
      ===================================================================== -->
 <style>
   /* ---- page hero -------------------------------------------------- */
-  .fmt-hero{position:relative;padding:clamp(30px,6vw,74px) 0 clamp(18px,3vw,34px)}
+  .fmt-hero{position:relative;padding:var(--section-y) 0 var(--sp-6)}
   .fmt-hero__glow-a{width:480px;height:480px;top:-140px;left:-170px}
   .fmt-hero__glow-b{width:420px;height:420px;top:-60px;right:-190px}
   .fmt-hero__inner{position:relative;z-index:1;max-width:820px}
@@ -54,7 +54,7 @@
   /* ---- the list of formats --------------------------------------- */
   .formats{
     display:flex;flex-direction:column;gap:clamp(50px,7.5vw,104px);
-    padding:clamp(34px,6vw,72px) 0 clamp(56px,9vw,104px);
+    padding:var(--section-y) 0 var(--section-y);
   }
 
   .format-row{
@@ -143,7 +143,7 @@
   .fmt-outro{
     position:relative;overflow:hidden;border-radius:var(--r);
     background:var(--panel);border:1px solid var(--hairline);
-    padding:clamp(32px,5vw,56px);margin-bottom:clamp(40px,7vw,80px);
+    padding:var(--sp-6);margin-bottom:clamp(40px,7vw,80px);
     display:flex;align-items:center;gap:clamp(24px,4vw,48px);flex-wrap:wrap;
   }
   .fmt-outro__glow{width:360px;height:360px;top:-120px;right:-120px}
@@ -270,10 +270,10 @@
         <p class="fmt-num" data-format-num>Формат 01</p>
         <h2 class="format-row__title">Stand Up от опытных комиков</h2>
         <p class="format-row__desc">
-          Сборные вечера с проверенными именами московской сцены — <b>Евгений Чебатков,
-          Илья Атлас, Маргарита Родина</b>, у каждого за плечами
-          сотни выступлений и свой блок программы. Номера отточены на публике,
-          тайминг выверен до секунды, ждать, пока комик разогреется, не придётся.
+          Сборный вечер: <b>несколько комиков подряд</b>, у каждого свой блок программы.
+          На сцену выходят те, кто уже отработал этот материал на публике, — открытый
+          микрофон и первые прогоны идут отдельным форматом. Состав вечера объявляем
+          в афише перед каждой датой.
         </p>
         <p class="format-row__date" data-format-date></p>
         <div class="format-row__cta">
@@ -390,7 +390,7 @@
           Стендап про то, что вы прожили на этой неделе: пробки на Садовом, съёмные
           квартиры, дедлайны, свидания из приложений. Смеются над вашей жизнью —
           вместе с вами: выходишь с ощущением «я не один такой». Работают резиденты
-          клуба — <b>Маргарита Родина, Юлия Македонская, Илья Атлас</b>. Хороший
+          клуба — <b>Маргарита Родина, Юлия Македонская, Андрей Атлас</b>. Хороший
           формат для первого похода на стендап.
         </p>
         <p class="format-row__date" data-format-date></p>

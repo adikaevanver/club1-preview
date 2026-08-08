@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
 <title>Комики · Клуб №1 · CLUB 1 — стендап на Новом Арбате</title>
 
-<meta name="description" content="Комики Клуба №1 на Новом Арбате: Евгений Чебатков, Расул Чабдаров, Илья Атлас и другие резиденты. Нажмите на карточку комика, чтобы открыть биографию, регалии, видео и соцсети.">
+<meta name="description" content="Комики Клуба №1 на Новом Арбате: Евгений Чебатков, Расул Чабдаров, Андрей Атлас и другие резиденты. Нажмите на карточку комика, чтобы открыть биографию, регалии, видео и соцсети.">
 <meta name="theme-color" content="#0a0810">
 <!-- созвон 21.07: страница на стопе — из навигации убрана, не индексируется;
      вернётся, когда фото артистов приведут к единому стилю брендбука -->
@@ -38,7 +38,7 @@
      ===================================================================== -->
 <style>
   /* ---- page hero ------------------------------------------------- */
-  .roster-hero{position:relative;padding:52px 0 10px}
+  .roster-hero{position:relative;padding:var(--section-y) 0 var(--sp-6)}
   .roster-hero__glow-a{width:520px;height:520px;top:-150px;left:-180px}
   .roster-hero__glow-b{width:440px;height:440px;top:-90px;right:-180px}
   .roster-hero__head{position:relative;z-index:1;max-width:720px}
@@ -55,7 +55,7 @@
   .roster-hero__lede b{color:var(--text);font-weight:600}
 
   /* ---- roster grid ---------------------------------------------- */
-  .roster-section{padding:44px 0 76px}
+  .roster-section{padding:var(--section-y) 0}
   .roster{
     display:grid;
     grid-template-columns:repeat(4,minmax(0,1fr));   /* 4-up desktop */
@@ -192,8 +192,8 @@
     .roster{grid-template-columns:repeat(3,minmax(0,1fr))}   /* tablet: 3-up */
   }
   @media (max-width:640px){
-    .roster-hero{padding:40px 0 6px}
-    .roster-section{padding:36px 0 60px}
+    .roster-hero{padding:var(--section-y) 0 var(--sp-6)}
+    .roster-section{padding:var(--section-y) 0}
     .roster{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}  /* 2-up mobile */
     button.comic-card{gap:12px}
     .comic-card__frame{clip-path:polygon(10% 0,100% 0,90% 100%,0 100%)}
@@ -327,10 +327,10 @@
         </button>
       </li>
 
-      <li data-comic="Илья Атлас">
-        <button type="button" class="comic-card" data-modal-open="bio-atlas" aria-label="Илья Атлас — открыть информацию о комике">
+      <li data-comic="Андрей Атлас">
+        <button type="button" class="comic-card" data-modal-open="bio-atlas" aria-label="Андрей Атлас — открыть информацию о комике">
           <span class="comic-card__frame">
-            <img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас" loading="lazy" width="900" height="900">
+            <img src="assets/comics/atlas.jpg" alt="Комик Андрей Атлас" loading="lazy" width="900" height="900">
           </span>
           <span class="comic-card__meta">
             <span class="comic-card__name"><span class="fn">Илья</span><span class="ln">Атлас</span></span>
@@ -537,7 +537,7 @@
     <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="bio-atlas-title">
       <button class="modal__close" data-modal-close aria-label="Закрыть">&times;</button>
       <p class="eyebrow modal__eyebrow">Резидент</p>
-      <h2 class="modal__title" id="bio-atlas-title">Илья Атлас</h2>
+      <h2 class="modal__title" id="bio-atlas-title">Андрей Атлас</h2>
       <div class="modal__body">
         <p>Постоянный участник стендап-вечеров Клуба №1. Свежий материал и обкатка новых шуток прямо в зале.</p>
 

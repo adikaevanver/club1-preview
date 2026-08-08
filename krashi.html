@@ -35,7 +35,7 @@
      ===================================================================== -->
 <style>
   /* ---- generic section rhythm (matches show.html conventions) ------ */
-  .show-section{position:relative;padding:clamp(44px,6vw,84px) 0}
+  .show-section{position:relative;padding:var(--section-y) 0}
   .show-section + .show-section{border-top:1px solid var(--hairline)}
   .section-head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,4vw,44px)}
   .section-title{
@@ -432,7 +432,7 @@
       <ul class="price-list">
         <li><b>Билет.</b> Цена фиксированная и указана в карточке события. Сервисным сбором не облагается.</li>
         <li><b>Еда и напитки.</b> По желанию: кухня и бар работают весь вечер, заказ приносят к столику. Меню и цены — на странице «Еда и напитки».</li>
-        <li><b>Сервисный сбор.</b> 10% к счёту за еду и напитки. Добавляется в счёт автоматически, отдельно платить не нужно.</li>
+        <li><b>Сервисный сбор.</b> 10% к счёту за еду и напитки. Билеты сбором не облагаются.</li>
       </ul>
       <p class="price-total">Цена, которую вы видите, и есть та, которую вы платите: билет — финальный, сбор касается только заказа за столом.</p>
     </div>

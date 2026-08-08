@@ -34,7 +34,7 @@
      ===================================================================== -->
 <style>
   /* section rhythm ------------------------------------------------------ */
-  .section{position:relative;padding:clamp(48px,7vw,84px) 0}
+  .section{position:relative;padding:var(--section-y) 0}
   .section__head{max-width:760px;position:relative;z-index:1}
   .section__head .eyebrow{display:block;margin-bottom:14px}
   .h-sec{
@@ -53,7 +53,7 @@
   }
 
   /* HERO ---------------------------------------------------------------- */
-  .rent-hero{position:relative;padding:clamp(30px,6vw,64px) 0 clamp(20px,4vw,40px)}
+  .rent-hero{position:relative;padding:var(--section-y) 0 var(--sp-6)}
   .rent-hero__glow-a{width:520px;height:520px;top:-150px;left:-180px}
   .rent-hero__glow-b{width:460px;height:460px;top:-40px;right:-190px}
   .rent-hero__inner{position:relative;z-index:1;max-width:860px}
@@ -98,14 +98,19 @@
     position:relative;aspect-ratio:16/9;display:flex;align-items:flex-end;
     padding:22px;isolation:isolate;
   }
+  /* Съёмка залов 01.2026 легла на место прежней градиентной заглушки.
+     Градиент остался затемнением снизу, чтобы цифра вместимости читалась
+     поверх фотографии. */
+  .hall__photo{
+    position:absolute;inset:0;z-index:-2;
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
   .hall__visual::before{
     content:"";position:absolute;inset:0;z-index:-1;
     background:
-      radial-gradient(120% 100% at 82% 0%, rgba(255,255,255,.14), transparent 55%),
-      linear-gradient(150deg, var(--v1), var(--v2));
+      radial-gradient(120% 100% at 82% 0%, rgba(255,255,255,.10), transparent 55%),
+      linear-gradient(to top, rgba(6,4,9,.88) 0%, rgba(6,4,9,.45) 42%, rgba(6,4,9,.12) 100%);
   }
-  .hall--main .hall__visual{--v1:#b02455;--v2:#1a0710}
-  .hall--lounge .hall__visual{--v1:#6b2fb0;--v2:#140a26}
   .hall__tag{
     position:absolute;top:0;left:0;background:var(--magenta);color:#fff;
     font-family:var(--display);font-weight:800;font-size:.72rem;letter-spacing:.04em;
@@ -174,12 +179,21 @@
   }
   .type p{color:var(--muted);font-size:.92rem;line-height:1.5}
 
+  /* GALLERY — интерьеры площадки.
+     Раньше здесь ехала общая лента с портретами комиков: на странице
+     аренды заказчику нужен зал, а не лица артистов. Плитки шире и
+     положе портретных — под горизонтальные кадры съёмки. */
+  .gallery .headliner{width:clamp(240px,26vw,360px)}
+  .gallery .headliner__frame{height:clamp(180px,19vw,240px)}
+  .gallery .headliner__frame img{object-position:50% 50%}
+  .gallery .headliner__name{text-align:left;align-self:stretch;padding-left:6px}
+
   /* GALLERY (reuses shared .headliners strip) --------------------------- */
-  .gallery{padding-bottom:clamp(40px,6vw,72px)}
+  .gallery{padding-bottom:var(--section-y)}
   .gallery .headliners{margin-top:36px}
 
   /* CTA + REQUEST FORM -------------------------------------------------- */
-  .cta{position:relative;padding-bottom:clamp(56px,8vw,96px)}
+  .cta{position:relative;padding-bottom:var(--section-y)}
   .cta__panel{
     position:relative;overflow:hidden;border-radius:var(--r);
     border:1px solid var(--hairline-strong);
@@ -365,6 +379,8 @@
       <!-- Большой зал -->
       <article class="hall hall--main">
         <div class="hall__visual">
+          <img class="hall__photo" src="assets/venue/hall-main.jpg" width="1280" height="853" loading="lazy"
+               alt="Большой зал Клуба №1: сцена с красным занавесом, свет и посадка за столами">
           <span class="hall__tag">Главная сцена</span>
           <div class="hall__big"><b>550</b><span>гостей в театральной рассадке</span></div>
         </div>
@@ -387,6 +403,8 @@
       <!-- Каминный зал -->
       <article class="hall hall--lounge">
         <div class="hall__visual">
+          <img class="hall__photo" src="assets/venue/hall-lounge.jpg" width="1280" height="853" loading="lazy"
+               alt="Каминный зал Клуба №1: мягкая мебель, зеркальные рамы и посадка за столами">
           <span class="hall__tag">Лаундж-бар</span>
           <div class="hall__big"><b>120</b><span>гостей за столами</span></div>
         </div>
@@ -486,8 +504,8 @@
       <h2 id="types-title" class="h-sec">Какие мероприятия проводим</h2>
       <div class="rule" aria-hidden="true"></div>
       <p class="section__lede">
-        За площадку берутся события разного характера — от закрытого корпоратива
-        на две сотни человек до съёмочной смены в дневное время.
+        Корпоративы, частные праздники, презентации, концерты и съёмки — от камерной
+        встречи в каминном зале до события на несколько сотен гостей в большом.
       </p>
     </div>
 
@@ -542,8 +560,7 @@
       <h2 id="gallery-title" class="h-sec">Так проходят вечера на нашей сцене</h2>
       <div class="rule" aria-hidden="true"></div>
       <p class="section__lede">
-        Каждую неделю на этой сцене выступают федеральные комики. Ту же атмосферу
-        живого зала получает и ваше событие.
+        Съёмка залов, фойе и барной зоны — так площадка выглядит в день события.
       </p>
     </div>
 
@@ -553,49 +570,46 @@
       <div class="headliners__track" id="galleryTrack" role="list">
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/guram.jpg" alt="Комик Гурам Амарян на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Сольный концерт</span><b>Амарян</b></figcaption>
+          <div class="headliner__frame"><img src="assets/venue/hall-main.jpg" alt="Большой зал Клуба №1: сцена с красным занавесом и посадка за столами" loading="lazy" width="1280" height="853"></div>
+          <figcaption class="headliner__name"><span>Большой зал</span><b>Главная сцена</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/chebatkov.jpg" alt="Комик Евгений Чебатков на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Сольный концерт</span><b>Чебатков</b></figcaption>
+          <div class="headliner__frame"><img src="assets/venue/hall-main-3.jpg" alt="Большой зал Клуба №1: круглые столы и световой задник под событие" loading="lazy" width="1280" height="853"></div>
+          <figcaption class="headliner__name"><span>Большой зал</span><b>Банкетная рассадка</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/rodina.jpg" alt="Комик Маргарита Родина на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Стендап-вечер</span><b>Родина</b></figcaption>
+          <div class="headliner__frame"><img src="assets/venue/bar.jpg" alt="Барная зона большого зала Клуба №1 с лаундж-мебелью" loading="lazy" width="1280" height="853"></div>
+          <figcaption class="headliner__name"><span>Большой зал</span><b>Барная зона</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/chabdarov.jpg" alt="Комик Расул Чабдаров на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Сольный концерт</span><b>Чабдаров</b></figcaption>
+          <div class="headliner__frame"><img src="assets/venue/hall-main-2.jpg" alt="Большой зал Клуба №1: концертный свет над сценой и залом" loading="lazy" width="1280" height="853"></div>
+          <figcaption class="headliner__name"><span>Большой зал</span><b>Концертный свет</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/atlas.jpg" alt="Комик Илья Атлас на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Стендап-вечер</span><b>Атлас</b></figcaption>
+          <div class="headliner__frame"><img src="assets/venue/hall-lounge.jpg" alt="Каминный зал Клуба №1: посадка за столами и мягкая мебель" loading="lazy" width="1280" height="853"></div>
+          <figcaption class="headliner__name"><span>Каминный зал</span><b>Камерный формат</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/makedonskaya.jpg" alt="Комик Юлия Македонская на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Открытый микрофон</span><b>Македонская</b></figcaption>
+          <div class="headliner__frame"><img src="assets/venue/hall-lounge-2.jpg" alt="Каминный зал Клуба №1: зеркальные рамы и приглушённый свет" loading="lazy" width="1280" height="853"></div>
+          <figcaption class="headliner__name"><span>Каминный зал</span><b>Лаундж</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/evdokimov.jpg" alt="Комик на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Корпоративный вечер</span><b>Евдокимов</b></figcaption>
+          <div class="headliner__frame"><img src="assets/venue/stairs.jpg" alt="Парадная лестница Клуба №1 с люстрой" loading="lazy" width="1280" height="853"></div>
+          <figcaption class="headliner__name"><span>Вход</span><b>Парадная лестница</b></figcaption>
         </figure>
 
         <figure class="headliner" role="listitem">
-          <div class="headliner__frame"><img src="assets/comics/shcherbak.jpg" alt="Комик на сцене Клуба №1" loading="lazy" width="900" height="900"></div>
-          <figcaption class="headliner__name"><span>Импровизация</span><b>Щербак</b></figcaption>
+          <div class="headliner__frame"><img src="assets/venue/lobby.jpg" alt="Фойе Клуба №1: зеркальные стены и диваны" loading="lazy" width="1280" height="853"></div>
+          <figcaption class="headliner__name"><span>Фойе</span><b>Зона welcome</b></figcaption>
         </figure>
 
       </div>
-
-      <button class="slider-arrow slider-arrow--next" data-slider="galleryTrack" data-dir="1" aria-label="Следующие кадры">›</button>
-    </div>
   </section>
 
 
@@ -628,11 +642,13 @@
           </p>
         </div>
 
-        <!-- right: form (static — posts nowhere) -->
+        <!-- Приёмник заявки настраивается в CLUB1_FORM внизу страницы.
+             Пока приёмник не подключён, форма НЕ пишет «отправлено»: она
+             собирает письмо на почту отдела мероприятий. -->
         <form class="req-form" id="reqForm" novalidate>
           <div class="form-status" id="formStatus" role="status" tabindex="-1">
             <span class="badge1" style="--s:34px" aria-hidden="true"><b>1</b></span>
-            <span><b>Заявка отправлена.</b> Менеджер отдела мероприятий свяжется с вами в ближайшее время.</span>
+            <span id="formStatusText"><b>Заявка отправлена.</b> Менеджер отдела мероприятий свяжется с вами в ближайшее время.</span>
           </div>
 
           <div class="field">
@@ -787,18 +803,71 @@
     });
   });
 
-  /* 4 · request form — static: no network, just confirm in place */
+  /* 4 · заявка на аренду.
+     Раньше здесь стояла заглушка: submit гасился, поля очищались и гостю
+     показывалось «Заявка отправлена» — при том что заявка никуда не шла.
+     Теперь так:
+       endpoint задан  → POST на него, «отправлено» только по ответу 2xx;
+       endpoint пустой → собирается письмо на почту отдела мероприятий,
+                         и текст честно говорит, что письмо надо отправить.
+     Чтобы включить приём на сервере, впишите URL в CLUB1_FORM.endpoint. */
+  var CLUB1_FORM = {
+    endpoint: '',                       // напр. 'https://formspree.io/f/XXXX'
+    mailto:   'Club1promo@yandex.ru'
+  };
+
   var form = document.getElementById('reqForm');
   if (form){
+    var status = document.getElementById('formStatus');
+    var statusText = document.getElementById('formStatusText');
+    var submitBtn = form.querySelector('button[type="submit"]');
+
+    var show = function(html){
+      if (statusText) statusText.innerHTML = html;
+      if (status){ status.setAttribute('data-shown', 'true'); status.focus(); }
+    };
+
     form.addEventListener('submit', function(e){
       e.preventDefault();
       if (!form.checkValidity()){ form.reportValidity(); return; }
-      form.reset();
-      var status = document.getElementById('formStatus');
-      if (status){
-        status.setAttribute('data-shown', 'true');
-        status.focus();
+
+      var data = new FormData(form);
+      var name = (data.get('name') || '').toString().trim();
+      var phone = (data.get('phone') || '').toString().trim();
+      var date = (data.get('date') || '').toString().trim();
+      var comment = (data.get('comment') || '').toString().trim();
+
+      if (!CLUB1_FORM.endpoint){
+        var body = [
+          'Имя: ' + name,
+          'Телефон: ' + phone,
+          date ? 'Дата события: ' + date : null,
+          comment ? 'Комментарий: ' + comment : null,
+          data.get('mailing-consent') ? 'Согласен на анонсы клуба' : null
+        ].filter(Boolean).join('\n');
+        window.location.href = 'mailto:' + CLUB1_FORM.mailto +
+          '?subject=' + encodeURIComponent('Заявка на аренду площадки') +
+          '&body=' + encodeURIComponent(body);
+        show('<b>Письмо готово.</b> Отправьте его из почты — или позвоните ' +
+             '<a href="tel:+74996869111">+7 (499) 686 91 11</a>, отдел мероприятий работает с 12:00 до 22:00.');
+        return;
       }
+
+      if (submitBtn){ submitBtn.disabled = true; }
+      fetch(CLUB1_FORM.endpoint, {
+        method: 'POST',
+        headers: {'Accept': 'application/json'},
+        body: data
+      }).then(function(r){
+        if (!r.ok) throw new Error(r.status);
+        form.reset();
+        show('<b>Заявка отправлена.</b> Менеджер отдела мероприятий свяжется с вами в ближайшее время.');
+      }).catch(function(){
+        show('<b>Заявка не ушла.</b> Позвоните <a href="tel:+74996869111">+7 (499) 686 91 11</a> ' +
+             'или напишите на <a href="mailto:' + CLUB1_FORM.mailto + '">' + CLUB1_FORM.mailto + '</a>.');
+      }).then(function(){
+        if (submitBtn){ submitBtn.disabled = false; }
+      });
     });
   }
 })();
