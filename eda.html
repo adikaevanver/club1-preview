@@ -16,7 +16,7 @@
 <meta property="og:description" content="Авторские коктейли, вино и крафт, горячее и закуски — весь вечер, пока идёт шоу. Удобная посадка за столами в центре Москвы, Новый Арбат, 21.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://adikaevanver.github.io/club1-preview/eda.html">
-<meta property="og:image" content="assets/comics/guram.jpg">
+<meta property="og:image" content="assets/venue/bar.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
@@ -105,12 +105,21 @@
     column-gap:48px;row-gap:2px;margin-top:16px;
   }
   .menu-item{padding:13px 0;border-top:1px solid var(--hairline)}
-  /* Позиции со съёмкой бара (01.2026). Файлы в папке названы по коктейлям,
-     поэтому фото стоит ровно у своей позиции, а не «для красоты». */
-  .menu-item--photo{display:grid;grid-template-columns:64px minmax(0,1fr);gap:var(--sp-3);align-items:center}
+  /* Позиции со съёмкой. Коктейли — папка Диска, названная по коктейлям;
+     кухня — карточки живого меню FoodPicasso, где фото уже привязано к
+     блюду. Ни одно фото не подобрано «на глаз». */
+  .menu-item--photo{
+    display:grid;grid-template-columns:clamp(92px,8.5vw,116px) minmax(0,1fr);
+    gap:var(--sp-4);align-items:center;padding:var(--sp-4) 0;
+  }
   .menu-item__thumb{
-    width:64px;height:64px;border-radius:10px;display:block;
+    width:100%;aspect-ratio:1;height:auto;border-radius:12px;display:block;
     object-fit:cover;background:var(--panel-2);border:1px solid var(--hairline);
+  }
+  .menu-item__text{min-width:0}
+  .menu-item__weight{
+    display:block;margin-top:4px;color:var(--muted-2);
+    font-size:.78rem;letter-spacing:.04em;
   }
   .menu-item__row{display:flex;align-items:baseline;gap:10px}
   .menu-item__name{font-weight:600;font-size:1.04rem;color:var(--text);min-width:0}
@@ -122,10 +131,12 @@
     flex:0 0 auto;white-space:nowrap;color:var(--gold);
     font-family:var(--display);font-weight:700;font-size:.9rem;letter-spacing:.01em;
   }
-  .menu-item__desc{margin-top:4px;color:var(--muted);font-size:.86rem;line-height:1.4;max-width:38ch}
+  .menu-item__desc{margin-top:4px;color:var(--muted);font-size:.86rem;line-height:1.4;max-width:46ch}
+  /* max-width:64ch из styles.css обрезал линейку на середине карточки —
+     разделитель должен идти во всю ширину блока меню. */
   .menu-legal{
     margin-top:var(--sp-5);padding-top:var(--sp-4);border-top:1px solid var(--hairline);
-    color:var(--muted-2);font-size:.82rem;line-height:1.5;
+    color:var(--muted-2);font-size:.82rem;line-height:1.5;max-width:none;
   }
 
   /* ---- tabbed menu  (Бар / Кухня  →  категории) ------------------ */
@@ -281,7 +292,7 @@
         <div class="eda-fact">
           <div class="eda-fact__k">Кухня</div>
           <div class="eda-fact__v">Горячее и закуски</div>
-          <div class="eda-fact__d">Приём заказов до 23:00</div>
+          <div class="eda-fact__d">Заказ приносят к столу</div>
         </div>
         <div class="eda-fact">
           <div class="eda-fact__k">За столом</div>
@@ -352,8 +363,8 @@
             <div class="tab-panel" id="panel-cocktails" role="tabpanel" aria-labelledby="tab-cocktails">
               <ul class="menu-list">
                 <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/aperol.jpg" alt="Коктейль Aperol Spritz в баре Клуба №1" loading="lazy" width="320" height="320">
-                  <div>
+                  <img class="menu-item__thumb" src="assets/menu/aperol.jpg" alt="Коктейль Aperol Spritz в баре Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
                     <div class="menu-item__row">
                       <span class="menu-item__name">Aperol Spritz</span>
                       <span class="menu-item__lead" aria-hidden="true"></span>
@@ -363,8 +374,8 @@
                   </div>
                 </li>
                 <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/negroni.jpg" alt="Коктейль Negroni в баре Клуба №1" loading="lazy" width="320" height="320">
-                  <div>
+                  <img class="menu-item__thumb" src="assets/menu/negroni.jpg" alt="Коктейль Negroni в баре Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
                     <div class="menu-item__row">
                       <span class="menu-item__name">Negroni</span>
                       <span class="menu-item__lead" aria-hidden="true"></span>
@@ -374,8 +385,8 @@
                   </div>
                 </li>
                 <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/daiquiri.jpg" alt="Коктейль Daiquiri в баре Клуба №1" loading="lazy" width="320" height="320">
-                  <div>
+                  <img class="menu-item__thumb" src="assets/menu/daiquiri.jpg" alt="Коктейль Daiquiri в баре Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
                     <div class="menu-item__row">
                       <span class="menu-item__name">Daiquiri</span>
                       <span class="menu-item__lead" aria-hidden="true"></span>
@@ -385,8 +396,8 @@
                   </div>
                 </li>
                 <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/gimlet.jpg" alt="Коктейль Gimlet в баре Клуба №1" loading="lazy" width="320" height="320">
-                  <div>
+                  <img class="menu-item__thumb" src="assets/menu/gimlet.jpg" alt="Коктейль Gimlet в баре Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
                     <div class="menu-item__row">
                       <span class="menu-item__name">Gimlet</span>
                       <span class="menu-item__lead" aria-hidden="true"></span>
@@ -396,8 +407,8 @@
                   </div>
                 </li>
                 <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/clover-club.jpg" alt="Коктейль Clover Club в баре Клуба №1" loading="lazy" width="320" height="320">
-                  <div>
+                  <img class="menu-item__thumb" src="assets/menu/clover-club.jpg" alt="Коктейль Clover Club в баре Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
                     <div class="menu-item__row">
                       <span class="menu-item__name">Clover Club</span>
                       <span class="menu-item__lead" aria-hidden="true"></span>
@@ -407,8 +418,8 @@
                   </div>
                 </li>
                 <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/knickerbocker.jpg" alt="Коктейль Knickerbocker в баре Клуба №1" loading="lazy" width="320" height="320">
-                  <div>
+                  <img class="menu-item__thumb" src="assets/menu/knickerbocker.jpg" alt="Коктейль Knickerbocker в баре Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
                     <div class="menu-item__row">
                       <span class="menu-item__name">Knickerbocker</span>
                       <span class="menu-item__lead" aria-hidden="true"></span>
@@ -494,7 +505,7 @@
 
       <!-- ── TOP PANEL: Кухня ──  (sibling of the top [data-tabs], linked by id) -->
       <div class="tab-panel eda-toppanel" id="panel-kitchen" role="tabpanel" aria-labelledby="tab-kitchen" hidden>
-        <p class="eda-cat-note">Кухня принимает заказы до 23:00 — от лёгких закусок до горячего.</p>
+        <p class="eda-cat-note">Кухня работает в вечер шоу — от лёгких закусок до горячего.</p>
 
         <div class="tabs eda-tabs" data-tabs>
           <div class="tabs__list" role="tablist" aria-label="Категории кухни">
@@ -506,29 +517,71 @@
             <!-- Закуски -->
             <div class="tab-panel" id="panel-snacks" role="tabpanel" aria-labelledby="tab-snacks">
               <ul class="menu-list">
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Начос с сыром и сальсой</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">от 520 ₽</span>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/antipasti.jpg" alt="Антипасти — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Антипасти</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">1 950 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Ассорти сыров и мясных деликатесов с оливками, гриссини и джемом из инжира<span class="menu-item__weight">550 г</span></p>
                   </div>
-                  <p class="menu-item__desc">чтобы было чем занять руки во время шоу</p>
                 </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Брускетты, сет 4 шт.</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">от 480 ₽</span>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/cheese.jpg" alt="Сырное ассорти — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Сырное ассорти</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">1 950 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Ассорти сыров, подается с виноградом, мёдом, гранатом и розмарином<span class="menu-item__weight">540 г</span></p>
                   </div>
-                  <p class="menu-item__desc">томаты, лосось, ростбиф, грибы</p>
                 </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Сырная и мясная тарелка</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">от 780 ₽</span>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/shrimp.jpg" alt="Креветки темпура — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Креветки темпура</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">1 150 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Креветки в хрустящей панировке, подаются с соусом айоли халапеньо<span class="menu-item__weight">130 г</span></p>
                   </div>
-                  <p class="menu-item__desc">ассорти на компанию, к вину</p>
+                </li>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/wings.jpg" alt="Крылья барбекю — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Крылья барбекю</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">740 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Куриные крылья в соусе BBQ, подаются с морковью, сельдереем и свежей кинзой<span class="menu-item__weight">270 г</span></p>
+                  </div>
+                </li>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/greek.jpg" alt="Греческий салат — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Греческий салат</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">990 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Огурцы, томаты, маринованный красный лук, сыр фета, оливки, перец рамиро и каперсы в грече<span class="menu-item__weight">330 г</span></p>
+                  </div>
+                </li>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/tacos.jpg" alt="Тако говядина — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Тако говядина</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">1 190 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Лепешка с томлёной говядиной, сыром гауда, огуречным соусом и яблочной сальсой, с долькой<span class="menu-item__weight">200 г</span></p>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -537,46 +590,48 @@
                  (clubnaarbate21.ru/menukitchen, 2026-07-20) -->
             <div class="tab-panel" id="panel-hot" role="tabpanel" aria-labelledby="tab-hot" hidden>
               <ul class="menu-list">
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Паста с пряной говядиной</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">1 250 ₽</span>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/ribs.jpg" alt="Ребрышки барбекю — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Ребрышки барбекю</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">950 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Свиные ребра в соусе BBQ, подаются с картофелем по-деревенски<span class="menu-item__weight">370 г</span></p>
                   </div>
                 </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Паста с морепродуктами</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">1 860 ₽</span>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/pasta.jpg" alt="Паста с морепродуктами — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Паста с морепродуктами</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">1 860 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Паппарделле в сливочном перечном соусе с тигровыми креветками, кальмаром и мидиями<span class="menu-item__weight">280 г</span></p>
                   </div>
                 </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Чизбургер</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">950 ₽</span>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/tomyam.jpg" alt="Том-ям — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Том-ям</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">940 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Пряно-сливочный бульон с тигровыми креветками, кальмаром, мидиями, рисом и свежей кинзой<span class="menu-item__weight">500 г</span></p>
                   </div>
                 </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Бургер мясника с вишней</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">1 150 ₽</span>
-                  </div>
-                </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Пицца с чоризо</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">1 150 ₽</span>
-                  </div>
-                </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Пицца с томатами и страчателлой</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">980 ₽</span>
+                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/pizza.jpg" alt="Пицца с Чоризо — кухня Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
+                    <div class="menu-item__row">
+                      <span class="menu-item__name">Пицца с Чоризо</span>
+                      <span class="menu-item__lead" aria-hidden="true"></span>
+                      <span class="menu-item__price">1 150 ₽</span>
+                    </div>
+                    <p class="menu-item__desc">Римская пицца с томатным соусом, чоризо, моцареллой, печёным перцем и джемом из бекона<span class="menu-item__weight">280 г</span></p>
                   </div>
                 </li>
               </ul>
