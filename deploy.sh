@@ -40,23 +40,28 @@ SSH="ssh -p ${CLUB1_SSH_PORT}"
 
 echo "→ ${REMOTE}:${CLUB1_DOCROOT}"
 
-# .htaccess ссылается на .htpasswd абсолютным путём — подставляем реальный
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
+
+# .htaccess ссылается на .htpasswd абсолютным путём — подставляем реальный
 sed "s|AuthUserFile .*|AuthUserFile ${CLUB1_DOCROOT}/.htpasswd|" .htaccess > "$tmp/.htaccess"
 
-rsync -az --delete $DRY --itemize-changes \
-  -e "$SSH" \
-  --exclude '.git/' \
-  --exclude '.claude/' \
-  --exclude 'backups/' \
-  --exclude 'sweeps/' \
-  --exclude 'sweep-*/' \
-  --exclude '.DS_Store' \
-  --exclude 'deploy.sh' \
-  --exclude '.env' \
+# В страницах прописан адрес превью на GitHub Pages (canonical, og:url).
+# На боевом домене он бы указывал поисковикам и мессенджерам на чужой хост,
+# поэтому подменяем при выкладке — в репозитории превью остаётся рабочим.
+stage="$tmp/site"
+mkdir -p "$stage"
+rsync -a \
+  --exclude '.git/' --exclude '.claude/' --exclude '.playwright-cli/' \
+  --exclude 'backups/' --exclude 'sweeps/' --exclude 'sweep-*/' \
+  --exclude '.DS_Store' --exclude 'deploy.sh' --exclude '.env' \
   --exclude '.htaccess' \
-  ./ "${REMOTE}:${CLUB1_DOCROOT}/"
+  ./ "$stage/"
+find "$stage" -name '*.html' -exec \
+  sed -i '' -e 's|https://adikaevanver\.github\.io/club1-preview|https://club1.moscow|g' {} +
+
+rsync -az --delete $DRY --itemize-changes \
+  -e "$SSH" "$stage/" "${REMOTE}:${CLUB1_DOCROOT}/"
 
 rsync -az $DRY -e "$SSH" "$tmp/.htaccess" "${REMOTE}:${CLUB1_DOCROOT}/.htaccess"
 
