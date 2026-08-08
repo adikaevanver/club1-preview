@@ -7,11 +7,18 @@
 # =====================================================================
 
 # ---- ЗАКРЫТЫЙ ДОСТУП (удалить при публикации) -----------------------
-# Путь к .htpasswd подставляет deploy.sh — руками править не нужно.
+# Путь к .htpasswd подставляет deploy.py — руками править не нужно.
 AuthType Basic
 AuthName "Club1 — сайт в работе"
 AuthUserFile /var/www/club1/data/www/club1.moscow/.htpasswd
 Require valid-user
+
+# Let's Encrypt подтверждает владение доменом, читая файл в
+# /.well-known/acme-challenge/. Под паролем он бы туда не попал, и
+# автопродление сертификата падало бы раз в 90 дней — поэтому путь открыт.
+<If "%{REQUEST_URI} =~ m#^/\.well-known/#">
+  Require all granted
+</If>
 
 # пока сайт закрыт — держим его вне поисковой выдачи
 <IfModule mod_headers.c>
@@ -21,6 +28,8 @@ Require valid-user
 
 # ---- HTTPS ----------------------------------------------------------
 RewriteEngine On
+# проверку Let's Encrypt на https не уводим — она ходит по http
+RewriteCond %{REQUEST_URI} !^/\.well-known/
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP:X-Forwarded-Proto} !=https
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
