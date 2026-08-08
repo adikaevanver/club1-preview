@@ -1,2 +1,5 @@
 .playwright-cli/
 .claude/
+.env
+.DS_Store
+.htpasswd

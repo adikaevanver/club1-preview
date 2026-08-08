@@ -819,8 +819,11 @@
        endpoint пустой → собирается письмо на почту отдела мероприятий,
                          и текст честно говорит, что письмо надо отправить.
      Чтобы включить приём на сервере, впишите URL в CLUB1_FORM.endpoint. */
+  /* На боевом хостинге заявку принимает send.php и шлёт её в отдел
+     мероприятий. На превью в GitHub Pages PHP нет, поэтому там остаётся
+     запасной путь через почтовый клиент. */
   var CLUB1_FORM = {
-    endpoint: '',                       // напр. 'https://formspree.io/f/XXXX'
+    endpoint: /(^|\.)club1\.moscow$/.test(location.hostname) ? 'send.php' : '',
     mailto:   'Club1promo@yandex.ru'
   };
 
