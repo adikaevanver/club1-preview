@@ -255,25 +255,115 @@
      Fires a "datebar:change" CustomEvent (detail.date / detail.button).
      ================================================================= */
   var Datebar = (function () {
+    var MONTHS = ['января','февраля','марта','апреля','мая','июня',
+                  'июля','августа','сентября','октября','ноября','декабря'];
+    var MONTHS_NOM = ['ЯНВАРЬ','ФЕВРАЛЬ','МАРТ','АПРЕЛЬ','МАЙ','ИЮНЬ',
+                      'ИЮЛЬ','АВГУСТ','СЕНТЯБРЬ','ОКТЯБРЬ','НОЯБРЬ','ДЕКАБРЬ'];
+    var WEEKDAYS = ['воскресенье','понедельник','вторник','среда',
+                    'четверг','пятница','суббота'];
+
+    function today() {
+      var t = new Date();
+      return new Date(t.getFullYear(), t.getMonth(), t.getDate());
+    }
+
+    function parse(day) {
+      var v = day.getAttribute('data-date');
+      if (!v) return null;
+      var p = v.split('-');
+      if (p.length !== 3) return null;
+      return new Date(+p[0], +p[1] - 1, +p[2]);
+    }
+
+    /* Дата на странице живёт в нескольких местах: подпись под рейкой,
+       кнопка брони, бейдж на афише, плашка с датой и мобильный CTA.
+       Обновляем их одним проходом по data-picked-*, чтобы страница не
+       осталась с датой, которая уже прошла. */
+    function paint(day) {
+      var d = parse(day);
+      var label = day.getAttribute('data-label') || '';
+      var time = day.getAttribute('data-time') || '';
+      var buy = day.getAttribute('data-buy') || '';
+
+      $$('[data-picked-date]').forEach(function (el) { el.textContent = label; });
+      $$('[data-picked-time]').forEach(function (el) { if (time) el.textContent = time; });
+      $$('[data-picked-buy]').forEach(function (el) { if (buy) el.setAttribute('href', buy); });
+
+      if (d) {
+        var dd = ('0' + d.getDate()).slice(-2);
+        var mm = ('0' + (d.getMonth() + 1)).slice(-2);
+        $$('[data-picked-badge]').forEach(function (el) {
+          el.innerHTML = dd + '.' + mm + (time ? '<small>' + time + '</small>' : '');
+        });
+        $$('[data-picked-meta]').forEach(function (el) {
+          var sub = WEEKDAYS[d.getDay()] + (time ? ', ' + time : '');
+          el.innerHTML = label + '<small>' + sub + '</small>';
+        });
+      }
+    }
+
     function select(bar, day) {
       $$('.datebar__day', bar).forEach(function (d) {
         d.setAttribute('aria-pressed', String(d === day));
       });
+      paint(day);
       bar.dispatchEvent(new CustomEvent('datebar:change', {
         bubbles: true,
         detail: { date: day.getAttribute('data-date') || null, button: day }
       }));
     }
 
+    /* Месяцы в подписи рейки («АВГУСТ — СЕНТЯБРЬ») пересобираем по тем
+       датам, что остались: иначе после скрытия прошедших в заголовке
+       висел бы месяц, которого в списке уже нет. */
+    function relabel(bar, days) {
+      var el = $('.datebar__month', bar);
+      if (!el) return;
+      var names = [];
+      days.forEach(function (d) {
+        var p = parse(d);
+        if (!p) return;
+        var n = MONTHS_NOM[p.getMonth()];
+        if (names.indexOf(n) === -1) names.push(n);
+      });
+      if (names.length) el.textContent = names.join(' — ');
+    }
+
     function init() {
+      var now = today();
+
       $$('[data-datebar]').forEach(function (bar) {
         var days = $$('.datebar__day', bar);
         if (!days.length) return;
 
-        // normalise: give each chip an aria-pressed if it lacks one
         days.forEach(function (d) {
           if (!d.hasAttribute('aria-pressed')) d.setAttribute('aria-pressed', 'false');
         });
+
+        /* Прошедшие даты убираем из рейки. До этого они оставались на
+           странице и могли быть выбраны по умолчанию: 8 августа
+           страница Чабдарова показывала «Выбрана дата: 1 августа». */
+        var upcoming = days.filter(function (d) {
+          var p = parse(d);
+          if (p && p < now) {
+            d.hidden = true;
+            d.disabled = true;
+            d.setAttribute('aria-pressed', 'false');
+            return false;
+          }
+          return true;
+        });
+
+        if (!upcoming.length) {
+          bar.setAttribute('data-datebar-empty', '');
+          bar.dispatchEvent(new CustomEvent('datebar:empty', { bubbles: true }));
+        } else {
+          relabel(bar, upcoming);
+          var pressed = upcoming.filter(function (d) {
+            return d.getAttribute('aria-pressed') === 'true';
+          })[0];
+          select(bar, pressed || upcoming[0]);
+        }
 
         bar.addEventListener('click', function (e) {
           var day = e.target.closest('.datebar__day');
