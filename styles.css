@@ -429,6 +429,65 @@ p + .hero__cta,
   .afisha__track:not(.afisha__track--grid){scroll-snap-type:x mandatory}
   .afisha__track:not(.afisha__track--grid) .event-card{scroll-snap-align:center}
 }
+/* =====================================================================
+   ПРОСМОТРЩИК ФОТО — компонент Lightbox из script.js
+   Оверлей собирается скриптом, разметку страница не пишет: достаточно
+   поставить [data-lightbox] на контейнер с картинками.
+   ===================================================================== */
+.zoom-btn{
+  display:block;width:100%;height:100%;padding:0;border:0;background:none;
+  cursor:zoom-in;color:inherit;font:inherit;
+}
+.zoom-btn:focus-visible{outline:2px solid var(--magenta);outline-offset:3px;border-radius:10px}
+.lightbox{
+  position:fixed;inset:0;z-index:200;display:flex;align-items:center;
+  justify-content:center;gap:clamp(6px,2vw,20px);
+  padding:clamp(12px,3vw,40px);
+  background:rgba(5,4,8,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  opacity:0;transition:opacity .2s var(--ease);
+}
+.lightbox.is-open{opacity:1}
+.lightbox[hidden]{display:none}
+.lightbox__fig{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  max-width:min(1200px,100%);max-height:100%;margin:0;
+}
+.lightbox__img{
+  max-width:100%;max-height:80vh;width:auto;height:auto;
+  border-radius:var(--r);display:block;object-fit:contain;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.9);
+}
+.lightbox__cap{color:var(--muted);font-size:.95rem;text-align:center;max-width:60ch}
+.lightbox__close{
+  position:absolute;top:clamp(10px,2vw,22px);right:clamp(10px,2vw,22px);
+  width:46px;height:46px;border-radius:50%;font-size:1.7rem;line-height:1;
+  color:#fff;background:rgba(255,255,255,.1);border:1px solid var(--hairline-strong);
+  cursor:pointer;transition:background .18s;
+}
+.lightbox__close:hover{background:var(--magenta);border-color:var(--magenta)}
+.lightbox__nav{
+  flex:0 0 auto;width:52px;height:52px;border-radius:50%;font-size:2rem;line-height:1;
+  color:#fff;background:rgba(255,255,255,.1);border:1px solid var(--hairline-strong);
+  cursor:pointer;transition:background .18s;
+}
+.lightbox__nav:hover{background:var(--magenta);border-color:var(--magenta)}
+.lightbox__nav[hidden]{display:none}
+.lightbox__count{
+  position:absolute;left:50%;transform:translateX(-50%);
+  bottom:clamp(10px,2.4vw,26px);color:var(--muted-2);font-size:.86rem;letter-spacing:.06em;
+}
+/* На телефоне стрелки уходят под снимок, чтобы палец не закрывал кадр.
+   align-content держит обе строки — фото и стрелки — единым блоком по
+   центру экрана; без него они разъезжались к краям с пустотой посередине. */
+@media (max-width:640px){
+  .lightbox{flex-wrap:wrap;align-content:center;gap:18px}
+  .lightbox__fig{order:1;flex:0 0 100%}
+  .lightbox__nav{order:2;width:46px;height:46px}
+  .lightbox__nav--prev{margin-left:auto}
+  .lightbox__nav--next{margin-right:auto}
+  .lightbox__img{max-height:60vh}
+}
+
 .afisha__track{
   display:flex;gap:22px;
   overflow-x:auto;scroll-snap-type:x proximity;

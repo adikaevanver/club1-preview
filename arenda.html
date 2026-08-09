@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=2608064">
+<link rel="stylesheet" href="styles.css?v=2608091">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS — «Аренда площадки»
@@ -579,7 +579,9 @@
     <div class="headliners">
       <button class="slider-arrow slider-arrow--prev" data-slider="galleryTrack" data-dir="-1" aria-label="Предыдущие кадры">‹</button>
 
-      <div class="headliners__track" id="galleryTrack" role="list">
+      <!-- data-lightbox: кадры площадки открываются во весь экран, иначе
+           арендатор не может рассмотреть зал (правка Анвера 09.08) -->
+      <div class="headliners__track" id="galleryTrack" data-lightbox role="list">
 
         <figure class="headliner" role="listitem">
           <div class="headliner__frame"><img src="assets/venue/hall-main.jpg" alt="Большой зал Клуба №1: сцена с красным занавесом и посадка за столами" loading="lazy" width="1280" height="853"></div>
@@ -887,6 +889,9 @@
   }
 })();
 </script>
+
+<!-- общие компоненты (просмотрщик фото) -->
+<script src="script.js?v=2608091" defer></script>
 
 </body>
 </html>

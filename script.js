@@ -392,6 +392,131 @@
     return { init: init };
   })();
 
+  /* =================================================================
+     5 · LIGHTBOX — [data-lightbox] контейнер, его <img> открываются
+         во весь экран (правка Анвера 09.08: фотографии зала висели
+         картинками, по которым гость тыкал впустую).
+
+     Разметка не нужна: компонент сам делает картинки кнопками, сам
+     собирает оверлей и сам его убирает. Внутри одного контейнера
+     работают стрелки и свайп, Esc и клик по фону закрывают.
+     Отсутствие [data-lightbox] на странице — no-op.
+     ================================================================= */
+  var Lightbox = (function () {
+    var box, imgEl, capEl, cntEl, items = [], idx = 0, opener = null;
+
+    function build() {
+      if (box) return;
+      box = document.createElement('div');
+      box.className = 'lightbox';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.setAttribute('aria-label', 'Просмотр фотографии');
+      box.hidden = true;
+      box.innerHTML =
+        '<button class="lightbox__close" type="button" aria-label="Закрыть">&times;</button>' +
+        '<button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Предыдущее фото">&lsaquo;</button>' +
+        '<figure class="lightbox__fig">' +
+          '<img class="lightbox__img" alt="">' +
+          '<figcaption class="lightbox__cap"></figcaption>' +
+        '</figure>' +
+        '<button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Следующее фото">&rsaquo;</button>' +
+        '<span class="lightbox__count" aria-hidden="true"></span>';
+      document.body.appendChild(box);
+      imgEl = $('.lightbox__img', box);
+      capEl = $('.lightbox__cap', box);
+      cntEl = $('.lightbox__count', box);
+
+      box.addEventListener('click', function (e) {
+        if (e.target.closest('.lightbox__close') || e.target === box ||
+            e.target.classList.contains('lightbox__fig')) { close(); return; }
+        if (e.target.closest('.lightbox__nav--prev')) step(-1);
+        if (e.target.closest('.lightbox__nav--next')) step(1);
+      });
+
+      /* свайп пальцем — тот же жест, что ждут от фотогалереи */
+      var x0 = null;
+      box.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      box.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
+        x0 = null;
+      }, { passive: true });
+    }
+
+    function show(i) {
+      idx = (i + items.length) % items.length;
+      var src = items[idx];
+      imgEl.src = src.full;
+      imgEl.alt = src.alt;
+      capEl.textContent = src.cap || '';
+      capEl.hidden = !src.cap;
+      cntEl.textContent = items.length > 1 ? (idx + 1) + ' / ' + items.length : '';
+      $('.lightbox__nav--prev', box).hidden = items.length < 2;
+      $('.lightbox__nav--next', box).hidden = items.length < 2;
+    }
+    function step(d) { show(idx + d); }
+
+    function open(list, i, from) {
+      build();
+      items = list; opener = from || null;
+      show(i);
+      box.hidden = false;
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function () { box.classList.add('is-open'); });
+      $('.lightbox__close', box).focus();
+    }
+    function close() {
+      if (!box || box.hidden) return;
+      box.classList.remove('is-open');
+      box.hidden = true;
+      document.body.style.overflow = '';
+      imgEl.src = '';
+      if (opener) { opener.focus(); opener = null; }
+    }
+
+    function init() {
+      var roots = $$('[data-lightbox]');
+      if (!roots.length) return;
+
+      roots.forEach(function (root) {
+        var imgs = $$('img', root);
+        var list = imgs.map(function (im) {
+          var fig = im.closest('figure');
+          var cap = fig ? $('figcaption', fig) : null;
+          return {
+            full: im.getAttribute('data-full') || im.currentSrc || im.src,
+            alt: im.getAttribute('alt') || '',
+            cap: cap ? cap.textContent.trim() : (im.getAttribute('alt') || '')
+          };
+        });
+        imgs.forEach(function (im, i) {
+          im.classList.add('is-zoomable');
+          /* картинка сама не фокусируется — оборачиваем в кнопку, чтобы
+             открывалось и с клавиатуры, и читалось скринридером */
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'zoom-btn';
+          btn.setAttribute('aria-label', 'Открыть фото во весь экран: ' + (list[i].cap || 'фотография зала'));
+          im.parentNode.insertBefore(btn, im);
+          btn.appendChild(im);
+          btn.addEventListener('click', function () { open(list, i, btn); });
+        });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (!box || box.hidden) return;
+        if (e.key === 'Escape') { e.preventDefault(); close(); }
+        if (e.key === 'ArrowLeft') step(-1);
+        if (e.key === 'ArrowRight') step(1);
+      });
+    }
+
+    return { init: init, open: open, close: close };
+  })();
+
+
   /* --- boot --------------------------------------------------------- */
   function boot() {
     Modal.init();
@@ -399,6 +524,7 @@
     Slideshow.init();
     Datebar.init();
     StickyCta.init();
+    Lightbox.init();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
