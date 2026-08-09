@@ -21,7 +21,7 @@
 Скрипт зеркалит папку: заливает новое и изменившееся, удаляет на сервере то,
 чего нет локально. Сравнение по размеру и времени правки.
 """
-import argparse, os, ssl, sys
+import argparse, os, ssl, subprocess, sys
 from datetime import datetime, timezone
 from ftplib import FTP_TLS, error_perm
 
@@ -70,8 +70,10 @@ def local_files():
 
 def transform(rel, data, docroot):
     """Правки, которые нужны только на боевом хосте."""
-    if rel.endswith('.html'):
-        # canonical и og:url в репозитории указывают на превью GitHub Pages
+    if rel.endswith(('.html', '.xml', '.txt')):
+        # canonical, og:url и JSON-LD в репозитории указывают на превью GitHub
+        # Pages; sitemap.xml и robots.txt — тоже, иначе на боевом остались бы
+        # чужие адреса и поисковик ушёл бы на превью
         return data.replace(PREVIEW_URL.encode(), LIVE_URL.encode())
     if rel == '.htaccess':
         out = []
@@ -128,7 +130,18 @@ def ensure_dirs(ftp, base, rel, made):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--dry-run', action='store_true')
+    ap.add_argument('--skip-seo', action='store_true',
+                    help='не пересобирать sitemap.xml и JSON-LD перед заливкой')
     args = ap.parse_args()
+
+    # sitemap и структурированные данные собираются из assets/data/events.js;
+    # делаем это перед каждой заливкой, иначе разметка отстанет от афиши
+    if not args.skip_seo:
+        print('пересборка sitemap.xml и JSON-LD…')
+        r = subprocess.run([sys.executable, os.path.join(ROOT, 'build-seo.py')])
+        if r.returncode:
+            sys.exit('build-seo.py упал — заливку не начинаю')
+        print()
 
     load_env()
     host, user, pw = need('CLUB1_FTP_HOST'), need('CLUB1_FTP_USER'), need('CLUB1_FTP_PASS')
