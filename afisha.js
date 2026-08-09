@@ -104,7 +104,13 @@
      Настоящая афиша → полноцветная картинка; нет афиши → фирменный
      CSS-постер (дуотон + STANDUP + имя), при наличии фото — с фото.
      Дата-бейдж единый на всех карточках: ДД.ММ + время или день недели. */
-  function cardHTML(ev){
+  /* Мигание афиш при листании ленты (правка Анвера 09.08): постеры грузились
+     лениво, то есть ровно в тот момент, когда карточка выезжает в кадр — глаз
+     успевал поймать пустой серый прямоугольник. Первые четыре карточки грузим
+     сразу, остальные остаются ленивыми: они за пределами двух-трёх свайпов. */
+  function cardHTML(ev, i){
+    var eager = (i || 0) < 4;
+    var load = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
     var badge = '<div class="poster__badge">' + fmtShort(ev) +
                 '<small>' + (ev.time ? esc(ev.time) : DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
     /* 18+ рисует сайт на каждой афише (созвон 21.07: алкоголь ⇒ всё 18+) */
@@ -137,8 +143,8 @@
          из той же картинки — портретный ресайз закроет рамку целиком */
       poster =
         '<div class="poster poster--art">' +
-          '<img class="poster__backfill" src="' + esc(ev.poster) + '" alt="" aria-hidden="true" loading="lazy" width="800" height="800">' +
-          '<img class="poster__full" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '" loading="lazy" width="800" height="800">' +
+          '<img class="poster__backfill" src="' + esc(ev.poster) + '" alt="" aria-hidden="true" ' + load + ' width="800" height="800">' +
+          '<img class="poster__full" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '" ' + load + ' width="800" height="800">' +
           badge + when + age +
         '</div>';
     } else {
@@ -246,12 +252,33 @@
         '" aria-label="' + esc(ev.title) + ' — подробнее о событии"></a>'
       : '';
     if (ev.wide){
+      /* Телефон (правка Анвера 09.08): слайды лежат в одной ячейке сетки, и
+         высоту задаёт самый высокий — слайд с квадратной афишей и кнопками
+         под ней. Панорамный арт 16:9, растянутый в этот высокий бокс через
+         cover, обрезался до неузнаваемости: от заголовка оставались огрызки,
+         а кнопки ложились поверх картинки. Поэтому на узком экране широкий
+         арт не показываем вовсе — отдаём квадратную афишу, как у остальных
+         слайдов; подложку из неё же размывает .bb-slide__bg. */
+      var sq = ev.poster
+        ? '<div class="bb-slide__mob">' +
+            '<div class="bb-slide__frame">' +
+              '<img class="bb-slide__poster" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '"' +
+              (i ? ' loading="lazy"' : '') + ' width="800" height="800">' +
+              '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>' +
+            '</div>' +
+          '</div>'
+        : '';
+      var mobBg = ev.poster
+        ? '<div class="bb-slide__bg bb-slide__bg--mob" style="background-image:url(\'' + esc(ev.poster) + '\')" aria-hidden="true"></div>'
+        : '';
       return (
         '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
           '<div class="bb-slide__bg bb-slide__bg--wide" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
+          mobBg +
           slideLink +
           '<div class="bb-slide__stage">' +
             '<div class="bb-slide__chips">' + chips + '</div>' +
+            sq +
             '<span class="bb-slide__age bb-slide__age--corner">' + esc(ev.age || '18+') + '</span>' +
             actions +
           '</div>' +

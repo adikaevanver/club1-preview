@@ -71,9 +71,13 @@
     background:var(--panel-2);border:1px solid var(--hairline-strong);
     border-radius:var(--r);padding:20px 24px;margin:var(--sp-6) 0;
   }
+  /* Полоса растянута на высоту карточки, а skewX смещает её тем сильнее,
+     чем она выше. На телефоне текст переносится, карточка вырастает до
+     полуэкрана — и полоса уезжала наискось прямо по заголовку и абзацу
+     (правка Анвера 09.08). Наклон у растянутой полосы убран. */
   .eda-callout__bar{
     flex:0 0 auto;width:8px;align-self:stretch;border-radius:3px;
-    background:var(--grad);transform:skewX(var(--skew));
+    background:var(--grad);
   }
   .eda-callout__t{font-family:var(--display);font-weight:700;font-size:.98rem;
     text-transform:uppercase;letter-spacing:.03em;color:#fff}
@@ -361,7 +365,7 @@
             <!-- Коктейли · позиции и цены сняты с живого бар-меню клуба
                  (clubnaarbate21.ru/menubar, 2026-07-20) -->
             <div class="tab-panel" id="panel-cocktails" role="tabpanel" aria-labelledby="tab-cocktails">
-              <ul class="menu-list">
+              <ul class="menu-list menu-list--photos">
                 <li class="menu-item menu-item--photo">
                   <img class="menu-item__thumb" src="assets/menu/aperol.jpg" alt="Коктейль Aperol Spritz в баре Клуба №1" loading="lazy" width="420" height="420">
                   <div class="menu-item__text">
@@ -428,15 +432,9 @@
                     <p class="menu-item__desc">ром, малина, лимон, кюрасао</p>
                   </div>
                 </li>
-              </ul>
-            </div>
-
-            <!-- Напитки -->
-            <div class="tab-panel" id="panel-drinks" role="tabpanel" aria-labelledby="tab-drinks" hidden>
-              <ul class="menu-list">
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/gin-tonic.jpg" alt="Коктейль Gin-Tonic в баре Клуба №1" loading="lazy" width="320" height="320">
-                  <div>
+                              <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/gin-tonic.jpg" alt="Gin-Tonic в баре Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
                     <div class="menu-item__row">
                       <span class="menu-item__name">Gin-Tonic</span>
                       <span class="menu-item__lead" aria-hidden="true"></span>
@@ -444,10 +442,9 @@
                     </div>
                     <p class="menu-item__desc">джин, тоник, лайм</p>
                   </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/martini-fiero.jpg" alt="Коктейль Martini Fiero-tonic в баре Клуба №1" loading="lazy" width="320" height="320">
-                  <div>
+                </li>                <li class="menu-item menu-item--photo">
+                  <img class="menu-item__thumb" src="assets/menu/martini-fiero.jpg" alt="Martini Fiero-tonic в баре Клуба №1" loading="lazy" width="420" height="420">
+                  <div class="menu-item__text">
                     <div class="menu-item__row">
                       <span class="menu-item__name">Martini Fiero-tonic</span>
                       <span class="menu-item__lead" aria-hidden="true"></span>
@@ -456,6 +453,12 @@
                     <p class="menu-item__desc">мартини фьеро, тоник, апельсин</p>
                   </div>
                 </li>
+              </ul>
+            </div>
+
+            <!-- Напитки -->
+            <div class="tab-panel" id="panel-drinks" role="tabpanel" aria-labelledby="tab-drinks" hidden>
+              <ul class="menu-list menu-list--photos">
                 <li class="menu-item">
                   <div class="menu-item__row">
                     <span class="menu-item__name">Пиво, разлив</span>
@@ -516,7 +519,7 @@
 
             <!-- Закуски -->
             <div class="tab-panel" id="panel-snacks" role="tabpanel" aria-labelledby="tab-snacks">
-              <ul class="menu-list">
+              <ul class="menu-list menu-list--photos">
                 <li class="menu-item menu-item--photo">
                   <img class="menu-item__thumb" src="assets/menu/antipasti.jpg" alt="Антипасти — кухня Клуба №1" loading="lazy" width="420" height="420">
                   <div class="menu-item__text">
@@ -589,7 +592,7 @@
             <!-- Горячее · позиции и цены сняты с живого меню клуба
                  (clubnaarbate21.ru/menukitchen, 2026-07-20) -->
             <div class="tab-panel" id="panel-hot" role="tabpanel" aria-labelledby="tab-hot" hidden>
-              <ul class="menu-list">
+              <ul class="menu-list menu-list--photos">
                 <li class="menu-item menu-item--photo">
                   <img class="menu-item__thumb" src="assets/menu/ribs.jpg" alt="Ребрышки барбекю — кухня Клуба №1" loading="lazy" width="420" height="420">
                   <div class="menu-item__text">

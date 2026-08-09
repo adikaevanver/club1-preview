@@ -294,7 +294,10 @@ ul{list-style:none}
   /* выше .sticky-cta (120): открытое меню перекрывает плашку брони
      целиком (аудит 06.08); шапку меню не трогает — начинается под ней */
   position:fixed;inset:var(--header-h) 0 0 0;z-index:130;
-  background:rgba(7,5,9,.97);backdrop-filter:blur(10px);
+  /* панель непрозрачная (правка Анвера 09.08): при полупрозрачном фоне
+     сквозь открытое меню читался текст страницы, и на глаз это выглядело
+     как «меню не открылось». blur оставлен только под шапкой. */
+  background:var(--ink, #070509);
   padding:24px var(--gutter) 48px;
   display:flex;flex-direction:column;gap:6px;
   transform:translateY(-8px);opacity:0;visibility:hidden;pointer-events:none;
@@ -418,6 +421,14 @@ p + .hero__cta,
    9. AFISHA — EVENT CARDS + CSS POSTERS
    ===================================================================== */
 .afisha{position:relative;padding-bottom:var(--section-y)}
+/* На телефоне лента ближайших событий раньше останавливалась где попало:
+   scroll-snap-type:proximity даёт браузеру право не доводить карточку до
+   края, и палец оставлял её обрезанной с обеих сторон (правка Анвера
+   09.08). На узком экране привязка обязательная — карточка встаёт целиком. */
+@media (max-width:760px){
+  .afisha__track:not(.afisha__track--grid){scroll-snap-type:x mandatory}
+  .afisha__track:not(.afisha__track--grid) .event-card{scroll-snap-align:center}
+}
 .afisha__track{
   display:flex;gap:22px;
   overflow-x:auto;scroll-snap-type:x proximity;
@@ -1051,6 +1062,8 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   filter:none;transform:none;inset:0;
   background-size:cover;background-position:center;
 }
+/* квадратная замена широкому арту живёт только на телефоне (см. @760px) */
+.bb-slide__mob,.bb-slide__bg--mob{display:none}
 /* Пропорция окна слайдера — жёсткая 12:5 (1440×600): под неё Максим
    готовит панорамные ресайзы, картинка видна целиком на любой ширине
    (раньше 16:9 с потолком 600px кропил арт по вертикали) */
@@ -1135,17 +1148,24 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   .bb-slide__chips,.bb-slide__actions{position:static}
   .bb-slide__chips{align-self:flex-start}
   .bb-slide__actions{width:100%;justify-content:center}
-  /* широкий баннер на телефоне: плашки сверху, кнопки к нижнему краю на
-     затемнении — центр афиши остаётся чистым */
-  .bb-slide--wide .bb-slide__stage{
-    aspect-ratio:16/10;max-height:none;justify-content:space-between;gap:0;
-    padding:10px 10px 12px;
-    background:linear-gradient(180deg, transparent 52%, rgba(10,8,16,.78));
+  /* Широкий баннер на телефоне не показываем (правка Анвера 09.08):
+     панорамный арт 16:9 в высоком боксе обрезался до огрызков, а кнопки
+     ложились поверх картинки. Вместо него — квадратная афиша того же
+     события, как на остальных слайдах, на размытой подложке из неё же.
+     Слайд перестаёт отличаться от соседей, и лента листается ровно. */
+  .bb-slide--wide .bb-slide__bg--wide{display:none}
+  .bb-slide__bg--mob{
+    filter:blur(30px) brightness(.42) saturate(1.15);transform:scale(1.2);
+    background-size:cover;background-position:center;
   }
+  .bb-slide--wide .bb-slide__stage{
+    aspect-ratio:auto;max-height:none;justify-content:flex-start;
+    gap:14px;padding:16px 16px 22px;background:none;
+  }
+  .bb-slide--wide .bb-slide__mob{min-width:0;display:flex;justify-content:center}
   .bb-slide--wide .bb-slide__chips{align-self:flex-start}
-  .bb-slide--wide .bb-slide__actions{margin-top:auto}
-  .bb-slide--wide .bb-slide__actions .btn{padding:.6em .95em;font-size:.85rem}
-  .bb-slide--wide .bb-slide__age--corner{position:absolute;left:10px;bottom:12px}
+  .bb-slide--wide .bb-slide__actions{margin-top:0}
+  .bb-slide--wide .bb-slide__age--corner{display:none}
   .bb-chip{font-size:.82rem;padding:7px 14px 7px 10px}
   .bb-slide__poster{max-height:none}
   .bb-slide__poster,
