@@ -150,7 +150,12 @@
           age +
         '</div>';
     }
-    poster = '<a class="poster-link" href="' + esc(ev.page) + '" aria-label="Подробнее: ' + esc(ev.title) + '">' + poster + '</a>';
+    /* партнёрские события идут без своей страницы (билеты живут на стороне
+       организатора) — тогда афиша не кликабельна и «Подробнее» не рисуем,
+       иначе ссылка уходила бы в href="null" */
+    if (ev.page){
+      poster = '<a class="poster-link" href="' + esc(ev.page) + '" aria-label="Подробнее: ' + esc(ev.title) + '">' + poster + '</a>';
+    }
     var cta;
     if (ev.soldOut){
       cta = '<a class="btn btn--ghost btn--sm" href="#contacts">Узнать о доп. датах</a>';
@@ -177,7 +182,7 @@
           (times ? ' · ' + times : '') + ' · Новый Арбат, 21</p>' +
         price +
         '<div class="event-card__actions">' +
-          '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
+          (ev.page ? '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Подробнее</a>' : '') + cta +
         '</div>' +
       '</article>'
     );
@@ -230,13 +235,16 @@
       ? '<a class="btn btn--primary" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
       : '<a class="btn btn--primary" href="#contacts">Узнать о старте продаж</a>';
     var actions = '<div class="bb-slide__actions">' +
-                    '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
+                    (ev.page ? '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' : '') + cta +
                   '</div>';
     /* клик по самой афише ведёт на страницу события (просьба Анвера
        06.08): ссылка-подложка на весь слайд; сцена поверх неё прозрачна
-       для кликов (pointer-events), кнопки остаются кликабельными */
-    var slideLink = '<a class="bb-slide__link" href="' + esc(ev.page) +
-                    '" aria-label="' + esc(ev.title) + ' — подробнее о событии"></a>';
+       для кликов (pointer-events), кнопки остаются кликабельными.
+       У партнёрского события своей страницы нет — подложку не ставим */
+    var slideLink = ev.page
+      ? '<a class="bb-slide__link" href="' + esc(ev.page) +
+        '" aria-label="' + esc(ev.title) + ' — подробнее о событии"></a>'
+      : '';
     if (ev.wide){
       return (
         '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
