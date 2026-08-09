@@ -21,7 +21,7 @@
 Скрипт зеркалит папку: заливает новое и изменившееся, удаляет на сервере то,
 чего нет локально. Сравнение по размеру и времени правки.
 """
-import argparse, os, ssl, subprocess, sys
+import argparse, hashlib, json, os, ssl, subprocess, sys
 from datetime import datetime, timezone
 from ftplib import FTP_TLS, error_perm
 
@@ -31,7 +31,11 @@ EXCLUDE_DIRS = {
     '.git', '.claude', '.playwright-cli', 'backups', 'sweeps',
     'node_modules', '__pycache__', '.idea', '.vscode',
 }
-EXCLUDE_FILES = {'.DS_Store', '.env', 'deploy.py', 'deploy.sh', 'build-seo.py', 'README.md'}
+EXCLUDE_FILES = {'.DS_Store', '.env', '.gitignore', 'deploy.py', 'deploy.sh',
+                 'build-seo.py', '.deploy-state.json', 'README.md'}
+# текстовое содержимое: правка может не изменить размер, поэтому при
+# отсутствии известного хеша такие файлы заливаем не глядя
+TEXT_EXT = ('.html', '.css', '.js', '.xml', '.txt', '.php', '.json', '.svg', '.htaccess')
 EXCLUDE_PREFIX = ('sweep-',)
 
 PREVIEW_URL = 'https://adikaevanver.github.io/club1-preview'
@@ -83,6 +87,23 @@ def transform(rel, data, docroot):
             out.append(line)
         return '\n'.join(out).encode('utf-8')
     return data
+
+
+STATE_FILE = os.path.join(ROOT, '.deploy-state.json')
+
+
+def load_state():
+    """Хеши файлов, залитых прошлым деплоем. Нет файла — считаем по размеру."""
+    try:
+        with open(STATE_FILE, encoding='utf-8') as fh:
+            return json.load(fh)
+    except Exception:
+        return {}
+
+
+def save_state(state):
+    with open(STATE_FILE, 'w', encoding='utf-8') as fh:
+        json.dump(state, fh, indent=0, sort_keys=True)
 
 
 def remote_tree(ftp, base):
@@ -163,12 +184,31 @@ def main():
     remote = remote_tree(ftp, base)
     made, sent, skipped, removed = set(), 0, 0, 0
 
+    # FTP не отдаёт хеш, только размер, а правка той же длины («590» → «690»,
+    # исправленная дата, опечатка) размера не меняет — такие правки молча
+    # оставались на боевом старыми. Поэтому держим свой список хешей того,
+    # что реально залито; размер остаётся запасным признаком для файлов,
+    # которых в списке ещё нет.
+    state = load_state()
+    new_state = {}
+
     for rel, full in local_files():
         data = transform(rel, open(full, 'rb').read(), docroot)
-        if remote.get(rel) == len(data):
+        digest = hashlib.sha256(data).hexdigest()
+        new_state[rel] = digest
+
+        known = state.get(rel)
+        if known:
+            same = known == digest
+        elif rel.endswith(TEXT_EXT):
+            same = False          # хеша нет и правка могла не менять размер
+        else:
+            same = remote.get(rel) == len(data)   # картинки: размера довольно
+        if same and rel in remote:
             skipped += 1
             remote.pop(rel, None)
             continue
+
         print(('  [dry] ' if args.dry_run else '  → ') + rel)
         if not args.dry_run:
             ensure_dirs(ftp, base, rel, made)
@@ -187,6 +227,8 @@ def main():
         removed += 1
 
     ftp.quit()
+    if not args.dry_run:
+        save_state(new_state)
     print(f'\nзалито {sent} · без изменений {skipped} · удалено {removed}')
     if args.dry_run:
         print('(dry-run: на сервере ничего не менялось)')
