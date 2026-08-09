@@ -31,7 +31,7 @@ EXCLUDE_DIRS = {
     '.git', '.claude', '.playwright-cli', 'backups', 'sweeps',
     'node_modules', '__pycache__', '.idea', '.vscode',
 }
-EXCLUDE_FILES = {'.DS_Store', '.env', 'deploy.py', 'deploy.sh', 'README.md'}
+EXCLUDE_FILES = {'.DS_Store', '.env', 'deploy.py', 'deploy.sh', 'build-seo.py', 'README.md'}
 EXCLUDE_PREFIX = ('sweep-',)
 
 PREVIEW_URL = 'https://adikaevanver.github.io/club1-preview'
