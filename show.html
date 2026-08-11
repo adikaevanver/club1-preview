@@ -16,7 +16,7 @@
 <meta property="og:description" content="Опытные комики столицы, три артиста и ведущий, час живого стендапа. Живой зал в центре Москвы, Новый Арбат, 21.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://adikaevanver.github.io/club1-preview/show">
-<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/posters/ok-sq.jpg">
+<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/posters/ok2-sq.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
@@ -963,6 +963,20 @@
  }
 ]
 </script>
+
+<!-- Яндекс.Метрика — тот же счётчик, что на clubnaarbate21.ru:
+     при переезде домена история визитов и сегменты не обнуляются -->
+<script>
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(105926738, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/105926738" style="position:absolute; left:-9999px;" alt=""></div></noscript>
+<script src="analytics.js?v=2608091" defer></script>
 </head>
 
 <body class="has-sticky-cta">
@@ -1171,12 +1185,14 @@
        Content per «структура»: регалии/проекты · видео · соцсети · шоу
        ================================================================= -->
 
-  <!-- Расул Чабдаров -->
-  <!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения -->
+  <!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения.
+       Цена берётся из events.js (минимум по будущим сеансам) — не вписывать
+       руками: в прошлый раз плашку скопировали с другой страницы вместе
+       с чужой ценой и чужим названием шоу. -->
 <div class="sticky-cta">
   <span class="sticky-cta__info">
     <span class="sticky-cta__date">От опытных комиков</span>
-    <span class="sticky-cta__price">1000–2500 ₽</span>
+    <span class="sticky-cta__price">от 690 ₽</span>
   </span>
   <a class="btn btn--primary" href="#dates">Выбрать дату</a>
 </div>
@@ -1275,12 +1291,31 @@
   /* 2 · burger / mobile drawer */
   var burger = document.getElementById('burger');
   var menu   = document.getElementById('mobileMenu');
+  var menuReturnFocus = null;
+  var menuItems = function(){
+    return menu.querySelectorAll('a[href], button:not([disabled])');
+  };
   var setMenu = function(open){
     menu.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    /* прокрутку держит html (у него overflow-x:clip), поэтому замок
+       вешаем на оба элемента — иначе страница под шторкой уезжала */
     document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    /* закрытая шторка не должна ловить Tab: она невидима, но её ссылки
+       оставались в порядке обхода и фокус проваливался «за экран» */
+    if (open) { menu.removeAttribute('inert'); } else { menu.setAttribute('inert', ''); }
+    if (open) {
+      menuReturnFocus = document.activeElement;
+      var first = menuItems()[0];
+      if (first) first.focus();
+    } else if (menuReturnFocus) {
+      menuReturnFocus.focus();
+      menuReturnFocus = null;
+    }
   };
+  menu.setAttribute('inert', '');
   burger.addEventListener('click', function(){
     setMenu(!menu.classList.contains('is-open'));
   });
@@ -1288,7 +1323,15 @@
     if (e.target.closest('a')) setMenu(false);
   });
   window.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+    if (!menu.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
+    if (e.key !== 'Tab') return;
+    /* пока меню открыто, обход ходит по кругу внутри него */
+    var items = menuItems();
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   /* 3 · horizontal slider ("Вам может понравиться") */

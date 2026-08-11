@@ -230,6 +230,20 @@
   }
   .fee-note{margin-top:12px;font-size:.8rem;color:var(--muted-2)}
 </style>
+
+<!-- Яндекс.Метрика — тот же счётчик, что на clubnaarbate21.ru:
+     при переезде домена история визитов и сегменты не обнуляются -->
+<script>
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(105926738, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/105926738" style="position:absolute; left:-9999px;" alt=""></div></noscript>
+<script src="analytics.js?v=2608091" defer></script>
 </head>
 
 <body class="has-sticky-cta">
@@ -354,8 +368,9 @@
         <!-- Кнопка подробнее + Кнопка покупки -->
         <div class="cta-row" id="tickets">
           <a class="btn btn--ghost" href="#about">Подробнее</a>
-          <a class="btn btn--primary" href="https://iframeab-pre7764.intickets.ru/seance/73241619/" target="_blank" rel="noopener">Бронировать места</a>
+          <a class="btn btn--primary" href="afisha">Смотреть афишу клуба</a>
         </div>
+        <p class="desc__note" style="margin-top:18px">Этот вечер уже прошёл (30 июля). Ближайших дат пока нет — посмотрите, что идёт в клубе на этой неделе, в <a href="afisha">афише</a>.</p>
         <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
         <p class="fee-note">Билет — от 2 500 ₽, сбором не облагается. К счёту за еду и напитки в зале добавляется сервисный сбор 10%. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
       </div>
@@ -425,9 +440,9 @@
 <div class="sticky-cta">
   <span class="sticky-cta__info">
     <span class="sticky-cta__date">Эйчар стендап · 30.07</span>
-    <span class="sticky-cta__price">от 2 500 ₽</span>
+    <span class="sticky-cta__price">даты уточняются</span>
   </span>
-  <a class="btn btn--primary" href="#tickets">Бронировать</a>
+  <a class="btn btn--primary" href="afisha">В афишу</a>
 </div>
 
 <!-- v4: модалка «Как считается цена» (открывается из строки про сбор) -->
@@ -526,12 +541,31 @@
   /* 2 · burger / mobile drawer */
   var burger = document.getElementById('burger');
   var menu   = document.getElementById('mobileMenu');
+  var menuReturnFocus = null;
+  var menuItems = function(){
+    return menu.querySelectorAll('a[href], button:not([disabled])');
+  };
   var setMenu = function(open){
     menu.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    /* прокрутку держит html (у него overflow-x:clip), поэтому замок
+       вешаем на оба элемента — иначе страница под шторкой уезжала */
     document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    /* закрытая шторка не должна ловить Tab: она невидима, но её ссылки
+       оставались в порядке обхода и фокус проваливался «за экран» */
+    if (open) { menu.removeAttribute('inert'); } else { menu.setAttribute('inert', ''); }
+    if (open) {
+      menuReturnFocus = document.activeElement;
+      var first = menuItems()[0];
+      if (first) first.focus();
+    } else if (menuReturnFocus) {
+      menuReturnFocus.focus();
+      menuReturnFocus = null;
+    }
   };
+  menu.setAttribute('inert', '');
   burger.addEventListener('click', function(){
     setMenu(!menu.classList.contains('is-open'));
   });
@@ -539,7 +573,15 @@
     if (e.target.closest('a')) setMenu(false);
   });
   window.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+    if (!menu.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
+    if (e.key !== 'Tab') return;
+    /* пока меню открыто, обход ходит по кругу внутри него */
+    var items = menuItems();
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   /* 3 · horizontal rail ("Вам может понравиться") */
