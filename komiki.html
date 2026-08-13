@@ -163,6 +163,13 @@
 
   /* соцсети — VK / TG / Instagram icon links */
   .bio__social{display:flex;gap:12px}
+  /* Ссылки на аккаунты артистов ещё не собраны, и в разметке стоят
+     заглушки href="#". Иконка, которая никуда не ведёт, хуже, чем её
+     отсутствие: гость жмёт и остаётся на месте. Прячем ряд вместе с
+     заголовком, пока в нём нет ни одной настоящей ссылки — как только
+     появится хотя бы одна, блок покажется сам. Придут все ссылки —
+     это правило можно удалить, разметка нетронута. */
+  .bio__section:has(.bio__social):not(:has(.bio__soc:not([href="#"]))){display:none}
   .bio__soc{
     width:44px;height:44px;border-radius:12px;flex:0 0 auto;
     display:flex;align-items:center;justify-content:center;
