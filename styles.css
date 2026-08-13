@@ -1112,6 +1112,14 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
     padding:10px 10px 12px;
     background:linear-gradient(180deg, transparent 52%, rgba(10,8,16,.78));
   }
+  /* На телефоне окно слайда 16:10, а панорамный арт 12:5 — cover срезал бы
+     ему треть ширины вместе с названием шоу (проверено на «В большом городе»:
+     от «STAND UP» оставалось «TAND UP»). Показываем афишу целиком, поля
+     добираем фоном страницы: плашки и кнопки как раз садятся на них.
+     Старым 16:9 это тоже на пользу — их больше не режет по бокам. */
+  .bb-slide__bg--wide{
+    background-size:contain;background-repeat:no-repeat;background-color:#0d0a13;
+  }
   .bb-slide--wide .bb-slide__chips{align-self:flex-start}
   .bb-slide--wide .bb-slide__actions{margin-top:auto}
   .bb-slide--wide .bb-slide__actions .btn{padding:.6em .95em;font-size:.85rem}
