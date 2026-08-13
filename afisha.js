@@ -233,8 +233,15 @@
      референсе; нет — квадратная афиша по центру на размытой подложке */
   function heroSlideHTML(item, i){
     var ev = item.ev;
+    /* цвет плашки — под каждую афишу (просьба Максима 13.08): необязательное
+       поле chip в events.js, {bg:'#d3e04b', ink:'#1c1c1c'}; без него —
+       фирменная маджента с белым (дефолты в CSS) */
+    var chipStyle = ev.chip
+      ? ' style="' + (ev.chip.bg ? '--chip-bg:' + esc(ev.chip.bg) + ';' : '') +
+                     (ev.chip.ink ? '--chip-ink:' + esc(ev.chip.ink) + ';' : '') + '"'
+      : '';
     var chips = item.dates.slice(0, 2).map(function(d){
-      return '<span class="bb-chip"><b>' + fmtShort(d) + '</b>' +
+      return '<span class="bb-chip"' + chipStyle + '><b>' + fmtShort(d) + '</b>' +
              (d.time ? '<small>' + esc(d.time) + '</small>' : '') + '</span>';
     }).join('');
     var cta = ev.buy
@@ -648,29 +655,25 @@
       });
     }
 
-    /* «Загрузить ещё»: первый экран — два ряда карточек, сколько бы
-       колонок ни поместилось; каждая догрузка добавляет ещё два ряда */
+    /* «Загрузить ещё»: первый экран — 8 карточек на любой ширине, чтобы
+       наполнение мобильной и десктопной версии совпадало (правка Максима
+       13.08; раньше было «два ряда» — на телефоне выходило 4 карточки
+       против 8 на десктопе); каждая догрузка добавляет ещё 8 */
     var visible = 0;
-    function batchSize(){
-      var cols = 1;
-      try {
-        cols = (getComputedStyle(track).gridTemplateColumns || '')
-                 .split(' ').filter(Boolean).length || 1;
-      } catch (e) {}
-      return Math.max(2, cols * 2);
-    }
+    function batchSize(){ return 8; }
 
     function render(){
-      /* пресеты: пилюля гаснет, если в диапазоне нет ни одного события.
-         «Все мероприятия» (макет Максима 06.08) — активна, пока не выбран
-         пресет или конкретный день; клик сбрасывает и то и другое */
+      /* пресеты — вкладки (макет Максима 06.08, подтверждён 13.08); вкладка
+         гаснет, если в диапазоне нет ни одного события. «Все мероприятия» —
+         активна, пока не выбран пресет или конкретный день; клик сбрасывает
+         и то и другое */
       if (presetWrap){
         presetWrap.innerHTML =
-          '<button class="pill" type="button" data-preset="all"' +
+          '<button class="af-tab" type="button" data-preset="all"' +
           ' aria-pressed="' + String(!state.preset && !state.date) + '">Все мероприятия</button>' +
           PRESETS.map(function(p){
             var n = events.filter(function(ev){ return inPreset(ev, p.key); }).length;
-            return '<button class="pill" type="button" data-preset="' + p.key + '"' +
+            return '<button class="af-tab" type="button" data-preset="' + p.key + '"' +
                    (n ? '' : ' disabled title="Событий нет"') +
                    ' aria-pressed="' + String(state.preset === p.key) + '">' + p.label + '</button>';
           }).join('');
