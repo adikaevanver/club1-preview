@@ -1050,20 +1050,28 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 }
 .bb-slide__cssposter{width:clamp(260px,34vw,400px)}
 
+/* Плашка дат по референсу Максима 13.08 (снимок 01.08.33): наклонённый
+   квадрат «под обрез» — примыкает к верхнему краю слайда слева с небольшим
+   отступом, дата крупно над чертой, время под ней, вся плашка слегка
+   повёрнута (верхний скошенный край уходит за обрез слайда). Цвет
+   настраивается по событию: поле chip в events.js кладёт --chip-bg/--chip-ink
+   на слайд; без поля — фирменная маджента с белым. */
 .bb-slide__chips{
-  position:absolute;left:clamp(20px,4.5vw,60px);top:clamp(20px,3.5vw,44px);
-  z-index:4;display:flex;gap:10px;
+  position:absolute;left:clamp(14px,2vw,26px);top:0;
+  z-index:4;display:flex;gap:12px;align-items:flex-start;
 }
 .bb-chip{
-  background:var(--magenta);color:#fff;text-align:left;
-  font-family:var(--display);font-weight:800;font-size:1.02rem;line-height:1.05;
-  padding:10px 20px 10px 14px;letter-spacing:.02em;
-  clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);
-  box-shadow:0 10px 26px -12px rgba(255,47,109,.9);
+  background:var(--chip-bg,var(--magenta));color:var(--chip-ink,#fff);
+  text-align:center;
+  font-family:var(--display);font-weight:800;font-size:1.3rem;line-height:1;
+  padding:16px 16px 12px;letter-spacing:.02em;
+  transform:rotate(-4deg) skewX(-6deg);transform-origin:top center;
+  margin-top:-8px;                       /* верхний край уходит за обрез слайда */
+  box-shadow:0 10px 26px -12px rgba(0,0,0,.65);
 }
-.bb-chip + .bb-chip{background:#3a3440;box-shadow:none}
-.bb-chip b{display:block}
-.bb-chip small{display:block;margin-top:3px;font-size:.74em;font-weight:700;opacity:.95}
+.bb-chip + .bb-chip{background:#3a3440;color:#fff;box-shadow:none}
+.bb-chip b{display:block;padding-bottom:6px;border-bottom:3px solid currentColor}
+.bb-chip small{display:block;margin-top:5px;font-size:.78em;font-weight:800}
 
 .bb-slide__age{
   position:absolute;left:12px;bottom:12px;z-index:4;
@@ -1116,7 +1124,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   .bb-slide--wide .bb-slide__actions{margin-top:auto}
   .bb-slide--wide .bb-slide__actions .btn{padding:.6em .95em;font-size:.85rem}
   .bb-slide--wide .bb-slide__age--corner{position:absolute;left:10px;bottom:12px}
-  .bb-chip{font-size:.82rem;padding:7px 14px 7px 10px}
+  .bb-chip{font-size:.95rem;padding:11px 12px 8px;margin-top:0}
   .bb-slide__poster{max-height:none}
   .bb-slide__poster,
   .bb-slide__cssposter{width:100%;max-width:min(100%,420px);margin:0 auto}
@@ -1205,9 +1213,36 @@ html{overflow-x:clip}
 .afisha__head--page{margin-top:clamp(28px,4vw,52px)}
 .afisha__head--page .afisha__title{font-size:clamp(1.35rem,3.2vw,2.15rem)}
 
-/* верхний ряд фильтров: пресеты слева, поиск справа */
-.filters__row--top{justify-content:space-between}
-.filters__presets{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+/* верхний ряд фильтров: пресеты слева, поиск справа. Под всем рядом —
+   фирменная градиентная линия (макет Максима 06.08, подтверждён 13.08) */
+.filters__row--top{
+  justify-content:space-between;
+  padding-bottom:14px;position:relative;
+}
+.filters__row--top::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:var(--grad);opacity:.55;
+}
+.filters__presets{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+
+/* Пресеты дат — вкладки по макету Максима 06.08 (снимок 13.08): прямоугольные
+   сегменты впритык с общей рамкой, активная — маджентовая заливка */
+.af-tab{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--body);font-weight:500;font-size:.95rem;
+  padding:.62em 1.15em;white-space:nowrap;
+  border:1.5px solid var(--hairline-strong);margin-left:-1.5px;
+  background:transparent;color:var(--text);position:relative;
+  transition:background .18s,color .18s,border-color .18s;
+}
+.af-tab:first-child{margin-left:0;border-radius:var(--r-sm) 0 0 var(--r-sm)}
+.af-tab:last-child{border-radius:0 var(--r-sm) var(--r-sm) 0}
+.af-tab:hover{background:rgba(255,255,255,.05);z-index:1}
+.af-tab[aria-pressed="true"]{
+  background:var(--magenta);color:#fff;border-color:var(--magenta);
+  font-weight:600;z-index:2;
+}
+.af-tab[disabled]{opacity:.35;cursor:default;pointer-events:none}
 
 /* «Ещё фильтры» (макет Максима 06.08): форматы и сортировка в раскрывашке.
    Стрелку рисует ТОЛЬКО легаси-псевдоэлемент .filters__more::after по
