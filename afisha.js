@@ -236,7 +236,10 @@
        внутри групп порядок по дате сохраняется */
     var solo   = out.filter(function(it){ return it.ev.format === 'solniki'; });
     var others = out.filter(function(it){ return it.ev.format !== 'solniki'; });
-    return solo.concat(others).slice(0, 6);
+    /* лимит поднят 6 → 8 (Анвер 13.08, «используй все панорамы Максима»):
+       при пяти сольниках впереди панорамные СБГ и Бурлеск не влезали в
+       шестёрку, и готовые арты 1920×800 не показывались вовсе */
+    return solo.concat(others).slice(0, 8);
   }
 
   /* макет Максима 22.07 (ранний вариант выбран на созвоне 24.07 как
@@ -246,8 +249,15 @@
      референсе; нет — квадратная афиша по центру на размытой подложке */
   function heroSlideHTML(item, i){
     var ev = item.ev;
+    /* цвет плашки — под каждую афишу (просьба Максима 13.08): необязательное
+       поле chip в events.js, {bg:'#d3e04b', ink:'#1c1c1c'}; без него —
+       фирменная маджента с белым (дефолты в CSS) */
+    var chipStyle = ev.chip
+      ? ' style="' + (ev.chip.bg ? '--chip-bg:' + esc(ev.chip.bg) + ';' : '') +
+                     (ev.chip.ink ? '--chip-ink:' + esc(ev.chip.ink) + ';' : '') + '"'
+      : '';
     var chips = item.dates.slice(0, 2).map(function(d){
-      return '<span class="bb-chip"><b>' + fmtShort(d) + '</b>' +
+      return '<span class="bb-chip"' + chipStyle + '><b>' + fmtShort(d) + '</b>' +
              (d.time ? '<small>' + esc(d.time) + '</small>' : '') + '</span>';
     }).join('');
     var cta = ev.buy
@@ -316,13 +326,28 @@
     /* 18+ — в нижнем левом углу самой афиши (рамка), не сцены слайда */
     var age = '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>';
     art = '<div class="bb-slide__frame">' + art + age + '</div>';
+    /* wide169 — переходный арт 16:9, пока Максим не прислал панораму 12:5
+       (замечание Анвера 13.08: карточка 4:5 в центре широкого окна выглядела
+       бедно). Показываем 16:9 целиком крупно по центру на десктопе; на
+       телефоне остаётся карточка — там 16:9 мелкий и нечитаемый */
+    var artWrap;
+    if (ev.wide169){
+      var midArt = '<div class="bb-slide__frame">' +
+          '<img class="bb-slide__poster bb-slide__poster--mid" src="' + esc(ev.wide169) + '" alt="Афиша: ' + esc(ev.title) + '"' +
+          (i ? ' loading="lazy"' : '') + ' width="1920" height="1080">' + age + '</div>';
+      artWrap = '<div class="bb-slide__art bb-slide__art--mid">' + midArt + '</div>' +
+                '<div class="bb-slide__art bb-slide__art--sq">' + art + '</div>';
+      bg = '<div class="bb-slide__bg" style="background-image:url(\'' + esc(ev.wide169) + '\')" aria-hidden="true"></div>';
+    } else {
+      artWrap = '<div class="bb-slide__art">' + art + '</div>';
+    }
     return (
       '<article class="bb-slide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
         bg +
         slideLink +
         '<div class="bb-slide__stage">' +
           '<div class="bb-slide__chips">' + chips + '</div>' +
-          '<div class="bb-slide__art">' + art + '</div>' +
+          artWrap +
           actions +
         '</div>' +
       '</article>'
@@ -683,29 +708,25 @@
       });
     }
 
-    /* «Загрузить ещё»: первый экран — два ряда карточек, сколько бы
-       колонок ни поместилось; каждая догрузка добавляет ещё два ряда */
+    /* «Загрузить ещё»: первый экран — 8 карточек на любой ширине, чтобы
+       наполнение мобильной и десктопной версии совпадало (правка Максима
+       13.08; раньше было «два ряда» — на телефоне выходило 4 карточки
+       против 8 на десктопе); каждая догрузка добавляет ещё 8 */
     var visible = 0;
-    function batchSize(){
-      var cols = 1;
-      try {
-        cols = (getComputedStyle(track).gridTemplateColumns || '')
-                 .split(' ').filter(Boolean).length || 1;
-      } catch (e) {}
-      return Math.max(2, cols * 2);
-    }
+    function batchSize(){ return 8; }
 
     function render(){
-      /* пресеты: пилюля гаснет, если в диапазоне нет ни одного события.
-         «Все мероприятия» (макет Максима 06.08) — активна, пока не выбран
-         пресет или конкретный день; клик сбрасывает и то и другое */
+      /* пресеты — вкладки (макет Максима 06.08, подтверждён 13.08); вкладка
+         гаснет, если в диапазоне нет ни одного события. «Все мероприятия» —
+         активна, пока не выбран пресет или конкретный день; клик сбрасывает
+         и то и другое */
       if (presetWrap){
         presetWrap.innerHTML =
-          '<button class="pill" type="button" data-preset="all"' +
+          '<button class="af-tab" type="button" data-preset="all"' +
           ' aria-pressed="' + String(!state.preset && !state.date) + '">Все мероприятия</button>' +
           PRESETS.map(function(p){
             var n = events.filter(function(ev){ return inPreset(ev, p.key); }).length;
-            return '<button class="pill" type="button" data-preset="' + p.key + '"' +
+            return '<button class="af-tab" type="button" data-preset="' + p.key + '"' +
                    (n ? '' : ' disabled title="Событий нет"') +
                    ' aria-pressed="' + String(state.preset === p.key) + '">' + p.label + '</button>';
           }).join('');
