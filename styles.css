@@ -1152,6 +1152,15 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 }
 .bb-slide__cssposter{width:clamp(260px,34vw,400px)}
 
+/* Переходный 16:9-арт (нет панорамы 12:5): целиком, крупно по центру.
+   На телефоне 16:9 нечитаем — там показывается карточка (--sq) */
+.bb-slide__art--sq{display:none}
+.bb-slide__poster--mid{max-height:clamp(340px,56vh,520px)}
+@media (max-width:760px){
+  .bb-slide__art--mid{display:none}
+  .bb-slide__art--sq{display:flex}
+}
+
 /* Плашка дат по референсу Максима 13.08 (снимок 01.08.33): наклонённый
    квадрат «под обрез» — примыкает к верхнему краю слайда слева с небольшим
    отступом, дата крупно над чертой, время под ней, вся плашка слегка

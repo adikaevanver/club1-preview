@@ -310,13 +310,28 @@
     /* 18+ — в нижнем левом углу самой афиши (рамка), не сцены слайда */
     var age = '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>';
     art = '<div class="bb-slide__frame">' + art + age + '</div>';
+    /* wide169 — переходный арт 16:9, пока Максим не прислал панораму 12:5
+       (замечание Анвера 13.08: карточка 4:5 в центре широкого окна выглядела
+       бедно). Показываем 16:9 целиком крупно по центру на десктопе; на
+       телефоне остаётся карточка — там 16:9 мелкий и нечитаемый */
+    var artWrap;
+    if (ev.wide169){
+      var midArt = '<div class="bb-slide__frame">' +
+          '<img class="bb-slide__poster bb-slide__poster--mid" src="' + esc(ev.wide169) + '" alt="Афиша: ' + esc(ev.title) + '"' +
+          (i ? ' loading="lazy"' : '') + ' width="1920" height="1080">' + age + '</div>';
+      artWrap = '<div class="bb-slide__art bb-slide__art--mid">' + midArt + '</div>' +
+                '<div class="bb-slide__art bb-slide__art--sq">' + art + '</div>';
+      bg = '<div class="bb-slide__bg" style="background-image:url(\'' + esc(ev.wide169) + '\')" aria-hidden="true"></div>';
+    } else {
+      artWrap = '<div class="bb-slide__art">' + art + '</div>';
+    }
     return (
       '<article class="bb-slide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
         bg +
         slideLink +
         '<div class="bb-slide__stage">' +
           '<div class="bb-slide__chips">' + chips + '</div>' +
-          '<div class="bb-slide__art">' + art + '</div>' +
+          artWrap +
           actions +
         '</div>' +
       '</article>'
