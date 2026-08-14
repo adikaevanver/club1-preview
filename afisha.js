@@ -223,7 +223,10 @@
        внутри групп порядок по дате сохраняется */
     var solo   = out.filter(function(it){ return it.ev.format === 'solniki'; });
     var others = out.filter(function(it){ return it.ev.format !== 'solniki'; });
-    return solo.concat(others).slice(0, 6);
+    /* лимит поднят 6 → 8 (Анвер 13.08, «используй все панорамы Максима»):
+       при пяти сольниках впереди панорамные СБГ и Бурлеск не влезали в
+       шестёрку, и готовые арты 1920×800 не показывались вовсе */
+    return solo.concat(others).slice(0, 8);
   }
 
   /* макет Максима 22.07 (ранний вариант выбран на созвоне 24.07 как
