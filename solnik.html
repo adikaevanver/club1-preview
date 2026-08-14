@@ -281,6 +281,20 @@
  }
 ]
 </script>
+
+<!-- Яндекс.Метрика club1.moscow. Тот же номер стоит в analytics.js
+     (там он нужен для целей) — менять оба места разом -->
+<script>
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=111571199", "ym");
+
+   ym(111571199, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/111571199" style="position:absolute; left:-9999px;" alt=""></div></noscript>
+<script src="analytics.js?v=2608091" defer></script>
 </head>
 
 <body class="has-sticky-cta">
@@ -385,7 +399,7 @@
 
           <span class="meta-chip">
             <span class="meta-chip__ic meta-chip__price" aria-hidden="true">₽</span>
-            <span>от 2 000 ₽<small>стоимость билета</small></span>
+            <span><b data-picked-price>от 3 000 ₽</b><small>стоимость билета</small></span>
           </span>
 
           <!-- v4: доступность локации прямо в строке данных события -->
@@ -410,15 +424,15 @@
           <div class="datebar" data-datebar>
             <span class="datebar__month">Август</span>
             <div class="datebar__days" role="group" aria-label="Выберите дату сольного концерта">
-              <button class="datebar__day" data-date="2026-08-15" data-label="15 августа" data-time="20:30" data-buy="https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODY4MTUwMDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button15_08&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce" aria-pressed="true"><b>15</b><span>Сб</span></button>
-              <button class="datebar__day" data-date="2026-08-20" data-label="20 августа" data-time="21:30" data-buy="https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODcyNTA2MDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button20_08&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce" aria-pressed="false"><b>20</b><span>Чт</span></button>
+              <button class="datebar__day" data-date="2026-08-15" data-label="15 августа" data-time="20:30" data-price="от 3 000 ₽" data-buy="https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODY4MTUwMDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button15_08&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce" aria-pressed="true"><b>15</b><span>Сб</span></button>
+              <button class="datebar__day" data-date="2026-08-20" data-label="20 августа" data-time="21:30" data-price="от 2 000 ₽" data-buy="https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODcyNTA2MDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button20_08&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce" aria-pressed="false"><b>20</b><span>Чт</span></button>
             </div>
           </div>
 
           <p class="datepick__note">Выбрана дата: <b data-picked-date id="pickedDate">15 августа</b>, начало в <b data-picked-time id="pickedTime">20:30</b>.</p>
           <a class="btn book-btn datepick__book" id="pickedBook" data-picked-buy href="https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODY4MTUwMDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button15_08&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce" target="_blank" rel="noopener">Бронировать места</a>
           <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
-          <p class="datepick__fee">Билет — от 2 000 ₽, сбором не облагается. К счёту за еду и напитки в зале добавляется сервисный сбор 10%. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
+          <p class="datepick__fee">Билет — <b data-picked-price>от 3 000 ₽</b>, сбором не облагается. К счёту за еду и напитки в зале добавляется сервисный сбор 10%. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
         </div>
       </div>
 
@@ -596,7 +610,7 @@
 <div class="sticky-cta">
   <span class="sticky-cta__info">
     <span class="sticky-cta__date">15 августа · 20:30</span>
-    <span class="sticky-cta__price">от 2 000 ₽</span>
+    <span class="sticky-cta__price" data-picked-price>от 3 000 ₽</span>
   </span>
   <a class="btn btn--primary" href="https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODY4MTUwMDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button15_08&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce" target="_blank" rel="noopener">Бронировать</a>
 </div>
@@ -691,12 +705,31 @@
   /* 2 · burger / mobile drawer */
   var burger = document.getElementById('burger');
   var menu   = document.getElementById('mobileMenu');
+  var menuReturnFocus = null;
+  var menuItems = function(){
+    return menu.querySelectorAll('a[href], button:not([disabled])');
+  };
   var setMenu = function(open){
     menu.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    /* прокрутку держит html (у него overflow-x:clip), поэтому замок
+       вешаем на оба элемента — иначе страница под шторкой уезжала */
     document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    /* закрытая шторка не должна ловить Tab: она невидима, но её ссылки
+       оставались в порядке обхода и фокус проваливался «за экран» */
+    if (open) { menu.removeAttribute('inert'); } else { menu.setAttribute('inert', ''); }
+    if (open) {
+      menuReturnFocus = document.activeElement;
+      var first = menuItems()[0];
+      if (first) first.focus();
+    } else if (menuReturnFocus) {
+      menuReturnFocus.focus();
+      menuReturnFocus = null;
+    }
   };
+  menu.setAttribute('inert', '');
   burger.addEventListener('click', function(){
     setMenu(!menu.classList.contains('is-open'));
   });
@@ -704,7 +737,15 @@
     if (e.target.closest('a')) setMenu(false);
   });
   window.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+    if (!menu.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
+    if (e.key !== 'Tab') return;
+    /* пока меню открыто, обход ходит по кругу внутри него */
+    var items = menuItems();
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   /* 3 · horizontal afisha rails (two on this page) */

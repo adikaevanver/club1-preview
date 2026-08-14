@@ -280,6 +280,20 @@
     .stat{padding:12px 18px}
   }
 </style>
+
+<!-- Яндекс.Метрика club1.moscow. Тот же номер стоит в analytics.js
+     (там он нужен для целей) — менять оба места разом -->
+<script>
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=111571199", "ym");
+
+   ym(111571199, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/111571199" style="position:absolute; left:-9999px;" alt=""></div></noscript>
+<script src="analytics.js?v=2608091" defer></script>
 </head>
 
 <body class="has-sticky-cta">
@@ -660,6 +674,15 @@
              Пока приёмник не подключён, форма НЕ пишет «отправлено»: она
              собирает письмо на почту отдела мероприятий. -->
         <form class="req-form" id="reqForm" novalidate>
+          <!-- Ловушка для ботов: человек этого поля не видит и не заполняет,
+               автозаполнялка спам-скрипта — заполняет. Непустое значение
+               send.php отбрасывает молча. Скрыто не через display:none:
+               часть ботов такие поля пропускает. -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+            <label for="f-website">Не заполняйте это поле</label>
+            <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
           <div class="form-status" id="formStatus" role="status" tabindex="-1">
             <span class="badge1" style="--s:34px" aria-hidden="true"><b>1</b></span>
             <span id="formStatusText"><b>Заявка отправлена.</b> Менеджер отдела мероприятий свяжется с вами в ближайшее время.</span>
@@ -790,12 +813,31 @@
   /* 2 · burger / mobile drawer */
   var burger = document.getElementById('burger');
   var menu   = document.getElementById('mobileMenu');
+  var menuReturnFocus = null;
+  var menuItems = function(){
+    return menu.querySelectorAll('a[href], button:not([disabled])');
+  };
   var setMenu = function(open){
     menu.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    /* прокрутку держит html (у него overflow-x:clip), поэтому замок
+       вешаем на оба элемента — иначе страница под шторкой уезжала */
     document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    /* закрытая шторка не должна ловить Tab: она невидима, но её ссылки
+       оставались в порядке обхода и фокус проваливался «за экран» */
+    if (open) { menu.removeAttribute('inert'); } else { menu.setAttribute('inert', ''); }
+    if (open) {
+      menuReturnFocus = document.activeElement;
+      var first = menuItems()[0];
+      if (first) first.focus();
+    } else if (menuReturnFocus) {
+      menuReturnFocus.focus();
+      menuReturnFocus = null;
+    }
   };
+  menu.setAttribute('inert', '');
   burger.addEventListener('click', function(){
     setMenu(!menu.classList.contains('is-open'));
   });
@@ -803,7 +845,15 @@
     if (e.target.closest('a')) setMenu(false);
   });
   window.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+    if (!menu.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
+    if (e.key !== 'Tab') return;
+    /* пока меню открыто, обход ходит по кругу внутри него */
+    var items = menuItems();
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   /* 3 · horizontal slider (gallery) — data-slider holds the track element id */
@@ -879,6 +929,8 @@
         if (!r.ok) throw new Error(r.status);
         form.reset();
         show('<b>Заявка отправлена.</b> Менеджер отдела мероприятий свяжется с вами в ближайшее время.');
+        // цель в Метрике: заявка на аренду — ловит analytics.js
+        document.dispatchEvent(new CustomEvent('club1:lead', {detail: {form: 'arenda'}}));
       }).catch(function(){
         show('<b>Заявка не ушла.</b> Позвоните <a href="tel:+74996869111">+7 (499) 686 91 11</a> ' +
              'или напишите на <a href="mailto:' + CLUB1_FORM.mailto + '">' + CLUB1_FORM.mailto + '</a>.');
