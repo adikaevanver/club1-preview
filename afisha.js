@@ -104,7 +104,13 @@
      Настоящая афиша → полноцветная картинка; нет афиши → фирменный
      CSS-постер (дуотон + STANDUP + имя), при наличии фото — с фото.
      Дата-бейдж единый на всех карточках: ДД.ММ + время или день недели. */
-  function cardHTML(ev){
+  /* Мигание афиш при листании ленты (правка Анвера 09.08): постеры грузились
+     лениво, то есть ровно в тот момент, когда карточка выезжает в кадр — глаз
+     успевал поймать пустой серый прямоугольник. Первые четыре карточки грузим
+     сразу, остальные остаются ленивыми: они за пределами двух-трёх свайпов. */
+  function cardHTML(ev, i){
+    var eager = (i || 0) < 4;
+    var load = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
     var badge = '<div class="poster__badge">' + fmtShort(ev) +
                 '<small>' + (ev.time ? esc(ev.time) : DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
     /* 18+ рисует сайт на каждой афише (созвон 21.07: алкоголь ⇒ всё 18+) */
@@ -137,8 +143,8 @@
          из той же картинки — портретный ресайз закроет рамку целиком */
       poster =
         '<div class="poster poster--art">' +
-          '<img class="poster__backfill" src="' + esc(ev.poster) + '" alt="" aria-hidden="true" loading="lazy" width="800" height="800">' +
-          '<img class="poster__full" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '" loading="lazy" width="800" height="800">' +
+          '<img class="poster__backfill" src="' + esc(ev.poster) + '" alt="" aria-hidden="true" ' + load + ' width="800" height="800">' +
+          '<img class="poster__full" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '" ' + load + ' width="800" height="800">' +
           badge + when + age +
         '</div>';
     } else {
@@ -150,7 +156,12 @@
           age +
         '</div>';
     }
-    poster = '<a class="poster-link" href="' + esc(ev.page) + '" aria-label="Подробнее: ' + esc(ev.title) + '">' + poster + '</a>';
+    /* партнёрские события идут без своей страницы (билеты живут на стороне
+       организатора) — тогда афиша не кликабельна и «Подробнее» не рисуем,
+       иначе ссылка уходила бы в href="null" */
+    if (ev.page){
+      poster = '<a class="poster-link" href="' + esc(ev.page) + '" aria-label="Подробнее: ' + esc(ev.title) + '">' + poster + '</a>';
+    }
     var cta;
     if (ev.soldOut){
       cta = '<a class="btn btn--ghost btn--sm" href="#contacts">Узнать о доп. датах</a>';
@@ -177,7 +188,7 @@
           (times ? ' · ' + times : '') + ' · Новый Арбат, 21</p>' +
         price +
         '<div class="event-card__actions">' +
-          '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
+          (ev.page ? '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Подробнее</a>' : '') + cta +
         '</div>' +
       '</article>'
     );
@@ -222,28 +233,59 @@
      референсе; нет — квадратная афиша по центру на размытой подложке */
   function heroSlideHTML(item, i){
     var ev = item.ev;
+    /* цвет плашки — под каждую афишу (просьба Максима 13.08): необязательное
+       поле chip в events.js, {bg:'#d3e04b', ink:'#1c1c1c'}; без него —
+       фирменная маджента с белым (дефолты в CSS) */
+    var chipStyle = ev.chip
+      ? ' style="' + (ev.chip.bg ? '--chip-bg:' + esc(ev.chip.bg) + ';' : '') +
+                     (ev.chip.ink ? '--chip-ink:' + esc(ev.chip.ink) + ';' : '') + '"'
+      : '';
     var chips = item.dates.slice(0, 2).map(function(d){
-      return '<span class="bb-chip"><b>' + fmtShort(d) + '</b>' +
+      return '<span class="bb-chip"' + chipStyle + '><b>' + fmtShort(d) + '</b>' +
              (d.time ? '<small>' + esc(d.time) + '</small>' : '') + '</span>';
     }).join('');
     var cta = ev.buy
       ? '<a class="btn btn--primary" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>'
       : '<a class="btn btn--primary" href="#contacts">Узнать о старте продаж</a>';
     var actions = '<div class="bb-slide__actions">' +
-                    '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' + cta +
+                    (ev.page ? '<a class="btn btn--ghost" href="' + esc(ev.page) + '">Подробнее</a>' : '') + cta +
                   '</div>';
     /* клик по самой афише ведёт на страницу события (просьба Анвера
        06.08): ссылка-подложка на весь слайд; сцена поверх неё прозрачна
-       для кликов (pointer-events), кнопки остаются кликабельными */
-    var slideLink = '<a class="bb-slide__link" href="' + esc(ev.page) +
-                    '" aria-label="' + esc(ev.title) + ' — подробнее о событии"></a>';
+       для кликов (pointer-events), кнопки остаются кликабельными.
+       У партнёрского события своей страницы нет — подложку не ставим */
+    var slideLink = ev.page
+      ? '<a class="bb-slide__link" href="' + esc(ev.page) +
+        '" aria-label="' + esc(ev.title) + ' — подробнее о событии"></a>'
+      : '';
     if (ev.wide){
+      /* Телефон (правка Анвера 09.08): слайды лежат в одной ячейке сетки, и
+         высоту задаёт самый высокий — слайд с квадратной афишей и кнопками
+         под ней. Панорамный арт 16:9, растянутый в этот высокий бокс через
+         cover, обрезался до неузнаваемости: от заголовка оставались огрызки,
+         а кнопки ложились поверх картинки. Поэтому на узком экране широкий
+         арт не показываем вовсе — отдаём квадратную афишу, как у остальных
+         слайдов; подложку из неё же размывает .bb-slide__bg. */
+      var sq = ev.poster
+        ? '<div class="bb-slide__mob">' +
+            '<div class="bb-slide__frame">' +
+              '<img class="bb-slide__poster" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '"' +
+              (i ? ' loading="lazy"' : '') + ' width="800" height="800">' +
+              '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>' +
+            '</div>' +
+          '</div>'
+        : '';
+      var mobBg = ev.poster
+        ? '<div class="bb-slide__bg bb-slide__bg--mob" style="background-image:url(\'' + esc(ev.poster) + '\')" aria-hidden="true"></div>'
+        : '';
       return (
         '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
           '<div class="bb-slide__bg bb-slide__bg--wide" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
+          mobBg +
           slideLink +
           '<div class="bb-slide__stage">' +
             '<div class="bb-slide__chips">' + chips + '</div>' +
+            sq +
             '<span class="bb-slide__age bb-slide__age--corner">' + esc(ev.age || '18+') + '</span>' +
             actions +
           '</div>' +
@@ -268,13 +310,28 @@
     /* 18+ — в нижнем левом углу самой афиши (рамка), не сцены слайда */
     var age = '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>';
     art = '<div class="bb-slide__frame">' + art + age + '</div>';
+    /* wide169 — переходный арт 16:9, пока Максим не прислал панораму 12:5
+       (замечание Анвера 13.08: карточка 4:5 в центре широкого окна выглядела
+       бедно). Показываем 16:9 целиком крупно по центру на десктопе; на
+       телефоне остаётся карточка — там 16:9 мелкий и нечитаемый */
+    var artWrap;
+    if (ev.wide169){
+      var midArt = '<div class="bb-slide__frame">' +
+          '<img class="bb-slide__poster bb-slide__poster--mid" src="' + esc(ev.wide169) + '" alt="Афиша: ' + esc(ev.title) + '"' +
+          (i ? ' loading="lazy"' : '') + ' width="1920" height="1080">' + age + '</div>';
+      artWrap = '<div class="bb-slide__art bb-slide__art--mid">' + midArt + '</div>' +
+                '<div class="bb-slide__art bb-slide__art--sq">' + art + '</div>';
+      bg = '<div class="bb-slide__bg" style="background-image:url(\'' + esc(ev.wide169) + '\')" aria-hidden="true"></div>';
+    } else {
+      artWrap = '<div class="bb-slide__art">' + art + '</div>';
+    }
     return (
       '<article class="bb-slide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
         bg +
         slideLink +
         '<div class="bb-slide__stage">' +
           '<div class="bb-slide__chips">' + chips + '</div>' +
-          '<div class="bb-slide__art">' + art + '</div>' +
+          artWrap +
           actions +
         '</div>' +
       '</article>'
@@ -613,29 +670,25 @@
       });
     }
 
-    /* «Загрузить ещё»: первый экран — два ряда карточек, сколько бы
-       колонок ни поместилось; каждая догрузка добавляет ещё два ряда */
+    /* «Загрузить ещё»: первый экран — 8 карточек на любой ширине, чтобы
+       наполнение мобильной и десктопной версии совпадало (правка Максима
+       13.08; раньше было «два ряда» — на телефоне выходило 4 карточки
+       против 8 на десктопе); каждая догрузка добавляет ещё 8 */
     var visible = 0;
-    function batchSize(){
-      var cols = 1;
-      try {
-        cols = (getComputedStyle(track).gridTemplateColumns || '')
-                 .split(' ').filter(Boolean).length || 1;
-      } catch (e) {}
-      return Math.max(2, cols * 2);
-    }
+    function batchSize(){ return 8; }
 
     function render(){
-      /* пресеты: пилюля гаснет, если в диапазоне нет ни одного события.
-         «Все мероприятия» (макет Максима 06.08) — активна, пока не выбран
-         пресет или конкретный день; клик сбрасывает и то и другое */
+      /* пресеты — вкладки (макет Максима 06.08, подтверждён 13.08); вкладка
+         гаснет, если в диапазоне нет ни одного события. «Все мероприятия» —
+         активна, пока не выбран пресет или конкретный день; клик сбрасывает
+         и то и другое */
       if (presetWrap){
         presetWrap.innerHTML =
-          '<button class="pill" type="button" data-preset="all"' +
+          '<button class="af-tab" type="button" data-preset="all"' +
           ' aria-pressed="' + String(!state.preset && !state.date) + '">Все мероприятия</button>' +
           PRESETS.map(function(p){
             var n = events.filter(function(ev){ return inPreset(ev, p.key); }).length;
-            return '<button class="pill" type="button" data-preset="' + p.key + '"' +
+            return '<button class="af-tab" type="button" data-preset="' + p.key + '"' +
                    (n ? '' : ' disabled title="Событий нет"') +
                    ' aria-pressed="' + String(state.preset === p.key) + '">' + p.label + '</button>';
           }).join('');
@@ -830,7 +883,7 @@
         card.setAttribute('data-has-date', '1');
       } else {
         if (dateEl) dateEl.textContent = 'Дат пока нет — следите за афишей';
-        if (cta) setCta(cta, 'Смотреть афишу', 'afisha.html');
+        if (cta) setCta(cta, 'Смотреть афишу', 'afisha');
       }
     });
     document.querySelectorAll('[data-format-grid]').forEach(function(grid){

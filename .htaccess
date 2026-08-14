@@ -1,0 +1,89 @@
+# =====================================================================
+# club1.moscow — конфигурация хостинга reg.ru (Apache)
+#
+# Пока сайт не показывают публично, он закрыт паролем. Чтобы открыть
+# доступ всем, удалите блок «ЗАКРЫТЫЙ ДОСТУП» ниже — больше ничего
+# менять не нужно.
+# =====================================================================
+
+# ---- ЗАКРЫТЫЙ ДОСТУП (удалить при публикации) -----------------------
+# Путь к .htpasswd подставляет deploy.py — руками править не нужно.
+AuthType Basic
+AuthName "Club1 — сайт в работе"
+AuthUserFile /var/www/club1/data/www/club1.moscow/.htpasswd
+Require valid-user
+
+# Let's Encrypt подтверждает владение доменом, читая файл в
+# /.well-known/acme-challenge/. Под паролем он бы туда не попал, и
+# автопродление сертификата падало бы раз в 90 дней — поэтому путь открыт.
+<If "%{REQUEST_URI} =~ m#^/\.well-known/#">
+  Require all granted
+</If>
+
+# пока сайт закрыт — держим его вне поисковой выдачи
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+# ---- конец блока ----------------------------------------------------
+
+# ---- HTTPS ----------------------------------------------------------
+RewriteEngine On
+# проверку Let's Encrypt на https не уводим — она ходит по http
+RewriteCond %{REQUEST_URI} !^/\.well-known/
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# без www
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# ---- адреса без .html -----------------------------------------------
+# Ссылки на сайте уже короткие. Здесь закрываем вторую половину: если
+# кто-то придёт по старому адресу с .html (пересланная ссылка, закладка,
+# выдача), уводим его на короткий одним 301 — чтобы одна и та же страница
+# не жила по двум адресам.
+#
+# Условие смотрит на THE_REQUEST — исходную строку запроса. Внутренняя
+# подстановка ниже её не меняет, поэтому петли не возникает.
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+RewriteRule ^ /? [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1? [R=301,L]
+
+# короткий адрес → реальный файл (внутренняя подстановка, без редиректа)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+DirectoryIndex index.html
+
+# ---- служебные файлы наружу не отдаём -------------------------------
+<FilesMatch "^\.(htaccess|htpasswd|git)">
+  Require all denied
+</FilesMatch>
+
+# ---- кэш и сжатие ---------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # афиша меняется часто — html не кэшируем
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType text/css                  "access plus 7 days"
+  ExpiresByType application/javascript    "access plus 7 days"
+  ExpiresByType image/jpeg                "access plus 30 days"
+  ExpiresByType image/png                 "access plus 30 days"
+  ExpiresByType image/svg+xml             "access plus 30 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+ErrorDocument 404 /index.html

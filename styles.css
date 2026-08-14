@@ -63,6 +63,28 @@
   --maxw:1440px;
   --gutter:clamp(18px, 5vw, 64px);
 
+  /* ── вертикальный ритм ──────────────────────────────────────────────
+     Одна шкала на весь сайт. До неё каждая страница задавала отступы
+     руками: 77 разных значений на 152 объявления, зазор между соседними
+     секциями гулял от 48px до 172px. Новые отступы берутся ТОЛЬКО отсюда.
+
+       --sp-1 … --sp-6   внутренние отступы: карточки, стопки, сетки
+       --section-y       padding-block каждой крупной секции
+                         (соседние секции дают 60–104px, а не 168)
+       --head-gap        заголовок секции → её содержимое
+       --cta-gap         абзац текста → кнопка под ним
+  */
+  --sp-1:8px;
+  --sp-2:12px;
+  --sp-3:16px;
+  --sp-4:clamp(18px, 2.2vw, 24px);
+  --sp-5:clamp(22px, 2.8vw, 32px);
+  --sp-6:clamp(28px, 3.6vw, 48px);
+
+  --section-y:clamp(28px, 3.4vw, 48px);
+  --head-gap:clamp(20px, 2.4vw, 30px);
+  --cta-gap:clamp(22px, 2.6vw, 32px);
+
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 
@@ -272,7 +294,10 @@ ul{list-style:none}
   /* выше .sticky-cta (120): открытое меню перекрывает плашку брони
      целиком (аудит 06.08); шапку меню не трогает — начинается под ней */
   position:fixed;inset:var(--header-h) 0 0 0;z-index:130;
-  background:rgba(7,5,9,.97);backdrop-filter:blur(10px);
+  /* панель непрозрачная (правка Анвера 09.08): при полупрозрачном фоне
+     сквозь открытое меню читался текст страницы, и на глаз это выглядело
+     как «меню не открылось». blur оставлен только под шапкой. */
+  background:var(--ink, #070509);
   padding:24px var(--gutter) 48px;
   display:flex;flex-direction:column;gap:6px;
   transform:translateY(-8px);opacity:0;visibility:hidden;pointer-events:none;
@@ -292,6 +317,14 @@ ul{list-style:none}
 .hero{position:relative;padding-top:26px;padding-bottom:8px}
 .hero__glow-a{width:520px;height:520px;top:-140px;left:-160px}
 .hero__glow-b{width:460px;height:460px;top:-60px;right:-180px}
+
+/* Абзац → кнопка под ним. Раньше кнопка вставала вплотную к последней
+   строке текста (у .btn нет своего margin), и стык читался как ошибка
+   вёрстки. Один отступ на все такие пары по сайту. */
+p + .btn,
+p + .btn-row,
+p + .hero__cta,
+.section__lede + .btn{margin-top:var(--cta-gap)}
 
 .headliners{position:relative;border-radius:var(--r);overflow:hidden;background:var(--ink-2)}
 
@@ -360,7 +393,7 @@ ul{list-style:none}
 /* =====================================================================
    8. FILTER BAR
    ===================================================================== */
-.filters{padding:38px 0 30px;display:flex;flex-direction:column;gap:16px}
+.filters{padding:var(--sp-6) 0 var(--sp-5);display:flex;flex-direction:column;gap:16px}
 .filters__row{
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
 }
@@ -387,7 +420,74 @@ ul{list-style:none}
 /* =====================================================================
    9. AFISHA — EVENT CARDS + CSS POSTERS
    ===================================================================== */
-.afisha{position:relative;padding-bottom:64px}
+.afisha{position:relative;padding-bottom:var(--section-y)}
+/* На телефоне лента ближайших событий раньше останавливалась где попало:
+   scroll-snap-type:proximity даёт браузеру право не доводить карточку до
+   края, и палец оставлял её обрезанной с обеих сторон (правка Анвера
+   09.08). На узком экране привязка обязательная — карточка встаёт целиком. */
+@media (max-width:760px){
+  .afisha__track:not(.afisha__track--grid){scroll-snap-type:x mandatory}
+  .afisha__track:not(.afisha__track--grid) .event-card{scroll-snap-align:center}
+}
+/* =====================================================================
+   ПРОСМОТРЩИК ФОТО — компонент Lightbox из script.js
+   Оверлей собирается скриптом, разметку страница не пишет: достаточно
+   поставить [data-lightbox] на контейнер с картинками.
+   ===================================================================== */
+.zoom-btn{
+  display:block;width:100%;height:100%;padding:0;border:0;background:none;
+  cursor:zoom-in;color:inherit;font:inherit;
+}
+.zoom-btn:focus-visible{outline:2px solid var(--magenta);outline-offset:3px;border-radius:10px}
+.lightbox{
+  position:fixed;inset:0;z-index:200;display:flex;align-items:center;
+  justify-content:center;gap:clamp(6px,2vw,20px);
+  padding:clamp(12px,3vw,40px);
+  background:rgba(5,4,8,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  opacity:0;transition:opacity .2s var(--ease);
+}
+.lightbox.is-open{opacity:1}
+.lightbox[hidden]{display:none}
+.lightbox__fig{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  max-width:min(1200px,100%);max-height:100%;margin:0;
+}
+.lightbox__img{
+  max-width:100%;max-height:80vh;width:auto;height:auto;
+  border-radius:var(--r);display:block;object-fit:contain;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.9);
+}
+.lightbox__cap{color:var(--muted);font-size:.95rem;text-align:center;max-width:60ch}
+.lightbox__close{
+  position:absolute;top:clamp(10px,2vw,22px);right:clamp(10px,2vw,22px);
+  width:46px;height:46px;border-radius:50%;font-size:1.7rem;line-height:1;
+  color:#fff;background:rgba(255,255,255,.1);border:1px solid var(--hairline-strong);
+  cursor:pointer;transition:background .18s;
+}
+.lightbox__close:hover{background:var(--magenta);border-color:var(--magenta)}
+.lightbox__nav{
+  flex:0 0 auto;width:52px;height:52px;border-radius:50%;font-size:2rem;line-height:1;
+  color:#fff;background:rgba(255,255,255,.1);border:1px solid var(--hairline-strong);
+  cursor:pointer;transition:background .18s;
+}
+.lightbox__nav:hover{background:var(--magenta);border-color:var(--magenta)}
+.lightbox__nav[hidden]{display:none}
+.lightbox__count{
+  position:absolute;left:50%;transform:translateX(-50%);
+  bottom:clamp(10px,2.4vw,26px);color:var(--muted-2);font-size:.86rem;letter-spacing:.06em;
+}
+/* На телефоне стрелки уходят под снимок, чтобы палец не закрывал кадр.
+   align-content держит обе строки — фото и стрелки — единым блоком по
+   центру экрана; без него они разъезжались к краям с пустотой посередине. */
+@media (max-width:640px){
+  .lightbox{flex-wrap:wrap;align-content:center;gap:18px}
+  .lightbox__fig{order:1;flex:0 0 100%}
+  .lightbox__nav{order:2;width:46px;height:46px}
+  .lightbox__nav--prev{margin-left:auto}
+  .lightbox__nav--next{margin-right:auto}
+  .lightbox__img{max-height:60vh}
+}
+
 .afisha__track{
   display:flex;gap:22px;
   overflow-x:auto;scroll-snap-type:x proximity;
@@ -901,7 +1001,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 /* social proof — реальные отзывы с Яндекс.Карт (карточка клуба 66983171570).
    Цитаты приводятся выдержками, у каждой — автор, оценка и дата; агрегат
    и ссылка на источник рядом, чтобы всё было проверяемо. */
-.proof{position:relative;padding:clamp(38px,5vw,64px) 0 clamp(10px,2vw,18px)}
+.proof{position:relative;padding:var(--section-y) 0 var(--sp-4)}
 .proof__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 22px;margin-bottom:26px}
 .proof__title{
   font-family:var(--display);font-weight:800;
@@ -947,7 +1047,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 /* финальный CTA-блок перед футером */
 .cta-final{
   position:relative;border-top:1px solid var(--hairline);margin-top:24px;
-  padding:clamp(44px,6vw,84px) 0 clamp(52px,7vw,92px);
+  padding:var(--section-y) 0 clamp(52px,7vw,92px);
 }
 .cta-final__title{
   font-family:var(--display);font-weight:800;
@@ -974,7 +1074,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
    ===================================================================== */
 
 /* ---- hero billboard ------------------------------------------------ */
-.hero-billboard{position:relative;padding-top:26px;padding-bottom:8px}
+.hero-billboard{position:relative;padding-top:26px;padding-bottom:var(--sp-6)}
 /* правки 26.07 (референс Максима): слайдер НЕ на всю ширину экрана —
    блок в ширину контента с полями по бокам и скруглением */
 .billboard{
@@ -1021,6 +1121,8 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   filter:none;transform:none;inset:0;
   background-size:cover;background-position:center;
 }
+/* квадратная замена широкому арту живёт только на телефоне (см. @760px) */
+.bb-slide__mob,.bb-slide__bg--mob{display:none}
 /* Пропорция окна слайдера — жёсткая 12:5 (1440×600): под неё Максим
    готовит панорамные ресайзы, картинка видна целиком на любой ширине
    (раньше 16:9 с потолком 600px кропил арт по вертикали) */
@@ -1050,20 +1152,37 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 }
 .bb-slide__cssposter{width:clamp(260px,34vw,400px)}
 
+/* Переходный 16:9-арт (нет панорамы 12:5): целиком, крупно по центру.
+   На телефоне 16:9 нечитаем — там показывается карточка (--sq) */
+.bb-slide__art--sq{display:none}
+.bb-slide__poster--mid{max-height:clamp(340px,56vh,520px)}
+@media (max-width:760px){
+  .bb-slide__art--mid{display:none}
+  .bb-slide__art--sq{display:flex}
+}
+
+/* Плашка дат по референсу Максима 13.08 (снимок 01.08.33): наклонённый
+   квадрат «под обрез» — примыкает к верхнему краю слайда слева с небольшим
+   отступом, дата крупно над чертой, время под ней, вся плашка слегка
+   повёрнута (верхний скошенный край уходит за обрез слайда). Цвет
+   настраивается по событию: поле chip в events.js кладёт --chip-bg/--chip-ink
+   на слайд; без поля — фирменная маджента с белым. */
 .bb-slide__chips{
-  position:absolute;left:clamp(20px,4.5vw,60px);top:clamp(20px,3.5vw,44px);
-  z-index:4;display:flex;gap:10px;
+  position:absolute;left:clamp(14px,2vw,26px);top:0;
+  z-index:4;display:flex;gap:12px;align-items:flex-start;
 }
 .bb-chip{
-  background:var(--magenta);color:#fff;text-align:left;
-  font-family:var(--display);font-weight:800;font-size:1.02rem;line-height:1.05;
-  padding:10px 20px 10px 14px;letter-spacing:.02em;
-  clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);
-  box-shadow:0 10px 26px -12px rgba(255,47,109,.9);
+  background:var(--chip-bg,var(--magenta));color:var(--chip-ink,#fff);
+  text-align:center;
+  font-family:var(--display);font-weight:800;font-size:1.3rem;line-height:1;
+  padding:16px 16px 12px;letter-spacing:.02em;
+  transform:rotate(-4deg) skewX(-6deg);transform-origin:top center;
+  margin-top:-8px;                       /* верхний край уходит за обрез слайда */
+  box-shadow:0 10px 26px -12px rgba(0,0,0,.65);
 }
-.bb-chip + .bb-chip{background:#3a3440;box-shadow:none}
-.bb-chip b{display:block}
-.bb-chip small{display:block;margin-top:3px;font-size:.74em;font-weight:700;opacity:.95}
+.bb-chip + .bb-chip{background:#3a3440;color:#fff;box-shadow:none}
+.bb-chip b{display:block;padding-bottom:6px;border-bottom:3px solid currentColor}
+.bb-chip small{display:block;margin-top:5px;font-size:.78em;font-weight:800}
 
 .bb-slide__age{
   position:absolute;left:12px;bottom:12px;z-index:4;
@@ -1105,26 +1224,25 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   .bb-slide__chips,.bb-slide__actions{position:static}
   .bb-slide__chips{align-self:flex-start}
   .bb-slide__actions{width:100%;justify-content:center}
-  /* широкий баннер на телефоне: плашки сверху, кнопки к нижнему краю на
-     затемнении — центр афиши остаётся чистым */
+  /* Широкий баннер на телефоне не показываем (правка Анвера 09.08):
+     панорамный арт 16:9 в высоком боксе обрезался до огрызков, а кнопки
+     ложились поверх картинки. Вместо него — квадратная афиша того же
+     события, как на остальных слайдах, на размытой подложке из неё же.
+     Слайд перестаёт отличаться от соседей, и лента листается ровно. */
+  .bb-slide--wide .bb-slide__bg--wide{display:none}
+  .bb-slide__bg--mob{
+    filter:blur(30px) brightness(.42) saturate(1.15);transform:scale(1.2);
+    background-size:cover;background-position:center;
+  }
   .bb-slide--wide .bb-slide__stage{
-    aspect-ratio:16/10;max-height:none;justify-content:space-between;gap:0;
-    padding:10px 10px 12px;
-    background:linear-gradient(180deg, transparent 52%, rgba(10,8,16,.78));
+    aspect-ratio:auto;max-height:none;justify-content:flex-start;
+    gap:14px;padding:16px 16px 22px;background:none;
   }
-  /* На телефоне окно слайда 16:10, а панорамный арт 12:5 — cover срезал бы
-     ему треть ширины вместе с названием шоу (проверено на «В большом городе»:
-     от «STAND UP» оставалось «TAND UP»). Показываем афишу целиком, поля
-     добираем фоном страницы: плашки и кнопки как раз садятся на них.
-     Старым 16:9 это тоже на пользу — их больше не режет по бокам. */
-  .bb-slide__bg--wide{
-    background-size:contain;background-repeat:no-repeat;background-color:#0d0a13;
-  }
+  .bb-slide--wide .bb-slide__mob{min-width:0;display:flex;justify-content:center}
   .bb-slide--wide .bb-slide__chips{align-self:flex-start}
-  .bb-slide--wide .bb-slide__actions{margin-top:auto}
-  .bb-slide--wide .bb-slide__actions .btn{padding:.6em .95em;font-size:.85rem}
-  .bb-slide--wide .bb-slide__age--corner{position:absolute;left:10px;bottom:12px}
-  .bb-chip{font-size:.82rem;padding:7px 14px 7px 10px}
+  .bb-slide--wide .bb-slide__actions{margin-top:0}
+  .bb-slide--wide .bb-slide__age--corner{display:none}
+  .bb-chip{font-size:.95rem;padding:11px 12px 8px;margin-top:0}
   .bb-slide__poster{max-height:none}
   .bb-slide__poster,
   .bb-slide__cssposter{width:100%;max-width:min(100%,420px);margin:0 auto}
@@ -1206,16 +1324,43 @@ html{overflow-x:clip}
    ===================================================================== */
 
 /* заголовок раздела стоит над фильтрами (был между фильтрами и списком) */
-.afisha__head--section{margin:44px 0 0;scroll-margin-top:calc(var(--header-h) + 12px)}
+.afisha__head--section{margin:var(--section-y) 0 0;scroll-margin-top:calc(var(--header-h) + 12px)}
 .afisha__head--section + .filters{padding-top:22px}
 
 /* самостоятельная страница афиши: заголовок-h1 крупнее, отступ от шапки */
 .afisha__head--page{margin-top:clamp(28px,4vw,52px)}
 .afisha__head--page .afisha__title{font-size:clamp(1.35rem,3.2vw,2.15rem)}
 
-/* верхний ряд фильтров: пресеты слева, поиск справа */
-.filters__row--top{justify-content:space-between}
-.filters__presets{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+/* верхний ряд фильтров: пресеты слева, поиск справа. Под всем рядом —
+   фирменная градиентная линия (макет Максима 06.08, подтверждён 13.08) */
+.filters__row--top{
+  justify-content:space-between;
+  padding-bottom:14px;position:relative;
+}
+.filters__row--top::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:var(--grad);opacity:.55;
+}
+.filters__presets{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+
+/* Пресеты дат — вкладки по макету Максима 06.08 (снимок 13.08): прямоугольные
+   сегменты впритык с общей рамкой, активная — маджентовая заливка */
+.af-tab{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--body);font-weight:500;font-size:.95rem;
+  padding:.62em 1.15em;white-space:nowrap;
+  border:1.5px solid var(--hairline-strong);margin-left:-1.5px;
+  background:transparent;color:var(--text);position:relative;
+  transition:background .18s,color .18s,border-color .18s;
+}
+.af-tab:first-child{margin-left:0;border-radius:var(--r-sm) 0 0 var(--r-sm)}
+.af-tab:last-child{border-radius:0 var(--r-sm) var(--r-sm) 0}
+.af-tab:hover{background:rgba(255,255,255,.05);z-index:1}
+.af-tab[aria-pressed="true"]{
+  background:var(--magenta);color:#fff;border-color:var(--magenta);
+  font-weight:600;z-index:2;
+}
+.af-tab[disabled]{opacity:.35;cursor:default;pointer-events:none}
 
 /* «Ещё фильтры» (макет Максима 06.08): форматы и сортировка в раскрывашке.
    Стрелку рисует ТОЛЬКО легаси-псевдоэлемент .filters__more::after по
@@ -1254,7 +1399,7 @@ html{overflow-x:clip}
 .afisha__track--grid .event-card__actions{flex-wrap:wrap}
 /* фирменный арт CSS-постера в плотной сетке чуть мельче, чтобы не резался */
 .afisha__track--grid .poster__standup{font-size:2.35rem}
-.afisha__more{display:flex;justify-content:center;padding:26px 0 0}
+.afisha__more{display:flex;justify-content:center;padding:var(--sp-5) 0 0}
 /* [hidden] обязан побеждать display:inline-flex кнопки */
 .afisha__more .btn[hidden]{display:none}
 

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
+<title>Алексей Жаров · Сольный концерт · Клуб №1 · CLUB 1 — стендап на Новом Арбате</title>
+
+<meta name="description" content="Алексей Жаров — сольный стендап-концерт «Свой, Родной» в Клубе №1 на Новом Арбате, 14 августа в 19:30. Время, сбор гостей и билеты на сайте.">
+<meta name="theme-color" content="#0a0810">
+<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/zharov">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Клуб №1 · CLUB 1">
+<meta property="og:title" content="Алексей Жаров. Сольный концерт «Свой, Родной» — Клуб №1 на Новом Арбате">
+<meta property="og:description" content="Сольный концерт 14 августа в 19:30, Новый Арбат, 21.">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/zharov">
+<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/posters/zharov-sq.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css?v=2608134">
+
+<!-- =====================================================================
+     PAGE-SPECIFIC CSS  ·  Страница разового шоу (zharov.html)
+     Reuses shared classes (.poster, .btn, .pill, .event-card, .afisha,
+     .rule, .eyebrow, .glow, .modal, .social-btn …). Everything below is
+     layout unique to this one-off-show template. The comic bios use the
+     shared modal component from styles.css §12 / script.js.
+     ===================================================================== -->
+<style>
+  /* ---- generic section rhythm (matches show.html conventions) ------ */
+  .show-section{position:relative;padding:var(--section-y) 0}
+  .show-section + .show-section{border-top:1px solid var(--hairline)}
+  .section-head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,4vw,44px)}
+  .section-title{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.06;letter-spacing:-.01em;color:#fff;
+  }
+  .section-head__note{color:var(--muted);font-size:1rem;max-width:60ch}
+
+  /* =================================================================
+     1 · HERO — Обложка (афиша) + Краткая информация + кнопки
+     ================================================================= */
+  .show-hero{position:relative;padding:clamp(24px,4vw,44px) 0 clamp(40px,5vw,64px)}
+  .show-hero__glow-a{width:520px;height:520px;top:-120px;left:-180px}
+  .show-hero__glow-b{width:440px;height:440px;top:40px;right:-180px}
+
+  .show-hero__grid{
+    position:relative;z-index:1;
+    display:grid;grid-template-columns:minmax(280px,440px) minmax(0,1fr);
+    gap:clamp(28px,4vw,60px);align-items:start;
+  }
+
+  /* left: enlarged shared poster (Обложка / афиша) */
+  .show-poster{width:100%}
+  .show-poster .poster{aspect-ratio:3/4}
+  .show-poster .poster__standup{font-size:clamp(2.6rem,5.8vw,3.6rem)}
+
+  /* right column */
+  .show-facts{display:flex;flex-direction:column;gap:clamp(18px,2.4vw,24px)}
+  .show-tag{display:inline-flex;align-items:center;gap:.6em;align-self:flex-start;
+    font-family:var(--body);font-weight:600;font-size:.82rem;letter-spacing:.02em;
+    color:#fff;background:rgba(255,47,109,.14);border:1px solid rgba(255,47,109,.5);
+    padding:6px 12px;border-radius:999px;text-transform:uppercase}
+  .show-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+  .show-title{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(2rem,4.8vw,3.1rem);line-height:1.02;letter-spacing:-.02em;color:#fff;
+  }
+  .show-title span{color:var(--magenta)}
+  .show-lede{color:var(--muted);font-size:1.05rem;line-height:1.6;max-width:56ch}
+
+  /* Краткая информация — 4 facts */
+  .quickfacts{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;margin-top:2px;
+  }
+  .fact{
+    display:flex;align-items:flex-start;gap:14px;
+    padding:16px;border-radius:var(--r);
+    background:var(--panel);border:1px solid var(--hairline);
+  }
+  .fact__ic{
+    width:40px;height:40px;flex:0 0 auto;border-radius:50%;
+    border:1.5px solid var(--hairline-strong);
+    display:flex;align-items:center;justify-content:center;color:var(--magenta);
+    font-family:var(--display);font-weight:700;font-size:1.05rem;
+  }
+  .fact__ic svg{width:19px;height:19px;display:block}
+  .fact__label{display:block;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+  .fact__value{display:block;font-weight:600;color:#fff;line-height:1.25;margin-top:3px}
+  .fact__value small{display:block;font-weight:400;font-size:.85rem;color:var(--muted)}
+
+  /* Кнопка подробнее + Кнопка покупки */
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+  .cta-row .btn{min-width:170px}
+
+  /* =================================================================
+     2 · Подробное описание шоу
+     ================================================================= */
+  .desc__copy{max-width:70ch}
+  .desc__copy p{color:var(--muted);font-size:1.05rem;line-height:1.64}
+  .desc__copy p + p{margin-top:16px}
+  .desc__copy p b{color:var(--text);font-weight:600}
+  .desc__note{
+    margin-top:24px;padding:16px 18px;border-radius:var(--r-sm);
+    background:var(--panel);border-left:3px solid var(--magenta);
+    color:var(--muted);font-size:.98rem;
+  }
+
+  /* =================================================================
+     VIDEO PLACEHOLDER — reused big (section) + small (inside bios)
+     ================================================================= */
+  .video-ph{
+    position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;
+    border:1.5px dashed var(--hairline-strong);
+    background:
+      radial-gradient(70% 60% at 50% 0%, rgba(180,70,255,.18), transparent 60%),
+      linear-gradient(150deg, var(--panel), var(--ink-2));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:clamp(20px,4vw,40px);
+  }
+  .video-ph__play{
+    width:76px;height:76px;flex:0 0 auto;border-radius:50%;
+    background:var(--magenta);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 44px -12px rgba(255,47,109,.8);
+  }
+  .video-ph__play::before{
+    content:"";display:block;margin-left:6px;
+    border-style:solid;border-width:13px 0 13px 22px;
+    border-color:transparent transparent transparent #fff;
+  }
+  .video-ph__text{
+    font-family:var(--display);font-weight:600;font-size:1rem;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--text);
+  }
+  .video-ph__sub{font-size:.94rem;color:var(--muted);max-width:46ch}
+  .video-ph--sm{border-radius:var(--r-sm)}
+  .video-ph--sm .video-ph__play{width:54px;height:54px}
+  .video-ph--sm .video-ph__play::before{border-width:9px 0 9px 15px;margin-left:4px}
+  .video-ph--sm .video-ph__text{font-size:.85rem}
+  .video-ph--sm .video-ph__sub{font-size:.86rem}
+
+  /* =================================================================
+     3 · Комики на сцене — headshots that open the shared bio modal
+     ================================================================= */
+  .lineup{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:clamp(14px,1.8vw,22px);
+  }
+  /* each item is a button that opens the comic pop-up */
+  .lineup__item{
+    display:flex;flex-direction:column;gap:12px;text-align:left;
+    background:transparent;border:none;padding:0;cursor:pointer;color:inherit;width:100%;
+  }
+  .lineup__photo{
+    position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#151019;
+    border:1px solid var(--hairline);
+  }
+  .lineup__photo img{
+    width:100%;height:100%;object-fit:cover;object-position:50% 20%;
+    transition:transform .5s var(--ease);
+  }
+  .lineup__item:hover .lineup__photo img,
+  .lineup__item:focus-visible .lineup__photo img{transform:scale(1.06)}
+  /* "+" affordance — hints the pop-up */
+  .lineup__plus{
+    position:absolute;right:10px;bottom:10px;z-index:2;
+    width:34px;height:34px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(10,8,16,.62);border:1px solid var(--hairline-strong);
+    color:#fff;font-size:1.35rem;line-height:1;backdrop-filter:blur(4px);
+    transition:background .18s,border-color .18s;
+  }
+  .lineup__item:hover .lineup__plus,
+  .lineup__item:focus-visible .lineup__plus{background:var(--magenta);border-color:var(--magenta)}
+  .lineup__name{font-weight:600;font-size:1rem;color:#fff;line-height:1.2}
+  .lineup__role{font-size:.82rem;color:var(--muted);margin-top:2px}
+
+  /* =================================================================
+     BIO MODAL sub-blocks (inside the shared .modal__body)
+     ================================================================= */
+  .bio-sub{
+    font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted-2);margin:24px 0 12px;
+  }
+  .bio-note{
+    padding:12px 14px;border-radius:var(--r-sm);
+    border:1px dashed var(--hairline-strong);background:rgba(255,255,255,.02);
+    color:var(--muted);font-size:.92rem;
+  }
+  .bio-social{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .bio-social .social-btn{width:42px;height:42px}
+  .bio-social__note{font-size:.88rem;color:var(--muted-2)}
+  .bio-shows{display:flex;flex-direction:column;gap:2px}
+  .bio-shows li{border-top:1px solid var(--hairline)}
+  .bio-shows li:first-child{border-top:none}
+  .bio-shows a{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:11px 0;color:var(--text);font-weight:500;transition:color .18s;
+  }
+  .bio-shows a::after{content:"→";color:var(--magenta);transition:transform .18s}
+  .bio-shows a:hover{color:#fff}
+  .bio-shows a:hover::after{transform:translateX(4px)}
+
+  /* =================================================================
+     4 · Вам может понравиться — shared .afisha / .event-card
+     ================================================================= */
+  .liked .afisha__track{padding-top:2px}
+
+  /* =================================================================
+     RESPONSIVE
+     ================================================================= */
+  @media (max-width:900px){
+    .show-hero__grid{grid-template-columns:1fr}
+    .show-poster{max-width:360px;margin-inline:auto}
+    .lineup{grid-template-columns:repeat(4,1fr)}
+  }
+  @media (max-width:640px){
+    .quickfacts{grid-template-columns:1fr}
+    .cta-row .btn{flex:1 1 100%;min-width:0}
+    .lineup{grid-template-columns:repeat(2,1fr);gap:14px}
+  }
+  .fee-note{margin-top:12px;font-size:.8rem;color:var(--muted-2)}
+</style>
+<script type="application/ld+json" data-seo="events">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "ComedyEvent",
+  "name": "Алексей Жаров. Сольный стендап-концерт",
+  "startDate": "2026-08-14T19:30:00+03:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+   "@type": "Place",
+   "name": "Клуб №1",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Новый Арбат, 21",
+    "addressLocality": "Москва",
+    "addressCountry": "RU"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 55.751916,
+    "longitude": 37.585132
+   }
+  },
+  "image": [
+   "https://adikaevanver.github.io/club1-preview/assets/posters/zharov-45.jpg"
+  ],
+  "organizer": {
+   "@type": "Organization",
+   "name": "Клуб №1",
+   "url": "https://adikaevanver.github.io/club1-preview/"
+  },
+  "url": "https://adikaevanver.github.io/club1-preview/zharov",
+  "performer": {
+   "@type": "Person",
+   "name": "Алексей Жаров"
+  },
+  "offers": {
+   "@type": "AggregateOffer",
+   "lowPrice": 1500,
+   "priceCurrency": "RUB",
+   "url": "https://iframeab-pre7764.intickets.ru/seance/73871868/",
+   "availability": "https://schema.org/InStock"
+  }
+ }
+]
+</script>
+</head>
+
+<body class="has-sticky-cta">
+
+<!-- =====================================================================
+     SITE HEADER  (reused verbatim on every sub-page)
+     Left: logo lockup · Centre: primary nav · Right: phone + CTA / burger
+     Разовое шоу is not a nav item — no aria-current here.
+     ===================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container site-header__inner">
+
+    <!-- logo lockup: КЛУБ / НОМЕР / ОДИН · CLUB · [1] -->
+    <a class="logo" href="./" aria-label="Клуб Номер Один — CLUB 1, на главную">
+      <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+    </a>
+
+    <!-- primary navigation -->
+    <nav class="main-nav" aria-label="Основная навигация">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="./">Главная</a></li>
+        <li><a class="main-nav__link" href="afisha">Афиша</a></li>
+        <li><a class="main-nav__link" href="formaty">Форматы</a></li>
+        <li><a class="main-nav__link" href="eda">Еда и напитки</a></li>
+        <li><a class="main-nav__link" href="o-klube">О клубе</a></li>
+        <li><a class="main-nav__link" href="arenda">Аренда площадки</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <a class="btn btn--primary" href="afisha">Смотреть афишу</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile drawer -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
+    <a class="main-nav__link" href="./">Главная</a>
+    <a class="main-nav__link" href="afisha">Афиша</a>
+    <a class="main-nav__link" href="formaty">Форматы</a>
+    <a class="main-nav__link" href="eda">Еда и напитки</a>
+    <a class="main-nav__link" href="o-klube">О клубе</a>
+    <a class="main-nav__link" href="arenda">Аренда площадки</a>
+    <div class="mobile-menu__foot">
+      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
+      <!-- «Смотреть афишу» из мобильного меню снята (макет Максима 06.08) -->
+    </div>
+  </nav>
+</header>
+
+
+<main class="container" id="main">
+
+  <!-- =================================================================
+       1 · HERO — Обложка (афиша) + Краткая информация + кнопки
+       ================================================================= -->
+  <section class="show-hero" aria-labelledby="show-title">
+    <div class="glow glow--mag show-hero__glow-a" aria-hidden="true"></div>
+    <div class="glow glow--pur show-hero__glow-b" aria-hidden="true"></div>
+
+    <div class="show-hero__grid">
+
+      <!-- LEFT · Обложка (афиша) — shared .poster, оформленная под разовое шоу -->
+      <div class="show-poster">
+        <div class="poster poster--art">
+          <img class="poster__backfill" src="assets/posters/zharov-sq.jpg" alt="" aria-hidden="true" width="1080" height="1080">
+          <img class="poster__full" src="assets/posters/zharov-sq.jpg" alt="Афиша: Алексей Жаров, 14 августа" width="1080" height="1080">
+          <div class="poster__badge">14.08<small>19:30</small></div>
+        </div>
+      </div>
+
+      <!-- RIGHT · заголовок, краткая информация, кнопки -->
+      <div class="show-facts">
+        <span class="show-tag">Сольный концерт · одна дата</span>
+        <h1 class="show-title" id="show-title">Алексей Жаров</h1>
+        <p class="show-lede">Сольный концерт «Свой, Родной» — про личный опыт, воспоминания и то, что передаётся из поколения в поколение.</p>
+
+        <!-- Краткая информация: время и дата · длительность · сбор гостей · стоимость -->
+        <div class="quickfacts" aria-label="Краткая информация о шоу">
+          <div class="fact">
+            <span class="fact__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+            </span>
+            <span>
+              <span class="fact__label">Время и дата</span>
+              <span class="fact__value">14 августа, пятница<small>Начало в 19:30</small></span>
+            </span>
+          </div>
+
+          <div class="fact">
+            <span class="fact__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"/><path d="M3 21h18"/><path d="M12 12h.01"/></svg>
+            </span>
+            <span>
+              <span class="fact__label">Сбор гостей</span>
+              <span class="fact__value">с 19:00<small>за 30 минут до начала</small></span>
+            </span>
+          </div>
+
+
+
+          <!-- v4: доступность локации прямо в строке данных события -->
+          <div class="fact">
+            <span class="fact__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <span>
+              <span class="fact__label">Локация</span>
+              <span class="fact__value">Новый Арбат, 21<small>м. «Смоленская» · 5–7 мин пешком · <a href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%9D%D0%BE%D0%B2%D1%8B%D0%B9%20%D0%90%D1%80%D0%B1%D0%B0%D1%82%2C%2021" target="_blank" rel="noopener">Яндекс</a> · <a href="https://2gis.ru/moscow/firm/70000001060656267" target="_blank" rel="noopener">2ГИС</a></small></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Кнопка подробнее + Кнопка покупки -->
+        <div class="cta-row" id="tickets">
+          <a class="btn btn--ghost" href="#about">Подробнее</a>
+          <a class="btn btn--primary" href="https://iframeab-pre7764.intickets.ru/seance/73871868/" target="_blank" rel="noopener">Бронировать места</a>
+        </div>
+        <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
+        
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       2 · Подробное описание шоу
+       ================================================================= -->
+  <section class="show-section" id="about" aria-labelledby="about-title">
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="about-title">О шоу</h2>
+    </div>
+
+    <div class="desc__copy">
+      <p>CLUB#1 представляет сольный стендап-концерт Алексея Жарова <b>«Свой, Родной»</b> — темы, близкие каждому, кто родился до 2010 года: личный опыт, воспоминания, преемственность поколений.</p>
+      <p>Бытовой, жизненный юмор без высокопарных оборотов, в котором каждый узнает себя или своего близкого. Смотреть удобно за столиками, весь вечер работают бар и кухня. Возрастное ограничение — 18+.</p>
+      <div class="desc__note">Концерт 14 августа. Если дата не подойдёт, загляните в афишу ближайших вечеров клуба.</div>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       3 · Видео с нарезкой моментов из шоу (placeholder)
+       ================================================================= -->
+  <!-- Видео-блок скрыт по правкам Фигмы 31.07/04.08 (Сергей, #9/#10/#14/#16:
+       контента пока нет, плейсхолдер выглядит пусто). Вернуть, когда появятся
+       нарезки или ссылки на целые материалы/рилсы: снять hidden. -->
+  <section class="show-section" aria-labelledby="video-title" hidden>
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="video-title">Видео с нарезкой моментов из шоу</h2>
+      <p class="section-head__note">Смонтируем нарезку ярких моментов после первого вечера и добавим её сюда.</p>
+    </div>
+
+    <div class="video-ph" role="img" aria-label="Видео с нарезкой моментов появится позже">
+      <span class="video-ph__play" aria-hidden="true"></span>
+      <span class="video-ph__text">Видео появится позже</span>
+      <span class="video-ph__sub">Здесь будет короткая нарезка лучших моментов шоу.</span>
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       5 · Вам может понравиться — shared .afisha / .event-card
+       ================================================================= -->
+  <section class="show-section afisha liked" aria-labelledby="liked-title">
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="liked-title">Вам может понравиться:</h2>
+    </div>
+
+    <div class="afisha__track" id="railLiked" role="list"
+         data-upcoming data-upcoming-except="Алексей Жаров" data-upcoming-limit="8"></div>
+
+    <button class="slider-arrow slider-arrow--next" data-slider="afisha" data-dir="1" aria-label="Показать ещё концерты">›</button>
+  </section>
+</main>
+
+
+<!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения -->
+<div class="sticky-cta">
+  <span class="sticky-cta__info">
+    <span class="sticky-cta__date">Алексей Жаров · 14.08</span>
+    
+  </span>
+  <a class="btn btn--primary" href="#tickets">Бронировать</a>
+</div>
+
+<!-- v4: модалка «Как считается цена» (открывается из строки про сбор) -->
+<div class="modal" id="priceModal" data-modal hidden role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
+  <div class="modal__panel">
+    <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>
+    <p class="eyebrow modal__eyebrow">Прозрачная цена</p>
+    <h2 class="modal__title" id="priceModalTitle">Из чего складывается вечер</h2>
+    <div class="modal__body">
+      <ul class="price-list">
+        <li><b>Билет.</b> Цена фиксированная и указана в карточке события. Сервисным сбором не облагается.</li>
+        <li><b>Еда и напитки.</b> По желанию: кухня и бар работают весь вечер, заказ приносят к столику. Меню и цены — на странице «Еда и напитки».</li>
+        <li><b>Сервисный сбор.</b> 10% к счёту за еду и напитки. Билеты сбором не облагаются.</li>
+      </ul>
+      <p class="price-total">Цена, которую вы видите, и есть та, которую вы платите: билет — финальный, сбор касается только заказа за столом.</p>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     SITE FOOTER  (reused verbatim on every sub-page)
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+
+    <div class="footer-brand">
+      <a class="logo logo--sm" href="./" aria-label="Клуб Номер Один — CLUB 1, на главную">
+        <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
+      </a>
+      <p>Клуб стендапа на Новом Арбате, 21. Здесь выступают известные комики и те, о ком скоро будут говорить все.</p>
+    </div>
+
+    <div class="footer-col" id="contacts">
+      <h3>Контакты</h3>
+      <ul>
+        <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
+        <li><span class="muted">Электронная почта</span><br><a href="mailto:Club1promo@yandex.ru">Club1promo@yandex.ru</a></li>
+        <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Информация</h3>
+      <ul>
+        <li><a href="vozvrat">Возврат билетов</a></li>
+        <li><a href="privacy">Политика конфиденциальности</a></li>
+        <li><a href="oferta">Договор оферты</a></li>
+        <li><a href="arenda">Аренда площадки</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-social-col">
+      <h3>Мы в соцсетях</h3>
+      <div class="social">
+        <a class="social-btn" href="https://vk.ru/standupclubnaarbate" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+        </a>
+        <a class="social-btn" href="https://t.me/club1standup" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+    <p>ООО «Продюсерский центр Клуб Номер Один» · ИНН 9704127352 · К счёту за еду и напитки добавляется сервисный сбор 10%, билеты сбором не облагаются.</p>
+  </div>
+</footer>
+
+
+<!-- =====================================================================
+     COMIC BIO POP-UPS — shared modal component (styles.css §12 / script.js)
+     Each id matches a data-modal-open on the lineup buttons above.
+     Регалии, видео и соцсети — placeholders (реальных данных пока нет).
+     ===================================================================== -->
+
+<!-- =====================================================================
+     PAGE INLINE SCRIPT — foundation interactions (header · burger · rail).
+     Modals come from the shared script.js below; different attribute
+     names, so the two never collide.
+     ===================================================================== -->
+<script>
+(function(){
+  "use strict";
+
+  /* 1 · sticky header goes ink once the page scrolls */
+  var header = document.getElementById('siteHeader');
+  var onScroll = function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* 2 · burger / mobile drawer */
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mobileMenu');
+  var setMenu = function(open){
+    menu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', function(){
+    setMenu(!menu.classList.contains('is-open'));
+  });
+  menu.addEventListener('click', function(e){
+    if (e.target.closest('a')) setMenu(false);
+  });
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+  });
+
+  /* 3 · horizontal rail ("Вам может понравиться") */
+  var tracks = { afisha: document.getElementById('railLiked') };
+  document.querySelectorAll('[data-slider]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var track = tracks[btn.dataset.slider];
+      if (!track) return;
+      var dir  = parseInt(btn.dataset.dir, 10) || 1;
+      var step = Math.max(track.clientWidth * 0.8, 260);
+      track.scrollBy({left: dir * step, behavior: 'smooth'});
+    });
+  });
+})();
+</script>
+
+<!-- shared components: modal (comic bios), tabs, slideshow, datebar -->
+<script src="script.js?v=2608134" defer></script>
+<script src="assets/data/events.js?v=2608134" defer></script>
+<script src="afisha.js?v=2608134" defer></script>
+
+</body>
+</html>

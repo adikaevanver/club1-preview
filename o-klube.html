@@ -7,7 +7,7 @@
 
 <meta name="description" content="О Клубе №1 — камерном комедийном клубе в центре Москвы на Новом Арбате, 21. Два зала: малый на 120 гостей и большой до 550, 150+ шоу в год, живой стендап 18+. Как нас найти — м. Смоленская.">
 <meta name="theme-color" content="#0a0810">
-<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/o-klube.html">
+<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/o-klube">
 
 <!-- Open Graph / social -->
 <meta property="og:type" content="website">
@@ -15,17 +15,17 @@
 <meta property="og:title" content="О клубе — Клуб №1 на Новом Арбате">
 <meta property="og:description" content="Камерный комедийный клуб в центре Москвы. Два зала, 150+ шоу в год, живой стендап рядом со сценой. Новый Арбат, 21 · м. Смоленская.">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/o-klube.html">
-<meta property="og:image" content="assets/comics/guram.jpg">
+<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/o-klube">
+<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0810'/%3E%3Ctext x='50%25' y='55%25' font-family='Arial' font-weight='bold' font-size='20' fill='%23ff2f6d' text-anchor='middle' dominant-baseline='middle'%3E1%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=2608064">
+<link rel="stylesheet" href="styles.css?v=2608134">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS — «О клубе»
@@ -35,7 +35,7 @@
      ===================================================================== -->
 <style>
   /* ---- HERO ------------------------------------------------------- */
-  .about-hero{position:relative;padding:clamp(40px,7vw,72px) 0 clamp(26px,4vw,40px)}
+  .about-hero{position:relative;padding:var(--section-y) 0 var(--sp-6)}
   .about-hero__glow-a{width:520px;height:520px;top:-170px;left:-190px}
   .about-hero__glow-b{width:440px;height:440px;top:-60px;right:-200px}
   .about-hero__inner{position:relative;z-index:1;max-width:840px}
@@ -52,7 +52,7 @@
   .about-hero .rule{margin-top:28px}
 
   /* ---- SECTION shell --------------------------------------------- */
-  .about-section{position:relative;padding:clamp(46px,7vw,86px) 0}
+  .about-section{position:relative;padding:var(--section-y) 0}
   .about-section + .about-section{border-top:1px solid var(--hairline)}
   .section-head{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(28px,4vw,44px)}
   .section-head h2{
@@ -100,10 +100,19 @@
   .hall{
     position:relative;overflow:hidden;
     background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r);
+    display:flex;flex-direction:column;
+  }
+  /* Съёмка залов 01.2026. До неё верх карточки был пустым полем под
+     градиентом — гость не видел, как выглядит зал. */
+  .hall__photo{
+    display:block;width:100%;aspect-ratio:16/10;object-fit:cover;
+    border-bottom:1px solid var(--hairline);
+  }
+  .hall__body{
+    position:relative;z-index:1;
     padding:clamp(24px,3vw,38px);display:flex;flex-direction:column;gap:16px;
   }
   .hall__glow{position:absolute;width:280px;height:280px;top:-120px;right:-120px;z-index:0}
-  .hall > *{position:relative;z-index:1}
   .hall__name{font-family:var(--display);font-weight:800;font-size:clamp(1.4rem,2.6vw,1.9rem);text-transform:uppercase;letter-spacing:.005em}
   .hall__cap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
   .hall__cap b{font-family:var(--display);font-weight:900;font-size:clamp(2.2rem,4vw,3rem);color:var(--gold);line-height:.9}
@@ -154,76 +163,35 @@
   .find-item .sub{font-size:.92rem;color:var(--muted);margin-top:2px}
   .find-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
 
-  /* stylised "map" panel — decorative, not a live map */
+  /* Живая карта Яндекса вместо прежней декоративной «схемы»: та рисовала
+     абстрактную сетку с одной полоской-«проспектом» и по ней нельзя было
+     понять, где здание. Тёмная тема виджета подобрана под фон сайта. */
   .find-map{
-    position:relative;overflow:hidden;border-radius:var(--r);min-height:320px;
-    background:
-      linear-gradient(150deg,#140f1d,#0a0810),
-      var(--ink-2);
-    border:1px solid var(--hairline);
-    isolation:isolate;
+    position:relative;display:flex;flex-direction:column;overflow:hidden;
+    border-radius:var(--r);border:1px solid var(--hairline);
+    background:var(--ink-2);min-height:320px;isolation:isolate;
   }
-  .find-map__grid{
-    position:absolute;inset:0;z-index:0;opacity:.5;
-    background-image:
-      linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-    background-size:44px 44px;
+  .find-map__frame{
+    flex:1;width:100%;min-height:320px;border:0;display:block;
   }
-  /* one broad "avenue" crossing the panel — Новый Арбат */
-  .find-map__road{
-    position:absolute;left:-10%;right:-10%;top:52%;height:34px;z-index:1;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
-    transform:skewY(-6deg);
-  }
-  .find-map__road::after{
-    content:"Новый Арбат";position:absolute;left:50%;top:50%;
-    transform:translate(-50%,-50%);
-    font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--muted-2);white-space:nowrap;
-  }
-  .find-map__glow{position:absolute;width:300px;height:300px;top:20%;left:40%;z-index:0}
-  .find-map__pin{
-    position:absolute;left:50%;top:44%;z-index:3;transform:translate(-50%,-100%);
-    display:flex;flex-direction:column;align-items:center;gap:10px;
-  }
-  .find-map__pin .badge1{--s:52px;box-shadow:0 16px 34px -14px rgba(255,47,109,.9)}
-  .find-map__pin .lbl{
-    font-family:var(--display);font-weight:700;font-size:.8rem;letter-spacing:.02em;
-    text-transform:uppercase;color:#fff;background:rgba(7,5,9,.72);
-    backdrop-filter:blur(4px);padding:7px 13px;border-radius:8px;white-space:nowrap;
+  .find-map__bar{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    gap:10px var(--sp-3);padding:var(--sp-2) var(--sp-3);
+    background:var(--panel);border-top:1px solid var(--hairline);
   }
   .find-map__metro{
-    position:absolute;left:16px;bottom:14px;z-index:3;
     display:inline-flex;align-items:center;gap:9px;
     font-size:.9rem;color:var(--text);
-    background:rgba(7,5,9,.66);backdrop-filter:blur(4px);
-    padding:8px 13px;border-radius:9px;border:1px solid var(--hairline);
   }
   .find-map__m{
     width:24px;height:24px;flex:0 0 auto;border-radius:50%;
     background:var(--magenta);color:#fff;font-family:var(--display);font-weight:900;
     font-size:.9rem;display:flex;align-items:center;justify-content:center;line-height:1;
   }
+  .find-map__links{display:inline-flex;gap:var(--sp-3);font-size:.88rem}
+  .find-map__links a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+  .find-map__links a:hover{color:#fff}
 
-  /* ---- VENUE SLIDESHOW (placeholder tiles) ----------------------- */
-  /* Real interior/guest photos aren't shot yet — each slide is a clearly
-     grey, hatched placeholder so nothing pretends to be a real photo.
-     Sits inside the shared .slideshow / .slideshow__slide from styles.css. */
-  .venue-ph{
-    position:relative;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:13px;text-align:center;
-    height:clamp(220px,42vw,440px);padding:26px;
-    background:
-      repeating-linear-gradient(-45deg,rgba(255,255,255,.04) 0 14px,rgba(255,255,255,.012) 14px 28px),
-      var(--ink-2);
-  }
-  .venue-ph__glyph{width:44px;height:44px;opacity:.5}
-  .venue-ph__label{
-    font-family:var(--display);font-weight:800;font-size:1rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--text);
-  }
-  .venue-ph__note{font-size:.82rem;letter-spacing:.02em;color:var(--muted)}
 
   /* ---- OPENING HOURS (inside the contacts card) ------------------ */
   .hours{display:flex;flex-direction:column;gap:7px;margin-top:4px}
@@ -246,9 +214,9 @@
     text-transform:uppercase;letter-spacing:-.01em;margin:12px 0 14px;
   }
   .arenda-cta p{color:var(--text);opacity:.86;font-size:1.05rem;line-height:1.55;max-width:54ch}
-  .arenda-cta__action{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+  .arenda-cta__action{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-4)}
   .arenda-cta__btn{font-size:1.05rem;padding:.95em 1.9em}
-  .arenda-cta__sub{font-size:.86rem;color:var(--muted-2);max-width:24ch;line-height:1.4}
+  .arenda-cta__sub{font-size:.86rem;color:var(--muted-2);max-width:34ch;line-height:1.5}
 
   /* ---- RESPONSIVE ------------------------------------------------- */
   @media (max-width:900px){
@@ -289,25 +257,25 @@
   <div class="container site-header__inner">
 
     <!-- logo lockup: КЛУБ / НОМЕР / ОДИН · CLUB · [1] -->
-    <a class="logo" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+    <a class="logo" href="./" aria-label="Клуб Номер Один — CLUB 1, на главную">
       <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
     </a>
 
     <!-- primary navigation -->
     <nav class="main-nav" aria-label="Основная навигация">
       <ul class="main-nav__list">
-        <li><a class="main-nav__link" href="index.html">Главная</a></li>
-        <li><a class="main-nav__link" href="afisha.html">Афиша</a></li>
-        <li><a class="main-nav__link" href="formaty.html">Форматы</a></li>
-        <li><a class="main-nav__link" href="eda.html">Еда и напитки</a></li>
-        <li><a class="main-nav__link" href="o-klube.html" aria-current="page">О клубе</a></li>
-        <li><a class="main-nav__link" href="arenda.html">Аренда площадки</a></li>
+        <li><a class="main-nav__link" href="./">Главная</a></li>
+        <li><a class="main-nav__link" href="afisha">Афиша</a></li>
+        <li><a class="main-nav__link" href="formaty">Форматы</a></li>
+        <li><a class="main-nav__link" href="eda">Еда и напитки</a></li>
+        <li><a class="main-nav__link" href="o-klube" aria-current="page">О клубе</a></li>
+        <li><a class="main-nav__link" href="arenda">Аренда площадки</a></li>
       </ul>
     </nav>
 
     <div class="header-actions">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="afisha.html">Смотреть афишу</a>
+      <a class="btn btn--primary" href="afisha">Смотреть афишу</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -316,12 +284,12 @@
 
   <!-- mobile drawer -->
   <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
-    <a class="main-nav__link" href="index.html">Главная</a>
-    <a class="main-nav__link" href="afisha.html">Афиша</a>
-    <a class="main-nav__link" href="formaty.html">Форматы</a>
-    <a class="main-nav__link" href="eda.html">Еда и напитки</a>
-    <a class="main-nav__link" href="o-klube.html" aria-current="page">О клубе</a>
-    <a class="main-nav__link" href="arenda.html">Аренда площадки</a>
+    <a class="main-nav__link" href="./">Главная</a>
+    <a class="main-nav__link" href="afisha">Афиша</a>
+    <a class="main-nav__link" href="formaty">Форматы</a>
+    <a class="main-nav__link" href="eda">Еда и напитки</a>
+    <a class="main-nav__link" href="o-klube" aria-current="page">О клубе</a>
+    <a class="main-nav__link" href="arenda">Аренда площадки</a>
     <div class="mobile-menu__foot">
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
       <!-- «Смотреть афишу» из мобильного меню снята (макет Максима 06.08) -->
@@ -344,8 +312,8 @@
       <h1 id="about-title">О клубе</h1>
       <p class="lede">
         Камерный комедийный клуб в самом центре Москвы. Два зала, живой звук и сцена
-        в двух шагах от зрителя — здесь <b>федеральные хедлайнеры</b> обкатывают новые
-        часы, а вечерние сольники идут почти каждый день.
+        в двух шагах от зрителя. На афише — сольные концерты <b>федеральных комиков</b>,
+        сборные вечера и проверка нового материала.
       </p>
       <div class="rule" aria-hidden="true"></div>
     </div>
@@ -379,7 +347,7 @@
 
       <div class="story-photo-wrap photo-skew">
         <figure class="photo-skew__frame">
-          <img src="assets/comics/chebatkov.jpg" alt="Резидент Клуба №1 — стендап-комик на сцене" loading="lazy" width="900" height="900">
+          <img src="assets/venue/audience.jpg" alt="Зал Клуба №1 во время шоу: гости за столами перед сценой" loading="lazy" width="1280" height="853">
           <figcaption class="photo-skew__tag">На сцене Клуба №1</figcaption>
         </figure>
       </div>
@@ -404,37 +372,45 @@
     <div class="halls">
 
       <article class="hall">
-        <div class="glow glow--mag hall__glow" aria-hidden="true"></div>
-        <p class="eyebrow">Малый зал</p>
-        <h3 class="hall__name">Камерная сцена</h3>
-        <p class="hall__cap"><b>≈120</b><span>гостей за столами</span></p>
-        <p>
-          Плотная посадка, сцена почти на уровне зала и тот самый эффект, когда комик
-          обращается будто лично к тебе. Идеально для вечерних сольников, разогревов
-          и открытых микрофонов.
-        </p>
-        <ul>
-          <li>Вечерние сольные концерты и прогоны материала</li>
-          <li>Открытые микрофоны и стендап-баттлы</li>
-          <li>Барная карта и обслуживание прямо за столиком</li>
-        </ul>
+        <img class="hall__photo" src="assets/venue/hall-lounge.jpg" width="1280" height="853" loading="lazy"
+             alt="Малый зал Клуба №1: посадка за круглыми столами, сцена на уровне зала">
+        <div class="hall__body">
+          <div class="glow glow--mag hall__glow" aria-hidden="true"></div>
+          <p class="eyebrow">Малый зал</p>
+          <h3 class="hall__name">Камерная сцена</h3>
+          <p class="hall__cap"><b>≈120</b><span>гостей за столами</span></p>
+          <p>
+            Плотная посадка, сцена почти на уровне зала и тот самый эффект, когда комик
+            обращается будто лично к тебе. Идеально для вечерних сольников, разогревов
+            и открытых микрофонов.
+          </p>
+          <ul>
+            <li>Вечерние сольные концерты и прогоны материала</li>
+            <li>Открытые микрофоны и стендап-баттлы</li>
+            <li>Барная карта и обслуживание прямо за столиком</li>
+          </ul>
+        </div>
       </article>
 
       <article class="hall">
-        <div class="glow glow--pur hall__glow" aria-hidden="true"></div>
-        <p class="eyebrow">Большой зал</p>
-        <h3 class="hall__name">Главная сцена</h3>
-        <p class="hall__cap"><b>≈350</b><span>за столами · до 550 в театральной рассадке</span></p>
-        <p>
-          Просторная площадка с профессиональным светом и звуком: сюда выходят
-          федеральные хедлайнеры с большими программами. Гибкая рассадка — от банкетной
-          до концертной под формат вечера.
-        </p>
-        <ul>
-          <li>Сольные концерты хедлайнеров и премьеры программ</li>
-          <li>Съёмки стендап-спешелов и корпоративные вечера</li>
-          <li>Банкетная и театральная рассадка на выбор</li>
-        </ul>
+        <img class="hall__photo" src="assets/venue/hall-main.jpg" width="1280" height="853" loading="lazy"
+             alt="Большой зал Клуба №1: сцена с красным занавесом и посадка за столами">
+        <div class="hall__body">
+          <div class="glow glow--pur hall__glow" aria-hidden="true"></div>
+          <p class="eyebrow">Большой зал</p>
+          <h3 class="hall__name">Главная сцена</h3>
+          <p class="hall__cap"><b>≈350</b><span>за столами · до 550 в театральной рассадке</span></p>
+          <p>
+            Просторная площадка с профессиональным светом и звуком: сюда выходят
+            федеральные хедлайнеры с большими программами. Гибкая рассадка — от банкетной
+            до концертной под формат вечера.
+          </p>
+          <ul>
+            <li>Сольные концерты хедлайнеров и премьеры программ</li>
+            <li>Съёмки стендап-спешелов и корпоративные вечера</li>
+            <li>Банкетная и театральная рассадка на выбор</li>
+          </ul>
+        </div>
       </article>
 
     </div>
@@ -477,18 +453,20 @@
           комиком и залом. Каждый вечер немного другой — потому что импровизация и
           реакция зала здесь такая же часть шоу, как заготовленный материал.
         </p>
-        <a class="btn btn--ghost" href="afisha.html">Смотреть афишу</a>
+        <a class="btn btn--ghost" href="afisha">Смотреть афишу</a>
       </div>
 
-      <div class="atmo-photos" aria-hidden="false">
+      <!-- data-lightbox: снимки открываются во весь экран (правка Анвера
+           09.08 — раньше по ним тыкали впустую) -->
+      <div class="atmo-photos" data-lightbox aria-hidden="false">
         <figure>
-          <img src="assets/comics/chebatkov.jpg" alt="Комик выступает в зале Клуба №1" loading="lazy" width="900" height="900">
+          <img src="assets/venue/audience.jpg" alt="Гости Клуба №1 за столами перед сценой" loading="lazy" width="1280" height="853">
         </figure>
         <figure>
-          <img src="assets/comics/makedonskaya.jpg" alt="Стендап-вечер в Клубе №1" loading="lazy" width="900" height="900">
+          <img src="assets/venue/audience-2.jpg" alt="Стендап-вечер в Клубе №1: зал и барная стойка" loading="lazy" width="1280" height="854">
         </figure>
         <figure>
-          <img src="assets/comics/shcherbak.jpg" alt="Гость на сцене Клуба №1" loading="lazy" width="900" height="900">
+          <img src="assets/venue/audience-3.jpg" alt="Зал Клуба №1 во время выступления" loading="lazy" width="1280" height="854">
         </figure>
       </div>
 
@@ -506,7 +484,6 @@
       <h2 id="venue-title">Интерьер и живые вечера</h2>
       <p class="section-lead">
         Как клуб выглядит изнутри — залы и сцена, бар и гости на вечерних шоу.
-        Галерею скоро наполним настоящими кадрами со съёмок.
       </p>
     </div>
 
@@ -515,47 +492,29 @@
       <div class="slideshow__track">
 
         <figure class="slideshow__slide">
-          <div class="venue-ph" role="img" aria-label="Интерьер клуба — фото появится позже">
-            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
-            <span class="venue-ph__label">Интерьер</span>
-            <span class="venue-ph__note">Фото появится позже</span>
-          </div>
-          <figcaption>Интерьер клуба — тёплый ламповый свет</figcaption>
+          <img src="assets/venue/lobby.jpg" alt="Фойе клуба: зеркальные стены, диваны и тёплый свет" loading="lazy" width="1280" height="853">
+          <figcaption>Фойе — зеркала и тёплый свет</figcaption>
         </figure>
 
         <figure class="slideshow__slide">
-          <div class="venue-ph" role="img" aria-label="Большой зал — фото появится позже">
-            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
-            <span class="venue-ph__label">Зал</span>
-            <span class="venue-ph__note">Фото появится позже</span>
-          </div>
-          <figcaption>Большой зал — концертная рассадка</figcaption>
+          <img src="assets/venue/hall-main-3.jpg" alt="Большой зал Клуба №1: круглые столы и световой задник" loading="lazy" width="1280" height="853">
+          <figcaption>Большой зал — рассадка за столами</figcaption>
         </figure>
 
         <figure class="slideshow__slide">
-          <div class="venue-ph" role="img" aria-label="Сцена — фото появится позже">
-            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
-            <span class="venue-ph__label">Сцена</span>
-            <span class="venue-ph__note">Фото появится позже</span>
-          </div>
+          <img src="assets/venue/stage.jpg" alt="Сцена Клуба №1: красный занавес, микрофон и зал" loading="lazy" width="1280" height="853">
           <figcaption>Сцена — комик в двух шагах от зала</figcaption>
         </figure>
 
         <figure class="slideshow__slide">
-          <div class="venue-ph" role="img" aria-label="Бар — фото появится позже">
-            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
-            <span class="venue-ph__label">Бар</span>
-            <span class="venue-ph__note">Фото появится позже</span>
-          </div>
+          <img src="assets/venue/bar.jpg" alt="Барная зона Клуба №1 с лаундж-мебелью" loading="lazy" width="1280" height="853">
           <figcaption>Бар — коктейли и обслуживание за столиком</figcaption>
         </figure>
 
         <figure class="slideshow__slide">
-          <div class="venue-ph" role="img" aria-label="Гости на вечернем шоу — фото появится позже">
-            <svg class="venue-ph__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></svg>
-            <span class="venue-ph__label">Гости</span>
-            <span class="venue-ph__note">Фото появится позже</span>
-          </div>
+          <!-- было audience-4.jpg: вопреки имени файла зал на нём пустой, а
+               подпись обещала гостей (правка Анвера 09.08) -->
+          <img src="assets/venue/audience-3.jpg" alt="Гости Клуба №1 в зале во время выступления комика" loading="lazy" width="1280" height="854">
           <figcaption>Гости на вечернем шоу — живая реакция зала</figcaption>
         </figure>
 
@@ -573,8 +532,7 @@
       <p class="eyebrow">Как нас найти</p>
       <h2 id="find-title">Новый Арбат, 21</h2>
       <p class="section-lead">
-        В центре Москвы, в паре минут от метро. Приходите заранее — до начала шоу
-        успеете занять столик и заказать с бара.
+        В центре Москвы, в паре минут пешком от метро «Смоленская».
       </p>
     </div>
 
@@ -593,12 +551,8 @@
         </div>
         <div class="find-item">
           <span class="k">Режим работы</span>
-          <ul class="hours">
-            <li><span>Пн–Чт</span><b>18:00–00:00</b></li>
-            <li><span>Пт–Сб</span><b>18:00–02:00</b></li>
-            <li><span>Вс</span><b>по афише</b></li>
-          </ul>
-          <span class="sub">зал открывается за час до начала шоу</span>
+          <span class="v">В дни мероприятий — по афише</span>
+          <span class="sub">зал открывается за час до начала шоу; ближайшие даты — <a href="afisha">в афише</a></span>
         </div>
         <div class="find-item">
           <span class="k">Парковка</span>
@@ -611,20 +565,23 @@
           <span class="sub"><a href="mailto:Club1promo@yandex.ru">Club1promo@yandex.ru</a></span>
         </div>
         <div class="find-actions">
-          <a class="btn btn--primary" href="afisha.html">Смотреть афишу</a>
-          <a class="btn btn--ghost" href="arenda.html">Арендовать зал</a>
+          <a class="btn btn--primary" href="afisha">Смотреть афишу</a>
+          <a class="btn btn--ghost" href="arenda">Арендовать зал</a>
         </div>
       </div>
 
-      <div class="find-map" role="img" aria-label="Схема расположения: Клуб №1 на Новом Арбате, 21, рядом со станцией метро Арбатская">
-        <div class="find-map__grid" aria-hidden="true"></div>
-        <div class="glow glow--mag find-map__glow" aria-hidden="true"></div>
-        <div class="find-map__road" aria-hidden="true"></div>
-        <div class="find-map__pin" aria-hidden="true">
-          <div class="badge1"><b>1</b></div>
-          <span class="lbl">Новый Арбат, 21</span>
+      <div class="find-map">
+        <iframe class="find-map__frame"
+                src="https://yandex.ru/map-widget/v1/?ll=37.585132%2C55.751916&amp;z=16&amp;pt=37.585132,55.751916,pm2rdm&amp;theme=dark"
+                title="Клуб №1 на карте: Москва, Новый Арбат, 21"
+                loading="lazy" allowfullscreen></iframe>
+        <div class="find-map__bar">
+          <span class="find-map__metro"><span class="find-map__m" aria-hidden="true">М</span>Смоленская — 5–7 минут пешком</span>
+          <span class="find-map__links">
+            <a href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%9D%D0%BE%D0%B2%D1%8B%D0%B9%20%D0%90%D1%80%D0%B1%D0%B0%D1%82%2C%2021" target="_blank" rel="noopener">Яндекс.Карты</a>
+            <a href="https://2gis.ru/moscow/firm/70000001060656267" target="_blank" rel="noopener">2ГИС</a>
+          </span>
         </div>
-        <span class="find-map__metro" aria-hidden="true"><span class="find-map__m">М</span>Смоленская</span>
       </div>
 
     </div>
@@ -649,7 +606,7 @@
       </div>
 
       <div class="arenda-cta__action">
-        <a class="btn btn--primary arenda-cta__btn" href="arenda.html">Арендовать площадку</a>
+        <a class="btn btn--primary arenda-cta__btn" href="arenda">Арендовать площадку</a>
         <span class="arenda-cta__sub">условия, форматы и форма заявки — на странице аренды</span>
       </div>
     </div>
@@ -665,7 +622,7 @@
   <div class="container site-footer__grid">
 
     <div class="footer-brand">
-      <a class="logo logo--sm" href="index.html" aria-label="Клуб Номер Один — CLUB 1, на главную">
+      <a class="logo logo--sm" href="./" aria-label="Клуб Номер Один — CLUB 1, на главную">
         <img src="assets/logo-white.svg" alt="Клуб Номер Один · CLUB 1" width="1229" height="219">
       </a>
       <p>Клуб стендапа на Новом Арбате, 21. Здесь выступают известные комики и те, о ком скоро будут говорить все.</p>
@@ -683,10 +640,10 @@
     <div class="footer-col">
       <h3>Информация</h3>
       <ul>
-        <li><a href="vozvrat.html">Возврат билетов</a></li>
-        <li><a href="privacy.html">Политика конфиденциальности</a></li>
-        <li><a href="oferta.html">Договор оферты</a></li>
-        <li><a href="arenda.html">Аренда площадки</a></li>
+        <li><a href="vozvrat">Возврат билетов</a></li>
+        <li><a href="privacy">Политика конфиденциальности</a></li>
+        <li><a href="oferta">Договор оферты</a></li>
+        <li><a href="arenda">Аренда площадки</a></li>
       </ul>
     </div>
 
@@ -748,7 +705,7 @@
 </script>
 
 <!-- shared interactive components (slideshow) -->
-<script src="script.js?v=2608064" defer></script>
+<script src="script.js?v=2608134" defer></script>
 
 </body>
 </html>
