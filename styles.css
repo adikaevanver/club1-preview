@@ -103,7 +103,12 @@ body{
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
-  overflow-x:hidden;              /* hard guard against horizontal scroll */
+  /* страховка от горизонтального скролла. Именно clip, а не hidden: hidden
+     делает body скролл-контейнером, и тогда position:sticky внутри страницы
+     не работает вовсе — так молча не липла шапка сайта, хотя стиль
+     .site-header.is-scrolled для прилипшего состояния написан. Для браузеров
+     без clip запасной hidden лежит в @supports ниже (см. html{overflow-x}) */
+  overflow-x:clip;
   min-height:100vh;
 }
 
@@ -800,6 +805,33 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 .datebar__day[aria-pressed="true"] span{color:rgba(10,8,16,.66)}
 .datebar__day[disabled]{opacity:.32;pointer-events:none}
 
+/* Липкая рейка дат страницы афиши (правка Саши 16.08, референс
+   standupstore.ru): прилипает под шапкой сайта, дни идут одной строкой с
+   горизонтальным скроллом — месяц целиком в перенос занял бы полэкрана.
+   Фон обязателен: под рейкой проезжают карточки. Поля вытянуты в гаттер
+   контейнера, иначе край карточки видно сбоку от рейки */
+.datebar--sticky{
+  position:sticky;top:var(--header-h);z-index:60;
+  flex-wrap:nowrap;gap:14px;
+  margin:var(--sp-6) calc(-1 * var(--gutter)) 0;
+  padding:14px var(--gutter);
+  background:var(--ink);
+  border-bottom:1px solid var(--hairline);
+}
+/* верхний отступ секции фильтров уехал вместе с рейкой — возвращаем воздух */
+.datebar--sticky + .filters{padding-top:16px}
+.datebar--sticky .datebar__days{
+  flex-wrap:nowrap;overflow-x:auto;scroll-behavior:smooth;
+  scrollbar-width:none;-ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;
+}
+.datebar--sticky .datebar__days::-webkit-scrollbar{display:none}
+.datebar--sticky .datebar__day{flex:0 0 auto}
+/* «текущий по скроллу» день — обводка, чтобы не путался с выбранным
+   фильтром (тот залит белым) */
+.datebar__day.is-current{border-color:var(--magenta);box-shadow:inset 0 0 0 1px var(--magenta)}
+.datebar__day.is-current[aria-pressed="true"]{box-shadow:none}
+
 @media (max-width:640px){
   .modal__panel{padding:24px 20px}
   .slideshow__slide{width:86%}
@@ -808,6 +840,14 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   .datebar__days{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px;
     scrollbar-width:none;-ms-overflow-style:none}
   .datebar__days::-webkit-scrollbar{display:none}
+  /* липкая рейка на телефоне держится в одну строку: месяц со стрелками
+     слева, дни листаются рядом. Колонкой она съедала 138px экрана вместе
+     с шапкой — почти четверть первого экрана */
+  .datebar--sticky{flex-direction:row;align-items:center;gap:10px;padding:10px var(--gutter)}
+  .datebar--sticky .datebar__nav{flex:0 0 auto;gap:6px}
+  .datebar--sticky .datebar__month{font-size:.74rem;letter-spacing:.1em}
+  .datebar--sticky .datebar__days{width:auto;min-width:0;flex:1 1 auto;padding-bottom:0}
+  .datebar--sticky .datebar__day{min-width:46px;padding:.4em .55em}
 }
 
 
@@ -1116,38 +1156,55 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
     radial-gradient(85% 110% at 92% 100%, rgba(180,70,255,.28), transparent 62%),
     var(--ink-2);
 }
-/* широкая афиша 1920×1080 фоном слайда без размытия — как в референсе */
+/* Панорама фоном слайда: вписана целиком, без обрезки (правка Саши 16.08 —
+   окно стало 3:1, а арты приходят 12:5, при cover срезало низ афиши: у
+   сольника Гурама уезжала фамилия). Поля по бокам закрывает слой
+   --wide-fill: та же картинка, размытая и растянутая по площади */
 .bb-slide__bg--wide{
   filter:none;transform:none;inset:0;
-  background-size:cover;background-position:center;
+  background-size:contain;background-position:center;background-repeat:no-repeat;
+}
+.bb-slide__bg--wide-fill{
+  filter:blur(30px) brightness(.5) saturate(1.1);transform:scale(1.12);
+  inset:0;background-size:cover;background-position:center;
 }
 /* квадратная замена широкому арту живёт только на телефоне (см. @760px) */
 .bb-slide__mob,.bb-slide__bg--mob{display:none}
-/* Пропорция окна слайдера — жёсткая 12:5 (1440×600): под неё Максим
-   готовит панорамные ресайзы, картинка видна целиком на любой ширине
-   (раньше 16:9 с потолком 600px кропил арт по вертикали) */
+/* Пропорция окна слайдера — жёсткая 3:1 (правка Саши 16.08: слайдер уже,
+   афиша поднимается на первый экран; было 12:5). Панорамы Максима сделаны
+   под 12:5, поэтому в окно 3:1 они вписываются целиком (contain), а поля
+   по бокам заполняет размытая копия того же арта — приём с карточек */
 .bb-slide--wide .bb-slide__stage{
-  aspect-ratio:12/5;min-height:0;width:100%;
-  padding:clamp(18px,2.5vw,32px) clamp(18px,3vw,44px);
+  aspect-ratio:3/1;min-height:0;width:100%;
+  padding:clamp(14px,2vw,24px) clamp(18px,3vw,44px);
 }
 .bb-slide__age--corner{position:absolute;left:clamp(18px,3vw,44px);bottom:clamp(18px,2.5vw,32px)}
 /* Слайд по макету Максима 22.07 (ранний вариант выбран на созвоне 24.07):
    афиша в центре сцены, текст рядом с ней не дублируется — поверх только
    плашки дат (первая маджента, вторая приглушённая), 18+ и кнопки */
+/* Высота сцены — та же 3:1, что и у панорамных слайдов (правка Саши 16.08):
+   раньше её задавал постер 520px плюс 164px вертикальных полей, и слайдер
+   занимал первый экран целиком */
 .bb-slide__stage{
   position:relative;z-index:1;
   max-width:var(--maxw);margin-inline:auto;
   display:flex;align-items:center;justify-content:center;
-  min-height:clamp(420px,62vh,600px);
-  padding:clamp(56px,7vw,76px) clamp(20px,4.5vw,60px) clamp(64px,8vw,88px);
+  aspect-ratio:3/1;min-height:0;
+  padding:clamp(34px,4vw,46px) clamp(20px,4.5vw,60px) clamp(38px,4.5vw,52px);
 }
-.bb-slide__art{min-width:0;display:flex;justify-content:center}
+/* высота цепочки арта задана явно (правка Саши 16.08): окно слайда теперь
+   3:1, и без height:100% у арта проценты считались от auto-высоты рамки —
+   картинка 16:9 брала натуральный размер и уезжала под нижний край */
+.bb-slide__art{min-width:0;display:flex;justify-content:center;align-items:center;
+  height:100%;min-height:0}
 /* рамка вокруг афиши: 18+ позиционируется от неё, а не от сцены слайда —
    иначе бейдж повисал в пустоте левее постера (находка ревизии) */
-.bb-slide__frame{position:relative;display:inline-flex}
+/* рамка тянется по высоте окна, а ширину берёт у самой картинки: иначе она
+   растягивалась на всю сцену и бейдж 18+ повисал на пустом поле слева */
+.bb-slide__frame{position:relative;display:inline-flex;height:100%;max-width:100%}
 .bb-slide__poster{
   display:block;width:auto;max-width:100%;height:auto;
-  max-height:clamp(300px,52vh,480px);object-fit:contain;border-radius:12px;
+  max-height:100%;object-fit:contain;border-radius:12px;
   box-shadow:0 28px 64px -26px rgba(0,0,0,.85);
 }
 .bb-slide__cssposter{width:clamp(260px,34vw,400px)}
@@ -1155,7 +1212,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 /* Переходный 16:9-арт (нет панорамы 12:5): целиком, крупно по центру.
    На телефоне 16:9 нечитаем — там показывается карточка (--sq) */
 .bb-slide__art--sq{display:none}
-.bb-slide__poster--mid{max-height:clamp(340px,56vh,520px)}
+.bb-slide__poster--mid{max-height:100%}
 @media (max-width:760px){
   .bb-slide__art--mid{display:none}
   .bb-slide__art--sq{display:flex}
@@ -1220,7 +1277,11 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 .bb-dot[aria-pressed="true"]{background:var(--magenta);transform:scale(1.3)}
 
 @media (max-width:760px){
-  .bb-slide__stage{flex-direction:column;min-height:0;padding:16px 16px 22px;gap:14px}
+  /* на телефоне слайд собран колонкой (афиша, чипсы, кнопки) — пропорция
+     3:1 десктопного окна здесь не действует, высоту задаёт содержимое */
+  .bb-slide__stage{flex-direction:column;min-height:0;aspect-ratio:auto;
+    padding:16px 16px 22px;gap:14px}
+  .bb-slide__art{height:auto}
   .bb-slide__chips,.bb-slide__actions{position:static}
   .bb-slide__chips{align-self:flex-start}
   .bb-slide__actions{width:100%;justify-content:center}
@@ -1286,6 +1347,7 @@ span.headliner__link{cursor:default}
 html{overflow-x:clip}
 @supports not (overflow-x:clip){
   html{overflow-x:hidden}
+  body{overflow-x:hidden}   /* там же теряется sticky — цена старого браузера */
 }
 
 /* ---- служебные страницы (возврат / конфиденциальность / оферта) ----

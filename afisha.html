@@ -1656,20 +1656,25 @@
       <div class="rule" aria-hidden="true"></div>
     </div>
 
+    <!-- Правки Максима 06.08 (PDF): календарь месяца сразу под заголовком,
+         ниже — строка пресетов с «Все мероприятия», «Ещё фильтры» и поиском;
+         форматы и сортировка живут под раскрывашкой.
+         Правка Саши 16.08: рейка дат прилипает под шапкой и ведёт активную
+         дату по скроллу (референс standupstore.ru). Поэтому она вынесена из
+         <section class="filters"> на уровень блока афиши: sticky держится
+         только в пределах своего родителя, а внутри короткой секции фильтров
+         рейка уезжала вверх вместе с ней. Фильтры не тронуты -->
+    <div class="datebar datebar--sticky">
+      <div class="datebar__nav">
+        <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
+        <span class="datebar__month" data-af-month></span>
+        <button class="datebar__arrow" data-af-next type="button" aria-label="Следующий месяц">›</button>
+      </div>
+      <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
+    </div>
+
     <section class="filters" aria-labelledby="filters-title">
       <h2 id="filters-title" class="sr-only">Поиск и фильтр афиши по датам и форматам</h2>
-
-      <!-- Правки Максима 06.08 (PDF): календарь месяца сразу под заголовком,
-           ниже — строка пресетов с «Все мероприятия», «Ещё фильтры» и
-           поиском; форматы и сортировка живут под раскрывашкой -->
-      <div class="datebar">
-        <div class="datebar__nav">
-          <button class="datebar__arrow" data-af-prev type="button" aria-label="Предыдущий месяц">‹</button>
-          <span class="datebar__month" data-af-month></span>
-          <button class="datebar__arrow" data-af-next type="button" aria-label="Следующий месяц">›</button>
-        </div>
-        <div class="datebar__days" data-af-days role="group" aria-label="Выберите дату"></div>
-      </div>
 
       <div class="filters__row filters__row--top">
         <div class="filters__presets" data-af-presets role="group" aria-label="Быстрый выбор даты"></div>

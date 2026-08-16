@@ -181,7 +181,7 @@
     var times = (ev.times && ev.times.length ? ev.times : (ev.time ? [ev.time] : []))
                   .map(esc).join(' и ');
     return (
-      '<article class="event-card" role="listitem">' +
+      '<article class="event-card" role="listitem" data-date="' + esc(ev.date) + '">' +
         poster +
         '<h3 class="event-card__title">' + esc(ev.title) + '</h3>' +
         '<p class="event-card__meta">' + DAYS_FULL[dateOf(ev).getDay()] + ', ' + fmtShort(ev) +
@@ -280,6 +280,9 @@
         : '';
       return (
         '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
+          /* нижний слой — размытая заливка полей, верхний — панорама целиком
+             (окно 3:1 шире, чем арты 12:5; правка Саши 16.08) */
+          '<div class="bb-slide__bg bb-slide__bg--wide-fill" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
           '<div class="bb-slide__bg bb-slide__bg--wide" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
           mobBg +
           slideLink +
@@ -515,13 +518,33 @@
       var arrow = e.target.closest('[data-hb-dir]');
       if (arrow){ goTo(idx + parseInt(arrow.getAttribute('data-hb-dir'), 10)); }
     });
-    /* руками начали листать — автопрокрутка не дёргает обратно */
-    ['mouseenter', 'focusin', 'touchstart', 'pointerdown', 'wheel'].forEach(function(evName){
-      root.addEventListener(evName, function(){ paused = true; }, {passive: true});
+    /* Руками начали листать — автопрокрутка не дёргает обратно. Наведение и
+       касание держим раздельно: на десктопе пауза живёт, пока курсор или
+       фокус на слайдере, и клик её не снимает; на телефоне пауза длится само
+       касание. Раньше касание ставило общий флаг, а снимали его только
+       mouseleave/focusout, которых на телефоне не бывает, — после первого
+       касания слайдер вставал до перезагрузки страницы (найдено 16.08) */
+    var overHover = false, overTouch = false;
+    function syncPaused(){ paused = overHover || overTouch; }
+    ['mouseenter', 'focusin'].forEach(function(evName){
+      root.addEventListener(evName, function(){ overHover = true; syncPaused(); }, {passive: true});
     });
     ['mouseleave', 'focusout'].forEach(function(evName){
-      root.addEventListener(evName, function(){ paused = false; });
+      root.addEventListener(evName, function(){ overHover = false; syncPaused(); }, {passive: true});
     });
+    ['touchstart', 'pointerdown'].forEach(function(evName){
+      root.addEventListener(evName, function(){ overTouch = true; syncPaused(); }, {passive: true});
+    });
+    ['touchend', 'touchcancel', 'pointerup', 'pointercancel'].forEach(function(evName){
+      root.addEventListener(evName, function(){ overTouch = false; syncPaused(); }, {passive: true});
+    });
+    /* жест трекпадом по слайдеру — тоже пауза, но короткая: снимаем сами */
+    var wheelPause = null;
+    root.addEventListener('wheel', function(){
+      overTouch = true; syncPaused();
+      if (wheelPause) clearTimeout(wheelPause);
+      wheelPause = setTimeout(function(){ overTouch = false; syncPaused(); }, 1200);
+    }, {passive: true});
     document.addEventListener('visibilitychange', function(){
       if (document.hidden) stop(); else play();
     });
@@ -620,11 +643,11 @@
     });
 
     /* состояние фильтров; восстановление после возврата из карточки.
-       Правило месяцев (Анвер, 26.07): выбран ТЕКУЩИЙ месяц — показываем
-       все ближайшие события сквозь месяцы; перелистнул на другой месяц —
-       только события этого месяца. Правило выводится из state.month на
-       каждом рендере, отдельного флага нет — протухать нечему, и после
-       перезагрузки на текущем месяце список снова полный */
+       Правило месяцев (правка Саши, 16.08): показываем ВСЕ события
+       выбранного месяца и только его — на августе весь август, перелистнул
+       на сентябрь, видишь весь сентябрь. Прежнее правило 26.07 («текущий
+       месяц = все ближайшие сквозь месяцы») этим отменено. Правило
+       выводится из state.month на каждом рендере, отдельного флага нет */
     var state = { month: null, date: null, format: null, sort: 'date', preset: null, q: '' };
     try {
       var saved = JSON.parse(sessionStorage.getItem('club1-afisha') || 'null');
@@ -657,25 +680,26 @@
     function filtered(){
       /* поиск ищет по всей афише (не только по выбранному месяцу);
          активный пресет заменяет собой месяц и дату, формат — поверх */
-      var curMonth = monthKey(todayISO());
       return events.filter(function(ev){
         if (!matchesQuery(ev)) return false;
         if (state.format && ev.format !== state.format) return false;
         if (state.q) return true;
         if (state.preset) return inPreset(ev, state.preset);
         if (state.date) return ev.date === state.date;
-        /* текущий месяц = все ближайшие; другой месяц = только он */
-        if (state.month === curMonth) return true;
+        /* выбранный месяц целиком — и только он */
         return monthKey(ev.date) === state.month;
       });
     }
 
-    /* «Загрузить ещё»: первый экран — 8 карточек на любой ширине, чтобы
-       наполнение мобильной и десктопной версии совпадало (правка Максима
-       13.08; раньше было «два ряда» — на телефоне выходило 4 карточки
-       против 8 на десктопе); каждая догрузка добавляет ещё 8 */
+    /* Пагинация (правка Саши, 16.08): «Загрузить ещё» больше нет — месяц
+       выводится списком целиком. Механика догрузки осталась в коде и
+       включается атрибутом data-af-limit="8" на блоке [data-afisha]:
+       столько карточек на первом экране, столько же в каждой догрузке
+       (правка Максима 13.08 — одинаковое наполнение на телефоне и на
+       десктопе). Без атрибута ограничения нет и кнопка не появляется */
+    var pageSize = parseInt(root.getAttribute('data-af-limit'), 10) || 0;
     var visible = 0;
-    function batchSize(){ return 8; }
+    function batchSize(){ return pageSize || 8; }
 
     function render(){
       /* пресеты — вкладки (макет Максима 06.08, подтверждён 13.08); вкладка
@@ -740,15 +764,72 @@
 
       /* «день = шоу»: повторные сеансы дня схлопнуты в одну карточку */
       var list = dedupeSameDay(applySort(filtered(), state.sort));
-      if (!visible) visible = batchSize();
-      track.innerHTML = list.slice(0, visible).map(cardHTML).join('');
-      if (loadBtn) loadBtn.hidden = list.length <= visible;
+      if (pageSize && !visible) visible = batchSize();
+      track.innerHTML = (pageSize ? list.slice(0, visible) : list).map(cardHTML).join('');
+      if (loadBtn) loadBtn.hidden = !pageSize || list.length <= visible;
       if (emptyBox) emptyBox.hidden = list.length > 0;
+      markCurrentDay();
       save();
     }
 
     /* любое изменение фильтров возвращает список к первым двум рядам */
     function rerender(){ visible = 0; render(); }
+
+    /* ----------------------------------------------------------------
+       Липкая рейка дат (правка Саши, 16.08; референс standupstore.ru).
+       Рейка прилипает под шапкой, а активная дата ведётся по скроллу:
+       подсвечивается день, чьи карточки сейчас у верхней кромки списка.
+       Фильтры это не трогает — выбранная дата остаётся aria-pressed,
+       «текущая по скроллу» живёт отдельным классом .is-current. Когда
+       дата выбрана руками, ведём подсветку по ней: список из одного дня
+       вести по скроллу нечем.
+       ---------------------------------------------------------------- */
+    var dateBar = root.querySelector('.datebar');
+    var spyFrame = null;
+
+    function scrollLine(){
+      /* кромка отсчёта — низ липкой рейки, но не выше низа шапки: там, где
+         рейка не липкая (блок афиши на главной), её box уезжает в минус и
+         «текущим» вечно оставался бы первый день */
+      var box = dateBar ? dateBar.getBoundingClientRect() : null;
+      var head = document.querySelector('.site-header');
+      var headBottom = head ? head.getBoundingClientRect().bottom : 88;
+      return Math.max(box ? box.bottom : 0, headBottom) + 8;
+    }
+    function dayInView(){
+      var line = scrollLine(), cards = track.children;
+      for (var i = 0; i < cards.length; i++){
+        if (cards[i].getBoundingClientRect().bottom > line){
+          return cards[i].getAttribute('data-date');
+        }
+      }
+      /* весь список выше кромки — значит доскроллили до конца: последний день */
+      return cards.length ? cards[cards.length - 1].getAttribute('data-date') : null;
+    }
+    function keepDayVisible(btn){
+      var wrap = daysWrap.getBoundingClientRect(), b = btn.getBoundingClientRect();
+      if (b.left < wrap.left) daysWrap.scrollLeft -= (wrap.left - b.left) + 28;
+      else if (b.right > wrap.right) daysWrap.scrollLeft += (b.right - wrap.right) + 28;
+    }
+    function markCurrentDay(){
+      spyFrame = null;
+      if (!daysWrap || !daysWrap.children.length) return;
+      var day = state.date || (state.preset || state.q ? null : dayInView());
+      var btns = daysWrap.children, active = null;
+      for (var i = 0; i < btns.length; i++){
+        var on = !!day && btns[i].getAttribute('data-date') === day;
+        btns[i].classList.toggle('is-current', on);
+        if (on) active = btns[i];
+      }
+      if (active) keepDayVisible(active);
+    }
+    function scheduleSpy(){
+      if (spyFrame) return;
+      spyFrame = window.requestAnimationFrame
+        ? requestAnimationFrame(markCurrentDay)
+        : setTimeout(markCurrentDay, 60);
+    }
+    window.addEventListener('scroll', scheduleSpy, {passive: true});
 
     if (presetWrap) presetWrap.addEventListener('click', function(e){
       var b = e.target.closest('[data-preset]');
