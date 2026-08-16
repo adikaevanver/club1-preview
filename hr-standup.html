@@ -7,7 +7,7 @@
 
 <meta name="description" content="«Эйчар стендап» в Клубе №1 на Новом Арбате — спецпроект 30 июля: стендапы от HR-менеджеров, рекрутеров и HRBP про найм и корпоративную жизнь. Время, сбор гостей, стоимость и билеты на сайте.">
 <meta name="theme-color" content="#0a0810">
-<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/hr-standup">
+<link rel="canonical" href="https://club1.moscow/hr-standup">
 
 <!-- Open Graph / social -->
 <meta property="og:type" content="website">
@@ -15,8 +15,8 @@
 <meta property="og:title" content="«Эйчар стендап» — спецпроект в Клубе №1">
 <meta property="og:description" content="HR выходят на сцену: истории про найм, корпоративную жизнь и кейсы за кадром. Новый Арбат, 21 · 30 июля, 19:00.">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/hr-standup">
-<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/posters/hr-sq.jpg">
+<meta property="og:url" content="https://club1.moscow/hr-standup">
+<meta property="og:image" content="https://club1.moscow/assets/posters/hr-sq.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=2608134">
+<link rel="stylesheet" href="styles.css?v=2608141">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS  ·  Страница разового шоу (razovoe.html only)
@@ -230,6 +230,20 @@
   }
   .fee-note{margin-top:12px;font-size:.8rem;color:var(--muted-2)}
 </style>
+
+<!-- Яндекс.Метрика club1.moscow. Тот же номер стоит в analytics.js
+     (там он нужен для целей) — менять оба места разом -->
+<script>
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=111571199", "ym");
+
+   ym(111571199, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/111571199" style="position:absolute; left:-9999px;" alt=""></div></noscript>
+<script src="analytics.js?v=2608141" defer></script>
   <!-- intickets widget: обязательный код (модальное окно вместо новой вкладки) -->
   <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
   <script src="//s3.intickets.ru/intickets.js"></script>
@@ -357,8 +371,9 @@
         <!-- Кнопка подробнее + Кнопка покупки -->
         <div class="cta-row" id="tickets">
           <a class="btn btn--ghost" href="#about">Подробнее</a>
-          <a class="btn btn--primary" href="https://iframeab-pre7764.intickets.ru/seance/73241619/#abiframe">Бронировать места</a>
+          <a class="btn btn--primary" href="afisha">Смотреть афишу клуба</a>
         </div>
+        <p class="desc__note" style="margin-top:18px">Этот вечер уже прошёл (30 июля). Ближайших дат пока нет — посмотрите, что идёт в клубе на этой неделе, в <a href="afisha">афише</a>.</p>
         <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
         <p class="fee-note">Билет — от 2 500 ₽, сбором не облагается. К счёту за еду и напитки в зале добавляется сервисный сбор 10%. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
       </div>
@@ -428,9 +443,9 @@
 <div class="sticky-cta">
   <span class="sticky-cta__info">
     <span class="sticky-cta__date">Эйчар стендап · 30.07</span>
-    <span class="sticky-cta__price">от 2 500 ₽</span>
+    <span class="sticky-cta__price">даты уточняются</span>
   </span>
-  <a class="btn btn--primary" href="#tickets">Бронировать</a>
+  <a class="btn btn--primary" href="afisha">В афишу</a>
 </div>
 
 <!-- v4: модалка «Как считается цена» (открывается из строки про сбор) -->
@@ -529,12 +544,31 @@
   /* 2 · burger / mobile drawer */
   var burger = document.getElementById('burger');
   var menu   = document.getElementById('mobileMenu');
+  var menuReturnFocus = null;
+  var menuItems = function(){
+    return menu.querySelectorAll('a[href], button:not([disabled])');
+  };
   var setMenu = function(open){
     menu.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    /* прокрутку держит html (у него overflow-x:clip), поэтому замок
+       вешаем на оба элемента — иначе страница под шторкой уезжала */
     document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    /* закрытая шторка не должна ловить Tab: она невидима, но её ссылки
+       оставались в порядке обхода и фокус проваливался «за экран» */
+    if (open) { menu.removeAttribute('inert'); } else { menu.setAttribute('inert', ''); }
+    if (open) {
+      menuReturnFocus = document.activeElement;
+      var first = menuItems()[0];
+      if (first) first.focus();
+    } else if (menuReturnFocus) {
+      menuReturnFocus.focus();
+      menuReturnFocus = null;
+    }
   };
+  menu.setAttribute('inert', '');
   burger.addEventListener('click', function(){
     setMenu(!menu.classList.contains('is-open'));
   });
@@ -542,7 +576,15 @@
     if (e.target.closest('a')) setMenu(false);
   });
   window.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+    if (!menu.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
+    if (e.key !== 'Tab') return;
+    /* пока меню открыто, обход ходит по кругу внутри него */
+    var items = menuItems();
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   /* 3 · horizontal rail ("Вам может понравиться") */
@@ -560,9 +602,9 @@
 </script>
 
 <!-- shared components: modal (comic bios), tabs, slideshow, datebar -->
-<script src="script.js?v=2608134" defer></script>
-<script src="assets/data/events.js?v=2608134" defer></script>
-<script src="afisha.js?v=2608134" defer></script>
+<script src="script.js?v=2608141" defer></script>
+<script src="assets/data/events.js?v=2608141" defer></script>
+<script src="afisha.js?v=2608141" defer></script>
 
 </body>
 </html>

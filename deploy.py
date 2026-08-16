@@ -31,7 +31,7 @@ EXCLUDE_DIRS = {
     '.git', '.claude', '.playwright-cli', 'backups', 'sweeps',
     'node_modules', '__pycache__', '.idea', '.vscode',
 }
-EXCLUDE_FILES = {'.DS_Store', '.env', '.gitignore', 'deploy.py', 'deploy.sh',
+EXCLUDE_FILES = {'.DS_Store', '.env', '.git', '.gitignore', 'deploy.py', 'deploy.sh',
                  'build-seo.py', '.deploy-state.json', 'README.md'}
 # текстовое содержимое: правка может не изменить размер, поэтому при
 # отсутствии известного хеша такие файлы заливаем не глядя
