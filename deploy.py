@@ -31,7 +31,12 @@ EXCLUDE_DIRS = {
     '.git', '.claude', '.playwright-cli', 'backups', 'sweeps',
     'node_modules', '__pycache__', '.idea', '.vscode',
 }
-EXCLUDE_FILES = {'.DS_Store', '.env', '.gitignore', 'deploy.py', 'deploy.sh',
+# '.git' есть и в EXCLUDE_DIRS, и здесь: в обычном клоне это папка, а в
+# git worktree — файл со строкой «gitdir: /Users/…/worktrees/<имя>». Фильтр
+# каталогов такой файл не ловит, и он уезжал на боевой: на club1.moscow сейчас
+# лежит .git с локальным путём чужого worktree. Пароль его прикрывает, но
+# после открытия сайта это был бы наружу торчащий путь с машины.
+EXCLUDE_FILES = {'.DS_Store', '.env', '.gitignore', '.git', 'deploy.py', 'deploy.sh',
                  'build-seo.py', '.deploy-state.json', 'README.md'}
 # текстовое содержимое: правка может не изменить размер, поэтому при
 # отсутствии известного хеша такие файлы заливаем не глядя
