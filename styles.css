@@ -1174,8 +1174,12 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
    афиша поднимается на первый экран; было 12:5). Панорамы Максима сделаны
    под 12:5, поэтому в окно 3:1 они вписываются целиком (contain), а поля
    по бокам заполняет размытая копия того же арта — приём с карточек */
+/* окно слайда 3:1, а сцена внутри — по размеру самой панорамы 12:5: чипсы
+   дат, 18+ и кнопки позиционируются от сцены, и при сцене во всю ширину они
+   ложились на размытые поля рядом с афишей, а не на неё */
+.bb-slide--wide{aspect-ratio:3/1}
 .bb-slide--wide .bb-slide__stage{
-  aspect-ratio:3/1;min-height:0;width:100%;
+  aspect-ratio:12/5;min-height:0;width:auto;height:100%;margin-inline:auto;
   padding:clamp(14px,2vw,24px) clamp(18px,3vw,44px);
 }
 .bb-slide__age--corner{position:absolute;left:clamp(18px,3vw,44px);bottom:clamp(18px,2.5vw,32px)}
