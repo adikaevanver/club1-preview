@@ -285,9 +285,16 @@
       var time = day.getAttribute('data-time') || '';
       var buy = day.getAttribute('data-buy') || '';
 
+      var price = day.getAttribute('data-price') || '';
+
       $$('[data-picked-date]').forEach(function (el) { el.textContent = label; });
       $$('[data-picked-time]').forEach(function (el) { if (time) el.textContent = time; });
       $$('[data-picked-buy]').forEach(function (el) { if (buy) el.setAttribute('href', buy); });
+      /* Цена у дат разная (сольник Гурама: 15.08 — 3000, 20.08 — 2000),
+         а на странице она стояла одной цифрой и не переключалась вместе
+         с датой. Кнопка даты несёт data-price, все места с ценой —
+         data-picked-price. */
+      $$('[data-picked-price]').forEach(function (el) { if (price) el.textContent = price; });
 
       if (d) {
         var dd = ('0' + d.getDate()).slice(-2);
@@ -381,13 +388,22 @@
      кнопки целиком). Без IntersectionObserver — поведение прежнее. */
   var StickyCta = (function () {
     function init() {
-      var sticky  = document.querySelector('.sticky-cta');
-      var heroCta = document.querySelector('.hero-cta, .cta-row');
-      if (!sticky || !heroCta || !('IntersectionObserver' in window)) return;
+      var sticky = document.querySelector('.sticky-cta');
+      if (!sticky || !('IntersectionObserver' in window)) return;
+      /* Прятаться надо не только над герой-кнопками: на странице аренды
+         плашка закрывала собой кнопку отправки формы, и заявку нельзя
+         было отправить с телефона, не проскроллив страницу вслепую. */
+      var anchors = document.querySelectorAll(
+        '.hero-cta, .cta-row, .datepick__book, .req-form button[type="submit"]');
+      if (!anchors.length) return;
+      var visible = new Set();
       var io = new IntersectionObserver(function (entries) {
-        sticky.classList.toggle('is-suppressed', entries[0].isIntersecting);
+        entries.forEach(function (en) {
+          if (en.isIntersecting) visible.add(en.target); else visible.delete(en.target);
+        });
+        sticky.classList.toggle('is-suppressed', visible.size > 0);
       }, { threshold: 0.4 });
-      io.observe(heroCta);
+      Array.prototype.forEach.call(anchors, function (el) { io.observe(el); });
     }
     return { init: init };
   })();

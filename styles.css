@@ -30,6 +30,12 @@
   /* «Сцена» palette (brand-locked) */
   --magenta:#ff2f6d;         /* primary accent · CTA · «1» */
   --magenta-d:#d11f53;       /* pressed / print-safer magenta */
+  /* Маджента как ФОН под белым текстом. #ff2f6d даёт с белым 3.57:1
+     при норме 4.5:1 — на кнопке покупки, бейджах и вкладках берём
+     затемнённый вариант (5.2:1). Светлая маджента остаётся везде,
+     где она сама текст или линия на тёмном фоне. */
+  --magenta-cta:#d11f53;
+  --magenta-cta-h:#b01745;   /* наведение поверх --magenta-cta */
   --magenta-soft:#ff5a89;
   --gold:#ffc24b;            /* rare 2nd accent · prices */
   --gold-soft:#ffd789;
@@ -103,8 +109,15 @@ body{
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
-  overflow-x:hidden;              /* hard guard against horizontal scroll */
+  /* clip, а не hidden: hidden делает body прокручиваемым блоком, и от
+     этого ломались две вещи — залипающая шапка переставала залипать
+     (у неё scroll-контейнером становился body, а прокручивался html)
+     и не работал запрет прокрутки под открытым мобильным меню. */
+  overflow-x:clip;
   min-height:100vh;
+}
+@supports not (overflow-x:clip){
+  body{overflow-x:hidden}
 }
 
 /* faint film-grain so the flat ink never looks dead */
@@ -187,10 +200,10 @@ ul{list-style:none}
 
 /* primary — magenta CTA */
 .btn--primary{
-  background:var(--magenta);color:#fff;
+  background:var(--magenta-cta);color:#fff;
   box-shadow:0 8px 26px -10px rgba(255,47,109,.75);
 }
-.btn--primary:hover{background:var(--magenta-d);box-shadow:0 10px 30px -8px rgba(255,47,109,.85)}
+.btn--primary:hover{background:var(--magenta-cta-h);box-shadow:0 10px 30px -8px rgba(255,47,109,.85)}
 
 /* ghost — outline on dark */
 .btn--ghost{
@@ -556,7 +569,7 @@ p + .hero__cta,
 /* date badge — top-left magenta parallelogram */
 .poster__badge{
   position:absolute;top:0;left:0;z-index:6;
-  background:var(--magenta);color:#fff;
+  background:var(--magenta-cta);color:#fff;
   font-family:var(--display);font-weight:800;font-size:.78rem;line-height:1.1;
   padding:8px 16px 8px 12px;letter-spacing:.02em;
   clip-path:polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
@@ -744,7 +757,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 }
 .tab:hover{border-color:var(--white);background:rgba(255,255,255,.04)}
 .tab[aria-selected="true"]{
-  background:var(--magenta);color:#fff;border-color:var(--magenta);font-weight:600;
+  background:var(--magenta-cta);color:#fff;border-color:var(--magenta-cta);font-weight:600;
   box-shadow:0 8px 26px -12px rgba(255,47,109,.8);
 }
 .tab-panel{animation:c1-fade .32s var(--ease)}
@@ -1172,7 +1185,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   z-index:4;display:flex;gap:12px;align-items:flex-start;
 }
 .bb-chip{
-  background:var(--chip-bg,var(--magenta));color:var(--chip-ink,#fff);
+  background:var(--chip-bg,var(--magenta-cta));color:var(--chip-ink,#fff);
   text-align:center;
   font-family:var(--display);font-weight:800;font-size:1.3rem;line-height:1;
   padding:16px 16px 12px;letter-spacing:.02em;
@@ -1252,6 +1265,16 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   /* на мобиле кнопки слайда уезжают к нижнему краю — точки выходят из
      наложения и встают строкой ПОД слайдом (аудит 06.08: точки лежали
      поверх «Бронировать места») */
+  .billboard__dots{
+    position:static;transform:none;margin:12px auto 2px;width:max-content;
+    background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;
+  }
+}
+
+/* Планшетная полоса 761–999px выпадала из правки выше: кнопки слайда
+   здесь всё ещё прижаты к нижнему краю, а точки уже возвращались в
+   наложение и перехватывали тап по «Бронировать места». */
+@media (min-width:761px) and (max-width:999px){
   .billboard__dots{
     position:static;transform:none;margin:12px auto 2px;width:max-content;
     background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;
@@ -1370,7 +1393,9 @@ html{overflow-x:clip}
 .filters__extra[hidden]{display:none}
 .af-search{position:relative;flex:1 1 240px;max-width:340px;display:flex;margin-left:auto}
 .af-search input{
-  width:100%;font:inherit;font-size:.95rem;color:var(--text);
+  /* ровно 16px: при меньшем размере Safari на iPhone зумит страницу,
+     как только палец попадает в поле, и вернуть масштаб уже нечем */
+  width:100%;font:inherit;font-size:1rem;color:var(--text);
   background:transparent;border:1.5px solid var(--hairline-strong);border-radius:var(--r-sm);
   padding:.6em 1.1em .6em 2.6em;outline:none;
   transition:border-color .18s, background .18s;

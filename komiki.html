@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=2608134">
+<link rel="stylesheet" href="styles.css?v=2608141">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS  ·  Комики (roster listing + bio pop-ups)
@@ -163,6 +163,13 @@
 
   /* соцсети — VK / TG / Instagram icon links */
   .bio__social{display:flex;gap:12px}
+  /* Ссылки на аккаунты артистов ещё не собраны, и в разметке стоят
+     заглушки href="#". Иконка, которая никуда не ведёт, хуже, чем её
+     отсутствие: гость жмёт и остаётся на месте. Прячем ряд вместе с
+     заголовком, пока в нём нет ни одной настоящей ссылки — как только
+     появится хотя бы одна, блок покажется сам. Придут все ссылки —
+     это правило можно удалить, разметка нетронута. */
+  .bio__section:has(.bio__social):not(:has(.bio__soc:not([href="#"]))){display:none}
   .bio__soc{
     width:44px;height:44px;border-radius:12px;flex:0 0 auto;
     display:flex;align-items:center;justify-content:center;
@@ -209,6 +216,19 @@
   <!-- intickets widget: обязательный код (модальное окно вместо новой вкладки) -->
   <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
   <script src="//s3.intickets.ru/intickets.js"></script>
+<!-- Яндекс.Метрика club1.moscow. Тот же номер стоит в analytics.js
+     (там он нужен для целей) — менять оба места разом -->
+<script>
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=111571199", "ym");
+
+   ym(111571199, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/111571199" style="position:absolute; left:-9999px;" alt=""></div></noscript>
+<script src="analytics.js?v=2608141" defer></script>
 </head>
 
 <body>
@@ -929,12 +949,31 @@
   /* 2 · burger / mobile drawer */
   var burger = document.getElementById('burger');
   var menu   = document.getElementById('mobileMenu');
+  var menuReturnFocus = null;
+  var menuItems = function(){
+    return menu.querySelectorAll('a[href], button:not([disabled])');
+  };
   var setMenu = function(open){
     menu.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    /* прокрутку держит html (у него overflow-x:clip), поэтому замок
+       вешаем на оба элемента — иначе страница под шторкой уезжала */
     document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    /* закрытая шторка не должна ловить Tab: она невидима, но её ссылки
+       оставались в порядке обхода и фокус проваливался «за экран» */
+    if (open) { menu.removeAttribute('inert'); } else { menu.setAttribute('inert', ''); }
+    if (open) {
+      menuReturnFocus = document.activeElement;
+      var first = menuItems()[0];
+      if (first) first.focus();
+    } else if (menuReturnFocus) {
+      menuReturnFocus.focus();
+      menuReturnFocus = null;
+    }
   };
+  menu.setAttribute('inert', '');
   burger.addEventListener('click', function(){
     setMenu(!menu.classList.contains('is-open'));
   });
@@ -942,17 +981,25 @@
     if (e.target.closest('a')) setMenu(false);
   });
   window.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
+    if (!menu.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
+    if (e.key !== 'Tab') return;
+    /* пока меню открыто, обход ходит по кругу внутри него */
+    var items = menuItems();
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 })();
 </script>
 
 <!-- shared interactive components (modal bio pop-ups) -->
-<script src="script.js?v=2608134" defer></script>
+<script src="script.js?v=2608141" defer></script>
 
 <!-- живая афиша: ближайшие концерты комиков -->
-<script src="assets/data/events.js?v=2608134" defer></script>
-<script src="afisha.js?v=2608134" defer></script>
+<script src="assets/data/events.js?v=2608141" defer></script>
+<script src="afisha.js?v=2608141" defer></script>
 
 </body>
 </html>

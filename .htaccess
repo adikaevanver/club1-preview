@@ -8,9 +8,11 @@
 
 # ---- ЗАКРЫТЫЙ ДОСТУП (удалить при публикации) -----------------------
 # Путь к .htpasswd подставляет deploy.py — руками править не нужно.
+# Значение ниже — страховка на случай ручной выкладки мимо скрипта:
+# это реальный докрут аккаунта u3603058 на reg.ru.
 AuthType Basic
 AuthName "Club1 — сайт в работе"
-AuthUserFile /var/www/club1/data/www/club1.moscow/.htpasswd
+AuthUserFile /var/www/u3603058/data/www/club1.moscow/.htpasswd
 Require valid-user
 
 # Let's Encrypt подтверждает владение доменом, читая файл в
@@ -20,9 +22,10 @@ Require valid-user
   Require all granted
 </If>
 
-# пока сайт закрыт — держим его вне поисковой выдачи
+# пока сайт закрыт — держим его вне поисковой выдачи.
+# always — иначе заголовок не вешается на ответы с кодом ошибки.
 <IfModule mod_headers.c>
-  Header set X-Robots-Tag "noindex, nofollow"
+  Header always set X-Robots-Tag "noindex, nofollow"
 </IfModule>
 # ---- конец блока ----------------------------------------------------
 
@@ -46,11 +49,22 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 #
 # Условие смотрит на THE_REQUEST — исходную строку запроса. Внутренняя
 # подстановка ниже её не меняет, поэтому петли не возникает.
+#
+# Знака «?» в конце подстановки быть не должно: он обрезает query-строку,
+# и переход по ссылке из рекламы терял utm-метки (проверено: адрес
+# /afisha.html?utm_source=yandex уезжал на /afisha без параметров).
 RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
-RewriteRule ^ /? [R=301,L]
+RewriteRule ^ / [R=301,L]
 
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
-RewriteRule ^ /%1? [R=301,L]
+RewriteRule ^ /%1 [R=301,L]
+
+# Слэш на конце убираем ДО подстановки .html. Без этой пары строк
+# /afisha/ уходил в петлю внутренних перенаправлений и отдавал 500
+# (в логе AH00124), потому что правило ниже пыталось открыть
+# «afisha/.html» и запускало разбор заново.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+?)/+$ /$1 [R=301,L]
 
 # короткий адрес → реальный файл (внутренняя подстановка, без редиректа)
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -60,14 +74,27 @@ RewriteRule ^(.+)$ $1.html [L]
 
 DirectoryIndex index.html
 
+# содержимое папок наружу не показываем
+Options -Indexes
+
 # ---- служебные файлы наружу не отдаём -------------------------------
-<FilesMatch "^\.(htaccess|htpasswd|git)">
+# Скрипты выкладки на сервер не уезжают, но если файл попадёт туда
+# руками — он всё равно останется закрытым.
+<FilesMatch "^\.(htaccess|htpasswd|git|env|deploy-state)">
+  Require all denied
+</FilesMatch>
+
+# json намеренно не в списке: сайту он сегодня не нужен, но если позже
+# появится манифест или данные для виджета — правило молча их закроет.
+<FilesMatch "\.(py|md|log|bak|sql)$">
   Require all denied
 </FilesMatch>
 
 # ---- кэш и сжатие ---------------------------------------------------
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+  # text/javascript обязателен: Apache отдаёт .js именно с этим типом,
+  # и без строки ниже скрипты уезжали несжатыми (75 КБ лишнего трафика).
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript image/svg+xml application/json
 </IfModule>
 
 <IfModule mod_expires.c>
@@ -76,14 +103,30 @@ DirectoryIndex index.html
   ExpiresByType text/html                 "access plus 0 seconds"
   ExpiresByType text/css                  "access plus 7 days"
   ExpiresByType application/javascript    "access plus 7 days"
+  ExpiresByType text/javascript           "access plus 7 days"
   ExpiresByType image/jpeg                "access plus 30 days"
   ExpiresByType image/png                 "access plus 30 days"
+  ExpiresByType image/webp                "access plus 30 days"
   ExpiresByType image/svg+xml             "access plus 30 days"
 </IfModule>
 
+# Данные афиши правятся чаще, чем поднимается версия в ссылках, —
+# держим их почти без кэша, чтобы снятое с продажи событие не висело
+# у гостя в браузере неделю.
+<FilesMatch "^events\.js$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=300, must-revalidate"
+  </IfModule>
+</FilesMatch>
+
 <IfModule mod_headers.c>
-  Header set X-Content-Type-Options "nosniff"
-  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  # always — иначе заголовки не доходят до ответов 401, 403 и 500
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  # полгода: сайт живёт только на https, сертификат продлевается сам
+  Header always set Strict-Transport-Security "max-age=15768000"
 </IfModule>
 
-ErrorDocument 404 /index.html
+ErrorDocument 404 /404.html

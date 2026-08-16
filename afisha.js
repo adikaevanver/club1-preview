@@ -54,10 +54,23 @@
     return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
   }
 
+  /* Сеанс уходит из афиши в момент начала, а не в полночь: сравнение
+     только по дате оставляло вечернее шоу с плашкой «Сегодня» и живой
+     кнопкой брони, когда оно уже шло на сцене. Полчаса форы оставляем —
+     опоздавшие ещё покупают на входе. */
+  var GRACE_MIN = 30;
+  function startedAlready(ev){
+    var p = (ev.date || '').split('-');
+    if (p.length !== 3) return false;
+    var hm = (ev.time || '23:59').split(':');
+    var start = new Date(+p[0], +p[1] - 1, +p[2], +hm[0] || 0, +hm[1] || 0);
+    return (new Date()).getTime() > start.getTime() + GRACE_MIN * 60000;
+  }
+
   function upcoming(){
     var t = todayISO();
     return EVENTS
-      .filter(function(ev){ return ev.date >= t; })
+      .filter(function(ev){ return ev.date >= t && !startedAlready(ev); })
       .sort(function(a, b){ return sortKey(a) < sortKey(b) ? -1 : 1; });
   }
   /* Сетка «день = шоу» (правки Фигмы 04.08, #17 + #11 «дубли перебор»):
@@ -223,7 +236,10 @@
        внутри групп порядок по дате сохраняется */
     var solo   = out.filter(function(it){ return it.ev.format === 'solniki'; });
     var others = out.filter(function(it){ return it.ev.format !== 'solniki'; });
-    return solo.concat(others).slice(0, 6);
+    /* лимит поднят 6 → 8 (Анвер 13.08, «используй все панорамы Максима»):
+       при пяти сольниках впереди панорамные СБГ и Бурлеск не влезали в
+       шестёрку, и готовые арты 1920×800 не показывались вовсе */
+    return solo.concat(others).slice(0, 8);
   }
 
   /* макет Максима 22.07 (ранний вариант выбран на созвоне 24.07 как
@@ -424,8 +440,18 @@
         moreBtn.className = 'btn btn--ghost sched-more';
         moreBtn.textContent = 'Показать все даты (' + list.length + ')';
         moreBtn.addEventListener('click', function(){
+          /* Кнопка прячет саму себя, и фокус вместе с ней улетал в body:
+             дальше Tab шёл с начала страницы, а раскрытые кнопки брони
+             пропускались. Запоминаем первую скрытую строку и переводим
+             фокус на её кнопку — обход продолжается с того же места. */
+          var firstHidden = null;
+          Array.prototype.forEach.call(listEl.children, function(row){
+            if (!firstHidden && row.hidden) firstHidden = row;
+          });
           expanded = true;
           applyCollapse();
+          var target = firstHidden && firstHidden.querySelector('a');
+          if (target) target.focus();
         });
         listEl.parentNode.insertBefore(moreBtn, listEl.nextSibling);
         applyCollapse();
@@ -466,7 +492,14 @@
     function goTo(i){
       idx = (i + list.length) % list.length;
       Array.prototype.forEach.call(track.children, function(s, j){
-        s.classList.toggle('is-active', j === idx);
+        var active = j === idx;
+        s.classList.toggle('is-active', active);
+        /* Неактивный слайд невидим (opacity:0) и не кликается
+           (pointer-events:none), но его ссылки и кнопки оставались в
+           порядке обхода: на главной Tab уводил на «Подробнее» слайда,
+           которого не видно. inert убирает их и из фокуса, и из
+           экранного диктора. */
+        if (active) { s.removeAttribute('inert'); } else { s.setAttribute('inert', ''); }
       });
       syncDots();
     }
@@ -626,8 +659,13 @@
        каждом рендере, отдельного флага нет — протухать нечему, и после
        перезагрузки на текущем месяце список снова полный */
     var state = { month: null, date: null, format: null, sort: 'date', preset: null, q: '' };
+    /* Ключ свой у каждой страницы: главная и /afisha делили один, и
+       фильтр, выставленный в каталоге, переезжал в блок «Ближайшие
+       события» на главной — гость видел там сентябрьские сольники
+       вместо ближайшего вечера. */
+    var STATE_KEY = 'club1-afisha:' + (location.pathname.replace(/\/+$/, '') || '/');
     try {
-      var saved = JSON.parse(sessionStorage.getItem('club1-afisha') || 'null');
+      var saved = JSON.parse(sessionStorage.getItem(STATE_KEY) || 'null');
       if (saved && months.indexOf(saved.month) !== -1) state = saved;
       if (!state.sort) state.sort = 'date';
       if (!('preset' in state)) state.preset = null;
@@ -641,7 +679,7 @@
     if (searchBox) searchBox.value = state.q;
 
     function save(){
-      try { sessionStorage.setItem('club1-afisha', JSON.stringify(state)); } catch (e) {}
+      try { sessionStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
     }
 
     /* поиск по названию, жанру и категории; регистр и «ё» не важны */
@@ -851,6 +889,15 @@
     var list   = upcoming();
     if (except){
       list = list.filter(function(ev){ return ev.title !== except; });
+    }
+    /* Рейка зовёт на ДРУГИЕ вечера. Атрибут data-upcoming-except про-
+       ставлен не везде, и на девяти страницах блок «Вам может понра-
+       виться» рекомендовал ровно то событие, на котором стоит гость.
+       Поэтому дополнительно убираем всё, что ведёт на текущую страницу:
+       поле page у события — это и есть имя файла без расширения. */
+    var self = location.pathname.split('/').pop().replace(/\.html$/, '');
+    if (self){
+      list = list.filter(function(ev){ return ev.page !== self; });
     }
     el.innerHTML = dedupeSameDay(list).slice(0, limit).map(cardHTML).join('');
   }
