@@ -1707,3 +1707,40 @@ html{overflow-x:clip}
 }
 .social--menu{margin-top:18px;gap:12px}
 .social--menu .social-btn{width:46px;height:46px}
+
+/* =====================================================================
+   Приглашение в Telegram (ТЗ Сергея 17.08, раздел 5). На десктопе —
+   окно в правом нижнем углу, оно не закрывает карточки и кнопки покупки.
+   На телефоне — нижняя панель не выше трети экрана. Разметку создаёт
+   analytics.js после условий показа, поэтому в HTML её нет.
+   ===================================================================== */
+.tg-invite{
+  position:fixed;right:20px;bottom:20px;z-index:150;
+  width:min(340px, calc(100vw - 40px));
+  display:flex;flex-direction:column;gap:12px;
+  padding:18px 18px 16px;border-radius:var(--r);
+  background:var(--ink-2);border:1px solid var(--hairline-strong);
+  box-shadow:0 26px 60px -24px rgba(0,0,0,.9);
+  opacity:0;transform:translateY(14px);
+  transition:opacity .26s var(--ease), transform .26s var(--ease);
+}
+.tg-invite.is-in{opacity:1;transform:none}
+.tg-invite__title{margin:0;padding-right:22px;font-size:.92rem;line-height:1.45;color:var(--text)}
+.tg-invite__close{
+  position:absolute;right:10px;top:8px;width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;
+  background:none;border:0;color:var(--muted);font-size:1.5rem;line-height:1;cursor:pointer;
+}
+.tg-invite__close:hover{color:#fff}
+.tg-invite__cta{align-self:flex-start}
+@media (max-width:760px){
+  .tg-invite{
+    right:0;left:0;bottom:0;width:auto;max-height:33vh;
+    border-radius:var(--r) var(--r) 0 0;border-bottom:0;
+    padding-bottom:calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  .tg-invite__cta{align-self:stretch;text-align:center}
+}
+@media (prefers-reduced-motion: reduce){
+  .tg-invite{transition:none}
+}

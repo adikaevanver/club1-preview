@@ -105,4 +105,159 @@
   document.addEventListener('club1:lead', function (ev) {
     goal('arenda_lead', (ev && ev.detail) || {});
   });
+
+  /* ===================================================================
+     События по ТЗ Сергея 17.08. Каждое уходит один раз на одно действие:
+     показ слайда помечается на самом слайде, чтобы прокрутка ленты
+     туда-сюда не накручивала счётчик.
+     =================================================================== */
+  function cardInfo(card){
+    if (!card) return {};
+    var t = card.querySelector('.event-card__title');
+    var m = card.querySelector('.event-card__meta');
+    var list = card.parentElement ? card.parentElement.children : [];
+    var pos = 0;
+    for (var i = 0; i < list.length; i++){ if (list[i] === card){ pos = i + 1; break; } }
+    var f = document.querySelector('.filters__presets [aria-pressed="true"], .pill[aria-pressed="true"]');
+    return {
+      title: t ? (t.textContent || '').trim().slice(0, 60) : '',
+      date:  card.getAttribute('data-date') || '',
+      meta:  m ? (m.textContent || '').trim().slice(0, 80) : '',
+      position: pos,
+      filter: f ? (f.textContent || '').trim().slice(0, 40) : ''
+    };
+  }
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+
+    var social = t.closest('a.social-btn');
+    if (social){
+      var href = social.getAttribute('href') || '';
+      goal('social_link_click', {
+        network: /t\.me/.test(href) ? 'telegram' : (/vk\./.test(href) ? 'vk' : 'other'),
+        place: (href.match(/utm_medium=([a-z_]+)/) || [])[1] || 'unknown'
+      });
+    }
+
+    var slide = t.closest('.bb-slide');
+    if (slide){
+      var btn = t.closest('.bb-slide__actions a');
+      goal('hero_slide_click', {
+        source: btn ? 'cta' : 'banner',
+        label: (slide.querySelector('.bb-chip') || {}).textContent || ''
+      });
+    }
+
+    var card = t.closest('.event-card');
+    if (card){
+      var info = cardInfo(card);
+      var buy = t.closest('.event-card__actions a');
+      if (buy){
+        info.source = 'button';
+        goal('ticket_button_click', info);
+      } else {
+        info.source = t.closest('.poster-link') ? 'image' : 'card';
+        goal('event_card_click', info);
+      }
+    }
+  }, true);
+
+  /* показ слайда: помечаем сам узел, чтобы событие ушло один раз */
+  function watchSlides(){
+    var track = document.querySelector('.billboard__track');
+    if (!track || !('MutationObserver' in window)) return;
+    function report(){
+      var act = track.querySelector('.bb-slide.is-active');
+      if (!act || act.getAttribute('data-seen')) return;
+      act.setAttribute('data-seen', '1');
+      var chip = act.querySelector('.bb-chip');
+      goal('hero_slide_view', {label: chip ? (chip.textContent || '').trim() : ''});
+    }
+    new MutationObserver(report).observe(track, {
+      subtree: true, attributes: true, attributeFilter: ['class']
+    });
+    report();
+  }
+
+  /* ===================================================================
+     Приглашение в Telegram (ТЗ Сергея 17.08, раздел 5).
+     Показ — после 45 секунд ИЛИ половины страницы, но только после
+     осмысленного действия и не чаще раза за визит. Закрыли — тихо на
+     7 дней, перешли — на 30. Состояние в localStorage; автоматического
+     перехода в Telegram нет.
+     =================================================================== */
+  var TG_KEY = 'club1-tg-invite';
+  var TG_LINK = 'https://t.me/club1standup?utm_source=club1_site' +
+                '&utm_medium=popup&utm_campaign=telegram_subscription';
+
+  function tgMuted(){
+    try {
+      var until = parseInt(localStorage.getItem(TG_KEY) || '0', 10);
+      return until && Date.now() < until;
+    } catch (e) { return false; }
+  }
+  function tgMute(days){
+    try { localStorage.setItem(TG_KEY, String(Date.now() + days * 864e5)); } catch (e) {}
+  }
+
+  function initTelegramInvite(){
+    if (tgMuted()) return;
+    var shown = false, acted = false, timer = null;
+
+    function markAction(){ acted = true; }
+    ['scroll', 'click', 'keydown', 'touchstart'].forEach(function (n){
+      window.addEventListener(n, markAction, {passive: true, once: true});
+    });
+
+    function halfway(){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      return h > 0 && (window.pageYOffset / h) >= 0.5;
+    }
+
+    function show(){
+      if (shown || !acted || tgMuted()) return;
+      /* не мешаем выбору мест и открытым окнам */
+      if (document.querySelector('.modal.is-open, .mobile-menu.is-open')) return;
+      shown = true;
+      if (timer) clearTimeout(timer);
+      window.removeEventListener('scroll', onScroll);
+
+      var box = document.createElement('aside');
+      box.className = 'tg-invite';
+      box.setAttribute('role', 'complementary');
+      box.setAttribute('aria-label', 'Афиша клуба в Telegram');
+      box.innerHTML =
+        '<button class="tg-invite__close" type="button" aria-label="Закрыть">&times;</button>' +
+        '<p class="tg-invite__title">Афиша, новые концерты и дополнительные даты — ' +
+          'в Telegram CLUB#1.</p>' +
+        '<a class="btn btn--primary btn--sm tg-invite__cta" href="' + TG_LINK + '"' +
+          ' target="_blank" rel="noopener noreferrer">Подписаться в Telegram</a>';
+      document.body.appendChild(box);
+      requestAnimationFrame(function(){ box.classList.add('is-in'); });
+      goal('telegram_invite_shown');
+
+      box.querySelector('.tg-invite__close').addEventListener('click', function(){
+        goal('telegram_invite_closed');
+        tgMute(7);
+        box.classList.remove('is-in');
+        setTimeout(function(){ box.remove(); }, 260);
+      });
+      box.querySelector('.tg-invite__cta').addEventListener('click', function(){
+        goal('telegram_invite_click');
+        tgMute(30);
+      });
+    }
+
+    function onScroll(){ if (halfway()) show(); }
+    window.addEventListener('scroll', onScroll, {passive: true});
+    timer = setTimeout(show, 45000);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ watchSlides(); initTelegramInvite(); });
+  } else {
+    watchSlides(); initTelegramInvite();
+  }
 })();
