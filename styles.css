@@ -1715,7 +1715,9 @@ html{overflow-x:clip}
    analytics.js после условий показа, поэтому в HTML её нет.
    ===================================================================== */
 .tg-invite{
-  position:fixed;right:20px;bottom:20px;z-index:150;
+  /* ниже мобильного меню (130) и его шапки: плашка ложилась поверх
+     открытой навигации, накрывая строку с телефоном (прогон QA 19.08) */
+  position:fixed;right:20px;bottom:20px;z-index:120;
   width:min(340px, calc(100vw - 40px));
   display:flex;flex-direction:column;gap:12px;
   padding:18px 18px 16px;border-radius:var(--r);
@@ -1826,3 +1828,6 @@ html:has(.mobile-menu.is-open) .site-header{
   /* разделитель — обычная строка сетки, а не пятистрочная карточка */
   .afisha__track--grid > .afisha__month{grid-row:span 1}
 }
+
+/* пока меню открыто, приглашение не мешает навигации */
+html:has(.mobile-menu.is-open) .tg-invite{display:none}
