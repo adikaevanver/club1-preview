@@ -891,29 +891,29 @@
         return el.hasAttribute && el.hasAttribute('data-date');
       });
     }
-    function dayInView(){
+    /* Какие дни сейчас на экране. Возвращаем СПИСОК, а не одну дату: в
+       одном ряду сетки стоят карточки разных дней (19, 20, 20, 20, 21), и
+       подсветка одной только первой заставляла рейку перепрыгивать через
+       промежуточные числа при прокрутке — 19 → 22, будто 20 и 21 в афише
+       нет (правка Анвера 19.08). Теперь горят все дни, попавшие в кадр. */
+    function daysInView(){
       var line = scrollLine(), cards = eventCards();
-      if (!cards.length) return null;
+      if (!cards.length) return [];
       var vh = window.innerHeight || document.documentElement.clientHeight;
-      /* Список целиком ушёл выше кромки — под рейкой уже отзывы и подвал,
-         вести нечего. Раньше здесь возвращался последний день, и на блоке
-         отзывов горело «30» (правка Анвера 19.08). */
-      if (cards[cards.length - 1].getBoundingClientRect().bottom <= line) return null;
-      /* сетка ещё не доехала до кромки — тоже нечего подсвечивать */
-      if (cards[0].getBoundingClientRect().top >= vh) return null;
-      /* Ведём по карточке, которая НАЧИНАЕТСЯ у кромки или ниже неё, а не
-         по первой пересекающей: у пересекающей верх уже ушёл за кромку, и
-         после перемотки к сентябрю подпись оставалась августовской из-за
-         хвоста предыдущего ряда, висящего сверху. */
-      var fallback = null;
+      /* список целиком выше кромки — под рейкой уже отзывы и подвал */
+      if (cards[cards.length - 1].getBoundingClientRect().bottom <= line) return [];
+      /* сетка ещё не доехала до кромки */
+      if (cards[0].getBoundingClientRect().top >= vh) return [];
+      var out = [];
       for (var i = 0; i < cards.length; i++){
         var r = cards[i].getBoundingClientRect();
         if (r.bottom <= line || r.top >= vh) continue;
-        if (r.top >= line - 40) return cards[i].getAttribute('data-date');
-        if (!fallback) fallback = cards[i].getAttribute('data-date');
+        var d = cards[i].getAttribute('data-date');
+        if (d && out.indexOf(d) === -1) out.push(d);
       }
-      return fallback;
+      return out;
     }
+
     function keepDayVisible(btn){
       var wrap = daysWrap.getBoundingClientRect(), b = btn.getBoundingClientRect();
       if (b.left < wrap.left) daysWrap.scrollLeft -= (wrap.left - b.left) + 28;
@@ -922,19 +922,20 @@
     function markCurrentDay(){
       spyFrame = null;
       if (!daysWrap || !daysWrap.children.length) return;
-      var day = state.date || (state.preset || state.q ? null : dayInView());
-      var btns = daysWrap.children, active = null;
+      var days = state.date ? [state.date]
+               : ((state.preset || state.q) ? [] : daysInView());
+      var btns = daysWrap.children, first = null;
       for (var i = 0; i < btns.length; i++){
-        var on = !!day && btns[i].getAttribute('data-date') === day;
+        var d = btns[i].getAttribute && btns[i].getAttribute('data-date');
+        var on = !!d && days.indexOf(d) !== -1;
         btns[i].classList.toggle('is-current', on);
-        if (on) active = btns[i];
+        if (on && !first) first = btns[i];
       }
-      if (active) keepDayVisible(active);
+      if (first) keepDayVisible(first);
       /* Подпись месяца идёт за лентой: доскроллил до сентябрьских карточек —
-         над рейкой встал «сентябрь» (правка Анвера 19.08). Сам state.month
-         тоже переставляем, иначе стрелки перематывали бы от старого месяца. */
-      if (day){
-        var mk = monthKey(day);
+         над рейкой встал «сентябрь». Берём месяц первого видимого дня. */
+      if (days.length){
+        var mk = monthKey(days[0]);
         if (mk !== state.month){
           state.month = mk;
           if (monthLabel) monthLabel.textContent = MONTHS_NOM[parseInt(mk.slice(5), 10) - 1];
@@ -944,6 +945,7 @@
         }
       }
     }
+
     function scheduleSpy(){
       if (spyFrame) return;
       spyFrame = window.requestAnimationFrame
@@ -958,12 +960,12 @@
       var key = b.getAttribute('data-preset');
       if (key === 'all'){                       /* «Все мероприятия» = сброс дат */
         state.preset = null; state.date = null;
-        rerender();
+        rerender(); showListTop();
         return;
       }
       state.preset = state.preset === key ? null : key;
       if (state.preset){ state.date = null; }   /* пресет заменяет ручные даты */
-      rerender();
+      rerender(); showListTop();
     });
     /* «Ещё фильтры» (макет Максима 06.08): форматы и сортировка спрятаны
        в раскрывашку; активный фильтр из sessionStorage раскрывает её сам,
@@ -979,6 +981,23 @@
     if (moreBtn && extraWrap){
       moreBtn.addEventListener('click', function(){ openExtra(extraWrap.hidden); });
       if (state.format || state.sort !== 'date') openExtra(true);
+    }
+
+    /* После смены фильтра список схлопывается, а страница остаётся там же,
+       где стояла: выбрал «3 октября», листая октябрь, — и оказался в пустоте
+       под единственной карточкой (правка Анвера 19.08). Показываем начало
+       списка: подводим блок афиши под шапку и липкую рейку. Прокручиваем
+       только вниз-вверх к списку, если он уже не в кадре целиком. */
+    function showListTop(){
+      var head = document.querySelector('.site-header');
+      var bar  = root.querySelector('.datebar');
+      var off  = (head ? head.getBoundingClientRect().height : 76) +
+                 (bar ? bar.getBoundingClientRect().height : 0) + 12;
+      var y = track.getBoundingClientRect().top + window.pageYOffset - off;
+      y = Math.max(0, Math.round(y));
+      if (Math.abs(window.pageYOffset - y) < 8) return;
+      try { window.scrollTo({top: y, behavior: 'smooth'}); }
+      catch (e) { window.scrollTo(0, y); }
     }
 
     /* Стрелки месяца прокручивают ленту к первой карточке соседнего месяца
@@ -1017,19 +1036,19 @@
       if (!b) return;
       state.date = state.date === b.getAttribute('data-date') ? null : b.getAttribute('data-date');
       if (state.date){ state.preset = null; }
-      rerender();
+      rerender(); showListTop();
     });
     if (fmtWrap) fmtWrap.addEventListener('click', function(e){
       var b = e.target.closest('[data-format]');
       if (!b) return;
       state.format = b.getAttribute('data-format') || null;
-      rerender();
+      rerender(); showListTop();
     });
     if (sortWrap) sortWrap.addEventListener('click', function(e){
       var b = e.target.closest('[data-sort]');
       if (!b) return;
       state.sort = b.getAttribute('data-sort');
-      rerender();
+      rerender(); showListTop();
     });
     if (searchBox){
       var searchT = null;
@@ -1050,7 +1069,7 @@
         state.date = null; state.format = null; state.sort = 'date'; state.preset = null; state.q = '';
         state.month = monthKey(todayISO());
         if (searchBox) searchBox.value = '';
-        rerender();
+        rerender(); showListTop();
       }
     });
 
