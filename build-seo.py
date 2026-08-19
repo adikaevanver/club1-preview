@@ -84,7 +84,9 @@ def event_ld(ev):
     if ev.get('page'):
         ld['url'] = f"{BASE}/{ev['page']}"
     elif ev.get('buy'):
-        ld['url'] = ev['buy']
+        # '#abiframe' — служебный якорь виджета кассы, он включает модальное
+        # окно на сайте. Поисковику он не нужен и только мусорит в разметке
+        ld['url'] = ev['buy'].split('#')[0]
 
     # сольник — на сцене конкретный человек; у сборных форматов состав
     # меняется от даты к дате, выдавать его за постоянный нельзя
@@ -98,7 +100,7 @@ def event_ld(ev):
             '@type': 'AggregateOffer',
             'lowPrice': ev['priceFrom'],
             'priceCurrency': 'RUB',
-            'url': ev['buy'],
+            'url': ev['buy'].split('#')[0],
             'availability': 'https://schema.org/InStock',
         }
     return ld
