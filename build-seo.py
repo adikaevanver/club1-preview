@@ -121,6 +121,54 @@ def inject(path, marker, payload):
     return False
 
 
+
+MONTHS_GEN = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+              'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+
+
+def esc(v):
+    return (str(v).replace('&', '&amp;').replace('<', '&lt;')
+            .replace('>', '&gt;').replace('"', '&quot;'))
+
+
+def inject_fallback(path, evs):
+    """Текстовая афиша в <noscript> — чтобы страница не была пустой без JS.
+
+    Список событий рисует afisha.js уже в браузере, поэтому в исходном
+    HTML страницы афиши не было ни одного мероприятия: краулеру, который
+    не исполняет скрипты, доставалась единственная фраза «По выбранным
+    фильтрам событий нет». Здесь тот же список лежит текстом. Видимую
+    вёрстку блок не трогает — он внутри noscript.
+    """
+    rows = []
+    for e in evs[:40]:
+        d = datetime.date.fromisoformat(e['date'])
+        when = f"{d.day} {MONTHS_GEN[d.month - 1]}"
+        if e.get('time'):
+            when += f", {e['time']}"
+        href = e.get('page') or 'afisha'
+        price = f" — от {e['priceFrom']} \u20bd" if e.get('priceFrom') else ''
+        rows.append(f'    <li>{when} — <a href="{esc(href)}">{esc(e["title"])}</a>{price}</li>')
+    block = ('<noscript data-seo="afisha-fallback">\n'
+             '  <h2>Ближайшие мероприятия</h2>\n  <ul>\n'
+             + '\n'.join(rows)
+             + '\n  </ul>\n</noscript>\n')
+    with open(path, encoding='utf-8') as fh:
+        s = fh.read()
+    pat = re.compile(r'<noscript data-seo="afisha-fallback">.*?</noscript>\n', re.S)
+    if pat.search(s):
+        s2 = pat.sub(block, s)
+    elif '</main>' in s:
+        s2 = s.replace('</main>', block + '</main>', 1)
+    else:
+        return False
+    if s2 == s:
+        return False
+    with open(path, 'w', encoding='utf-8') as fh:
+        fh.write(s2)
+    return True
+
+
 def lastmod(f):
     try:
         r = subprocess.run(['git', 'log', '-1', '--format=%cs', '--', f],
@@ -130,7 +178,26 @@ def lastmod(f):
         return datetime.date.today().isoformat()
 
 
+def indexable(f):
+    """Страница с noindex в карте сайта — противоречивое указание.
+
+    Вебмастер и Search Console выписывают за это предупреждение: карта
+    зовёт робота на страницу, а страница просит её не индексировать.
+    Так в карту попадала komiki — она закрыта до единого стиля фото.
+    Служебная 404 в карте тоже не нужна.
+    """
+    if f == '404.html':
+        return False
+    try:
+        with open(os.path.join(ROOT, f), encoding='utf-8') as fh:
+            head = fh.read(4000)
+    except OSError:
+        return True
+    return 'noindex' not in head
+
+
 def build_sitemap(pages):
+    pages = [f for f in pages if indexable(f)]
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for f in pages:
@@ -175,6 +242,10 @@ def main():
             continue
         if inject(path, 'events', [event_ld(e) for e in lst]):
             touched.append(f'{slug}.html ({len(lst)})')
+
+    for f in ('afisha.html', 'index.html'):
+        if inject_fallback(os.path.join(ROOT, f), evs):
+            touched.append(f'{f} (текстовая афиша)')
 
     no_price = [e for e in evs if not e.get('priceFrom')]
     print(f'sitemap.xml: {n} страниц')

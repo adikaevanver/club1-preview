@@ -21,7 +21,7 @@
 Скрипт зеркалит папку: заливает новое и изменившееся, удаляет на сервере то,
 чего нет локально. Сравнение по размеру и времени правки.
 """
-import argparse, hashlib, json, os, ssl, subprocess, sys
+import argparse, hashlib, json, os, re, ssl, subprocess, sys
 from datetime import datetime, timezone
 from ftplib import FTP_TLS, error_perm
 
@@ -31,7 +31,12 @@ EXCLUDE_DIRS = {
     '.git', '.claude', '.playwright-cli', 'backups', 'sweeps',
     'node_modules', '__pycache__', '.idea', '.vscode',
 }
-EXCLUDE_FILES = {'.DS_Store', '.env', '.git', '.gitignore', 'deploy.py', 'deploy.sh',
+# '.git' есть и в EXCLUDE_DIRS, и здесь: в обычном клоне это папка, а в
+# git worktree — файл со строкой «gitdir: /Users/…/worktrees/<имя>». Фильтр
+# каталогов такой файл не ловит, и он уезжал на боевой: на club1.moscow сейчас
+# лежит .git с локальным путём чужого worktree. Пароль его прикрывает, но
+# после открытия сайта это был бы наружу торчащий путь с машины.
+EXCLUDE_FILES = {'.DS_Store', '.env', '.gitignore', '.git', 'deploy.py', 'deploy.sh',
                  'build-seo.py', '.deploy-state.json', 'README.md'}
 # текстовое содержимое: правка может не изменить размер, поэтому при
 # отсутствии известного хеша такие файлы заливаем не глядя
@@ -151,6 +156,8 @@ def ensure_dirs(ftp, base, rel, made):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--dry-run', action='store_true')
+    ap.add_argument('--yes', action='store_true',
+                    help='не спрашивать подтверждение на удаление лишнего с сервера')
     ap.add_argument('--skip-seo', action='store_true',
                     help='не пересобирать sitemap.xml и JSON-LD перед заливкой')
     args = ap.parse_args()
@@ -169,13 +176,23 @@ def main():
     base = os.environ.get('CLUB1_REMOTE', '/www/club1.moscow').rstrip('/')
     docroot = os.environ.get('CLUB1_DOCROOT', '/var/www/u3603058/data' + base).rstrip('/')
 
-    if not os.path.isfile(os.path.join(ROOT, '.htpasswd')):
+    # .htpasswd нужен, только пока сайт закрыт. После публикации блок
+    # пароля из .htaccess удаляют — и без этой проверки деплой падал бы
+    # с требованием пароля на уже открытом сайте.
+    with open(os.path.join(ROOT, '.htaccess'), encoding='utf-8') as fh:
+        password_on = 'Require valid-user' in fh.read()
+    if password_on and not os.path.isfile(os.path.join(ROOT, '.htpasswd')):
         sys.exit('нет .htpasswd — сайт уехал бы без пароля.\n'
                  "создайте: htpasswd -nbB club1 '<пароль>' > .htpasswd")
 
+    # Сертификат FTPS reg.ru выписан не на тот адрес, по которому мы
+    # подключаемся (ходим по IP), поэтому проверка по умолчанию снята —
+    # иначе выкладка просто не соединится. Кому нужна строгая проверка:
+    # CLUB1_FTP_VERIFY=1 в окружении.
     ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
+    if os.environ.get('CLUB1_FTP_VERIFY') != '1':
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
     ftp = FTP_TLS(context=ctx)
     ftp.connect(host, 21, timeout=60)
     ftp.login(user, pw)
@@ -217,7 +234,33 @@ def main():
         sent += 1
         remote.pop(rel, None)
 
-    for rel in sorted(remote):
+    # Зеркалирование удаляет с боевого всё, чего нет в локальной папке.
+    # Под нож попадают файлы, которых у нас и не должно быть: подтверждение
+    # прав в Вебмастере и Search Console, служебные каталоги хостинга,
+    # загруженный менеджером PDF. Их держим в белом списке, а на остальное
+    # спрашиваем подтверждение — молча сносить чужое нельзя.
+    keep = [re.compile(p) for p in (
+        r'^yandex_[0-9a-f]+\.html$',
+        r'^google[0-9a-f]+\.html$',
+        r'^\.well-known/',
+        r'^cgi-bin/',
+        r'^robots\.txt\.bak$',
+    )]
+    doomed = [rel for rel in sorted(remote)
+              if not any(p.search(rel) for p in keep)]
+    spared = [rel for rel in sorted(remote) if rel not in doomed]
+    for rel in spared:
+        print('  = оставляю на сервере (белый список):', rel)
+
+    if doomed and not args.dry_run and not args.yes:
+        print('\nна сервере есть файлы, которых нет локально:')
+        for rel in doomed:
+            print('   ×', rel)
+        if input(f'удалить {len(doomed)} шт.? [y/N] ').strip().lower() not in ('y', 'yes', 'д'):
+            print('  удаление пропущено')
+            doomed = []
+
+    for rel in doomed:
         print(('  [dry] удалить ' if args.dry_run else '  × ') + rel)
         if not args.dry_run:
             try:

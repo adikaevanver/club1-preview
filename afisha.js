@@ -54,10 +54,23 @@
     return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
   }
 
+  /* Сеанс уходит из афиши в момент начала, а не в полночь: сравнение
+     только по дате оставляло вечернее шоу с плашкой «Сегодня» и живой
+     кнопкой брони, когда оно уже шло на сцене. Полчаса форы оставляем —
+     опоздавшие ещё покупают на входе. */
+  var GRACE_MIN = 30;
+  function startedAlready(ev){
+    var p = (ev.date || '').split('-');
+    if (p.length !== 3) return false;
+    var hm = (ev.time || '23:59').split(':');
+    var start = new Date(+p[0], +p[1] - 1, +p[2], +hm[0] || 0, +hm[1] || 0);
+    return (new Date()).getTime() > start.getTime() + GRACE_MIN * 60000;
+  }
+
   function upcoming(){
     var t = todayISO();
     return EVENTS
-      .filter(function(ev){ return ev.date >= t; })
+      .filter(function(ev){ return ev.date >= t && !startedAlready(ev); })
       .sort(function(a, b){ return sortKey(a) < sortKey(b) ? -1 : 1; });
   }
   /* Сетка «день = шоу» (правки Фигмы 04.08, #17 + #11 «дубли перебор»):
@@ -434,8 +447,18 @@
         moreBtn.className = 'btn btn--ghost sched-more';
         moreBtn.textContent = 'Показать все даты (' + list.length + ')';
         moreBtn.addEventListener('click', function(){
+          /* Кнопка прячет саму себя, и фокус вместе с ней улетал в body:
+             дальше Tab шёл с начала страницы, а раскрытые кнопки брони
+             пропускались. Запоминаем первую скрытую строку и переводим
+             фокус на её кнопку — обход продолжается с того же места. */
+          var firstHidden = null;
+          Array.prototype.forEach.call(listEl.children, function(row){
+            if (!firstHidden && row.hidden) firstHidden = row;
+          });
           expanded = true;
           applyCollapse();
+          var target = firstHidden && firstHidden.querySelector('a');
+          if (target) target.focus();
         });
         listEl.parentNode.insertBefore(moreBtn, listEl.nextSibling);
         applyCollapse();
@@ -476,7 +499,14 @@
     function goTo(i){
       idx = (i + list.length) % list.length;
       Array.prototype.forEach.call(track.children, function(s, j){
-        s.classList.toggle('is-active', j === idx);
+        var active = j === idx;
+        s.classList.toggle('is-active', active);
+        /* Неактивный слайд невидим (opacity:0) и не кликается
+           (pointer-events:none), но его ссылки и кнопки оставались в
+           порядке обхода: на главной Tab уводил на «Подробнее» слайда,
+           которого не видно. inert убирает их и из фокуса, и из
+           экранного диктора. */
+        if (active) { s.removeAttribute('inert'); } else { s.setAttribute('inert', ''); }
       });
       syncDots();
     }
