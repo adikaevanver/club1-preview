@@ -66,6 +66,11 @@ RewriteRule ^ /%1 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.+?)/+$ /$1 [R=301,L]
 
+# Страница сольника Гурама переехала с безличного /solnik на /guram
+# (правка Анвера 19.08: в адресной строке стояло «solnik» вместо имени
+# артиста). Старый адрес мог разойтись по ссылкам — держим 301.
+RewriteRule ^solnik/?$ /guram [R=301,L]
+
 # короткий адрес → реальный файл (внутренняя подстановка, без редиректа)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

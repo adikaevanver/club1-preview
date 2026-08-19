@@ -122,8 +122,11 @@
      успевал поймать пустой серый прямоугольник. Первые четыре карточки грузим
      сразу, остальные остаются ленивыми: они за пределами двух-трёх свайпов. */
   function cardHTML(ev, i){
-    var eager = (i || 0) < 4;
-    var load = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+    /* ТЗ Сергея 17.08: первые пять афиш грузятся сразу — это ровно первый
+       ряд сетки на широком экране; остальные лениво */
+    var eager = (i || 0) < 5;
+    var load = (eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"') +
+               ' decoding="async"';
     var badge = '<div class="poster__badge">' + fmtShort(ev) +
                 '<small>' + (ev.time ? esc(ev.time) : DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
     /* 18+ рисует сайт на каждой афише (созвон 21.07: алкоголь ⇒ всё 18+) */
@@ -187,9 +190,10 @@
     }
     /* правки 24.07: строка-попап «как считается цена» с карточек снята —
        подробности о цене живут на странице мероприятия */
-    var price = ev.priceFrom
-      ? '<p class="event-card__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽</p>'
-      : '';
+    /* цена рисуется всегда, пустой абзац держит свою строку в subgrid-сетке:
+       иначе у карточки без цены кнопки поднимались выше соседних */
+    var price = '<p class="event-card__price">' +
+      (ev.priceFrom ? 'от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽' : '') + '</p>';
     /* слитая карточка (dedupeSameDay) несёт все времена дня: «16:00 и 18:30» */
     var times = (ev.times && ev.times.length ? ev.times : (ev.time ? [ev.time] : []))
                   .map(esc).join(' и ');
@@ -200,9 +204,11 @@
         '<p class="event-card__meta">' + DAYS_FULL[dateOf(ev).getDay()] + ', ' + fmtShort(ev) +
           (times ? ' · ' + times : '') + ' · Новый Арбат, 21</p>' +
         price +
-        '<div class="event-card__actions">' +
-          (ev.page ? '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Подробнее</a>' : '') + cta +
-        '</div>' +
+        /* ТЗ Сергея 17.08: в карточке одна кнопка — покупка. «Подробнее»
+           снята, на страницу события ведёт сама карточка (растянутая ссылка
+           .poster-link::after). В пяти колонках две кнопки не помещались и
+           переносились друг под друга. */
+        '<div class="event-card__actions">' + cta + '</div>' +
       '</article>'
     );
   }
@@ -723,8 +729,12 @@
         if (state.q) return true;
         if (state.preset) return inPreset(ev, state.preset);
         if (state.date) return ev.date === state.date;
-        /* выбранный месяц целиком — и только он */
-        return monthKey(ev.date) === state.month;
+        /* Правка Анвера 19.08: афиша идёт непрерывной лентой — кончился
+           август, ниже сразу сентябрь. Месяц больше не режет список (этим
+           отменено правило Саши 16.08 «месяц целиком и только он»), он стал
+           подписью над рейкой и меняется по мере прокрутки. Стрелки ‹ ›
+           перематывают ленту к первой дате соседнего месяца. */
+        return true;
       });
     }
 
@@ -762,15 +772,26 @@
       if (monthPrev) monthPrev.disabled = mi <= 0;
       if (monthNext) monthNext.disabled = mi >= months.length - 1;
 
-      /* дни месяца, в которые есть события */
+      /* Все ближайшие даты подряд, сквозь месяцы (правка Анвера 19.08):
+         рейка — навигация по непрерывной ленте, а не список одного месяца */
       if (daysWrap){
         var dates = [];
         events.forEach(function(ev){
-          if (monthKey(ev.date) === state.month && dates.indexOf(ev.date) === -1) dates.push(ev.date);
+          if (dates.indexOf(ev.date) === -1) dates.push(ev.date);
         });
+        dates.sort();
+        var prevMk = null;
         daysWrap.innerHTML = dates.map(function(d){
           var dt = new Date(d + 'T00:00:00');
-          return '<button class="datebar__day" type="button" data-date="' + d + '"' +
+          var mk = monthKey(d), mark = '';
+          /* смена месяца внутри сквозной рейки помечается словом, иначе
+             «06» сразу после «30» читается как продолжение августа */
+          if (prevMk && mk !== prevMk){
+            mark = '<span class="datebar__mark">' +
+                   MONTHS_NOM[parseInt(mk.slice(5), 10) - 1] + '</span>';
+          }
+          prevMk = mk;
+          return mark + '<button class="datebar__day" type="button" data-date="' + d + '"' +
                  ' aria-pressed="' + String(state.date === d) + '">' +
                  '<b>' + d.slice(8, 10) + '</b><span>' + DAYS_SHORT[dt.getDay()] + '</span></button>';
         }).join('');
@@ -835,13 +856,19 @@
     }
     function dayInView(){
       var line = scrollLine(), cards = track.children;
+      if (!cards.length) return null;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      /* Список целиком ушёл выше кромки — под рейкой уже отзывы и подвал,
+         вести нечего. Раньше здесь возвращался последний день, и на блоке
+         отзывов горело «30» (правка Анвера 19.08). */
+      if (cards[cards.length - 1].getBoundingClientRect().bottom <= line) return null;
+      /* сетка ещё не доехала до кромки — тоже нечего подсвечивать */
+      if (cards[0].getBoundingClientRect().top >= vh) return null;
       for (var i = 0; i < cards.length; i++){
-        if (cards[i].getBoundingClientRect().bottom > line){
-          return cards[i].getAttribute('data-date');
-        }
+        var r = cards[i].getBoundingClientRect();
+        if (r.bottom > line && r.top < vh) return cards[i].getAttribute('data-date');
       }
-      /* весь список выше кромки — значит доскроллили до конца: последний день */
-      return cards.length ? cards[cards.length - 1].getAttribute('data-date') : null;
+      return null;
     }
     function keepDayVisible(btn){
       var wrap = daysWrap.getBoundingClientRect(), b = btn.getBoundingClientRect();
@@ -859,6 +886,19 @@
         if (on) active = btns[i];
       }
       if (active) keepDayVisible(active);
+      /* Подпись месяца идёт за лентой: доскроллил до сентябрьских карточек —
+         над рейкой встал «сентябрь» (правка Анвера 19.08). Сам state.month
+         тоже переставляем, иначе стрелки перематывали бы от старого месяца. */
+      if (day){
+        var mk = monthKey(day);
+        if (mk !== state.month){
+          state.month = mk;
+          if (monthLabel) monthLabel.textContent = MONTHS_NOM[parseInt(mk.slice(5), 10) - 1];
+          var mi2 = months.indexOf(mk);
+          if (monthPrev) monthPrev.disabled = mi2 <= 0;
+          if (monthNext) monthNext.disabled = mi2 >= months.length - 1;
+        }
+      }
     }
     function scheduleSpy(){
       if (spyFrame) return;
@@ -897,13 +937,32 @@
       if (state.format || state.sort !== 'date') openExtra(true);
     }
 
+    /* Стрелки месяца прокручивают ленту к первой карточке соседнего месяца
+       (правка Анвера 19.08). Раньше они переключали фильтр и подменяли весь
+       список; теперь список непрерывен, и перематывать нужно именно его. */
+    function jumpToMonth(mk){
+      if (!mk) return;
+      state.date = null; state.preset = null; state.month = mk;
+      rerender();
+      var target = null, cards = track.children;
+      for (var i = 0; i < cards.length; i++){
+        if (monthKey(cards[i].getAttribute('data-date') || '') === mk){ target = cards[i]; break; }
+      }
+      if (!target) return;
+      var head = document.querySelector('.site-header');
+      var bar  = root.querySelector('.datebar');
+      var off  = (head ? head.getBoundingClientRect().height : 76) +
+                 (bar ? bar.getBoundingClientRect().height : 0) + 12;
+      var y = target.getBoundingClientRect().top + window.pageYOffset - off;
+      window.scrollTo({top: Math.max(0, y), behavior: 'smooth'});
+    }
     if (monthPrev) monthPrev.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
-      if (mi > 0){ state.month = months[mi - 1]; state.date = null; state.preset = null; rerender(); }
+      if (mi > 0) jumpToMonth(months[mi - 1]);
     });
     if (monthNext) monthNext.addEventListener('click', function(){
       var mi = months.indexOf(state.month);
-      if (mi < months.length - 1){ state.month = months[mi + 1]; state.date = null; state.preset = null; rerender(); }
+      if (mi < months.length - 1) jumpToMonth(months[mi + 1]);
     });
     if (daysWrap) daysWrap.addEventListener('click', function(e){
       var b = e.target.closest('[data-date]');
