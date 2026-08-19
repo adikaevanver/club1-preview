@@ -233,12 +233,28 @@
         '<p class="tg-invite__title">Афиша, новые концерты и дополнительные даты — ' +
           'в Telegram CLUB#1.</p>' +
         '<a class="btn btn--primary btn--sm tg-invite__cta" href="' + TG_LINK + '"' +
-          ' target="_blank" rel="noopener noreferrer">Подписаться в Telegram</a>';
+          ' target="_blank" rel="noopener noreferrer">Подписаться в Telegram</a>' +
+        '<button class="tg-invite__peek" type="button" aria-label="Афиша клуба в Telegram">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>' +
+        '</button>';
       document.body.appendChild(box);
       requestAnimationFrame(function(){ box.classList.add('is-in'); });
       goal('telegram_invite_shown');
 
+      /* ТЗ Сергея 17.08: окно «не закрывающее карточки и CTA». В правом
+         нижнем углу широкого экрана карточки доходят до самого края, и
+         развёрнутая панель неизбежно ложится на кнопки. Поэтому через
+         двенадцать секунд она сама сворачивается в иконку 52 px, а клик
+         по иконке разворачивает обратно. */
+      var fold = setTimeout(function(){ box.classList.add('is-mini'); }, 12000);
+      box.querySelector('.tg-invite__peek').addEventListener('click', function(){
+        clearTimeout(fold);
+        box.classList.remove('is-mini');
+        fold = setTimeout(function(){ box.classList.add('is-mini'); }, 12000);
+      });
+
       box.querySelector('.tg-invite__close').addEventListener('click', function(){
+        clearTimeout(fold);
         goal('telegram_invite_closed');
         tgMute(7);
         box.classList.remove('is-in');

@@ -1831,3 +1831,34 @@ html:has(.mobile-menu.is-open) .site-header{
 
 /* пока меню открыто, приглашение не мешает навигации */
 html:has(.mobile-menu.is-open) .tg-invite{display:none}
+
+/* Свёрнутое состояние приглашения (прогон QA 19.08: развёрнутая панель в
+   правом нижнем углу ложилась на кнопки карточек и ссылки подвала).
+   Через двенадцать секунд панель ужимается в иконку 52 px, клик по
+   иконке разворачивает её обратно. */
+.tg-invite__peek{
+  display:none;width:52px;height:52px;padding:0;
+  align-items:center;justify-content:center;
+  background:none;border:0;color:var(--text);cursor:pointer;
+}
+.tg-invite__peek svg{width:26px;height:26px;fill:currentColor}
+.tg-invite.is-mini{
+  width:52px;min-width:0;padding:0;gap:0;border-radius:50%;
+  background:var(--magenta);border-color:transparent;
+}
+.tg-invite.is-mini .tg-invite__title,
+.tg-invite.is-mini .tg-invite__cta,
+.tg-invite.is-mini .tg-invite__close{display:none}
+.tg-invite.is-mini .tg-invite__peek{display:flex;color:#fff}
+@media (max-width:760px){
+  /* на телефоне панель нижняя и на кнопки не ложится — сворачивать нечего */
+  .tg-invite.is-mini{
+    width:auto;border-radius:var(--r) var(--r) 0 0;background:var(--ink-2);
+    border-color:var(--hairline-strong);padding:18px 18px 16px;gap:12px;
+  }
+  .tg-invite.is-mini .tg-invite__title,
+  .tg-invite.is-mini .tg-invite__cta,
+  .tg-invite.is-mini .tg-invite__close{display:revert}
+  .tg-invite.is-mini .tg-invite__cta{display:inline-flex}
+  .tg-invite.is-mini .tg-invite__peek{display:none}
+}
