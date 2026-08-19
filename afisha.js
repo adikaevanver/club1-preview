@@ -548,19 +548,36 @@
       goTo(idx + (e.deltaX > 0 ? 1 : -1));
     }, {passive: false});
 
-    function tick(){ if (!paused) goTo(idx + 1); }
+    function tick(){
+      if (paused) return;
+      if (new Date().getTime() < manualUntil) return;   /* пауза после ручного листания */
+      goTo(idx + 1);
+    }
     function play(){
       if (reduceMotion || list.length < 2 || timer) return;
       timer = setInterval(tick, 6000);
     }
     function stop(){ if (timer){ clearInterval(timer); timer = null; } }
 
+    /* ТЗ Сергея 17.08: после ручного переключения автопрокрутка молчит
+       не меньше десяти секунд — иначе слайдер уводит гостя с того слайда,
+       который он только что выбрал сам */
+    var manualUntil = 0;
+    function handled(){ manualUntil = new Date().getTime() + 10000; }
     root.addEventListener('click', function(e){
       var go = e.target.closest('[data-hb-goto]');
-      if (go){ goTo(parseInt(go.getAttribute('data-hb-goto'), 10)); return; }
+      if (go){ handled(); goTo(parseInt(go.getAttribute('data-hb-goto'), 10)); return; }
       var arrow = e.target.closest('[data-hb-dir]');
-      if (arrow){ goTo(idx + parseInt(arrow.getAttribute('data-hb-dir'), 10)); }
+      if (arrow){ handled(); goTo(idx + parseInt(arrow.getAttribute('data-hb-dir'), 10)); }
     });
+
+    /* ТЗ Сергея 17.08: один слайд — стрелки и точки не нужны */
+    if (list.length < 2){
+      Array.prototype.forEach.call(
+        root.querySelectorAll('[data-hb-dir], [data-hb-dots]'),
+        function(el){ el.hidden = true; }
+      );
+    }
     /* Руками начали листать — автопрокрутка не дёргает обратно. Наведение и
        касание держим раздельно: на десктопе пауза живёт, пока курсор или
        фокус на слайдере, и клик её не снимает; на телефоне пауза длится само
