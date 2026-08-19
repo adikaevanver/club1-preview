@@ -257,26 +257,54 @@
       foldLater();
       box.querySelector('.tg-invite__peek').addEventListener('click', function(){
         box.classList.remove('is-mini');
+        readUntil = new Date().getTime() + 1500;
         foldLater();
       });
 
-      /* У подвала панель сворачивается сразу: там под ней оказывались
-         иконки соцсетей и служебные ссылки, и на 1280 закрывались целиком */
-      function foldNearFooter(){
-        var f = document.querySelector('.site-footer');
-        if (!f) return;
-        var r = f.getBoundingClientRect();
-        if (r.top < window.innerHeight){
-          clearTimeout(fold);
-          box.classList.add('is-mini');
+      /* Сокращение показа не спасало: точки, где панель ложится на кнопку
+         «Бронировать места», геометрические — они зависят от того, какая
+         карточка проехала под правым нижним углом, а не от секунд (замер
+         прогона: пять таких участков на 1440 и 1280). Поэтому панель сама
+         сворачивается, как только под её прямоугольником оказывается
+         что-то кликабельное — кнопка карточки, ссылка подвала, соцсеть.
+         Полторы секунды в начале не трогаем: за это время приглашение
+         успевает прочитаться, дальше оно уступает место кнопкам. */
+      var readUntil = new Date().getTime() + 1500;
+      var checkFrame = null;
+      function hitsSomething(){
+        var b = box.getBoundingClientRect();
+        var els = document.querySelectorAll(
+          '.event-card__actions a, .poster-link, .site-footer a, .social-btn, .sticky-cta a');
+        for (var i = 0; i < els.length; i++){
+          var r = els[i].getBoundingClientRect();
+          if (r.bottom < 0 || r.top > window.innerHeight) continue;
+          if (r.right > b.left && r.left < b.right &&
+              r.bottom > b.top && r.top < b.bottom) return true;
         }
+        return false;
       }
-      window.addEventListener('scroll', foldNearFooter, {passive: true});
-      foldNearFooter();
+      function foldIfInTheWay(){
+        checkFrame = null;
+        if (box.classList.contains('is-mini')) return;
+        if (new Date().getTime() < readUntil) return;
+        if (!hitsSomething()) return;
+        clearTimeout(fold);
+        box.classList.add('is-mini');
+      }
+      function scheduleCheck(){
+        if (checkFrame) return;
+        checkFrame = window.requestAnimationFrame
+          ? requestAnimationFrame(foldIfInTheWay)
+          : setTimeout(foldIfInTheWay, 80);
+      }
+      window.addEventListener('scroll', scheduleCheck, {passive: true});
+      window.addEventListener('resize', scheduleCheck, {passive: true});
+      setTimeout(foldIfInTheWay, 1600);
 
       box.querySelector('.tg-invite__close').addEventListener('click', function(){
         clearTimeout(fold);
-        window.removeEventListener('scroll', foldNearFooter);
+        window.removeEventListener('scroll', scheduleCheck);
+        window.removeEventListener('resize', scheduleCheck);
         goal('telegram_invite_closed');
         tgMute(7);
         box.classList.remove('is-in');
