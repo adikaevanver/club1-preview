@@ -1806,3 +1806,23 @@ html:has(.mobile-menu.is-open) .site-header{
   /* палец попадает по дате увереннее */
   .datebar--sticky .datebar__day{min-width:50px;height:46px}
 }
+
+/* Разделитель месяца в ленте афиши (правка Анвера 19.08): занимает всю
+   строку сетки, поэтому новый месяц всегда начинается сновой строки и не
+   делит его с хвостом предыдущего. */
+.afisha__month{
+  grid-column:1 / -1;
+  display:flex;align-items:center;gap:14px;
+  margin:10px 0 -6px;
+  font-family:var(--display);font-weight:700;font-size:.82rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--magenta);
+}
+.afisha__month::after{
+  content:"";flex:1 1 auto;height:1px;background:var(--hairline);
+}
+/* первый разделитель ленты не нужен — над ним и так стоит подпись рейки */
+.afisha__track--grid > .afisha__month:first-child{display:none}
+@supports (grid-template-rows: subgrid){
+  /* разделитель — обычная строка сетки, а не пятистрочная карточка */
+  .afisha__track--grid > .afisha__month{grid-row:span 1}
+}

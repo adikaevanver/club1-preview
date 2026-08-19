@@ -840,7 +840,22 @@
       /* «день = шоу»: повторные сеансы дня схлопнуты в одну карточку */
       var list = dedupeSameDay(applySort(filtered(), state.sort));
       if (pageSize && !visible) visible = batchSize();
-      track.innerHTML = (pageSize ? list.slice(0, visible) : list).map(cardHTML).join('');
+      /* Разделитель месяца во всю ширину сетки (правка Анвера 19.08).
+         Лента идёт непрерывно, но месяцы делили один ряд: рядом стояли
+         29 августа и 6 сентября, и подпись над рейкой не понимала, какой
+         месяц показывать. Разделитель начинает новый месяц с новой строки
+         и служит якорем для перемотки стрелками. */
+      var shown = pageSize ? list.slice(0, visible) : list;
+      var lastMk = null;
+      track.innerHTML = shown.map(function(ev, i){
+        var mk = monthKey(ev.date), head = '';
+        if (mk !== lastMk){
+          lastMk = mk;
+          head = '<div class="afisha__month" data-month="' + mk + '" aria-hidden="true">' +
+                 MONTHS_NOM[parseInt(mk.slice(5), 10) - 1] + '</div>';
+        }
+        return head + cardHTML(ev, i);
+      }).join('');
       if (loadBtn) loadBtn.hidden = !pageSize || list.length <= visible;
       if (emptyBox) emptyBox.hidden = list.length > 0;
       markCurrentDay();
@@ -871,8 +886,13 @@
       var headBottom = head ? head.getBoundingClientRect().bottom : 88;
       return Math.max(box ? box.bottom : 0, headBottom) + 8;
     }
+    function eventCards(){
+      return Array.prototype.filter.call(track.children, function(el){
+        return el.hasAttribute && el.hasAttribute('data-date');
+      });
+    }
     function dayInView(){
-      var line = scrollLine(), cards = track.children;
+      var line = scrollLine(), cards = eventCards();
       if (!cards.length) return null;
       var vh = window.innerHeight || document.documentElement.clientHeight;
       /* Список целиком ушёл выше кромки — под рейкой уже отзывы и подвал,
@@ -881,11 +901,18 @@
       if (cards[cards.length - 1].getBoundingClientRect().bottom <= line) return null;
       /* сетка ещё не доехала до кромки — тоже нечего подсвечивать */
       if (cards[0].getBoundingClientRect().top >= vh) return null;
+      /* Ведём по карточке, которая НАЧИНАЕТСЯ у кромки или ниже неё, а не
+         по первой пересекающей: у пересекающей верх уже ушёл за кромку, и
+         после перемотки к сентябрю подпись оставалась августовской из-за
+         хвоста предыдущего ряда, висящего сверху. */
+      var fallback = null;
       for (var i = 0; i < cards.length; i++){
         var r = cards[i].getBoundingClientRect();
-        if (r.bottom > line && r.top < vh) return cards[i].getAttribute('data-date');
+        if (r.bottom <= line || r.top >= vh) continue;
+        if (r.top >= line - 40) return cards[i].getAttribute('data-date');
+        if (!fallback) fallback = cards[i].getAttribute('data-date');
       }
-      return null;
+      return fallback;
     }
     function keepDayVisible(btn){
       var wrap = daysWrap.getBoundingClientRect(), b = btn.getBoundingClientRect();
@@ -961,9 +988,13 @@
       if (!mk) return;
       state.date = null; state.preset = null; state.month = mk;
       rerender();
-      var target = null, cards = track.children;
-      for (var i = 0; i < cards.length; i++){
-        if (monthKey(cards[i].getAttribute('data-date') || '') === mk){ target = cards[i]; break; }
+      /* якорь перемотки — заголовок месяца, он всегда начинает новую строку */
+      var target = track.querySelector('.afisha__month[data-month="' + mk + '"]');
+      if (!target){
+        var cards = eventCards();
+        for (var i = 0; i < cards.length; i++){
+          if (monthKey(cards[i].getAttribute('data-date') || '') === mk){ target = cards[i]; break; }
+        }
       }
       if (!target) return;
       var head = document.querySelector('.site-header');
