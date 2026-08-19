@@ -22,6 +22,20 @@
 (function () {
   "use strict";
 
+  /* Крестик внутри мобильного меню (правка Анвера 19.08 по прогону QA).
+     Открытое меню ставит overflow:hidden на html, и липкая шапка теряет
+     свой скролл-контейнер: открыв меню, прокрутив страницу вниз, гость
+     видел панель без единой кнопки закрытия — шапка вместе с бургером
+     оставалась на прежнем месте документа, за верхним краем экрана.
+     Кнопка живёт в самой панели и просто дёргает бургер, чтобы состояние
+     и замок прокрутки снимались одной и той же логикой. */
+  document.addEventListener('click', function (e) {
+    var x = e.target.closest && e.target.closest('.mobile-menu__close');
+    if (!x) return;
+    var b = document.getElementById('burger');
+    if (b) b.click();
+  });
+
   /* --- tiny helpers ------------------------------------------------- */
   var $  = function (sel, ctx) { return (ctx || document).querySelector(sel); };
   var $$ = function (sel, ctx) {

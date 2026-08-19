@@ -1740,7 +1740,51 @@ html{overflow-x:clip}
     padding-bottom:calc(16px + env(safe-area-inset-bottom, 0px));
   }
   .tg-invite__cta{align-self:stretch;text-align:center}
+  /* Панель стоит поверх нижней части экрана и накрывала кнопку «Позвонить»
+     в блоке «Готовы к вечеру?» (прогон QA 19.08). Пока панель на экране,
+     страница получает запас снизу — до кнопок можно дотянуться. */
+  body:has(.tg-invite.is-in){padding-bottom:180px}
 }
 @media (prefers-reduced-motion: reduce){
   .tg-invite{transition:none}
+}
+
+/* =====================================================================
+   Открытое мобильное меню (правка Анвера 19.08 по прогону QA)
+   Замок прокрутки ставит overflow:hidden на html, и липкая шапка теряет
+   свой скролл-контейнер: если меню открыть, прокрутив страницу вниз,
+   шапка вместе с бургером остаётся на своём месте в документе — за
+   верхним краем экрана, и закрыть меню становится нечем. Пришпиливаем
+   шапку на время показа меню и держим в панели собственный крестик.
+   ===================================================================== */
+html:has(.mobile-menu.is-open) .site-header{
+  position:fixed;top:0;left:0;right:0;
+  background:var(--ink);border-bottom-color:var(--hairline);
+}
+.mobile-menu__close{
+  position:absolute;right:var(--gutter);top:12px;
+  width:44px;height:44px;display:none;
+  align-items:center;justify-content:center;
+  background:none;border:1px solid var(--hairline-strong);border-radius:12px;
+  color:var(--text);font-size:1.7rem;line-height:1;cursor:pointer;
+}
+.mobile-menu__close:hover{border-color:var(--magenta);color:#fff}
+/* показываем только там, где меню вообще бывает */
+@media (max-width:1023px){
+  .mobile-menu.is-open .mobile-menu__close{display:flex}
+  /* и освобождаем под него место, чтобы не легло на первый пункт */
+  .mobile-menu{padding-top:64px}
+}
+
+/* =====================================================================
+   Первый экран телефона, добор (прогон QA 19.08: первая карточка стояла
+   на 748 из 844 и была видна полоской). ТЗ Сергея 17.08 прямо разрешает
+   убрать поиск и дополнительные фильтры под кнопку «Фильтры».
+   ===================================================================== */
+@media (max-width:760px){
+  /* подзаголовок повторяет то, что и так стоит в шапке и в подвале */
+  .hero__tagline{display:none}
+  /* поиск оставляем на виду — на телефоне им пользуются чаще, чем
+     раскрывашкой, — но прижимаем по высоте */
+  .af-search input{padding-block:11px}
 }
