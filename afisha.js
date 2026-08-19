@@ -155,12 +155,28 @@
        прямо под афишей); афиша целиком кликабельна на «Подробнее» */
     var poster;
     if (ev.poster){
-      /* рамка 4:5; пока арт квадратный, поля добивает размытая подложка
-         из той же картинки — портретный ресайз закроет рамку целиком */
+      /* Афиша отдаётся в двух размерах. На телефоне карточка шириной около
+         170 CSS-пикселей, а грузилась картинка 1080×1350 — на двадцати
+         четырёх карточках это десятки мегапикселей, iOS выгружает
+         декодированные битмапы и декодирует заново при каждой прокрутке.
+         Внешне это и есть «моргание афиш» (правка Анвера 19.08, третий
+         заход). Мелкая версия 540 px закрывает телефон с запасом на
+         ретину, крупная остаётся десктопу. */
+      var small = esc(ev.poster).replace(/\.jpg$/, '-540.jpg');
+      var srcset = ' srcset="' + small + ' 540w, ' + esc(ev.poster) + ' 1080w"' +
+                   ' sizes="(max-width:760px) 46vw, (max-width:1279px) 24vw, 260px"';
+      /* Подложка под поля рамки нужна только квадратным артам и только на
+         широком экране: на телефоне она скрыта стилями, но браузер всё
+         равно её скачивал и держал в памяти — 23 лишние картинки. */
+      var wide = !window.matchMedia || !window.matchMedia('(max-width:900px)').matches;
+      var backfill = wide
+        ? '<img class="poster__backfill" src="' + small + '" alt="" aria-hidden="true" ' + load + ' width="540" height="675">'
+        : '';
       poster =
         '<div class="poster poster--art">' +
-          '<img class="poster__backfill" src="' + esc(ev.poster) + '" alt="" aria-hidden="true" ' + load + ' width="800" height="800">' +
-          '<img class="poster__full" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '" ' + load + ' width="800" height="800">' +
+          backfill +
+          '<img class="poster__full" src="' + esc(ev.poster) + '"' + srcset +
+            ' alt="Афиша: ' + esc(ev.title) + '" ' + load + ' width="1080" height="1350">' +
           badge + when + age +
         '</div>';
     } else {
@@ -302,8 +318,11 @@
       var sq = ev.poster
         ? '<div class="bb-slide__mob">' +
             '<div class="bb-slide__frame">' +
-              '<img class="bb-slide__poster" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '"' +
-              (i ? ' loading="lazy"' : '') + ' width="800" height="800">' +
+              '<img class="bb-slide__poster" src="' + esc(ev.poster) + '"' +
+              ' srcset="' + esc(ev.poster).replace(/\.jpg$/, '-540.jpg') + ' 540w, ' + esc(ev.poster) + ' 1080w"' +
+              ' sizes="(max-width:760px) 100vw, 540px"' +
+              ' alt="Афиша: ' + esc(ev.title) + '"' +
+              (i ? ' loading="lazy"' : '') + ' width="1080" height="1350">' +
               '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>' +
             '</div>' +
           '</div>'
@@ -330,8 +349,11 @@
     }
     var art;
     if (ev.poster){
-      art = '<img class="bb-slide__poster" src="' + esc(ev.poster) + '" alt="Афиша: ' + esc(ev.title) + '"' +
-            (i ? ' loading="lazy"' : '') + ' width="800" height="800">';
+      art = '<img class="bb-slide__poster" src="' + esc(ev.poster) + '"' +
+            ' srcset="' + esc(ev.poster).replace(/\.jpg$/, '-540.jpg') + ' 540w, ' + esc(ev.poster) + ' 1080w"' +
+            ' sizes="(max-width:760px) 100vw, 480px"' +
+            ' alt="Афиша: ' + esc(ev.title) + '"' +
+            (i ? ' loading="lazy"' : '') + ' width="1080" height="1350">';
     } else {
       art =
         '<div class="poster poster--' + esc(ev.tone || 'mag') + ' bb-slide__cssposter">' +
