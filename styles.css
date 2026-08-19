@@ -1893,3 +1893,32 @@ html:has(.mobile-menu.is-open) .tg-invite{display:none}
    живой адрес — блок покажется сам, разметку трогать не нужно. */
 .bio-social:not(:has(.social-btn:not([href="#"]))){display:none}
 .bio-sub:has(+ .bio-social:not(:has(.social-btn:not([href="#"])))){display:none}
+
+/* =====================================================================
+   Мерцание афиш при прокрутке на телефоне — второй заход (правка Анвера
+   19.08). Первый снял тяжёлые filter:blur с карточек и фоновых пятен, но
+   осталось главное: у прокрученной шапки включается backdrop-filter, а он
+   размывает не картинку, а ЖИВОЙ фон под собой — браузер пересчитывает
+   его на каждом кадре прокрутки и заново растрирует всё, что проезжает
+   под шапкой. На телефоне это и читается как моргание афиш. Меняем на
+   непрозрачный фон: визуально почти то же, стоимость нулевая.
+   ===================================================================== */
+@media (max-width:900px){
+  .site-header.is-scrolled{
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+    background:var(--ink);
+  }
+  /* остальные живые размытия на телефоне тоже не нужны */
+  .slider-arrow,
+  .billboard__arrow,
+  .bb-slide__actions .btn--ghost,
+  .billboard__dots,
+  .modal{
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+  }
+  .bb-slide__actions .btn--ghost{background:rgba(10,8,16,.82)}
+  .modal{background:rgba(7,5,9,.94)}
+  /* карточки не перерисовываются от собственных переходов во время
+     прокрутки: анимировать нечего, пока курсора нет */
+  .poster-link .poster{transition:none}
+}
