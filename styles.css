@@ -1801,9 +1801,11 @@ html:has(.mobile-menu.is-open) .site-header{
 @media (max-width:760px){
   .datebar--sticky .datebar__arrow{display:none}
   .datebar--sticky .datebar__nav{gap:0}
-  .datebar--sticky .datebar__month{
-    font-size:.66rem;letter-spacing:.08em;max-width:5.2em;line-height:1.1;
-  }
+  /* Подпись месяца слева дублировала метку смены месяца в самой ленте
+     («ОКТЯБРЬ  12  19  ОКТЯБРЬ  03») и забирала место. На телефоне месяц
+     называют метки внутри ленты — подпись убрана (правка Анвера 19.08). */
+  .datebar--sticky .datebar__month{display:none}
+  .datebar--sticky .datebar__nav{display:none}
   .datebar--sticky .datebar__days{flex:1 1 auto;min-width:0}
   /* палец попадает по дате увереннее */
   .datebar--sticky .datebar__day{min-width:50px;height:46px}
