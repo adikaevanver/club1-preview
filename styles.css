@@ -1788,3 +1788,21 @@ html:has(.mobile-menu.is-open) .site-header{
      раскрывашкой, — но прижимаем по высоте */
   .af-search input{padding-block:11px}
 }
+
+/* =====================================================================
+   Рейка дат на телефоне (правка Анвера 19.08: «распознавание дат на
+   мобильной плохо работает»). Стрелки месяца и подпись занимали больше
+   половины строки — на ленту оставалось 174 px, и из четырнадцати дат
+   помещалось три. Стрелки на телефоне не нужны: лента листается пальцем,
+   а подпись месяца и так едет за прокруткой.
+   ===================================================================== */
+@media (max-width:760px){
+  .datebar--sticky .datebar__arrow{display:none}
+  .datebar--sticky .datebar__nav{gap:0}
+  .datebar--sticky .datebar__month{
+    font-size:.66rem;letter-spacing:.08em;max-width:5.2em;line-height:1.1;
+  }
+  .datebar--sticky .datebar__days{flex:1 1 auto;min-width:0}
+  /* палец попадает по дате увереннее */
+  .datebar--sticky .datebar__day{min-width:50px;height:46px}
+}
