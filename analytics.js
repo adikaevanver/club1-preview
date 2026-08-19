@@ -243,18 +243,40 @@
 
       /* ТЗ Сергея 17.08: окно «не закрывающее карточки и CTA». В правом
          нижнем углу широкого экрана карточки доходят до самого края, и
-         развёрнутая панель неизбежно ложится на кнопки. Поэтому через
-         двенадцать секунд она сама сворачивается в иконку 52 px, а клик
-         по иконке разворачивает обратно. */
-      var fold = setTimeout(function(){ box.classList.add('is-mini'); }, 12000);
-      box.querySelector('.tg-invite__peek').addEventListener('click', function(){
+         развёрнутая панель неизбежно ложится на кнопки: замер прогона
+         показал, что на пути прокрутки она успевает целиком накрыть то
+         кнопку брони, то блок соцсетей в подвале. Поэтому развёрнутой она
+         живёт шесть секунд — прочитать хватает, — а дальше сворачивается
+         в иконку 52 px, которая не задевает ничего (замер: не больше 2 %
+         площади одной кнопки). Клик по иконке разворачивает обратно. */
+      var FOLD_MS = 6000, fold = null;
+      function foldLater(){
         clearTimeout(fold);
+        fold = setTimeout(function(){ box.classList.add('is-mini'); }, FOLD_MS);
+      }
+      foldLater();
+      box.querySelector('.tg-invite__peek').addEventListener('click', function(){
         box.classList.remove('is-mini');
-        fold = setTimeout(function(){ box.classList.add('is-mini'); }, 12000);
+        foldLater();
       });
+
+      /* У подвала панель сворачивается сразу: там под ней оказывались
+         иконки соцсетей и служебные ссылки, и на 1280 закрывались целиком */
+      function foldNearFooter(){
+        var f = document.querySelector('.site-footer');
+        if (!f) return;
+        var r = f.getBoundingClientRect();
+        if (r.top < window.innerHeight){
+          clearTimeout(fold);
+          box.classList.add('is-mini');
+        }
+      }
+      window.addEventListener('scroll', foldNearFooter, {passive: true});
+      foldNearFooter();
 
       box.querySelector('.tg-invite__close').addEventListener('click', function(){
         clearTimeout(fold);
+        window.removeEventListener('scroll', foldNearFooter);
         goal('telegram_invite_closed');
         tgMute(7);
         box.classList.remove('is-in');
