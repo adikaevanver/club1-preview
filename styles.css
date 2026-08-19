@@ -1885,3 +1885,11 @@ html:has(.mobile-menu.is-open) .tg-invite{display:none}
   .bb-slide__bg--wide-fill,
   .bb-slide__bg--mob{filter:none;transform:none;opacity:.55}
 }
+
+/* Соцсети артиста в модалках разовых шоу — те же заглушки href="#", что
+   были на komiki (аудит переходов 19.08). Иконка, которая никуда не ведёт,
+   хуже её отсутствия: гость жмёт и остаётся на месте. Прячем ряд вместе с
+   заголовком «Соцсети», пока в нём нет ни одной настоящей ссылки; появится
+   живой адрес — блок покажется сам, разметку трогать не нужно. */
+.bio-social:not(:has(.social-btn:not([href="#"]))){display:none}
+.bio-sub:has(+ .bio-social:not(:has(.social-btn:not([href="#"])))){display:none}

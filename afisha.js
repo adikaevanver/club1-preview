@@ -177,6 +177,13 @@
        иначе ссылка уходила бы в href="null" */
     if (ev.page){
       poster = '<a class="poster-link" href="' + esc(ev.page) + '" aria-label="Подробнее: ' + esc(ev.title) + '">' + poster + '</a>';
+    } else if (ev.buy){
+      /* У партнёрских событий своей страницы нет (билеты живут у
+         организатора). Раньше их афиша не кликалась вовсе — единственная
+         карточка в афише, которая молча не реагировала на клик (аудит
+         переходов 19.08). Теперь ведёт туда же, куда кнопка: в кассу. */
+      poster = '<a class="poster-link" href="' + esc(ev.buy) + '" target="_blank" rel="noopener"' +
+               ' aria-label="Билеты: ' + esc(ev.title) + '">' + poster + '</a>';
     }
     var cta;
     if (ev.soldOut){
@@ -1099,6 +1106,21 @@
     if (except){
       list = list.filter(function(ev){ return ev.title !== except; });
     }
+    /* Блок «Вам может понравиться» рекомендовал то самое событие, которое
+       гость уже читает: на странице Риэлторского стендапа первой карточкой
+       шёл он сам, с той же датой и ценой (аудит переходов 19.08). Страница
+       события узнаёт себя по полю page и убирает себя из подборки —
+       атрибут data-upcoming-except теперь нужен только для исключений
+       по названию, а не для каждой страницы руками. */
+    var file = (location.pathname.split('/').pop() || '').replace(/\.html$/, '');
+    if (file && file !== 'index' && file !== 'afisha'){
+      var self = EVENTS.filter(function(ev){ return ev.page === file; });
+      if (self.length){
+        var titles = {};
+        self.forEach(function(ev){ titles[ev.title] = 1; });
+        list = list.filter(function(ev){ return !titles[ev.title]; });
+      }
+    }
     el.innerHTML = dedupeSameDay(list).slice(0, limit).map(cardHTML).join('');
   }
 
@@ -1222,8 +1244,60 @@
     });
   }
 
+  /* =================================================================
+     Прошедшее событие — страница сама себя закрывает
+     ----------------------------------------------------------------
+     На страницах Жарова, Медстендапа и Бурлеска (аудит переходов 19.08)
+     висела живая кнопка покупки на кассу закрытого сеанса: их снимали
+     руками, и про три страницы забыли. Теперь страница смотрит в
+     events.js: если её собственных будущих сеансов не осталось, кнопки
+     кассы заменяются на «Смотреть афишу клуба», а под ними встаёт
+     honest-строка «этот вечер уже прошёл». Руками снимать больше нечего.
+     ================================================================= */
+  function initPastEvent(){
+    var file = (location.pathname.split('/').pop() || '').replace(/\.html$/, '');
+    if (!file || file === 'index' || file === 'afisha') return;
+    var mine = EVENTS.filter(function(ev){ return ev.page === file; });
+    if (!mine.length) return;                       /* не страница события */
+    var t = todayISO();
+    var future = mine.filter(function(ev){ return ev.date >= t && !startedAlready(ev); });
+    if (future.length) return;                      /* даты ещё впереди */
+
+    var last = mine.slice().sort(function(a, b){ return a.date < b.date ? 1 : -1; })[0];
+    var when = last ? fmtHuman(last) : '';
+
+    var links = document.querySelectorAll('a[href*="intickets.ru"], a[href*="afisha.yandex.ru"]');
+    Array.prototype.forEach.call(links, function(a){
+      a.setAttribute('href', 'afisha');
+      a.removeAttribute('target');
+      a.removeAttribute('rel');
+      a.textContent = 'Смотреть афишу клуба';
+    });
+
+    /* строку ставим один раз, рядом с первой парой кнопок */
+    if (!document.querySelector('[data-past-note]')){
+      var host = document.querySelector('.hero-cta, .cta-row, .datepick__book');
+      if (host && host.parentNode){
+        var note = document.createElement('p');
+        note.className = 'desc__note';
+        note.setAttribute('data-past-note', '');
+        note.style.marginTop = '18px';
+        note.innerHTML = 'Этот вечер уже прошёл' + (when ? ' (' + when + ')' : '') +
+          '. Ближайших дат пока нет — посмотрите, что идёт в клубе, в ' +
+          '<a href="afisha">афише</a>.';
+        host.parentNode.insertBefore(note, host.nextSibling);
+      }
+    }
+    /* датапик и расписание прошедшего события только путают */
+    Array.prototype.forEach.call(
+      document.querySelectorAll('[data-schedule], .datepick'),
+      function(el){ el.hidden = true; }
+    );
+  }
+
   /* --- boot ---------------------------------------------------------- */
   function boot(){
+    initPastEvent();
     initTicker();
     document.querySelectorAll('[data-hero-slider]').forEach(initHeroSlider);
     document.querySelectorAll('[data-afisha]').forEach(initAfisha);
