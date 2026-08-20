@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ru" class="v-static">
+<html lang="ru" class="v-site">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
 <meta name="theme-color" content="#0a0810">
 <meta name="robots" content="noindex, nofollow">
 <title>Тест полосы статус-бара — 2</title>
-<link rel="stylesheet" href="styles.css?v=2608221">
+<link rel="stylesheet" href="styles.css?v=2608222">
 <style>
   /* Страница повторяет шапку сайта один в один (те же классы, тот же
      styles.css) и сама переключает варианты раз в 4 секунды. Задача —
@@ -22,19 +22,17 @@
              font:700 22px/1 -apple-system, system-ui, sans-serif;color:#000}
 
   /* ── варианты ────────────────────────────────────────────────────── */
-  /* 1 · как на сайте: ничего не меняем */
+  /* 1 · как сейчас на сайте: фон на потомке шапки — ничего не меняем */
 
-  /* 2 · фон шапки задан сразу, не по классу is-scrolled */
-  .v-static .site-header{background:var(--ink)}
+  /* 2 · фон возвращён на саму шапку (как было до правки) */
+  .v-onself .site-header__bg{display:none}
+  .v-onself .site-header.is-scrolled{background:var(--ink)}
 
-  /* 3 · фон шапки убран с неё самой и отдан absolute-потомку */
-  .v-child .site-header,
-  .v-child .site-header.is-scrolled{background:transparent}
-  .v-child .site-header .hdr-bg{position:absolute;inset:0;background:var(--ink);z-index:-1}
+  /* 3 · фон потомка задан сразу, без класса is-scrolled */
+  .v-static .site-header__bg{opacity:1}
 
-  /* 4 · без рамки, тени и полотна над шапкой */
+  /* 4 · без рамки и тени у шапки */
   .v-plain .site-header.is-scrolled{box-shadow:none;border-bottom-color:transparent}
-  .v-plain .site-header::before{display:none}
 
   /* 5 · html и body без overflow-x:clip */
   .v-noclip, .v-noclip body{overflow-x:visible}
@@ -43,7 +41,7 @@
 <body>
 
 <header class="site-header is-scrolled" id="siteHeader">
-  <div class="hdr-bg" aria-hidden="true"></div>
+  <div class="site-header__bg" aria-hidden="true"></div>
   <div class="container site-header__inner">
     <a class="logo" href="./" aria-label="CLUB 1">
       <img src="assets/logo-white.svg" alt="CLUB 1" width="1229" height="219">
@@ -86,10 +84,10 @@
   }, {passive:true});
 
   var VARIANTS = [
-    ['v-static', '2 · ФОН ШАПКИ ЗАДАН СРАЗУ'],
-    ['v-site',   '1 · КАК НА САЙТЕ'],
-    ['v-child',  '3 · ФОН НА ПОТОМКЕ ШАПКИ'],
-    ['v-plain',  '4 · БЕЗ РАМКИ, ТЕНИ И ПОЛОТНА'],
+    ['v-site',   '1 · КАК СЕЙЧАС НА САЙТЕ'],
+    ['v-onself', '2 · ФОН НА САМОЙ ШАПКЕ'],
+    ['v-static', '3 · ФОН ПОТОМКА ЗАДАН СРАЗУ'],
+    ['v-plain',  '4 · БЕЗ РАМКИ И ТЕНИ'],
     ['v-noclip', '5 · HTML/BODY БЕЗ CLIP']
   ];
   var lab = document.getElementById('lab');

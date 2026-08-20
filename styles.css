@@ -261,28 +261,30 @@ ul{list-style:none}
      и в альбомной ориентации — работает. */
   padding-top:var(--safe-top);
 }
-/* Полоса статус-бара на айфоне (правка Анвера 20.08, второй заход).
+/* Полоса статус-бара на айфоне (правка Анвера 20.08, третий заход).
    В портретном Safari env(safe-area-inset-top) отдаёт ноль даже с
-   viewport-fit=cover — форум Apple 699415, — поэтому отступ выше в этой
+   viewport-fit=cover (форум Apple 699415), поэтому отступ выше в этой
    ориентации не действует: шапка прилипает НИЖЕ полосы, а лента
-   прокручивается за ней, и над логотипом едут афиши. Полосу закрываем
-   тем, что не зависит от env: полотном над шапкой. В обычном браузере
-   оно лежит за верхним краем экрана и невидимо. */
-.site-header::before{
-  content:"";position:absolute;left:0;right:0;bottom:100%;height:220px;
-  background:#0a0810;opacity:0;pointer-events:none;
-  transition:opacity .28s var(--ease);
-}
-.site-header.is-scrolled::before{opacity:1}
-/* JS toggles .is-scrolled once the page moves past the hero top */
-.site-header.is-scrolled{
+   прокручивается за ней, и над логотипом едут афиши.
+
+   Замер по записям с телефона Анвера: на служебной странице, где фон
+   липкой полосы лежал на её ПОТОМКАХ, айфон залил полосу статус-бара
+   ровно этим цветом (23,19,30 в кадре). На сайте, где фон стоял на
+   самом липком элементе, в той же области живой контент. Это совпадает
+   с рекомендацией для Safari 26: фон и размытие липкой шапки держать не
+   на ней, а на absolute-потомке — тогда система забирает его цвет себе
+   за полосу. Фон и переносим; сама шапка остаётся прозрачной. */
+.site-header__bg{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:rgba(10,8,16,.94);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  opacity:0;transition:opacity .28s var(--ease);
+}
+.site-header.is-scrolled .site-header__bg{opacity:1}
+/* JS toggles .is-scrolled once the page moves past the hero top */
+.site-header.is-scrolled{
   border-bottom-color:var(--hairline);
-  /* вторая, независимая страховка на ту же полосу: сплошная тень вверх.
-     Псевдоэлемент и тень рисуются разными механизмами — какой из них
-     айфон покажет за полосой статус-бара, тот её и закроет */
-  box-shadow:0 12px 40px -24px rgba(0,0,0,.9), 0 -220px 0 0 #0a0810;
+  box-shadow:0 12px 40px -24px rgba(0,0,0,.9);
 }
 .site-header__inner{
   display:flex;align-items:center;gap:24px;
@@ -1790,7 +1792,12 @@ html{overflow-x:clip}
    ===================================================================== */
 html:has(.mobile-menu.is-open) .site-header{
   position:fixed;top:0;left:0;right:0;
-  background:var(--ink);border-bottom-color:var(--hairline);
+  border-bottom-color:var(--hairline);
+}
+/* фон открытой шапки — на том же потомке, что и у прокрученной */
+html:has(.mobile-menu.is-open) .site-header .site-header__bg{
+  opacity:1;background:var(--ink);
+  -webkit-backdrop-filter:none;backdrop-filter:none;
 }
 .mobile-menu__close{
   position:absolute;right:var(--gutter);top:12px;
@@ -1939,7 +1946,9 @@ html:has(.mobile-menu.is-open) .tg-invite{display:none}
    непрозрачный фон: визуально почти то же, стоимость нулевая.
    ===================================================================== */
 @media (max-width:900px){
-  .site-header.is-scrolled{
+  /* фон живёт на потомке шапки (см. полосу статус-бара выше) — гасим
+     размытие и делаем его непрозрачным именно там */
+  .site-header__bg{
     -webkit-backdrop-filter:none;backdrop-filter:none;
     background:var(--ink);
   }
