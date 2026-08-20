@@ -1771,11 +1771,17 @@ html:has(.mobile-menu.is-open) .site-header{
   color:var(--text);font-size:1.7rem;line-height:1;cursor:pointer;
 }
 .mobile-menu__close:hover{border-color:var(--magenta);color:#fff}
-/* показываем только там, где меню вообще бывает */
+/* Крестик панели — запасной (правка Анвера 20.08). Пока шапка пришпилена,
+   бургер сам стоит крестиком в правом верхнем углу, и второй крестик под
+   ним просто дублировал его на экране. Показываем панельный только там,
+   где :has() не работает и пришпилить шапку нечем: тогда без него меню
+   действительно нечем закрыть. */
 @media (max-width:1023px){
-  .mobile-menu.is-open .mobile-menu__close{display:flex}
-  /* и освобождаем под него место, чтобы не легло на первый пункт */
-  .mobile-menu{padding-top:64px}
+  @supports not selector(:has(*)){
+    .mobile-menu.is-open .mobile-menu__close{display:flex}
+    /* и освобождаем под него место, чтобы не легло на первый пункт */
+    .mobile-menu{padding-top:64px}
+  }
 }
 
 /* =====================================================================
