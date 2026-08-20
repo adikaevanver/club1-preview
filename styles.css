@@ -255,15 +255,33 @@ ul{list-style:none}
   transition:background .28s var(--ease), border-color .28s, box-shadow .28s;
   border-bottom:1px solid transparent;
   /* на телефоне под шапку уходит область статус-бара: без этого отступа
-     сквозь неё просвечивали афиши (правка Анвера 19.08) */
+     сквозь неё просвечивали афиши (правка Анвера 19.08). В портретном
+     Safari отступ равен нулю (см. полосу статус-бара ниже), в standalone
+     и в альбомной ориентации — работает. */
   padding-top:var(--safe-top);
 }
+/* Полоса статус-бара на айфоне (правка Анвера 20.08, второй заход).
+   В портретном Safari env(safe-area-inset-top) отдаёт ноль даже с
+   viewport-fit=cover — форум Apple 699415, — поэтому отступ выше в этой
+   ориентации не действует: шапка прилипает НИЖЕ полосы, а лента
+   прокручивается за ней, и над логотипом едут афиши. Полосу закрываем
+   тем, что не зависит от env: полотном над шапкой. В обычном браузере
+   оно лежит за верхним краем экрана и невидимо. */
+.site-header::before{
+  content:"";position:absolute;left:0;right:0;bottom:100%;height:220px;
+  background:#0a0810;opacity:0;pointer-events:none;
+  transition:opacity .28s var(--ease);
+}
+.site-header.is-scrolled::before{opacity:1}
 /* JS toggles .is-scrolled once the page moves past the hero top */
 .site-header.is-scrolled{
   background:rgba(10,8,16,.94);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom-color:var(--hairline);
-  box-shadow:0 12px 40px -24px rgba(0,0,0,.9);
+  /* вторая, независимая страховка на ту же полосу: сплошная тень вверх.
+     Псевдоэлемент и тень рисуются разными механизмами — какой из них
+     айфон покажет за полосой статус-бара, тот её и закроет */
+  box-shadow:0 12px 40px -24px rgba(0,0,0,.9), 0 -220px 0 0 #0a0810;
 }
 .site-header__inner{
   display:flex;align-items:center;gap:24px;
