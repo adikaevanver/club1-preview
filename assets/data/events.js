@@ -231,25 +231,59 @@ window.CLUB1_EVENTS = [
   {date:'2026-08-30', time:'18:30', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
    poster:'assets/posters/gorod-45.jpg', wide:'assets/posters/gorod-wide125.jpg', photo:null, tone:'cyan', page:'gorod',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73581193/#abiframe', age:'18+'},
+  /* ЧУДАки — сверка со старым сайтом 20.08: шоу продавалось там и
+     отсутствовало здесь. Сеанс intickets 74461153 открыт живьём:
+     «Вск, 30 августа 2026, 19:00 · Шоу "ЧУДАки" · CLUB#1», цены
+     1 500–5 000 ₽. Афиша взята с Тильда-CDN, она квадратная 1:1 —
+     карточка покажет её в рамке 4:5 с полями; портрет 1080×1350
+     заказан Максиму. Своей страницы у шоу нет, кнопка ведёт в кассу. */
+  {date:'2026-08-30', time:'19:00', title:'ЧУДАки', kind:'Шоу', format:'special', priceFrom:1500,
+   poster:'assets/posters/chudaki-sq.jpg', wide:null, wide169:'assets/posters/chudaki-wide.jpg', photo:null, tone:'gold', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74461153/#abiframe', age:'18+'},
   {date:'2026-08-30', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
    poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide125.jpg', photo:null, tone:'mono', page:'show',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@68548535?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  /* Гурам Амарян, вторая дата — сверка со старым сайтом 20.08. Виджет
+     Афиши открыт живьём: «Ср, 2 сентября, 20:00 · Club #1», цены
+     2 000–6 000 ₽. Афиша и страница те же, что у даты 20.08. */
+  {date:'2026-09-02', time:'20:00', title:'Гурам Амарян', kind:'Сольный концерт', format:'solniki', priceFrom:2000,
+   poster:'assets/posters/guram2-45.jpg', wide:null, wide169:'assets/posters/guram2-wide.jpg', photo:null, tone:'mag', page:'guram',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODgzNjg0MDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button02_09&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce', age:'18+'},
   {date:'2026-09-06', time:'19:00', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/komarov-45.jpg', wide:null, wide169:'assets/posters/komarov-wide.jpg', photo:null, tone:'sky', page:'komarov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73420327/#abiframe', age:'18+'},
   {date:'2026-09-12', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/chabdarov-45.jpg', wide:null, photo:null, tone:'mag', page:'chabdarov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74316674/#abiframe', age:'18+'},
-  {date:'2026-09-19', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:'assets/posters/chabdarov-45.jpg', wide:null, photo:null, tone:'mag', page:'chabdarov',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/74316676/#abiframe', age:'18+'},
+  /* Валентин Сидоров — сверка со старым сайтом 20.08. Сеанс intickets
+     74461145 открыт живьём: «Сб, 12 сентября 2026, 21:30 · Валентин
+     Сидоров. Стендап. Сольный концерт · CLUB#1», цены 1 500–5 000 ₽.
+     Афиша квадратная 1:1 с Тильда-CDN, портрет 4:5 заказан Максиму. */
+  {date:'2026-09-12', time:'21:30', title:'Валентин Сидоров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
+   poster:'assets/posters/sidorov-sq.jpg', wide:null, photo:null, tone:'cyan', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74461145/#abiframe', age:'18+'},
   /* Бьюти стендап — заведён 13.08 по карточке Максима; время и сеанс из
      кассы (intickets 74087267, сверено 10.08 при заводе на старый сайт),
      внутренней страницы на превью нет — кнопка ведёт сразу в кассу */
   {date:'2026-09-19', time:'21:30', title:'Бьюти стендап', kind:'Шоу', format:'special', priceFrom:2000,
    poster:'assets/posters/beauty-45.jpg', wide:null, photo:null, tone:'mag', page:null,
    buy:'https://iframeab-pre7764.intickets.ru/seance/74087267/#abiframe', age:'18+'},
+  /* ВИА Ваши Краши — сверка со старым сайтом 20.08. Сеанс intickets
+     74432364 открыт живьём: «Вск, 20 сентября 2026, 19:00 · ВИА Ваши
+     Краши · CLUB#1», цены 1 200–3 500 ₽. Афиша квадратная 1:1,
+     портрет 4:5 заказан Максиму. */
+  {date:'2026-09-20', time:'19:00', title:'ВИА Ваши Краши', kind:'Концерт', format:'krashi', priceFrom:1200,
+   poster:'assets/posters/krashi2009-sq.jpg', wide:null, wide169:'assets/posters/krashi2009-wide.jpg', photo:null, tone:'mag', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74432364/#abiframe', age:'18+'},
   {date:'2026-10-03', time:'18:30', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/komarov-45.jpg', wide:null, wide169:'assets/posters/komarov-wide.jpg', photo:null, tone:'sky', page:'komarov',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/73420338/#abiframe', age:'18+'}
+   buy:'https://iframeab-pre7764.intickets.ru/seance/73420338/#abiframe', age:'18+'},
+  /* Расул Чабдаров, вторая дата — БЫЛА 19.09, стала 4 октября. Касса
+     перенесла дату внутри того же сеанса 74316676: виджет, открытый
+     20.08, отдаёт «Вск, 4 октября 2026, 18:30». Сайт до этой правки
+     продавал её как 19 сентября, то есть человек покупал билет на
+     другой день. Ссылка не менялась, менялась дата вокруг неё. */
+  {date:'2026-10-04', time:'18:30', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
+   poster:'assets/posters/chabdarov-45.jpg', wide:null, photo:null, tone:'mag', page:'chabdarov',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74316676/#abiframe', age:'18+'}
 ];
