@@ -61,7 +61,16 @@
   --r-sm:10px;               /* control radius */
   --header-h:88px;
   --maxw:1440px;
-  --gutter:clamp(18px, 5vw, 64px);
+  /* Безопасные зоны телефона. Действуют только вместе с viewport-fit=cover
+     в мета-вьюпорте страниц: без него iOS держит вьюпорт внутри безопасной
+     зоны, env(safe-area-*) отдаёт ноль, и отступ шапке под статус-бар
+     оказывается написан вхолостую (грабля правки 19.08). Гаттер забирает
+     вырез в альбомной ориентации, --header-total — полная высота шапки
+     вместе с полосой статус-бара. */
+  --safe-top:env(safe-area-inset-top, 0px);
+  --safe-bottom:env(safe-area-inset-bottom, 0px);
+  --gutter:max(clamp(18px, 5vw, 64px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  --header-total:calc(var(--header-h) + var(--safe-top));
 
   /* ── вертикальный ритм ──────────────────────────────────────────────
      Одна шкала на весь сайт. До неё каждая страница задавала отступы
@@ -247,7 +256,7 @@ ul{list-style:none}
   border-bottom:1px solid transparent;
   /* на телефоне под шапку уходит область статус-бара: без этого отступа
      сквозь неё просвечивали афиши (правка Анвера 19.08) */
-  padding-top:env(safe-area-inset-top, 0px);
+  padding-top:var(--safe-top);
 }
 /* JS toggles .is-scrolled once the page moves past the hero top */
 .site-header.is-scrolled{
@@ -307,7 +316,7 @@ ul{list-style:none}
 .mobile-menu{
   /* выше .sticky-cta (120): открытое меню перекрывает плашку брони
      целиком (аудит 06.08); шапку меню не трогает — начинается под ней */
-  position:fixed;inset:var(--header-h) 0 0 0;z-index:130;
+  position:fixed;inset:var(--header-total) 0 0 0;z-index:130;
   /* панель непрозрачная (правка Анвера 09.08): при полупрозрачном фоне
      сквозь открытое меню читался текст страницы, и на глаз это выглядело
      как «меню не открылось». blur оставлен только под шапкой. */
@@ -602,7 +611,8 @@ p + .hero__cta,
    ===================================================================== */
 .site-footer{
   border-top:1px solid var(--hairline);
-  padding:56px 0 46px;margin-top:8px;
+  /* нижний запас держит подвал над индикатором home на айфоне */
+  padding:56px 0 calc(46px + var(--safe-bottom));margin-top:8px;
 }
 .site-footer__grid{
   display:grid;grid-template-columns:auto 1fr 1fr auto;gap:40px;align-items:start;
@@ -678,7 +688,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   .event-card{width:86vw;max-width:360px}
   .afisha .slider-arrow{display:none}         /* rely on native swipe */
 
-  .site-footer{padding:44px 0 40px}
+  .site-footer{padding:44px 0 calc(40px + var(--safe-bottom))}
   .site-footer__grid{grid-template-columns:1fr;gap:32px}
   .footer-brand,.footer-social-col{grid-column:auto}
 }
@@ -820,7 +830,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
    Фон обязателен: под рейкой проезжают карточки. Поля вытянуты в гаттер
    контейнера, иначе край карточки видно сбоку от рейки */
 .datebar--sticky{
-  position:sticky;top:var(--header-h);z-index:60;
+  position:sticky;top:var(--header-total);z-index:60;
   flex-wrap:nowrap;gap:14px;
   margin:22px calc(-1 * var(--gutter)) 0;
   padding:14px var(--gutter);
@@ -1424,7 +1434,7 @@ span.headliner__link{cursor:default}
 /* ---- мобильное меню: скролл при высоком контенте (баг с созвона) ---- */
 .mobile-menu{-webkit-overflow-scrolling:touch;padding-bottom:calc(48px + env(safe-area-inset-bottom))}
 @supports (height:100dvh){
-  .mobile-menu{top:var(--header-h);bottom:auto;height:calc(100dvh - var(--header-h))}
+  .mobile-menu{top:var(--header-total);bottom:auto;height:calc(100dvh - var(--header-total))}
 }
 
 /* =====================================================================
@@ -1480,7 +1490,7 @@ html{overflow-x:clip}
    ===================================================================== */
 
 /* заголовок раздела стоит над фильтрами (был между фильтрами и списком) */
-.afisha__head--section{margin:var(--section-y) 0 0;scroll-margin-top:calc(var(--header-h) + 12px)}
+.afisha__head--section{margin:var(--section-y) 0 0;scroll-margin-top:calc(var(--header-total) + 12px)}
 .afisha__head--section + .filters{padding-top:22px}
 
 /* самостоятельная страница афиши: заголовок-h1 крупнее, отступ от шапки */
