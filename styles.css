@@ -62,16 +62,6 @@
   --header-h:88px;
   --maxw:1440px;
   --gutter:clamp(18px, 5vw, 64px);
-  /* Безопасные зоны телефона. В портретном Safari они всегда нули: iOS
-     держит вьюпорт внутри безопасной зоны, а с viewport-fit=cover
-     env(safe-area-*) в портрете всё равно отдаёт ноль (форум Apple 699415)
-     — сам cover при этом добавлял тёмные поля по бокам, поэтому снят со
-     страниц 20.08. Токены оставлены ради standalone и альбомной
-     ориентации, где значения настоящие; --header-total — полная высота
-     шапки вместе с полосой статус-бара. */
-  --safe-top:env(safe-area-inset-top, 0px);
-  --safe-bottom:env(safe-area-inset-bottom, 0px);
-  --header-total:calc(var(--header-h) + var(--safe-top));
 
   /* ── вертикальный ритм ──────────────────────────────────────────────
      Одна шкала на весь сайт. До неё каждая страница задавала отступы
@@ -256,33 +246,13 @@ ul{list-style:none}
   transition:background .28s var(--ease), border-color .28s, box-shadow .28s;
   border-bottom:1px solid transparent;
   /* на телефоне под шапку уходит область статус-бара: без этого отступа
-     сквозь неё просвечивали афиши (правка Анвера 19.08). В портретном
-     Safari отступ равен нулю (см. полосу статус-бара ниже), в standalone
-     и в альбомной ориентации — работает. */
-  padding-top:var(--safe-top);
+     сквозь неё просвечивали афиши (правка Анвера 19.08) */
+  padding-top:env(safe-area-inset-top, 0px);
 }
-/* Полоса статус-бара на айфоне (правка Анвера 20.08, третий заход).
-   В портретном Safari env(safe-area-inset-top) отдаёт ноль даже с
-   viewport-fit=cover (форум Apple 699415), поэтому отступ выше в этой
-   ориентации не действует: шапка прилипает НИЖЕ полосы, а лента
-   прокручивается за ней, и над логотипом едут афиши.
-
-   Замер по записям с телефона Анвера: на служебной странице, где фон
-   липкой полосы лежал на её ПОТОМКАХ, айфон залил полосу статус-бара
-   ровно этим цветом (23,19,30 в кадре). На сайте, где фон стоял на
-   самом липком элементе, в той же области живой контент. Это совпадает
-   с рекомендацией для Safari 26: фон и размытие липкой шапки держать не
-   на ней, а на absolute-потомке — тогда система забирает его цвет себе
-   за полосу. Фон и переносим; сама шапка остаётся прозрачной. */
-.site-header__bg{
-  position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:rgba(10,8,16,.94);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  opacity:0;transition:opacity .28s var(--ease);
-}
-.site-header.is-scrolled .site-header__bg{opacity:1}
 /* JS toggles .is-scrolled once the page moves past the hero top */
 .site-header.is-scrolled{
+  background:rgba(10,8,16,.94);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom-color:var(--hairline);
   box-shadow:0 12px 40px -24px rgba(0,0,0,.9);
 }
@@ -337,7 +307,7 @@ ul{list-style:none}
 .mobile-menu{
   /* выше .sticky-cta (120): открытое меню перекрывает плашку брони
      целиком (аудит 06.08); шапку меню не трогает — начинается под ней */
-  position:fixed;inset:var(--header-total) 0 0 0;z-index:130;
+  position:fixed;inset:var(--header-h) 0 0 0;z-index:130;
   /* панель непрозрачная (правка Анвера 09.08): при полупрозрачном фоне
      сквозь открытое меню читался текст страницы, и на глаз это выглядело
      как «меню не открылось». blur оставлен только под шапкой. */
@@ -632,8 +602,7 @@ p + .hero__cta,
    ===================================================================== */
 .site-footer{
   border-top:1px solid var(--hairline);
-  /* нижний запас держит подвал над индикатором home на айфоне */
-  padding:56px 0 calc(46px + var(--safe-bottom));margin-top:8px;
+  padding:56px 0 46px;margin-top:8px;
 }
 .site-footer__grid{
   display:grid;grid-template-columns:auto 1fr 1fr auto;gap:40px;align-items:start;
@@ -709,7 +678,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   .event-card{width:86vw;max-width:360px}
   .afisha .slider-arrow{display:none}         /* rely on native swipe */
 
-  .site-footer{padding:44px 0 calc(40px + var(--safe-bottom))}
+  .site-footer{padding:44px 0 40px}
   .site-footer__grid{grid-template-columns:1fr;gap:32px}
   .footer-brand,.footer-social-col{grid-column:auto}
 }
@@ -851,7 +820,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
    Фон обязателен: под рейкой проезжают карточки. Поля вытянуты в гаттер
    контейнера, иначе край карточки видно сбоку от рейки */
 .datebar--sticky{
-  position:sticky;top:var(--header-total);z-index:60;
+  position:sticky;top:var(--header-h);z-index:60;
   flex-wrap:nowrap;gap:14px;
   margin:22px calc(-1 * var(--gutter)) 0;
   padding:14px var(--gutter);
@@ -1455,7 +1424,7 @@ span.headliner__link{cursor:default}
 /* ---- мобильное меню: скролл при высоком контенте (баг с созвона) ---- */
 .mobile-menu{-webkit-overflow-scrolling:touch;padding-bottom:calc(48px + env(safe-area-inset-bottom))}
 @supports (height:100dvh){
-  .mobile-menu{top:var(--header-total);bottom:auto;height:calc(100dvh - var(--header-total))}
+  .mobile-menu{top:var(--header-h);bottom:auto;height:calc(100dvh - var(--header-h))}
 }
 
 /* =====================================================================
@@ -1511,7 +1480,7 @@ html{overflow-x:clip}
    ===================================================================== */
 
 /* заголовок раздела стоит над фильтрами (был между фильтрами и списком) */
-.afisha__head--section{margin:var(--section-y) 0 0;scroll-margin-top:calc(var(--header-total) + 12px)}
+.afisha__head--section{margin:var(--section-y) 0 0;scroll-margin-top:calc(var(--header-h) + 12px)}
 .afisha__head--section + .filters{padding-top:22px}
 
 /* самостоятельная страница афиши: заголовок-h1 крупнее, отступ от шапки */
@@ -1792,12 +1761,7 @@ html{overflow-x:clip}
    ===================================================================== */
 html:has(.mobile-menu.is-open) .site-header{
   position:fixed;top:0;left:0;right:0;
-  border-bottom-color:var(--hairline);
-}
-/* фон открытой шапки — на том же потомке, что и у прокрученной */
-html:has(.mobile-menu.is-open) .site-header .site-header__bg{
-  opacity:1;background:var(--ink);
-  -webkit-backdrop-filter:none;backdrop-filter:none;
+  background:var(--ink);border-bottom-color:var(--hairline);
 }
 .mobile-menu__close{
   position:absolute;right:var(--gutter);top:12px;
@@ -1946,9 +1910,7 @@ html:has(.mobile-menu.is-open) .tg-invite{display:none}
    непрозрачный фон: визуально почти то же, стоимость нулевая.
    ===================================================================== */
 @media (max-width:900px){
-  /* фон живёт на потомке шапки (см. полосу статус-бара выше) — гасим
-     размытие и делаем его непрозрачным именно там */
-  .site-header__bg{
+  .site-header.is-scrolled{
     -webkit-backdrop-filter:none;backdrop-filter:none;
     background:var(--ink);
   }
