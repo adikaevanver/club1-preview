@@ -3,38 +3,41 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#00c853">
 <meta name="robots" content="noindex, nofollow">
 <title>Тест полосы статус-бара</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:#0a0810;color:#fff;font:15px/1.4 -apple-system, system-ui, sans-serif}
 
-  /* четыре полосы-кандидата, каждая своим механизмом красит область
-     за полосой статус-бара; какая проявится — тот приём и рабочий */
+  /* пять полос-кандидатов: каждая красит участок за полосой статус-бара
+     своим механизмом. Какая проявится на скриншоте — тот приём и рабочий */
   .bar{position:sticky;top:0;z-index:50;display:flex;height:72px}
   .lane{flex:1;display:flex;align-items:center;justify-content:center;
         font-weight:700;font-size:20px;background:#17131f;
         border-right:1px solid #000}
 
-  /* A — псевдоэлемент над липким элементом */
-  .lane--a::before{content:"";position:absolute;top:-220px;left:0;width:25%;
+  /* A — псевдоэлемент над липкой шапкой (красный) */
+  .lane--a::before{content:"";position:absolute;top:-220px;left:0;width:20%;
                    height:220px;background:#ff2d2d}
-  /* B — position:fixed над верхней кромкой вьюпорта */
-  .fixed-b{position:fixed;top:-220px;left:25%;width:25%;height:220px;
+  /* B — position:fixed выше верхней кромки вьюпорта (синий) */
+  .fixed-b{position:fixed;top:-220px;left:20%;width:20%;height:220px;
            background:#2d8cff;z-index:50}
-  /* C — сплошная тень вверх */
+  /* C — сплошная тень вверх (зелёный) */
   .lane--c{box-shadow:0 -220px 0 0 #23d160}
-  /* D — прозрачный липкий родитель, фон на absolute-потомке
-     (рекомендация для Safari 26) */
+  /* D — прозрачный липкий родитель, фон на absolute-потомке (фиолетовый) */
   .lane--d{background:transparent;position:relative}
   .lane--d span{position:absolute;inset:0;background:#b14aff;z-index:-1}
+  /* E — обычный absolute в потоке документа, который скрипт держит ровно
+     над верхней кромкой экрана (бирюзовый) */
+  .abs-e{position:absolute;left:80%;width:20%;height:220px;
+         background:#00e5ff;z-index:50}
 
   /* замер держим под шапкой всегда на виду: скриншот верха экрана
      должен показывать и полосу, и цифры */
   .readout{position:fixed;top:72px;left:0;right:0;z-index:40;
            padding:12px 14px;background:#1d1a26;border-bottom:2px solid #ff2d2d;
            font:12px/1.45 ui-monospace, Menlo, monospace;white-space:pre-wrap}
-  .filler{padding:0}
   .filler div{height:90px;display:flex;align-items:center;padding-left:14px;
               font-weight:700;font-size:22px;color:#000}
 </style>
@@ -46,16 +49,18 @@
   <div class="lane lane--b">B</div>
   <div class="lane lane--c">C</div>
   <div class="lane lane--d">D<span></span></div>
+  <div class="lane lane--e">E</div>
 </div>
 <div class="fixed-b"></div>
+<div class="abs-e" id="absE"></div>
 
 <div class="readout" id="readout">замер…</div>
 
 <div class="filler" id="filler"></div>
 
 <script>
-  // яркая лента: если в полосе статус-бара видно её, значит ни один
-  // из приёмов туда не дорисовал
+  /* яркая лента: если за полосой статус-бара видно её, значит ни один
+     из приёмов туда не дорисовал */
   var f = document.getElementById('filler');
   var colors = ['#ffd400','#ff7ad9','#7affd4','#ffa14a','#a6c1ff'];
   for (var i = 0; i < 40; i++) {
@@ -73,7 +78,12 @@
     'padding-right:env(safe-area-inset-right,0px)';
   document.body.appendChild(probe);
 
+  var absE = document.getElementById('absE');
+
   function render(){
+    /* E: держим полотно ровно над верхней кромкой экрана */
+    absE.style.top = (window.scrollY - 220) + 'px';
+
     var cs = getComputedStyle(probe);
     var vv = window.visualViewport;
     var lines = [
