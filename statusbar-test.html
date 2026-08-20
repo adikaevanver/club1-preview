@@ -1,106 +1,110 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" class="v-static">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#00c853">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
+<meta name="theme-color" content="#0a0810">
 <meta name="robots" content="noindex, nofollow">
-<title>Тест полосы статус-бара</title>
+<title>Тест полосы статус-бара — 2</title>
+<link rel="stylesheet" href="styles.css?v=2608221">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#0a0810;color:#fff;font:15px/1.4 -apple-system, system-ui, sans-serif}
+  /* Страница повторяет шапку сайта один в один (те же классы, тот же
+     styles.css) и сама переключает варианты раз в 4 секунды. Задача —
+     увидеть, при каком варианте полоса статус-бара перестаёт показывать
+     проехавший контент. */
+  .lab{position:fixed;top:74px;left:0;right:0;z-index:140;
+       padding:10px 14px;background:#ff2d2d;color:#fff;
+       font:700 17px/1.3 -apple-system, system-ui, sans-serif}
+  .lab small{display:block;font-weight:500;font-size:12px;opacity:.9;
+             font-family:ui-monospace, Menlo, monospace}
+  .strip{padding:0}
+  .strip div{height:110px;display:flex;align-items:center;padding-left:16px;
+             font:700 22px/1 -apple-system, system-ui, sans-serif;color:#000}
 
-  /* пять полос-кандидатов: каждая красит участок за полосой статус-бара
-     своим механизмом. Какая проявится на скриншоте — тот приём и рабочий */
-  .bar{position:sticky;top:0;z-index:50;display:flex;height:72px}
-  .lane{flex:1;display:flex;align-items:center;justify-content:center;
-        font-weight:700;font-size:20px;background:#17131f;
-        border-right:1px solid #000}
+  /* ── варианты ────────────────────────────────────────────────────── */
+  /* 1 · как на сайте: ничего не меняем */
 
-  /* A — псевдоэлемент над липкой шапкой (красный) */
-  .lane--a::before{content:"";position:absolute;top:-220px;left:0;width:20%;
-                   height:220px;background:#ff2d2d}
-  /* B — position:fixed выше верхней кромки вьюпорта (синий) */
-  .fixed-b{position:fixed;top:-220px;left:20%;width:20%;height:220px;
-           background:#2d8cff;z-index:50}
-  /* C — сплошная тень вверх (зелёный) */
-  .lane--c{box-shadow:0 -220px 0 0 #23d160}
-  /* D — прозрачный липкий родитель, фон на absolute-потомке (фиолетовый) */
-  .lane--d{background:transparent;position:relative}
-  .lane--d span{position:absolute;inset:0;background:#b14aff;z-index:-1}
-  /* E — обычный absolute в потоке документа, который скрипт держит ровно
-     над верхней кромкой экрана (бирюзовый) */
-  .abs-e{position:absolute;left:80%;width:20%;height:220px;
-         background:#00e5ff;z-index:50}
+  /* 2 · фон шапки задан сразу, не по классу is-scrolled */
+  .v-static .site-header{background:var(--ink)}
 
-  /* замер держим под шапкой всегда на виду: скриншот верха экрана
-     должен показывать и полосу, и цифры */
-  .readout{position:fixed;top:72px;left:0;right:0;z-index:40;
-           padding:12px 14px;background:#1d1a26;border-bottom:2px solid #ff2d2d;
-           font:12px/1.45 ui-monospace, Menlo, monospace;white-space:pre-wrap}
-  .filler div{height:90px;display:flex;align-items:center;padding-left:14px;
-              font-weight:700;font-size:22px;color:#000}
+  /* 3 · фон шапки убран с неё самой и отдан absolute-потомку */
+  .v-child .site-header,
+  .v-child .site-header.is-scrolled{background:transparent}
+  .v-child .site-header .hdr-bg{position:absolute;inset:0;background:var(--ink);z-index:-1}
+
+  /* 4 · без рамки, тени и полотна над шапкой */
+  .v-plain .site-header.is-scrolled{box-shadow:none;border-bottom-color:transparent}
+  .v-plain .site-header::before{display:none}
+
+  /* 5 · html и body без overflow-x:clip */
+  .v-noclip, .v-noclip body{overflow-x:visible}
 </style>
 </head>
 <body>
 
-<div class="bar">
-  <div class="lane lane--a">A</div>
-  <div class="lane lane--b">B</div>
-  <div class="lane lane--c">C</div>
-  <div class="lane lane--d">D<span></span></div>
-  <div class="lane lane--e">E</div>
-</div>
-<div class="fixed-b"></div>
-<div class="abs-e" id="absE"></div>
+<header class="site-header is-scrolled" id="siteHeader">
+  <div class="hdr-bg" aria-hidden="true"></div>
+  <div class="container site-header__inner">
+    <a class="logo" href="./" aria-label="CLUB 1">
+      <img src="assets/logo-white.svg" alt="CLUB 1" width="1229" height="219">
+    </a>
+    <div class="header-actions">
+      <button class="burger" id="burger" aria-label="Меню"><span></span></button>
+    </div>
+  </div>
+</header>
 
-<div class="readout" id="readout">замер…</div>
+<div class="lab" id="lab">вариант…</div>
 
-<div class="filler" id="filler"></div>
+<div class="strip" id="strip"></div>
 
 <script>
-  /* яркая лента: если за полосой статус-бара видно её, значит ни один
-     из приёмов туда не дорисовал */
-  var f = document.getElementById('filler');
+  /* лента: яркие плашки вперемешку с настоящими афишами — на сайте за
+     полосу статус-бара просвечивают именно карточки с картинками */
+  var strip = document.getElementById('strip');
   var colors = ['#ffd400','#ff7ad9','#7affd4','#ffa14a','#a6c1ff'];
-  for (var i = 0; i < 40; i++) {
+  var posters = ['beauty-45-640.jpg','burlesk-1007-sq-640.jpg'];
+  for (var i = 0; i < 60; i++) {
     var d = document.createElement('div');
-    d.style.background = colors[i % colors.length];
-    d.textContent = 'ЛЕНТА ' + (i + 1);
-    f.appendChild(d);
+    if (i % 3 === 2) {
+      d.style.padding = '0';
+      var img = document.createElement('img');
+      img.src = 'assets/posters/' + posters[(i / 3 | 0) % posters.length];
+      img.style.cssText = 'width:100%;height:110px;object-fit:cover;display:block';
+      d.appendChild(img);
+    } else {
+      d.style.background = colors[i % colors.length];
+      d.textContent = 'ЛЕНТА ' + (i + 1);
+    }
+    strip.appendChild(d);
   }
 
-  var probe = document.createElement('div');
-  probe.style.cssText = 'position:absolute;visibility:hidden;' +
-    'padding-top:env(safe-area-inset-top,0px);' +
-    'padding-bottom:env(safe-area-inset-bottom,0px);' +
-    'padding-left:env(safe-area-inset-left,0px);' +
-    'padding-right:env(safe-area-inset-right,0px)';
-  document.body.appendChild(probe);
+  /* шапка ведёт себя как на сайте */
+  var header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 24);
+  }, {passive:true});
 
-  var absE = document.getElementById('absE');
+  var VARIANTS = [
+    ['v-static', '2 · ФОН ШАПКИ ЗАДАН СРАЗУ'],
+    ['v-site',   '1 · КАК НА САЙТЕ'],
+    ['v-child',  '3 · ФОН НА ПОТОМКЕ ШАПКИ'],
+    ['v-plain',  '4 · БЕЗ РАМКИ, ТЕНИ И ПОЛОТНА'],
+    ['v-noclip', '5 · HTML/BODY БЕЗ CLIP']
+  ];
+  var lab = document.getElementById('lab');
+  var n = 0;
 
-  function render(){
-    /* E: держим полотно ровно над верхней кромкой экрана */
-    absE.style.top = (window.scrollY - 220) + 'px';
-
-    var cs = getComputedStyle(probe);
-    var vv = window.visualViewport;
-    var lines = [
-      'safe-area top / bottom : ' + cs.paddingTop + ' / ' + cs.paddingBottom,
-      'safe-area left / right : ' + cs.paddingLeft + ' / ' + cs.paddingRight,
-      'innerHeight            : ' + window.innerHeight,
-      'visualViewport h / top : ' + (vv ? Math.round(vv.height) + ' / ' + Math.round(vv.offsetTop) : 'нет'),
-      'screen h / DPR         : ' + screen.height + ' / ' + window.devicePixelRatio,
-      'scrollY                : ' + Math.round(window.scrollY),
-      'standalone             : ' + (matchMedia('(display-mode: standalone)').matches ? 'да' : 'нет'),
-      'UA                     : ' + navigator.userAgent.slice(0, 70)
-    ];
-    document.getElementById('readout').textContent = lines.join('\n');
+  function apply(){
+    var v = VARIANTS[n % VARIANTS.length];
+    VARIANTS.forEach(function(x){ document.documentElement.classList.remove(x[0]); });
+    document.documentElement.classList.add(v[0]);
+    lab.innerHTML = v[1] + '<small>прокрути и смотри полосу над логотипом · scrollY ' +
+      Math.round(window.scrollY) + '</small>';
+    n++;
   }
-  render();
-  window.addEventListener('scroll', render, {passive:true});
-  window.addEventListener('resize', render);
+  apply();
+  setInterval(apply, 4000);
 </script>
 </body>
 </html>
