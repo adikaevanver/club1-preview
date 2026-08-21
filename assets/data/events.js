@@ -125,7 +125,7 @@ window.CLUB1_EVENTS = [
    buy:'https://iframeab-pre7764.intickets.ru/seance/73469460/#abiframe', age:'18+'},
   /* партнёрское событие: продаётся с отдельного поддомена intickets, своей
      страницы нет ни у нас, ни на старом сайте — page:null, афиша не
-     кликабельна, «Подробнее» не рисуется (см. afisha.js) */
+     кликабельна, «Подробнее» не рисуется (см. afisha.js) */,
   {date:'2026-08-13', time:'20:00', title:'Дела | True Crime', kind:'Встреча', format:'special', priceFrom:1000,
    poster:null, wide:null, photo:null, tone:'mono', page:null,
    buy:'https://delatruecrime.intickets.ru/seance/73691678/#abiframe', age:null},
@@ -236,7 +236,7 @@ window.CLUB1_EVENTS = [
      «Вск, 30 августа 2026, 19:00 · Шоу "ЧУДАки" · CLUB#1», цены
      1 500–5 000 ₽. Афиша взята с Тильда-CDN, она квадратная 1:1 —
      карточка покажет её в рамке 4:5 с полями; портрет 1080×1350
-     заказан Максиму. Своей страницы у шоу нет, кнопка ведёт в кассу. */
+     заказан Максиму. Своей страницы у шоу нет, кнопка ведёт в кассу. */,
   {date:'2026-08-30', time:'19:00', title:'ЧУДАки', kind:'Шоу', format:'special', priceFrom:1500,
    poster:'assets/posters/chudaki-sq.jpg', wide:null, wide169:'assets/posters/chudaki-wide.jpg', photo:null, tone:'gold', page:null,
    buy:'https://iframeab-pre7764.intickets.ru/seance/74461153/#abiframe', age:'18+'},
@@ -245,36 +245,87 @@ window.CLUB1_EVENTS = [
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@68548535?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
   /* Гурам Амарян, вторая дата — сверка со старым сайтом 20.08. Виджет
      Афиши открыт живьём: «Ср, 2 сентября, 20:00 · Club #1», цены
-     2 000–6 000 ₽. Афиша и страница те же, что у даты 20.08. */
+     2 000–6 000 ₽. Афиша и страница те же, что у даты 20.08. */,
+  {date:'2026-09-02', time:'19:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686647/', age:'18+'},
   {date:'2026-09-02', time:'20:00', title:'Гурам Амарян', kind:'Сольный концерт', format:'solniki', priceFrom:2000,
    poster:'assets/posters/guram2-45.jpg', wide:null, wide169:'assets/posters/guram2-wide.jpg', photo:null, tone:'mag', page:'guram',
    buy:'https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODgzNjg0MDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button02_09&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce', age:'18+'},
+  {date:'2026-09-03', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686651/', age:'18+'},
+  {date:'2026-09-04', time:'19:00', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
+   poster:'assets/posters/burlesk-0409-sq.jpg', wide:'assets/posters/burlesk-wide.jpg', photo:null, tone:'pur', page:'razovoe',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74432346/', age:'18+'},
   {date:'2026-09-06', time:'19:00', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/komarov-45.jpg', wide:null, wide169:'assets/posters/komarov-wide.jpg', photo:null, tone:'sky', page:'komarov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73420327/#abiframe', age:'18+'},
+  {date:'2026-09-09', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686653/', age:'18+'},
+  {date:'2026-09-10', time:'19:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686661/', age:'18+'},
+  {date:'2026-09-12', time:'16:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686667/', age:'18+'},
   {date:'2026-09-12', time:'19:00', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/chabdarov-45.jpg', wide:null, photo:null, tone:'mag', page:'chabdarov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74316674/#abiframe', age:'18+'},
   /* Валентин Сидоров — сверка со старым сайтом 20.08. Сеанс intickets
      74461145 открыт живьём: «Сб, 12 сентября 2026, 21:30 · Валентин
      Сидоров. Стендап. Сольный концерт · CLUB#1», цены 1 500–5 000 ₽.
-     Афиша квадратная 1:1 с Тильда-CDN, портрет 4:5 заказан Максиму. */
+     Афиша квадратная 1:1 с Тильда-CDN, портрет 4:5 заказан Максиму. */,
   {date:'2026-09-12', time:'21:30', title:'Валентин Сидоров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/sidorov-sq.jpg', wide:null, photo:null, tone:'cyan', page:null,
    buy:'https://iframeab-pre7764.intickets.ru/seance/74461145/#abiframe', age:'18+'},
   /* Бьюти стендап — заведён 13.08 по карточке Максима; время и сеанс из
      кассы (intickets 74087267, сверено 10.08 при заводе на старый сайт),
-     внутренней страницы на превью нет — кнопка ведёт сразу в кассу */
+     внутренней страницы на превью нет — кнопка ведёт сразу в кассу */,
+  {date:'2026-09-13', time:'18:30', title:'Money Mic', kind:'Битва комиков', format:'special', priceFrom:700,
+   poster:'assets/posters/money-mic-sq.jpg', wide:'assets/posters/money-mic-wide.jpg', photo:null, tone:'mag', page:'money-mic',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686679/', age:'18+'},
+  {date:'2026-09-13', time:'21:00', title:'Шоу БАЙКИ', kind:'Шоу', format:'special', priceFrom:800,
+   poster:null, wide:null, photo:null, tone:'gold', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686573/', age:'18+'},
+  {date:'2026-09-16', time:'19:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686663/', age:'18+'},
+  {date:'2026-09-17', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686655/', age:'18+'},
+  {date:'2026-09-18', time:'19:00', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
+   poster:'assets/posters/burlesk-1809-sq.jpg', wide:'assets/posters/burlesk-wide.jpg', photo:null, tone:'pur', page:'razovoe',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74432348/', age:'18+'},
   {date:'2026-09-19', time:'21:30', title:'Бьюти стендап', kind:'Шоу', format:'special', priceFrom:2000,
    poster:'assets/posters/beauty-45.jpg', wide:null, photo:null, tone:'mag', page:null,
    buy:'https://iframeab-pre7764.intickets.ru/seance/74087267/#abiframe', age:'18+'},
   /* ВИА Ваши Краши — сверка со старым сайтом 20.08. Сеанс intickets
      74432364 открыт живьём: «Вск, 20 сентября 2026, 19:00 · ВИА Ваши
      Краши · CLUB#1», цены 1 200–3 500 ₽. Афиша квадратная 1:1,
-     портрет 4:5 заказан Максиму. */
+     портрет 4:5 заказан Максиму. */,
   {date:'2026-09-20', time:'19:00', title:'ВИА Ваши Краши', kind:'Концерт', format:'krashi', priceFrom:1200,
    poster:'assets/posters/krashi2009-sq.jpg', wide:null, wide169:'assets/posters/krashi2009-wide.jpg', photo:null, tone:'mag', page:null,
    buy:'https://iframeab-pre7764.intickets.ru/seance/74432364/#abiframe', age:'18+'},
+  {date:'2026-09-23', time:'20:00', title:'Стендап Комьюнити', kind:'Комьюнити', format:'community', priceFrom:1000,
+   poster:null, wide:null, photo:null, tone:'green', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686575/', age:'18+'},
+  {date:'2026-09-23', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686657/', age:'18+'},
+  {date:'2026-09-24', time:'19:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686665/', age:'18+'},
+  {date:'2026-09-26', time:'19:00', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
+   poster:'assets/posters/burlesk-2609-sq.jpg', wide:'assets/posters/burlesk-wide.jpg', photo:null, tone:'pur', page:'razovoe',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74432350/', age:'18+'},
+  {date:'2026-09-27', time:'18:30', title:'Money Mic', kind:'Битва комиков', format:'special', priceFrom:700,
+   poster:'assets/posters/money-mic-sq.jpg', wide:'assets/posters/money-mic-wide.jpg', photo:null, tone:'mag', page:'money-mic',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686681/', age:'18+'},
+  {date:'2026-10-01', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
+   poster:null, wide:null, photo:null, tone:'mono', page:null,
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686659/', age:'18+'},
   {date:'2026-10-03', time:'18:30', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/komarov-45.jpg', wide:null, wide169:'assets/posters/komarov-wide.jpg', photo:null, tone:'sky', page:'komarov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73420338/#abiframe', age:'18+'},
@@ -282,8 +333,14 @@ window.CLUB1_EVENTS = [
      перенесла дату внутри того же сеанса 74316676: виджет, открытый
      20.08, отдаёт «Вск, 4 октября 2026, 18:30». Сайт до этой правки
      продавал её как 19 сентября, то есть человек покупал билет на
-     другой день. Ссылка не менялась, менялась дата вокруг неё. */
+     другой день. Ссылка не менялась, менялась дата вокруг неё. */,
   {date:'2026-10-04', time:'18:30', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/chabdarov-45.jpg', wide:null, photo:null, tone:'mag', page:'chabdarov',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/74316676/#abiframe', age:'18+'}
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74316676/#abiframe', age:'18+'},
+  {date:'2026-10-10', time:'19:00', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
+   poster:'assets/posters/burlesk-1010-sq.jpg', wide:'assets/posters/burlesk-wide.jpg', photo:null, tone:'pur', page:'razovoe',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74432352/', age:'18+'},
+  {date:'2026-10-30', time:'21:30', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
+   poster:'assets/posters/burlesk-3010-sq.jpg', wide:'assets/posters/burlesk-wide.jpg', photo:null, tone:'pur', page:'razovoe',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686618/', age:'18+'}
 ];
