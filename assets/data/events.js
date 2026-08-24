@@ -300,7 +300,7 @@ window.CLUB1_EVENTS = [
    poster:'assets/posters/money-mic-45.jpg', wide:'assets/posters/money-mic-wide.jpg', photo:null, tone:'mag', page:'money-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686679/#abiframe', age:'18+'},
   {date:'2026-09-13', time:'21:00', title:'Шоу БАЙКИ', kind:'Шоу', format:'special', priceFrom:800,
-   poster:null, wide:null, photo:null, tone:'gold', page:'bayki',
+   poster:'assets/posters/baiki-45.jpg', wide:null, photo:null, tone:'gold', page:'bayki',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686573/#abiframe', age:'18+'},
   {date:'2026-09-16', time:'19:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide.jpg', photo:null, tone:'mono', page:'open-mic',
