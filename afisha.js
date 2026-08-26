@@ -1197,38 +1197,64 @@
         list = list.filter(function(ev){ return !titles[ev.title]; });
       }
     }
-    /* Подборка (Анвер 26.08: «одни и те же мероприятия, какая логика?»):
-       1) одно шоу — одна карточка (ближайшая дата), иначе семь дат «Опытных»
-          занимали половину рейки; 2) форматы чередуются — первым идёт
-          ближайшее шоу каждого формата, потом вторые и т.д.; 3) начало
-          подборки сдвигается по имени страницы, чтобы на разных страницах
-          набор отличался, а не повторялся один в один. */
+    /* Подборка «похожее на то, что гость смотрит» (Анвер 26.08: «по какой
+       логике ты ставишь мероприятия в рекомендацию?»). Кандидаты — по одной
+       карточке на шоу (ближайшая дата), без ежедневных проверок материала
+       и без самого шоу страницы. Каждому шоу считается близость к текущему:
+         · тот же формат (сольник → сольники, шоу → шоу)        +3
+         · похожая цена: разница ≤ 300 ₽ +2, ≤ 800 ₽ +1
+         · близкая дата к дате текущего шоу: ≤ 7 дней +2, ≤ 21 дня +1
+       Сортировка по сумме, при равенстве — раньше по дате. Чтобы рейка не
+       была монотонной, среди первых четырёх обязательно есть шоу другого
+       формата. Если у страницы нет своего шоу (сводные страницы) —
+       ближайшие по дате с чередованием форматов. */
     var byTitle = {}, shows = [];
     dedupeSameDay(list).forEach(function(ev){
       if (ev.format === 'ok') return;   /* ежедневные проверки материала не рекомендуем — они и так в афише каждый день */
       if (byTitle[ev.title]) return;
       byTitle[ev.title] = 1; shows.push(ev);
     });
-    var buckets = {}, order = [];
-    shows.forEach(function(ev){
-      if (!buckets[ev.format]){ buckets[ev.format] = []; order.push(ev.format); }
-      buckets[ev.format].push(ev);
-    });
-    var mixed = [], round = 0, added = true;
-    while (added){
-      added = false;
-      order.forEach(function(f){
-        if (buckets[f][round]){ mixed.push(buckets[f][round]); added = true; }
+    var cur = (file && file !== 'index' && file !== 'afisha')
+      ? upcoming().filter(function(ev){ return ev.page === file; })[0] || null
+      : null;
+    var picked;
+    if (cur){
+      var curT = dateOf(cur).getTime();
+      function score(ev){
+        var sc = 0;
+        if (ev.format === cur.format) sc += 3;
+        if (ev.priceFrom && cur.priceFrom){
+          var dp = Math.abs(ev.priceFrom - cur.priceFrom);
+          sc += dp <= 300 ? 2 : dp <= 800 ? 1 : 0;
+        }
+        var dd = Math.abs(dateOf(ev).getTime() - curT) / 86400000;
+        sc += dd <= 7 ? 2 : dd <= 21 ? 1 : 0;
+        return sc;
+      }
+      shows.forEach(function(ev){ ev._score = score(ev); });
+      shows.sort(function(a, b){ return b._score - a._score || (a.date < b.date ? -1 : 1); });
+      var top = shows.slice(0, 4);
+      if (top.length === 4 && top.every(function(ev){ return ev.format === top[0].format; })){
+        var other = shows.slice(4).filter(function(ev){ return ev.format !== top[0].format; })[0];
+        if (other){ shows.splice(shows.indexOf(other), 1); shows.splice(2, 0, other); }
+      }
+      picked = shows;
+    } else {
+      var buckets = {}, order = [];
+      shows.forEach(function(ev){
+        if (!buckets[ev.format]){ buckets[ev.format] = []; order.push(ev.format); }
+        buckets[ev.format].push(ev);
       });
-      round++;
+      picked = []; var round = 0, added = true;
+      while (added){
+        added = false;
+        order.forEach(function(f){
+          if (buckets[f][round]){ picked.push(buckets[f][round]); added = true; }
+        });
+        round++;
+      }
     }
-    var hash = 0;
-    for (var i = 0; i < file.length; i++) hash = (hash * 31 + file.charCodeAt(i)) >>> 0;
-    /* весь список вращается по имени страницы: при 15 шоу и 8 местах каждая
-       страница показывает своё окно подборки, а не одну и ту же восьмёрку */
-    var shift = mixed.length ? hash % mixed.length : 0;
-    mixed = mixed.slice(shift).concat(mixed.slice(0, shift));
-    el.innerHTML = mixed.slice(0, limit).map(cardHTML).join('');
+    el.innerHTML = picked.slice(0, limit).map(cardHTML).join('');
   }
 
   /* =================================================================
