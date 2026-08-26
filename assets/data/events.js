@@ -246,7 +246,7 @@ window.CLUB1_EVENTS = [
      карточка покажет её в рамке 4:5 с полями; портрет 1080×1350
      заказан Максиму. Своей страницы у шоу нет, кнопка ведёт в кассу. */
   {date:'2026-08-30', time:'19:00', title:'ЧУДАки', kind:'Шоу', format:'special', priceFrom:1500,
-   poster:'assets/posters/chudaki-45.jpg', wide:'assets/posters/chudaki-wide125.jpg', photo:null, tone:'gold', page:null,
+   poster:'assets/posters/chudaki-45.jpg', wide:null, photo:null, tone:'gold', page:'chudaki',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74461153/#abiframe', age:'18+'},
   {date:'2026-08-30', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
    poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
@@ -298,13 +298,13 @@ window.CLUB1_EVENTS = [
      Сидоров. Стендап. Сольный концерт · CLUB#1», цены 1 500–5 000 ₽.
      Афиша квадратная 1:1 с Тильда-CDN, портрет 4:5 заказан Максиму. */
   {date:'2026-09-12', time:'21:30', title:'Валентин Сидоров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
-   poster:'assets/posters/sidorov-45.jpg', wide:null, photo:null, tone:'cyan', page:null,
+   poster:'assets/posters/sidorov-45.jpg', wide:null, photo:null, tone:'cyan', page:'sidorov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74461145/#abiframe', age:'18+'},
   /* Бьюти стендап — заведён 13.08 по карточке Максима; время и сеанс из
      кассы (intickets 74087267, сверено 10.08 при заводе на старый сайт),
      внутренней страницы на превью нет — кнопка ведёт сразу в кассу */
   {date:'2026-09-13', time:'18:30', title:'Money Mic', kind:'Битва комиков', format:'special', priceFrom:700,
-   poster:'assets/posters/money-mic-45.jpg', wide:'assets/posters/money-mic-wide31.jpg', wideFocus:'35%', photo:null, tone:'mag', page:'money-mic',
+   poster:'assets/posters/money-mic-45.jpg', wide:null, photo:null, tone:'mag', page:'money-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686679/#abiframe', age:'18+'},
   {date:'2026-09-13', time:'21:00', title:'Шоу БАЙКИ', kind:'Шоу', format:'special', priceFrom:800,
    poster:'assets/posters/baiki-45.jpg', wide:null, photo:null, tone:'gold', page:'bayki',
@@ -325,7 +325,7 @@ window.CLUB1_EVENTS = [
    poster:'assets/posters/black-standup-45.jpg', wide:'assets/posters/black-standup-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'black-standup',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70329460?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
   {date:'2026-09-19', time:'21:30', title:'Бьюти стендап', kind:'Шоу', format:'special', priceFrom:2000,
-   poster:'assets/posters/beauty-45.jpg', wide:null, photo:null, tone:'mag', page:null,
+   poster:'assets/posters/beauty-45.jpg', wide:null, photo:null, tone:'mag', page:'beauty',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74087267/#abiframe', age:'18+'},
   {date:'2026-09-19', time:'21:30', title:'Вечер чёрного стендапа', kind:'Чёрный юмор', format:'black', priceFrom:1390,
    poster:'assets/posters/black-standup-45.jpg', wide:'assets/posters/black-standup-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'black-standup',
@@ -335,7 +335,7 @@ window.CLUB1_EVENTS = [
      Краши · CLUB#1», цены 1 200–3 500 ₽. Афиша квадратная 1:1,
      портрет 4:5 заказан Максиму. */
   {date:'2026-09-20', time:'19:00', title:'ВИА Ваши Краши', kind:'Концерт', format:'krashi', priceFrom:1200,
-   poster:'assets/posters/krashi2009-45.jpg', wide:'assets/posters/krashi-wide41.jpg', wideFocus:'42%', photo:null, tone:'mag', page:null,
+   poster:'assets/posters/krashi2009-45.jpg', wide:'assets/posters/krashi-wide41.jpg', wideFocus:'42%', photo:null, tone:'mag', page:'krashi',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74432364/#abiframe', age:'18+'},
   {date:'2026-09-23', time:'20:00', title:'Стендап Комьюнити', kind:'Комьюнити', format:'community', priceFrom:1000,
    poster:null, wide:null, photo:null, tone:'green', page:'community',
@@ -356,7 +356,7 @@ window.CLUB1_EVENTS = [
    poster:'assets/posters/black-standup-45.jpg', wide:'assets/posters/black-standup-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'black-standup',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70329464?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
   {date:'2026-09-27', time:'18:30', title:'Money Mic', kind:'Битва комиков', format:'special', priceFrom:700,
-   poster:'assets/posters/money-mic-45.jpg', wide:'assets/posters/money-mic-wide31.jpg', wideFocus:'35%', photo:null, tone:'mag', page:'money-mic',
+   poster:'assets/posters/money-mic-45.jpg', wide:null, photo:null, tone:'mag', page:'money-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686681/#abiframe', age:'18+'},
   {date:'2026-10-01', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'open-mic',
