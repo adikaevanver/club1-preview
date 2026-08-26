@@ -275,6 +275,9 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-05', time:'21:30', title:'Вечер чёрного стендапа', kind:'Чёрный юмор', format:'black', priceFrom:1390,
    poster:'assets/posters/black-standup-45.jpg', wide:'assets/posters/black-standup-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'black-standup',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70329452?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-06', time:'18:30', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
+   poster:'assets/posters/gorod-45.jpg', wide:'assets/posters/gorod-wide41.jpg', wideFocus:'40%', photo:null, tone:'cyan', page:'gorod',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74846314/#abiframe', age:'18+'},
   {date:'2026-09-06', time:'19:00', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/komarov-45.jpg', wide:null, wide169:'assets/posters/komarov-wide.jpg', photo:null, tone:'sky', page:'komarov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73420327/#abiframe', age:'18+'},
@@ -284,6 +287,9 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-10', time:'19:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'open-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686661/#abiframe', age:'18+'},
+  {date:'2026-09-11', time:'19:00', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
+   poster:'assets/posters/gorod-45.jpg', wide:'assets/posters/gorod-wide41.jpg', wideFocus:'40%', photo:null, tone:'cyan', page:'gorod',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74846473/#abiframe', age:'18+'},
   {date:'2026-09-11', time:'21:30', title:'Вечер чёрного стендапа', kind:'Чёрный юмор', format:'black', priceFrom:1390,
    poster:'assets/posters/black-standup-45.jpg', wide:'assets/posters/black-standup-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'black-standup',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70322194?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
@@ -300,6 +306,13 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-12', time:'21:30', title:'Валентин Сидоров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/sidorov-45.jpg', wide:null, photo:null, tone:'cyan', page:'sidorov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74461145/#abiframe', age:'18+'},
+  /* Давай переиграем, 12.09 — сеанс 74846235 открыт виджетом 26.08: «Сб, 12 сентября
+     2026, 21:30», 800–1 500 ₽. Какой фильм переигрывают и арт под дату клуб ещё не
+     прислал (папка 09 - Сентябрь на Диске пустая), поэтому карточка на фирменном
+     CSS-постере, а не на арте 19.08 с «Дьявол носит Прада 2» — он назвал бы чужой фильм. */
+  {date:'2026-09-12', time:'21:30', title:'Давай переиграем', kind:'Импровизационное шоу', format:'pereigraem', priceFrom:800,
+   poster:null, wide:null, photo:null, tone:'pur', page:'pereigraem',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74846235/#abiframe', age:'18+'},
   /* Бьюти стендап — заведён 13.08 по карточке Максима; время и сеанс из
      кассы (intickets 74087267, сверено 10.08 при заводе на старый сайт),
      внутренней страницы на превью нет — кнопка ведёт сразу в кассу */
@@ -330,6 +343,9 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-19', time:'21:30', title:'Вечер чёрного стендапа', kind:'Чёрный юмор', format:'black', priceFrom:1390,
    poster:'assets/posters/black-standup-45.jpg', wide:'assets/posters/black-standup-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'black-standup',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70329458?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-20', time:'18:30', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
+   poster:'assets/posters/gorod-45.jpg', wide:'assets/posters/gorod-wide41.jpg', wideFocus:'40%', photo:null, tone:'cyan', page:'gorod',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74846316/#abiframe', age:'18+'},
   /* ВИА Ваши Краши — сверка со старым сайтом 20.08. Сеанс intickets
      74432364 открыт живьём: «Вск, 20 сентября 2026, 19:00 · ВИА Ваши
      Краши · CLUB#1», цены 1 200–3 500 ₽. Афиша квадратная 1:1,
@@ -346,6 +362,9 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-24', time:'19:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'open-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686665/#abiframe', age:'18+'},
+  {date:'2026-09-25', time:'19:00', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
+   poster:'assets/posters/gorod-45.jpg', wide:'assets/posters/gorod-wide41.jpg', wideFocus:'40%', photo:null, tone:'cyan', page:'gorod',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74846475/#abiframe', age:'18+'},
   {date:'2026-09-25', time:'21:30', title:'Вечер чёрного стендапа', kind:'Чёрный юмор', format:'black', priceFrom:1390,
    poster:'assets/posters/black-standup-45.jpg', wide:'assets/posters/black-standup-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'black-standup',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70329462?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
@@ -358,9 +377,15 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-27', time:'18:30', title:'Money Mic', kind:'Битва комиков', format:'special', priceFrom:700,
    poster:'assets/posters/money-mic-45.jpg', wide:null, photo:null, tone:'mag', page:'money-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686681/#abiframe', age:'18+'},
+  {date:'2026-09-27', time:'21:00', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
+   poster:'assets/posters/gorod-45.jpg', wide:'assets/posters/gorod-wide41.jpg', wideFocus:'40%', photo:null, tone:'cyan', page:'gorod',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74846480/#abiframe', age:'18+'},
   {date:'2026-10-01', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'open-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686659/#abiframe', age:'18+'},
+  {date:'2026-10-02', time:'19:00', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
+   poster:'assets/posters/gorod-45.jpg', wide:'assets/posters/gorod-wide41.jpg', wideFocus:'40%', photo:null, tone:'cyan', page:'gorod',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74846477/#abiframe', age:'18+'},
   {date:'2026-10-03', time:'18:30', title:'Виктор Комаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/komarov-45.jpg', wide:null, wide169:'assets/posters/komarov-wide.jpg', photo:null, tone:'sky', page:'komarov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/73420338/#abiframe', age:'18+'},
