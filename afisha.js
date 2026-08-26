@@ -264,7 +264,6 @@
   function heroEvents(){
     var seen = {}, out = [];
     upcoming().forEach(function(ev){
-      if (ev.format === 'ok') return;          /* проверки — не хиро-продукт */
       if (ev.soldOut || ev.moved) return;
       if (seen[ev.title]){ seen[ev.title].dates.push(ev); return; }
       var item = { ev: ev, dates: [ev] };
@@ -278,11 +277,15 @@
        слайдер само, как только его панорама от Максима встанет в wide */
     out = out.filter(function(it){ return it.ev.wide; });
     var solo   = out.filter(function(it){ return it.ev.format === 'solniki'; });
-    var others = out.filter(function(it){ return it.ev.format !== 'solniki'; });
+    /* проверки материала (format 'ok') раньше в хиро не брались вовсе;
+       26.08 Максим прислал под них панораму 4:1 — идут последним слайдом,
+       после продуктов с полной ценой */
+    var checks = out.filter(function(it){ return it.ev.format === 'ok'; });
+    var others = out.filter(function(it){ return it.ev.format !== 'solniki' && it.ev.format !== 'ok'; });
     /* лимит поднят 6 → 8 (Анвер 13.08, «используй все панорамы Максима»):
        при пяти сольниках впереди панорамные СБГ и Бурлеск не влезали в
        шестёрку, и готовые арты 1920×800 не показывались вовсе */
-    return solo.concat(others).slice(0, 8);
+    return solo.concat(others, checks).slice(0, 8);
   }
 
   /* макет Максима 22.07 (ранний вариант выбран на созвоне 24.07 как
@@ -318,28 +321,28 @@
         '" aria-label="' + esc(ev.title) + ' — подробнее о событии"></a>'
       : '';
     if (ev.wide){
-      /* Телефон (правка Анвера 09.08): слайды лежат в одной ячейке сетки, и
-         высоту задаёт самый высокий — слайд с квадратной афишей и кнопками
-         под ней. Панорамный арт 16:9, растянутый в этот высокий бокс через
-         cover, обрезался до неузнаваемости: от заголовка оставались огрызки,
-         а кнопки ложились поверх картинки. Поэтому на узком экране широкий
-         арт не показываем вовсе — отдаём квадратную афишу, как у остальных
-         слайдов; подложку из неё же размывает .bb-slide__bg. */
-      var sq = ev.poster
-        ? '<div class="bb-slide__mob">' +
+      /* Телефон: баннер 180 px (правка Анвера 19.08) режется из самой
+         панорамы по центру — Максим рисует 4:1 (2880×720) так, чтобы всё
+         важное сидело в центральных 60 % ширины, и на экране 390 px остаётся
+         как раз эта полоса. До 26.08 здесь стояла афиша 4:5 (с 09.08, когда
+         панорамы были 16:9 и в высокий бокс не влезали): в полосе 180 px от
+         неё оставался нечитаемый огрызок по 32 % высоты. Точку кадрирования
+         задаёт wideFocus из events.js: заголовки у Максима сидят левее
+         центра, и без сдвига в полосу попадало только лицо. */
+      var sq =
+          '<div class="bb-slide__mob">' +
             '<div class="bb-slide__frame">' +
-              '<img class="bb-slide__poster" src="' + esc(ev.poster) + '"' +
-              ' srcset="' + esc(ev.poster).replace(/\.jpg$/, '-540.jpg') + ' 540w, ' + esc(ev.poster) + ' 1080w"' +
-              ' sizes="(max-width:760px) 100vw, 540px"' +
+              '<img class="bb-slide__poster" src="' + esc(ev.wide) + '"' +
+              (ev.wideFocus ? ' style="object-position:' + esc(ev.wideFocus) + ' center"' : '') +
+              ' srcset="' + esc(ev.wide).replace(/\.jpg$/, '-640.jpg') + ' 640w, ' + esc(ev.wide) + ' 2880w"' +
+              ' sizes="720px"' +
               ' alt="Афиша: ' + esc(ev.title) + '"' +
-              (i ? ' loading="lazy"' : '') + ' width="1080" height="1350">' +
+              (i ? ' loading="lazy"' : '') + ' width="2880" height="720">' +
               '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>' +
             '</div>' +
-          '</div>'
-        : '';
-      var mobBg = ev.poster
-        ? '<div class="bb-slide__bg bb-slide__bg--mob" style="background-image:url(\'' + esc(ev.poster) + '\')" aria-hidden="true"></div>'
-        : '';
+          '</div>';
+      var mobBg =
+          '<div class="bb-slide__bg bb-slide__bg--mob" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>';
       return (
         '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
           /* нижний слой — размытая заливка полей, верхний — панорама целиком
