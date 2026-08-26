@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
 <title>Давай переиграем · Клуб №1 · CLUB 1 — стендап на Новом Арбате</title>
 
-<meta name="description" content="Актёрское импровизационное шоу «Давай переиграем» в Клубе №1 на Новом Арбате, 19 августа в 21:00. Билеты и состав на сайте.">
+<meta name="description" content="Актёрское импровизационное шоу «Давай переиграем» в Клубе №1 на Новом Арбате, 12 сентября в 21:30. Билеты на сайте.">
 <meta name="theme-color" content="#0a0810">
 <link rel="canonical" href="https://adikaevanver.github.io/club1-preview/pereigraem">
 
@@ -16,7 +16,7 @@
 <meta property="og:description" content="Даты и билеты на сайте Клуба №1 — стендап-клуб на Новом Арбате, 21.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://adikaevanver.github.io/club1-preview/pereigraem">
-<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/posters/pereigraem-45.jpg">
+<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/venue/hall-main.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
@@ -231,7 +231,47 @@
   .fee-note{margin-top:12px;font-size:.8rem;color:var(--muted-2)}
 </style>
 <script type="application/ld+json" data-seo="events">
-[]
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "ComedyEvent",
+  "name": "Давай переиграем",
+  "startDate": "2026-09-12T21:30:00+03:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+   "@type": "Place",
+   "name": "Клуб №1",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Новый Арбат, 21",
+    "addressLocality": "Москва",
+    "addressCountry": "RU"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 55.751916,
+    "longitude": 37.585132
+   }
+  },
+  "image": [
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
+  ],
+  "organizer": {
+   "@type": "Organization",
+   "name": "Клуб №1",
+   "url": "https://adikaevanver.github.io/club1-preview/"
+  },
+  "url": "https://adikaevanver.github.io/club1-preview/pereigraem",
+  "offers": {
+   "@type": "Offer",
+   "price": 800,
+   "priceCurrency": "RUB",
+   "url": "https://iframeab-pre7764.intickets.ru/seance/74846235/",
+   "availability": "https://schema.org/InStock"
+  }
+ }
+]
 </script>
 
 <!-- Яндекс.Метрика club1.moscow. Тот же номер стоит в analytics.js
@@ -250,7 +290,6 @@
   <!-- intickets widget: обязательный код (модальное окно вместо новой вкладки) -->
   <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
   <script src="//s3.intickets.ru/intickets.js"></script>
-<meta name="robots" content="noindex, follow" data-seo="past">
 <meta name="robots" content="noindex, nofollow" data-preview-only>
 </head>
 
@@ -322,10 +361,12 @@
 
       <!-- LEFT · Обложка (афиша) — shared .poster, оформленная под разовое шоу -->
       <div class="show-poster">
-        <div class="poster poster--art">
-          <img class="poster__backfill" src="assets/posters/pereigraem-45.jpg" alt="" aria-hidden="true" width="1080" height="1080">
-          <img class="poster__full" src="assets/posters/pereigraem-45.jpg" alt="Афиша: Давай переиграем, 19 августа" width="1080" height="1350">
-          <div class="poster__badge">19.08<small>21:00</small></div>
+        <!-- Арт под 12.09 клуб ещё не прислал (папка «09 - Сентябрь» на Диске пустая);
+             афиша 19.08 печатает название прошлого фильма, поэтому до нового арта —
+             фирменный CSS-постер, как у Комьюнити. -->
+        <div class="poster poster--noname poster--pur">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Давай переиграем</span></div>
+          <div class="poster__badge">12.09<small>21:30</small></div>
         </div>
       </div>
 
@@ -333,7 +374,7 @@
       <div class="show-facts">
         <span class="show-tag">Импровизационное шоу · одна дата</span>
         <h1 class="show-title" id="show-title">Давай переиграем</h1>
-        <p class="show-lede">Команда актёров и секретный участник переигрывают фильм «Дьявол носит Прада 2» — без заготовок, прямо на сцене.</p>
+        <p class="show-lede">Команда актёров и секретный участник переигрывают известный фильм — без заготовок, прямо на сцене.</p>
 
         <!-- Краткая информация: время и дата · длительность · сбор гостей · стоимость -->
         <div class="quickfacts" aria-label="Краткая информация о шоу">
@@ -343,12 +384,27 @@
             </span>
             <span>
               <span class="fact__label">Время и дата</span>
-              <span class="fact__value">19 августа, среда<small>Начало в 21:00</small></span>
+              <span class="fact__value">12 сентября, суббота<small>Начало в 21:30</small></span>
             </span>
           </div>
 
+          <div class="fact">
+            <span class="fact__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"/><path d="M3 21h18"/><path d="M12 12h.01"/></svg>
+            </span>
+            <span>
+              <span class="fact__label">Сбор гостей</span>
+              <span class="fact__value">за 30 минут до начала<small>бар и кухня работают весь вечер</small></span>
+            </span>
+          </div>
 
-
+          <div class="fact">
+            <span class="fact__ic" aria-hidden="true">₽</span>
+            <span>
+              <span class="fact__label">Стоимость</span>
+              <span class="fact__value">от 800 ₽<small>стоимость билета</small></span>
+            </span>
+          </div>
 
           <!-- v4: доступность локации прямо в строке данных события -->
           <div class="fact">
@@ -365,7 +421,7 @@
         <!-- Кнопка подробнее + Кнопка покупки -->
         <div class="cta-row" id="tickets">
           <a class="btn btn--ghost" href="#about">Подробнее</a>
-          <a class="btn btn--primary" href="https://iframeab-pre7764.intickets.ru/seance/73864719/#abiframe">Бронировать места</a>
+          <a class="btn btn--primary" href="https://iframeab-pre7764.intickets.ru/seance/74846235/#abiframe">Бронировать места</a>
         </div>
         <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
         
@@ -385,9 +441,9 @@
     </div>
 
     <div class="desc__copy">
-      <p>CLUB#1 представляет актёрское импровизационное шоу <b>«Давай переиграем»</b>. Команда актёров и секретный участник в импровизационной форме переигрывают фильм «Дьявол носит Прада 2». Никаких заготовок и никаких клише — только юмор, только импровизация и супер атмосфера.</p>
-      <p>На сцене: Кирилл Ковбас, Вера Дровеникова, Карим Курмангалиев, Никита Небо, Млада Аккерман, Ева Нога. Возрастное ограничение — 18+.</p>
-      <div class="desc__note">Шоу 19 августа. Если дата не подойдёт, загляните в афишу ближайших вечеров клуба.</div>
+      <p>CLUB#1 представляет актёрское импровизационное шоу <b>«Давай переиграем»</b>. Команда актёров и секретный участник в импровизационной форме переигрывают известный фильм. Никаких заготовок и никаких клише — только юмор, только импровизация и супер атмосфера.</p>
+      <p>Возрастное ограничение — 18+.</p>
+      <div class="desc__note">Шоу 12 сентября. Если дата не подойдёт, загляните в афишу ближайших вечеров клуба.</div>
     </div>
   </section>
 
@@ -433,7 +489,7 @@
 <!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения -->
 <div class="sticky-cta">
   <span class="sticky-cta__info">
-    <span class="sticky-cta__date">Давай переиграем · 19.08</span>
+    <span class="sticky-cta__date">Давай переиграем · 12.09</span>
     
   </span>
   <a class="btn btn--primary" href="#tickets">Бронировать</a>
@@ -593,7 +649,7 @@
 
 <!-- shared components: modal (comic bios), tabs, slideshow, datebar -->
 <script src="script.js?v=f78cafecfa" defer></script>
-<script src="assets/data/events.js?v=d110c884f3" defer></script>
+<script src="assets/data/events.js?v=6bdd53b98b" defer></script>
 <script src="afisha.js?v=a5abe92938" defer></script>
 
 </body>
