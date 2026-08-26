@@ -127,8 +127,11 @@
     var eager = (i || 0) < 5;
     var load = (eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"') +
                ' decoding="async"';
+    /* два сеанса в день — оба времени и в плашке (Анвер 26.08: в плашке одно
+       время, а в подписи два) */
+    var badgeTimes = (ev.times && ev.times.length ? ev.times : (ev.time ? [ev.time] : [])).map(esc).join(' / ');
     var badge = '<div class="poster__badge">' + fmtShort(ev) +
-                '<small>' + (ev.time ? esc(ev.time) : DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
+                '<small>' + (badgeTimes || DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
     /* 18+ рисует сайт на каждой афише (созвон 21.07: алкоголь ⇒ всё 18+) */
     var age = '<span class="poster__age">' + esc(ev.age || '18+') + '</span>';
     /* бейдж срочности — только из реальных данных: дата/время события,
@@ -261,6 +264,7 @@
   /* продукты биллборда: по одному слайду на продукт, все его ближайшие
      даты копятся в item.dates — макет Максима показывает на слайде
      плашки с парами «дата · время» */
+  var HERO_DAYS = 14, HERO_LIMIT = 6;
   function heroEvents(){
     var seen = {}, out = [];
     upcoming().forEach(function(ev){
@@ -272,20 +276,24 @@
     });
     /* сольники — первыми (созвон: крупные продукты в приоритете),
        внутри групп порядок по дате сохраняется */
-    /* В слайдере только события с панорамой 12:5 (решение Анвера 14.08):
-       карточки и переходные 16:9 в хиро не показываем — событие войдёт в
-       слайдер само, как только его панорама от Максима встанет в wide */
+    /* В слайдере только события с панорамой (решение Анвера 14.08, с 26.08 —
+       только 4:1 от Максима: «если нет арта, не ставь на главный»). Карточки
+       и переходные 16:9 в хиро не показываем — событие войдёт в слайдер само,
+       как только его панорама 4:1 встанет в wide */
     out = out.filter(function(it){ return it.ev.wide; });
+    /* Слайдер — только актуальные события (Анвер 26.08: «прям все ставить не
+       надо»): ближайшие HERO_DAYS дней от сегодня, дальние ждут своей очереди */
+    var horizon = new Date(); horizon.setDate(horizon.getDate() + HERO_DAYS);
+    var horizonISO = horizon.getFullYear() + '-' + String(horizon.getMonth() + 1).padStart(2, '0') + '-' + String(horizon.getDate()).padStart(2, '0');
+    out = out.filter(function(it){ return it.ev.date <= horizonISO; });
     var solo   = out.filter(function(it){ return it.ev.format === 'solniki'; });
     /* проверки материала (format 'ok') раньше в хиро не брались вовсе;
        26.08 Максим прислал под них панораму 4:1 — идут последним слайдом,
        после продуктов с полной ценой */
     var checks = out.filter(function(it){ return it.ev.format === 'ok'; });
     var others = out.filter(function(it){ return it.ev.format !== 'solniki' && it.ev.format !== 'ok'; });
-    /* лимит поднят 6 → 8 (Анвер 13.08, «используй все панорамы Максима»):
-       при пяти сольниках впереди панорамные СБГ и Бурлеск не влезали в
-       шестёрку, и готовые арты 1920×800 не показывались вовсе */
-    return solo.concat(others, checks).slice(0, 8);
+    /* лимит: 6 (26.08; до этого 8 — «используй все панорамы», 13.08) */
+    return solo.concat(others, checks).slice(0, HERO_LIMIT);
   }
 
   /* макет Максима 22.07 (ранний вариант выбран на созвоне 24.07 как
@@ -1189,7 +1197,78 @@
         list = list.filter(function(ev){ return !titles[ev.title]; });
       }
     }
-    el.innerHTML = dedupeSameDay(list).slice(0, limit).map(cardHTML).join('');
+    /* Подборка (Анвер 26.08: «одни и те же мероприятия, какая логика?»):
+       1) одно шоу — одна карточка (ближайшая дата), иначе семь дат «Опытных»
+          занимали половину рейки; 2) форматы чередуются — первым идёт
+          ближайшее шоу каждого формата, потом вторые и т.д.; 3) начало
+          подборки сдвигается по имени страницы, чтобы на разных страницах
+          набор отличался, а не повторялся один в один. */
+    var byTitle = {}, shows = [];
+    dedupeSameDay(list).forEach(function(ev){
+      if (ev.format === 'ok') return;   /* ежедневные проверки материала не рекомендуем — они и так в афише каждый день */
+      if (byTitle[ev.title]) return;
+      byTitle[ev.title] = 1; shows.push(ev);
+    });
+    var buckets = {}, order = [];
+    shows.forEach(function(ev){
+      if (!buckets[ev.format]){ buckets[ev.format] = []; order.push(ev.format); }
+      buckets[ev.format].push(ev);
+    });
+    var mixed = [], round = 0, added = true;
+    while (added){
+      added = false;
+      order.forEach(function(f){
+        if (buckets[f][round]){ mixed.push(buckets[f][round]); added = true; }
+      });
+      round++;
+    }
+    var hash = 0;
+    for (var i = 0; i < file.length; i++) hash = (hash * 31 + file.charCodeAt(i)) >>> 0;
+    /* весь список вращается по имени страницы: при 15 шоу и 8 местах каждая
+       страница показывает своё окно подборки, а не одну и ту же восьмёрку */
+    var shift = mixed.length ? hash % mixed.length : 0;
+    mixed = mixed.slice(shift).concat(mixed.slice(0, shift));
+    el.innerHTML = mixed.slice(0, limit).map(cardHTML).join('');
+  }
+
+  /* =================================================================
+     2b · Все даты шоу в герое  [data-all-dates]
+     ----------------------------------------------------------------
+     Анвер 26.08: у многодатного шоу факт «Время и дата» показывал одну
+     дату — «может сразу все ставить». Узел получает все будущие даты
+     шоу страницы (по полю page): при одном времени — «4, 18, 26 сентября ·
+     10, 30 октября» и «начало в 19:00», при разных — пары «4 сен 19:00 ·
+     30 окт 21:30». Выбор конкретного сеанса остаётся за кнопками дат.
+     ================================================================= */
+  var MONTHS_SHORT = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+  function initAllDates(el){
+    var file = (location.pathname.split('/').pop() || '').replace(/\.html$/, '');
+    var list = upcoming().filter(function(ev){ return ev.page === file; });
+    if (!list.length) return;
+    var dates = {}, times = {};
+    list.forEach(function(ev){
+      dates[ev.date] = dates[ev.date] || [];
+      if (ev.time){ dates[ev.date].push(ev.time); times[ev.time] = 1; }
+    });
+    var keys = Object.keys(dates).sort();
+    var uniqTimes = Object.keys(times);
+    var html;
+    if (uniqTimes.length <= 1){
+      var byMonth = [], last = null;
+      keys.forEach(function(d){
+        var m = parseInt(d.slice(5, 7), 10) - 1, day = parseInt(d.slice(8, 10), 10);
+        if (!last || last.m !== m){ last = { m: m, days: [] }; byMonth.push(last); }
+        last.days.push(day);
+      });
+      html = byMonth.map(function(g){ return g.days.join(', ') + ' ' + MONTHS_GEN[g.m]; }).join(' · ') +
+             (uniqTimes.length ? '<small>начало в ' + esc(uniqTimes[0]) + '</small>' : '');
+    } else {
+      html = keys.map(function(d){
+        var m = parseInt(d.slice(5, 7), 10) - 1, day = parseInt(d.slice(8, 10), 10);
+        return day + ' ' + MONTHS_SHORT[m] + (dates[d].length ? ' ' + dates[d].map(esc).join(' / ') : '');
+      }).join(' · ') + '<small>' + keys.length + ' ' + (keys.length === 1 ? 'дата' : keys.length < 5 ? 'даты' : 'дат') + ' — выберите ниже</small>';
+    }
+    el.innerHTML = html;
   }
 
   /* =================================================================
@@ -1370,6 +1449,7 @@
     document.querySelectorAll('[data-hero-slider]').forEach(initHeroSlider);
     document.querySelectorAll('[data-afisha]').forEach(initAfisha);
     document.querySelectorAll('[data-upcoming]').forEach(initUpcoming);
+    document.querySelectorAll('[data-all-dates]').forEach(initAllDates);
     initSchedule();
     initFormatCards();
     initComics();
