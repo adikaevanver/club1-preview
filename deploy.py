@@ -83,7 +83,12 @@ def transform(rel, data, docroot):
         # canonical, og:url и JSON-LD в репозитории указывают на превью GitHub
         # Pages; sitemap.xml и robots.txt — тоже, иначе на боевом остались бы
         # чужие адреса и поисковик ушёл бы на превью
-        return data.replace(PREVIEW_URL.encode(), LIVE_URL.encode())
+        data = data.replace(PREVIEW_URL.encode(), LIVE_URL.encode())
+        # noindex превью (ставит build-seo.py) на боевой не едет: превью на
+        # GitHub Pages — публичный дубль сайта, боевой — единственный оригинал
+        if rel.endswith('.html'):
+            data = b'\n'.join(l for l in data.split(b'\n') if b'data-preview-only' not in l)
+        return data
     if rel == '.htaccess':
         out = []
         for line in data.decode('utf-8').split('\n'):
