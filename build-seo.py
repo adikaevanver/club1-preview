@@ -96,9 +96,11 @@ def event_ld(ev):
     # offers пишем только с подтверждённой ценой: Offer без price — невалидная
     # разметка, а придумывать цену нельзя
     if ev.get('priceFrom') and ev.get('buy'):
+        # Offer/price — единственная форма, которую документирует Google для
+        # Event (аудит 26.08: AggregateOffer/lowPrice в доке не упоминается)
         ld['offers'] = {
-            '@type': 'AggregateOffer',
-            'lowPrice': ev['priceFrom'],
+            '@type': 'Offer',
+            'price': ev['priceFrom'],
             'priceCurrency': 'RUB',
             'url': ev['buy'].split('#')[0],
             'availability': 'https://schema.org/InStock',
@@ -192,9 +194,12 @@ def indexable(f):
         return False
     try:
         with open(os.path.join(ROOT, f), encoding='utf-8') as fh:
-            head = fh.read(4000)
+            head = fh.read().split('</head>', 1)[0]
     except OSError:
         return True
+    # строка с data-preview-only — noindex только для превью на GitHub Pages,
+    # deploy.py вырезает её при заливке на боевой; для карты сайта её нет
+    head = '\n'.join(l for l in head.split('\n') if 'data-preview-only' not in l)
     return 'noindex' not in head
 
 
@@ -214,13 +219,187 @@ def build_sitemap(pages):
     return len(pages)
 
 
+# ---------------------------------------------------------------------
+# Жизненный цикл страниц событий, кнопки дат, превью и версии (аудит 26.08)
+# ---------------------------------------------------------------------
+import hashlib
+
+DAYS_SHORT = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+MONTHS_NOM = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+              'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+MONTHS_SHORT = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек']
+DAYS_FULL = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
+PREVIEW_META = '<meta name="robots" content="noindex, nofollow" data-preview-only>\n'
+PAST_META = '<meta name="robots" content="noindex, follow" data-seo="past">\n'
+PAST_OG = 'Даты и билеты на сайте Клуба №1 — стендап-клуб на Новом Арбате, 21.'
+
+
+def read(path):
+    with open(path, encoding='utf-8') as fh:
+        return fh.read()
+
+
+def write_if_changed(path, s_old, s_new):
+    if s_new != s_old:
+        with open(path, 'w', encoding='utf-8') as fh:
+            fh.write(s_new)
+        return True
+    return False
+
+
+def all_dates_text(lst):
+    """Тот же формат, что рисует afisha.js в [data-all-dates]."""
+    dates, times = {}, {}
+    for e in lst:
+        dates.setdefault(e['date'], [])
+        if e.get('time'):
+            dates[e['date']].append(e['time']); times[e['time']] = 1
+    keys = sorted(dates)
+    if len(times) <= 1:
+        groups, last = [], None
+        for d in keys:
+            dd = datetime.date.fromisoformat(d)
+            if not last or last[0] != dd.month:
+                last = [dd.month, []]; groups.append(last)
+            last[1].append(str(dd.day))
+        txt = ' · '.join(', '.join(g[1]) + ' ' + MONTHS_GEN[g[0] - 1] for g in groups)
+        if times:
+            txt += '<small>начало в ' + esc(next(iter(times))) + '</small>'
+        return txt
+    parts = []
+    for d in keys:
+        dd = datetime.date.fromisoformat(d)
+        parts.append(f"{dd.day} {MONTHS_SHORT[dd.month - 1]}" + (' ' + ' / '.join(esc(t) for t in dates[d]) if dates[d] else ''))
+    n = len(keys)
+    word = 'дата' if n == 1 else 'даты' if n < 5 else 'дат'
+    return ' · '.join(parts) + f'<small>{n} {word} — выберите ниже</small>'
+
+
+def sync_datebar(path, lst):
+    """Кнопки дат на странице — из events.js, а не руками.
+
+    Аудит 26.08: у Гурама и Чабдарова ручной датабар разошёлся с афишей —
+    со страницы нельзя было купить билет на реальную дату. Страницы с
+    data-sched-days (расписание строит afisha.js) не трогаем.
+    """
+    s = read(path)
+    if 'data-sched-days' in s or 'class="datebar__days"' not in s:
+        return False
+    lst = sorted(lst, key=lambda e: (e['date'], e.get('time') or '23:00'))
+    if not lst:
+        return False
+    same_day = {}
+    for e in lst:
+        same_day[e['date']] = same_day.get(e['date'], 0) + 1
+    btns = []
+    for i, e in enumerate(lst):
+        d = datetime.date.fromisoformat(e['date'])
+        label = f"{d.day} {MONTHS_GEN[d.month - 1]}"
+        sub = DAYS_SHORT[d.weekday()] + ((' ' + e['time']) if same_day[e['date']] > 1 and e.get('time') else '')
+        attrs = [f'data-date="{e["date"]}"', f'data-label="{label}"']
+        if e.get('time'):
+            attrs.append(f'data-time="{esc(e["time"])}"')
+        if e.get('priceFrom'):
+            attrs.append(f'data-price="от {int(e["priceFrom"]):,} ₽"'.replace(',', ' '))
+        if e.get('buy'):
+            attrs.append(f'data-buy="{esc(e["buy"])}"')
+        attrs.append('aria-pressed="' + ('true' if i == 0 else 'false') + '"')
+        btns.append(f'              <button class="datebar__day" {" ".join(attrs)}><b>{d.day:02d}</b><span>{sub}</span></button>')
+    months = []
+    for e in lst:
+        m = MONTHS_NOM[datetime.date.fromisoformat(e['date']).month - 1]
+        if m not in months:
+            months.append(m)
+    month_label = months[0] if len(months) == 1 else f'{months[0]} — {months[-1]}'
+    s2 = re.sub(r'(<div class="datebar__days"[^>]*>)\n.*?\n(\s*</div>)',
+                lambda m: m.group(1) + '\n' + '\n'.join(btns) + '\n' + m.group(2), s, count=1, flags=re.S)
+    s2 = re.sub(r'(<span class="datebar__month">)[^<]*(</span>)', lambda m: m.group(1) + month_label + m.group(2), s2, count=1)
+    first = lst[0]
+    d0 = datetime.date.fromisoformat(first['date'])
+    label0 = f"{d0.day} {MONTHS_GEN[d0.month - 1]}"
+    time0 = first.get('time') or ''
+    s2 = re.sub(r'(<div class="poster__badge" data-picked-badge>)[^<]*(<small>)[^<]*(</small></div>)',
+                lambda m: m.group(1) + f'{d0.day:02d}.{d0.month:02d}' + m.group(2) + esc(time0) + m.group(3), s2)
+    s2 = re.sub(r'(<b data-picked-date[^>]*>)[^<]*(</b>)', lambda m: m.group(1) + label0 + m.group(2), s2)
+    s2 = re.sub(r'(<b data-picked-time[^>]*>)[^<]*(</b>)', lambda m: m.group(1) + esc(time0) + m.group(2), s2)
+    if first.get('priceFrom'):
+        s2 = re.sub(r'(<b data-picked-price>)[^<]*(</b>)',
+                    lambda m: m.group(1) + f'от {int(first["priceFrom"]):,} ₽'.replace(',', ' ') + m.group(2), s2)
+    if first.get('buy'):
+        s2 = re.sub(r'(data-picked-buy href=")[^"]*(")', lambda m: m.group(1) + esc(first['buy']) + m.group(2), s2)
+    s2 = re.sub(r'(<span data-picked-meta>)[^<]*<small>[^<]*</small>(</span>)',
+                lambda m: m.group(1) + label0 + f'<small>{DAYS_FULL[d0.weekday()]}, {esc(time0)}</small>' + m.group(2), s2)
+    s2 = re.sub(r'(<span class="fact__value" data-picked-meta>)[^<]*<small>[^<]*</small>(</span>)',
+                lambda m: m.group(1) + label0 + f'<small>{DAYS_FULL[d0.weekday()]}, {esc(time0)}</small>' + m.group(2), s2)
+    s2 = re.sub(r'(<span[^>]*data-all-dates[^>]*>).*?(</span>)', lambda m: m.group(1) + all_dates_text(lst) + m.group(2), s2, count=1, flags=re.S)
+    return write_if_changed(path, s, s2)
+
+
+def mark_past(path, has_future):
+    """Страница события без будущих дат: noindex, пустой JSON-LD, og без даты.
+
+    Правило жизненного цикла из вольта («Стандарт SEO», §5): страница
+    прошедшего события не остаётся в индексе. Появится новая дата на той же
+    странице — маркер снимается сам следующим прогоном.
+    """
+    s = read(path)
+    s2 = s
+    if has_future:
+        s2 = s2.replace(PAST_META, '')
+    else:
+        if PAST_META not in s2:
+            s2 = s2.replace('</head>', PAST_META + '</head>', 1)
+        s2 = re.sub(r'(<script type="application/ld\+json" data-seo="events">\n).*?(\n</script>\n)',
+                    lambda m: m.group(1) + '[]' + m.group(2), s2, count=1, flags=re.S)
+        s2 = re.sub(r'(<meta property="og:description" content=")[^"]*(">)', lambda m: m.group(1) + PAST_OG + m.group(2), s2, count=1)
+    return write_if_changed(path, s, s2)
+
+
+def mark_preview(path):
+    """noindex для превью на GitHub Pages: deploy.py вырезает эту строку
+    при заливке на боевой (аудит 26.08: превью — публичный дубль сайта)."""
+    s = read(path)
+    if 'data-preview-only' in s:
+        return False
+    return write_if_changed(path, s, s.replace('</head>', PREVIEW_META + '</head>', 1))
+
+
+VERSIONED = ['styles.css', 'script.js', 'afisha.js', 'analytics.js', 'assets/data/events.js']
+
+
+def stamp_versions(pages):
+    """?v= у css/js — хэш содержимого файла, а не ручная строка.
+
+    Хост кэширует статику 45 дней, игнорируя TTL из .htaccess (аудит
+    26.08); единственная защита — версия в адресе. Считаем её сами.
+    """
+    hashes = {}
+    for f in VERSIONED:
+        fp = os.path.join(ROOT, f)
+        if os.path.exists(fp):
+            hashes[f] = hashlib.sha256(open(fp, 'rb').read()).hexdigest()[:10]
+    pat = re.compile(r'((?:assets/data/)?(?:styles\.css|script\.js|afisha\.js|analytics\.js|events\.js))\?v=[A-Za-z0-9._-]+')
+    def sub(m):
+        key = m.group(1)
+        if key == 'events.js':
+            key = 'assets/data/events.js'
+        return m.group(1) + '?v=' + hashes.get(key, m.group(0).split('?v=')[1])
+    n = 0
+    for f in pages:
+        path = os.path.join(ROOT, f)
+        s = read(path)
+        s2 = pat.sub(sub, s)
+        if write_if_changed(path, s, s2):
+            n += 1
+    return n, hashes
+
+
 def main():
     today = datetime.date.today().isoformat()
     evs = [e for e in events() if e['date'] >= today]
     evs.sort(key=lambda e: (e['date'], e.get('time') or '23:00'))
 
     pages = sorted(os.path.basename(p) for p in glob.glob(os.path.join(ROOT, '*.html')))
-    n = build_sitemap(pages)
 
     touched = []
     if inject(os.path.join(ROOT, 'index.html'), 'org', ORG):
@@ -248,6 +427,33 @@ def main():
     for f in ('afisha.html', 'index.html'):
         if inject_fallback(os.path.join(ROOT, f), evs):
             touched.append(f'{f} (текстовая афиша)')
+
+    # кнопки дат и подписи первой даты — из events.js
+    for slug, lst in sorted(by_page.items()):
+        path = os.path.join(ROOT, slug + '.html')
+        if os.path.exists(path) and sync_datebar(path, lst):
+            touched.append(f'{slug}.html (кнопки дат)')
+
+    # прошедшие события: страница события (есть в events.js), у которой нет
+    # будущих дат — независимо от того, успел ли на ней появиться JSON-LD
+    event_pages = {e['page'] for e in events() if e.get('page')}
+    for f in pages:
+        path = os.path.join(ROOT, f)
+        if f[:-5] not in event_pages or f in ('index.html', 'afisha.html'):
+            continue
+        if mark_past(path, f[:-5] in by_page):
+            touched.append(f'{f} (' + ('снят noindex' if f[:-5] in by_page else 'прошедшее: noindex') + ')')
+
+    # превью на GitHub Pages — noindex; на боевом строку вырезает deploy.py
+    for f in pages:
+        if mark_preview(os.path.join(ROOT, f)):
+            touched.append(f'{f} (noindex превью)')
+
+    # карта сайта — после маркеров (noindex прошедших уходит из карты)
+    n = build_sitemap(pages)
+    nv, hashes = stamp_versions(pages)
+    if nv:
+        touched.append(f'версии ?v= обновлены в {nv} файлах: ' + ', '.join(f'{k.split("/")[-1]}={v}' for k, v in hashes.items()))
 
     no_price = [e for e in evs if not e.get('priceFrom')]
     print(f'sitemap.xml: {n} страниц')

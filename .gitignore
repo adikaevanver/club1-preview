@@ -4,3 +4,4 @@
 .DS_Store
 .htpasswd
 .deploy-state.json
+__pycache__/

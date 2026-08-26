@@ -1746,6 +1746,15 @@ html{overflow-x:clip}
      в блоке «Готовы к вечеру?» (прогон QA 19.08). Пока панель на экране,
      страница получает запас снизу — до кнопок можно дотянуться. */
   body:has(.tg-invite.is-in){padding-bottom:180px}
+  /* На страницах событий внизу живёт липкая кнопка брони (.sticky-cta,
+     тот же z-index 120): панель ложилась ровно на неё и закрывала покупку
+     (аудит перед открытием 26.08). Поднимаем панель над кнопкой. */
+  body.has-sticky-cta .tg-invite{
+    bottom:calc(66px + env(safe-area-inset-bottom, 0px));
+    border-radius:var(--r);border-bottom:1px solid var(--hairline-strong);
+    left:12px;right:12px;padding-bottom:16px;
+  }
+  body.has-sticky-cta:has(.tg-invite.is-in){padding-bottom:260px}
 }
 @media (prefers-reduced-motion: reduce){
   .tg-invite{transition:none}
@@ -1922,3 +1931,10 @@ html:has(.mobile-menu.is-open) .tg-invite{display:none}
      прокрутки: анимировать нечего, пока курсора нет */
   .poster-link .poster{transition:none}
 }
+
+/* Блок «Комик в соцсетях» на страницах сольников: пока все ссылки —
+   заглушки href="#", секцию не показываем (аудит 26.08; тот же приём,
+   что у карточек комиков на komiki.html). Появятся реальные ссылки —
+   блок откроется сам. */
+section:has(> .socials):not(:has(.soc-link[href]:not([href="#"]))),
+.socials:not(:has(.soc-link[href]:not([href="#"]))){display:none}
