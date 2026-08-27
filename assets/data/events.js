@@ -247,19 +247,13 @@ window.CLUB1_EVENTS = [
      заказан Максиму. Своей страницы у шоу нет, кнопка ведёт в кассу. */
   {date:'2026-08-30', time:'19:00', title:'ЧУДАки', kind:'Шоу', format:'special', priceFrom:1500,
    poster:'assets/posters/chudaki-45.jpg', wide:null, photo:null, tone:'gold', page:'chudaki',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/74461153/#abiframe', age:'18+'},
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74461153/#abiframe', age:'12+'},
   {date:'2026-08-30', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
    poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@68548535?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
-  /* Гурам Амарян, вторая дата — сверка со старым сайтом 20.08. Виджет
-     Афиши открыт живьём: «Ср, 2 сентября, 20:00 · Club #1», цены
-     2 000–6 000 ₽. Афиша и страница те же, что у даты 20.08. */
   {date:'2026-09-02', time:'19:00', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'open-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686647/#abiframe', age:'18+'},
-  {date:'2026-09-02', time:'20:00', title:'Гурам Амарян', kind:'Сольный концерт', format:'solniki', priceFrom:2000,
-   poster:'assets/posters/guram2-45.jpg', wide:null, wide169:'assets/posters/guram2-wide.jpg', photo:null, tone:'mag', page:'guram',
-   buy:'https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzkwNjg5fDEyMzY2MDAzfDE3ODgzNjg0MDAwMDA=?utm_source=guram-amarian-club-1&utm_medium=button02_09&utm_campaign=redirect_to_afisha&clientKey=669491f5-955b-442e-97de-9eb090af0cce', age:'18+'},
   {date:'2026-09-03', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'open-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686651/#abiframe', age:'18+'},
