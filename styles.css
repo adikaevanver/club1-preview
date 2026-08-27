@@ -113,8 +113,14 @@ body{
 }
 
 /* faint film-grain so the flat ink never looks dead */
+/* z-index:1, а не 9998 (27.08). Safari 26 на iPhone красит полосу статус-бара
+   цветом fixed/sticky-элемента, прижатого к верхней кромке (WebKit bug 301756);
+   пока зерно стояло над шапкой, оно и было этим элементом — без цвета фона, —
+   и в полосе просвечивал проехавший контент («пустое место над меню», 20.08 и
+   27.08). Под шапкой (z-index 100) полоса берёт цвет шапки. Проверено Анвером
+   на телефоне 27.08 на трёх вариантах. Поднимать обратно нельзя. */
 body::after{
-  content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.045;
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
