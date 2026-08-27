@@ -1439,7 +1439,8 @@
     var last = mine.slice().sort(function(a, b){ return a.date < b.date ? 1 : -1; })[0];
     var when = last ? fmtHuman(last) : '';
 
-    var links = document.querySelectorAll('a[href*="intickets.ru"], a[href*="afisha.yandex.ru"]');
+    /* data-keep-link — ссылка не в кассу (например, на возврат билетов отменённого концерта), её не трогаем */
+    var links = document.querySelectorAll('a[href*="intickets.ru"]:not([data-keep-link]), a[href*="afisha.yandex.ru"]:not([data-keep-link])');
     Array.prototype.forEach.call(links, function(a){
       a.setAttribute('href', 'afisha');
       a.removeAttribute('target');
