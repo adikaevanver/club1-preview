@@ -353,9 +353,6 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-19', time:'21:30', title:'Вечер чёрного стендапа', kind:'Чёрный юмор', format:'black', priceFrom:1390,
    poster:'assets/posters/black-standup-45.jpg', wide:'assets/posters/black-standup-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'black-standup',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70329458?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
-  {date:'2026-09-20', time:'18:30', title:'В большом городе', kind:'Сборный концерт', format:'gorod', priceFrom:800,
-   poster:'assets/posters/gorod-45.jpg', wide:'assets/posters/gorod-wide41.jpg', wideFocus:'40%', photo:null, tone:'cyan', page:'gorod',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/74846316/#abiframe', age:'18+'},
   /* ВИА Ваши Краши — сверка со старым сайтом 20.08. Сеанс intickets
      74432364 открыт живьём: «Вск, 20 сентября 2026, 19:00 · ВИА Ваши
      Краши · CLUB#1», цены 1 200–3 500 ₽. Афиша квадратная 1:1,
