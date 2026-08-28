@@ -32,6 +32,10 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
 RewriteRule ^ / [R=301,L]
 
+# Файлы подтверждения прав (Вебмастер yandex_*.html, Search Console
+# google*.html) роботы запрашивают по точному адресу с .html и ждут 200 —
+# 301 на короткий адрес ломает проверку (открытие 28.08).
+RewriteCond %{THE_REQUEST} !\s/+(yandex_[0-9a-f]+|google[0-9a-f]+)\.html[\s?] [NC]
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
