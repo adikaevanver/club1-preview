@@ -11,7 +11,7 @@
  */
 
 const MAIL_TO      = 'Club1promo@yandex.ru';
-const MAIL_FROM    = 'noreply@club1.moscow';
+const MAIL_FROM    = 'noreply@metelitsaclub1.ru';
 const MAX_PER_HOUR = 20;     // предел с одного адреса
 // Соль для имени файла-счётчика. /tmp на шаред-хостинге общий: сосед по
 // серверу мог заранее создать файл с предсказуемым именем и закрыть приём
@@ -93,7 +93,7 @@ if ($date !== '')    { $lines[] = 'Дата события: ' . $date; }
 if ($comment !== '') { $lines[] = 'Комментарий: ' . $comment; }
 $lines[] = $consent ? 'Согласен получать анонсы клуба' : 'Анонсы — без согласия';
 $lines[] = '';
-$lines[] = 'Отправлено с club1.moscow/arenda, ' . date('d.m.Y H:i');
+$lines[] = 'Отправлено с metelitsaclub1.ru/arenda, ' . date('d.m.Y H:i');
 
 $body    = implode("\n", $lines);
 $subject = '=?UTF-8?B?' . base64_encode('Заявка на аренду площадки — ' . $name) . '?=';

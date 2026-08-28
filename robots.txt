@@ -1,7 +1,7 @@
 # Клуб №1 · стендап на Новом Арбате, 21
 #
 # Сайт открыт для индексации 28.08.2026 (блок пароля и X-Robots-Tag из
-# .htaccess сняты). Адрес карты ниже deploy.py переписывает на club1.moscow.
+# .htaccess сняты). Адрес карты ниже deploy.py переписывает на metelitsaclub1.ru.
 
 User-agent: *
 Allow: /

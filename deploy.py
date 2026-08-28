@@ -13,6 +13,10 @@
     CLUB1_REMOTE=/www/club1.moscow
     CLUB1_DOCROOT=/var/www/u3603058/data/www/club1.moscow
 
+Папка на сервере по-прежнему называется club1.moscow — это историческое имя.
+Боевой домен с 28.08.2026 — metelitsaclub1.ru, он привязан к той же папке
+как алиас, поэтому пути CLUB1_REMOTE/CLUB1_DOCROOT не меняются.
+
 Почему FTPS, а не rsync: на шаред-хостинге reg.ru вход по SSH только по
 паролю, а ставить sshpass ради одной задачи не хочется. ftplib встроен в
 питон, TLS включается prot_p(). Когда на хостинг ляжет SSH-ключ, транспорт
@@ -44,7 +48,7 @@ TEXT_EXT = ('.html', '.css', '.js', '.xml', '.txt', '.php', '.json', '.svg', '.h
 EXCLUDE_PREFIX = ('sweep-',)
 
 PREVIEW_URL = 'https://adikaevanver.github.io/club1-preview'
-LIVE_URL = 'https://club1.moscow'
+LIVE_URL = 'https://metelitsaclub1.ru'
 
 
 def load_env():
@@ -281,7 +285,7 @@ def main():
     if args.dry_run:
         print('(dry-run: на сервере ничего не менялось)')
     else:
-        print('https://club1.moscow')
+        print(LIVE_URL)
 
 
 if __name__ == '__main__':
