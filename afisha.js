@@ -301,6 +301,14 @@
      информацию, на слайде остаются даты, маркировка 18+ и кнопки.
      Есть широкая афиша (ev.wide) → она фоном всего слайда, как в
      референсе; нет — квадратная афиша по центру на размытой подложке */
+  /* фирменный CSS-постер слайда — когда у события нет афиши 4:5 */
+  function cssPosterHTML(ev){
+    return '<div class="poster poster--' + esc(ev.tone || 'mag') + ' bb-slide__cssposter">' +
+      (ev.photo ? '<img class="poster__photo" src="' + esc(ev.photo) + '" alt="" aria-hidden="true" loading="lazy" width="900" height="900"><div class="poster__tint"></div>' : '') +
+      '<div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">' + esc(ev.kind || '') + '</span></div>' +
+      '<div class="poster__name"><b>' + esc(ev.title) + '</b></div>' +
+    '</div>';
+  }
   function heroSlideHTML(item, i){
     var ev = item.ev;
     /* цвет плашки — под каждую афишу (просьба Максима 13.08): необязательное
@@ -337,27 +345,37 @@
          неё оставался нечитаемый огрызок по 32 % высоты. Точку кадрирования
          задаёт wideFocus из events.js: заголовки у Максима сидят левее
          центра, и без сдвига в полосу попадало только лицо. */
+      /* Правки Максима 27.08 (PDF «моб правки»): на телефоне слайд — афиша
+         4:5 (1080×1350), та же, что на карточке, во всю ширину экрана,
+         кнопки под ней. Баннер 180 px из панорамы (19.08–27.08) снят.
+         <picture> отдаёт 4:5 только по медиазапросу телефона: на десктопе
+         блок скрыт, img берёт src панорамы, уже скачанной под фон, — лишних
+         запросов нет. Нет 4:5 — фирменный CSS-постер, как на карточке. */
+      var mobArt = ev.poster
+        ? '<picture>' +
+            '<source media="(max-width:760px)"' +
+              ' srcset="' + esc(ev.poster).replace(/\.jpg$/, '-540.jpg') + ' 540w, ' +
+                           esc(ev.poster).replace(/\.jpg$/, '-640.jpg') + ' 640w, ' +
+                           esc(ev.poster) + ' 1080w"' +
+              ' sizes="100vw">' +
+            '<img class="bb-slide__poster" src="' + esc(ev.wide) + '"' +
+              ' alt="Афиша: ' + esc(ev.title) + '"' +
+              (i ? ' loading="lazy"' : '') + ' width="1080" height="1350">' +
+          '</picture>'
+        : cssPosterHTML(ev);
       var sq =
           '<div class="bb-slide__mob">' +
             '<div class="bb-slide__frame">' +
-              '<img class="bb-slide__poster" src="' + esc(ev.wide) + '"' +
-              (ev.wideFocus ? ' style="object-position:' + esc(ev.wideFocus) + ' center"' : '') +
-              ' srcset="' + esc(ev.wide).replace(/\.jpg$/, '-640.jpg') + ' 640w, ' + esc(ev.wide) + ' 2880w"' +
-              ' sizes="720px"' +
-              ' alt="Афиша: ' + esc(ev.title) + '"' +
-              (i ? ' loading="lazy"' : '') + ' width="2880" height="720">' +
+              mobArt +
               '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>' +
             '</div>' +
           '</div>';
-      var mobBg =
-          '<div class="bb-slide__bg bb-slide__bg--mob" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>';
       return (
         '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
           /* нижний слой — размытая заливка полей, верхний — панорама целиком
              (окно 3:1 шире, чем арты 12:5; правка Саши 16.08) */
           '<div class="bb-slide__bg bb-slide__bg--wide-fill" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
           '<div class="bb-slide__bg bb-slide__bg--wide" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
-          mobBg +
           slideLink +
           '<div class="bb-slide__stage">' +
             '<div class="bb-slide__chips">' + chips + '</div>' +
@@ -376,12 +394,7 @@
             ' alt="Афиша: ' + esc(ev.title) + '"' +
             (i ? ' loading="lazy"' : '') + ' width="1080" height="1350">';
     } else {
-      art =
-        '<div class="poster poster--' + esc(ev.tone || 'mag') + ' bb-slide__cssposter">' +
-          (ev.photo ? '<img class="poster__photo" src="' + esc(ev.photo) + '" alt="" aria-hidden="true" loading="lazy" width="900" height="900"><div class="poster__tint"></div>' : '') +
-          '<div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">' + esc(ev.kind || '') + '</span></div>' +
-          '<div class="poster__name"><b>' + esc(ev.title) + '</b></div>' +
-        '</div>';
+      art = cssPosterHTML(ev);
     }
     var bg = ev.poster
       ? '<div class="bb-slide__bg" style="background-image:url(\'' + esc(ev.poster) + '\')" aria-hidden="true"></div>'
