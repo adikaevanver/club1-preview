@@ -113,8 +113,14 @@ body{
 }
 
 /* faint film-grain so the flat ink never looks dead */
+/* z-index:1, а не 9998 (27.08). Safari 26 на iPhone красит полосу статус-бара
+   цветом fixed/sticky-элемента, прижатого к верхней кромке (WebKit bug 301756);
+   пока зерно стояло над шапкой, оно и было этим элементом — без цвета фона, —
+   и в полосе просвечивал проехавший контент («пустое место над меню», 20.08 и
+   27.08). Под шапкой (z-index 100) полоса берёт цвет шапки. Проверено Анвером
+   на телефоне 27.08 на трёх вариантах. Поднимать обратно нельзя. */
 body::after{
-  content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.045;
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -226,9 +232,12 @@ ul{list-style:none}
      </a>
    ===================================================================== */
 /* Approved horizontal lockup used verbatim (real asset, not a CSS rebuild). */
-.logo{display:inline-flex;align-items:center;flex:0 0 auto;height:34px}
+/* Логотип «Метелица | CLUB 1» (Саша 28.08, PNG 465×240 с прозрачным
+   фоном): пропорция 1,9:1 вместо 5,6:1 у прежнего лого — в шапке 88 px
+   ему нужны 80 px высоты, на 34 px он не читается */
+.logo{display:inline-flex;align-items:center;flex:0 0 auto;height:80px}
 .logo img{height:100%;width:auto;display:block}
-.logo--sm{height:30px}
+.logo--sm{height:72px}
 
 
 /* =====================================================================
@@ -580,8 +589,10 @@ p + .hero__cta,
 /* club mark — top-right */
 .poster__logo{position:absolute;top:12px;right:12px;z-index:6;height:15px;width:auto;opacity:.95}
 /* 18+ — bottom-right */
+/* 18+ слева снизу (правки Максима 27.08, для телефона и десктопа); до
+   этого стоял справа */
 .poster__age{
-  position:absolute;right:12px;bottom:12px;z-index:6;
+  position:absolute;left:12px;bottom:12px;z-index:6;
   font-family:var(--body);font-weight:600;font-size:.72rem;
   padding:3px 7px;border-radius:5px;border:1px solid rgba(255,255,255,.55);
   color:#fff;background:rgba(0,0,0,.28);
@@ -652,6 +663,7 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 /* phones */
 @media (max-width:640px){
   :root{--header-h:72px}
+  .logo{height:60px}
 
   /* hero: ONE headliner per view (peek next), straight full-bleed photo —
      the skewed slivers and clipped names are gone; name is centred below */
@@ -1204,6 +1216,9 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
    Арты Максима приходят пока 12:5 и вписываются по высоте с размытыми
    полями; арт 4:1 (2880×720) закроет окно целиком без полей. */
 .bb-slide--wide{aspect-ratio:4/1;max-height:360px}
+/* Партнёрский баннер (28.08): панорама без плашек и кнопок, весь слайд —
+   ссылка; кнопка «Купить билеты» живёт только на телефоне (см. @760px) */
+.bb-slide--banner .bb-slide__actions{display:none}
 .bb-slide--wide .bb-slide__stage{
   aspect-ratio:auto;min-height:0;width:auto;height:100%;margin-inline:auto;
   padding:clamp(10px,1.4vw,18px) clamp(18px,3vw,44px);
@@ -1307,86 +1322,83 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
 .bb-dot[aria-pressed="true"]{background:var(--magenta);transform:scale(1.3)}
 
 @media (max-width:760px){
-  /* на телефоне слайд собран колонкой (афиша, чипсы, кнопки) — пропорция
-     3:1 десктопного окна здесь не действует, высоту задаёт содержимое */
-  .bb-slide__stage{flex-direction:column;min-height:0;aspect-ratio:auto;
-    padding:16px 16px 22px;gap:14px}
-  .bb-slide__art{height:auto}
-  .bb-slide__chips,.bb-slide__actions{position:static}
-  .bb-slide__chips{align-self:flex-start}
-  .bb-slide__actions{width:100%;justify-content:center}
-  /* Широкий баннер на телефоне не показываем (правка Анвера 09.08):
-     панорамный арт 16:9 в высоком боксе обрезался до огрызков, а кнопки
-     ложились поверх картинки. Вместо него — квадратная афиша того же
-     события, как на остальных слайдах, на размытой подложке из неё же.
-     Слайд перестаёт отличаться от соседей, и лента листается ровно. */
-  .bb-slide--wide .bb-slide__bg--wide{display:none}
-  .bb-slide__bg--mob{
-    filter:blur(30px) brightness(.42) saturate(1.15);transform:scale(1.2);
-    background-size:cover;background-position:center;
-  }
-  .bb-slide--wide .bb-slide__stage{
-    aspect-ratio:auto;max-height:none;justify-content:flex-start;
-    gap:14px;padding:16px 16px 22px;background:none;
-  }
-  .bb-slide--wide .bb-slide__mob{min-width:0;display:flex;justify-content:center}
-  .bb-slide--wide .bb-slide__chips{align-self:flex-start}
-  .bb-slide--wide .bb-slide__actions{margin-top:0}
-  .bb-slide--wide .bb-slide__age--corner{display:none}
-
-  /* Правка Анвера 19.08 + ТЗ Сергея 17.08: на телефоне слайд перестаёт быть
-     колонкой с афишей во весь экран и становится баннером 180 px. Квадратная
-     афиша уходила почти на весь первый экран, и до карточек нужно было
-     листать. Арт кадрируется по центру (cover), поверх — плашка даты и одна
-     кнопка на тёмной подложке снизу. */
+  /* Телефон — правки Максима 27.08 (PDF «моб правки club1»): слайд — афиша
+     4:5 (1080×1350, та же, что на карточке) во всю ширину экрана, под ней
+     ряд кнопок «Подробнее» и «Бронировать места», стрелки — круги по
+     середине афиши, плашка даты ровная, без наклона, точки у нижней кромки
+     афиши. До этого здесь был баннер 180 px из панорамы (Анвер 19.08):
+     кнопка ложилась на арт, стрелки при общем min-height 44 px и ширине 42
+     вытягивались в овалы, панорама резалась до полосы. Десктоп (4:1) не
+     тронут. Высота ряда кнопок вынесена в --bb-actions-h: от неё считаются
+     середина афиши для стрелок и место точек. */
+  .hero-billboard{padding-top:10px;padding-bottom:10px}
+  .hero__tagline{font-size:.72rem;margin-bottom:6px}
+  .billboard{--bb-actions-h:76px;width:100%;margin-top:10px;border-radius:0}
+  /* aspect-ratio:auto обязателен: десктопное 4:1 у .bb-slide--wide иначе
+     сжимает слайд до 97 px и афиша 4:5 обрезается (замер 27.08) */
   .bb-slide,
+  .bb-slide--wide,
   .bb-slide__stage,
-  .bb-slide--wide .bb-slide__stage{height:180px;max-height:180px}
+  .bb-slide--wide .bb-slide__stage{height:auto;max-height:none;aspect-ratio:auto}
   .bb-slide__stage,
   .bb-slide--wide .bb-slide__stage{
-    padding:10px 12px;gap:0;justify-content:flex-end;align-items:stretch;
+    display:block;min-height:0;width:auto;margin:0;padding:0;background:none;
   }
-  .bb-slide__art,.bb-slide__mob,.bb-slide--wide .bb-slide__mob{
-    position:absolute;inset:0;display:block;height:180px;z-index:0;
+  .bb-slide__stage::after{display:none}
+  /* фоновые слои десктопа (панорама, её размытая заливка) на телефоне не
+     нужны: афиша 4:5 закрывает всю ширину, под кнопками — фон слайдера */
+  .bb-slide--wide .bb-slide__bg--wide,
+  .bb-slide--wide .bb-slide__bg--wide-fill,
+  .bb-slide__bg--mob{display:none}
+  .bb-slide__art,
+  .bb-slide__mob,
+  .bb-slide--wide .bb-slide__mob{
+    position:relative;inset:auto;display:block;height:auto;min-width:0;z-index:0;
   }
-  .bb-slide__frame{position:absolute;inset:0;height:180px;max-width:none;display:block}
+  .bb-slide__art--mid{display:none}
+  .bb-slide__art--sq{display:block}
+  .bb-slide__frame{
+    position:relative;inset:auto;display:block;width:100%;height:auto;max-width:none;
+    aspect-ratio:4/5;overflow:hidden;
+  }
   .bb-slide__poster,
   .bb-slide--wide .bb-slide__poster{
-    width:100%;max-width:none;height:180px;object-fit:cover;object-position:center 32%;
-    border-radius:0;box-shadow:none;margin:0;
+    display:block;width:100%;max-width:none;height:100%;max-height:none;
+    object-fit:cover;object-position:center;border-radius:0;box-shadow:none;margin:0;
   }
-  /* тёмная подложка под кнопкой: без неё светлая афиша съедала текст */
-  .bb-slide__stage::after{
-    content:'';position:absolute;left:0;right:0;bottom:0;height:96px;z-index:1;
-    background:linear-gradient(to top, rgba(8,6,14,.92), rgba(8,6,14,0));
-    pointer-events:none;
-  }
+  .bb-slide__cssposter{width:100%;height:100%;max-width:none;aspect-ratio:4/5;margin:0}
+  .bb-slide--wide .bb-slide__age--corner{display:none}
+  /* плашка даты: ровная, свисает с верхней кромки афиши (макет Максима);
+     на телефоне одна — ближайшая дата, остальные на странице события */
   .bb-slide__chips,
   .bb-slide--wide .bb-slide__chips{
-    position:absolute;left:10px;top:0;z-index:3;align-self:flex-start;margin:0;
+    position:absolute;left:14px;top:0;z-index:3;margin:0;align-self:auto;
   }
-  .bb-slide__actions,
-  .bb-slide--wide .bb-slide__actions{
-    position:relative;z-index:3;width:100%;justify-content:center;margin:0;
-  }
-  .bb-slide__actions .btn{flex:0 1 auto}
-  /* «Подробнее» на баннере в 180 px не помещается рядом с покупкой —
-     на телефоне сам баннер уже ведёт на страницу события */
-  .bb-slide__actions .btn--ghost{display:none}
-  .bb-slide__cssposter{width:100%;height:180px;max-width:none}
-  /* На баннере в 180 px помещается одна плашка даты: две налезали на арт и
-     обрезались по левому краю (правка Анвера 19.08). Ближайшая дата важнее,
-     остальные видны на странице события. */
-  .bb-slide__chips .bb-chip + .bb-chip{display:none}
-  .bb-chip{font-size:.8rem;padding:8px 10px 6px}
+  .bb-chip{transform:none;margin-top:0;font-size:.9rem;padding:10px 10px 8px;border-radius:0 0 8px 8px}
   .bb-chip b{padding-bottom:4px}
   .bb-chip small{margin-top:3px}
-  /* указатель вниз съедал 58 px первого экрана, а карточки и так теперь
-     видны сразу под баннером */
+  .bb-slide__chips .bb-chip + .bb-chip{display:none}
+  /* ряд кнопок под афишей — «Подробнее» возвращается (макет Максима 27.08),
+     на баннере 180 px ей не хватало места */
+  .bb-slide__actions,
+  .bb-slide--wide .bb-slide__actions{
+    position:relative;inset:auto;z-index:3;width:100%;height:var(--bb-actions-h);margin:0;
+    display:flex;align-items:center;justify-content:center;gap:10px;padding:0 12px;flex-wrap:nowrap;
+  }
+  .bb-slide__actions .btn{flex:0 1 auto;white-space:nowrap}
+  .bb-slide__actions .btn--ghost{display:inline-flex;background:rgba(255,255,255,.06);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .bb-slide--banner .bb-slide__actions{display:flex}
+  /* стрелки — круги 44 px (не овалы: общий min-height:44px при ширине 42),
+     по вертикали по центру афиши, а не всего слайда вместе с кнопками */
+  .billboard__arrow{
+    width:44px;height:44px;min-height:44px;font-size:1.5rem;
+    top:calc((100% - var(--bb-actions-h)) / 2);
+  }
+  .billboard__arrow--prev{left:10px}
+  .billboard__arrow--next{right:10px}
+  /* точки — у нижней кромки афиши, над рядом кнопок */
+  .billboard__dots{bottom:calc(var(--bb-actions-h) + 12px)}
   .scroll-hint{display:none}
-  .hero__tagline{font-size:.72rem;margin-bottom:6px}
-  .hero-billboard{padding-top:10px;padding-bottom:10px}
-  .billboard{margin-top:10px}
   /* пилюли пресетов в одну прокручиваемую строку: тремя рядами они
      отодвигали карточки за нижний край (ТЗ Сергея 17.08 — первый ряд
      афиши виден без длительной прокрутки) */
@@ -1397,20 +1409,6 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   }
   .filters__presets::-webkit-scrollbar{display:none}
   .filters__presets .pill{flex:0 0 auto}
-  .bb-chip{font-size:.95rem;padding:11px 12px 8px;margin-top:0}
-  .bb-slide__poster{max-height:none}
-  .bb-slide__poster,
-  .bb-slide__cssposter{width:100%;max-width:min(100%,420px);margin:0 auto}
-  .billboard__arrow{width:38px;height:38px;top:32%}
-  .billboard__arrow--prev{left:8px}
-  .billboard__arrow--next{right:8px}
-  /* на мобиле кнопки слайда уезжают к нижнему краю — точки выходят из
-     наложения и встают строкой ПОД слайдом (аудит 06.08: точки лежали
-     поверх «Бронировать места») */
-  .billboard__dots{
-    position:static;transform:none;margin:12px auto 2px;width:max-content;
-    background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;
-  }
 }
 
 /* ---- артисты ниже афиши -------------------------------------------- */
@@ -1627,11 +1625,22 @@ html{overflow-x:clip}
 }
 /* на CSS-постере карточки название не дублируется — заголовок стоит под
    афишей, поэтому фирменный арт опускается к нижнему краю */
-.poster--noname .poster__art{bottom:18px}
+.poster--noname .poster__art{bottom:52px}   /* над 18+, который с 27.08 слева */
 
 /* дата-бейдж: строка времени крупнее и жирнее, воздух между строками */
 .poster__badge{padding:9px 16px 9px 12px}
 .poster__badge small{font-size:.84em;font-weight:800;opacity:1;margin-top:3px}
+/* Телефон: плашка даты на карточке меньше примерно на 40 % (правки Максима
+   27.08): 12.5/10.5 px текста и 9 px полей давали 70×46 px на карточке
+   шириной 180 — плашка закрывала пятую часть афиши. Хиро страниц событий
+   не трогаем, там афиша во всю ширину. */
+@media (max-width:760px){
+  .event-card .poster__badge{
+    font-size:.6rem;padding:5px 10px 5px 8px;
+    clip-path:polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+  }
+  .event-card .poster__badge small{font-size:.84em;margin-top:2px}
+}
 
 /* бегущая строка отмен/переносов (включается в events.js) */
 .ticker{position:relative;z-index:101;background:var(--gold);color:#20160a;overflow:hidden}
@@ -1780,11 +1789,17 @@ html:has(.mobile-menu.is-open) .site-header{
   color:var(--text);font-size:1.7rem;line-height:1;cursor:pointer;
 }
 .mobile-menu__close:hover{border-color:var(--magenta);color:#fff}
-/* показываем только там, где меню вообще бывает */
+/* Крестик панели — запасной (правка Анвера 20.08, повторно Максим 27.08).
+   Пока шапка пришпилена, бургер сам стоит крестиком в правом верхнем углу,
+   и второй крестик под ним просто дублировал его на экране. Показываем
+   панельный только там, где :has() не работает и пришпилить шапку нечем:
+   тогда без него меню действительно нечем закрыть. */
 @media (max-width:1023px){
-  .mobile-menu.is-open .mobile-menu__close{display:flex}
-  /* и освобождаем под него место, чтобы не легло на первый пункт */
-  .mobile-menu{padding-top:64px}
+  @supports not selector(:has(*)){
+    .mobile-menu.is-open .mobile-menu__close{display:flex}
+    /* и освобождаем под него место, чтобы не легло на первый пункт */
+    .mobile-menu{padding-top:64px}
+  }
 }
 
 /* =====================================================================
@@ -1820,25 +1835,6 @@ html:has(.mobile-menu.is-open) .site-header{
   .datebar--sticky .datebar__day{min-width:50px;height:46px}
 }
 
-/* Разделитель месяца в ленте афиши (правка Анвера 19.08): занимает всю
-   строку сетки, поэтому новый месяц всегда начинается сновой строки и не
-   делит его с хвостом предыдущего. */
-.afisha__month{
-  grid-column:1 / -1;
-  display:flex;align-items:center;gap:14px;
-  margin:10px 0 -6px;
-  font-family:var(--display);font-weight:700;font-size:.82rem;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--magenta);
-}
-.afisha__month::after{
-  content:"";flex:1 1 auto;height:1px;background:var(--hairline);
-}
-/* первый разделитель ленты не нужен — над ним и так стоит подпись рейки */
-.afisha__track--grid > .afisha__month:first-child{display:none}
-@supports (grid-template-rows: subgrid){
-  /* разделитель — обычная строка сетки, а не пятистрочная карточка */
-  .afisha__track--grid > .afisha__month{grid-row:span 1}
-}
 
 /* пока меню открыто, приглашение не мешает навигации */
 html:has(.mobile-menu.is-open) .tg-invite{display:none}

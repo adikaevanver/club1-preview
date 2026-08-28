@@ -293,7 +293,13 @@
     var checks = out.filter(function(it){ return it.ev.format === 'ok'; });
     var others = out.filter(function(it){ return it.ev.format !== 'solniki' && it.ev.format !== 'ok'; });
     /* лимит: 6 (26.08; до этого 8 — «используй все панорамы», 13.08) */
-    return solo.concat(others, checks).slice(0, HERO_LIMIT);
+    /* партнёрские баннеры (CLUB1_BANNERS, 28.08) — первыми и сверх лимита;
+       без панорамы или с истёкшим until не показываются */
+    var today = todayISO();
+    var banners = (window.CLUB1_BANNERS || []).filter(function(b){
+      return b && b.wide && b.href && !(b.until && b.until < today);
+    }).map(function(b){ return { banner: true, ev: b, dates: [] }; });
+    return banners.concat(solo.concat(others, checks).slice(0, HERO_LIMIT));
   }
 
   /* макет Максима 22.07 (ранний вариант выбран на созвоне 24.07 как
@@ -301,8 +307,53 @@
      информацию, на слайде остаются даты, маркировка 18+ и кнопки.
      Есть широкая афиша (ev.wide) → она фоном всего слайда, как в
      референсе; нет — квадратная афиша по центру на размытой подложке */
+  /* фирменный CSS-постер слайда — когда у события нет афиши 4:5 */
+  function cssPosterHTML(ev){
+    return '<div class="poster poster--' + esc(ev.tone || 'mag') + ' bb-slide__cssposter">' +
+      (ev.photo ? '<img class="poster__photo" src="' + esc(ev.photo) + '" alt="" aria-hidden="true" loading="lazy" width="900" height="900"><div class="poster__tint"></div>' : '') +
+      '<div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">' + esc(ev.kind || '') + '</span></div>' +
+      '<div class="poster__name"><b>' + esc(ev.title) + '</b></div>' +
+    '</div>';
+  }
+  /* афиша 4:5 для телефона внутри широкого слайда: <picture> отдаёт её только
+     по медиазапросу, на десктопе img берёт src панорамы, уже скачанной под фон */
+  function mobPictureHTML(ev, i){
+    return '<picture>' +
+        '<source media="(max-width:760px)"' +
+          ' srcset="' + esc(ev.poster).replace(/\.jpg$/, '-540.jpg') + ' 540w, ' +
+                       esc(ev.poster).replace(/\.jpg$/, '-640.jpg') + ' 640w, ' +
+                       esc(ev.poster) + ' 1080w"' +
+          ' sizes="100vw">' +
+        '<img class="bb-slide__poster" src="' + esc(ev.wide) + '"' +
+          ' alt="' + esc(ev.title) + '"' +
+          (i ? ' loading="lazy"' : '') + ' width="1080" height="1350">' +
+      '</picture>';
+  }
   function heroSlideHTML(item, i){
     var ev = item.ev;
+    /* Партнёрский баннер (Саша 28.08): панорама без плашек дат, 18+ и кнопок,
+       весь слайд — внешняя ссылка. На телефоне — афиша 4:5 и одна кнопка
+       под ней (ряд кнопок у событий там же), на десктопе кнопка скрыта CSS */
+    if (item.banner){
+      var bLink = '<a class="bb-slide__link" href="' + esc(ev.href) + '" target="_blank" rel="noopener"' +
+                  ' aria-label="' + esc(ev.title) + '"></a>';
+      var bMob = ev.poster
+        ? '<div class="bb-slide__mob"><div class="bb-slide__frame">' + mobPictureHTML(ev, i) + '</div></div>'
+        : '';
+      return (
+        '<article class="bb-slide bb-slide--wide bb-slide--banner" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + '">' +
+          '<div class="bb-slide__bg bb-slide__bg--wide-fill" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
+          '<div class="bb-slide__bg bb-slide__bg--wide" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
+          bLink +
+          '<div class="bb-slide__stage">' +
+            bMob +
+            '<div class="bb-slide__actions">' +
+              '<a class="btn btn--primary" href="' + esc(ev.href) + '" target="_blank" rel="noopener">Купить билеты</a>' +
+            '</div>' +
+          '</div>' +
+        '</article>'
+      );
+    }
     /* цвет плашки — под каждую афишу (просьба Максима 13.08): необязательное
        поле chip в events.js, {bg:'#d3e04b', ink:'#1c1c1c'}; без него —
        фирменная маджента с белым (дефолты в CSS) */
@@ -337,27 +388,26 @@
          неё оставался нечитаемый огрызок по 32 % высоты. Точку кадрирования
          задаёт wideFocus из events.js: заголовки у Максима сидят левее
          центра, и без сдвига в полосу попадало только лицо. */
+      /* Правки Максима 27.08 (PDF «моб правки»): на телефоне слайд — афиша
+         4:5 (1080×1350), та же, что на карточке, во всю ширину экрана,
+         кнопки под ней. Баннер 180 px из панорамы (19.08–27.08) снят.
+         <picture> отдаёт 4:5 только по медиазапросу телефона: на десктопе
+         блок скрыт, img берёт src панорамы, уже скачанной под фон, — лишних
+         запросов нет. Нет 4:5 — фирменный CSS-постер, как на карточке. */
+      var mobArt = ev.poster ? mobPictureHTML(ev, i) : cssPosterHTML(ev);
       var sq =
           '<div class="bb-slide__mob">' +
             '<div class="bb-slide__frame">' +
-              '<img class="bb-slide__poster" src="' + esc(ev.wide) + '"' +
-              (ev.wideFocus ? ' style="object-position:' + esc(ev.wideFocus) + ' center"' : '') +
-              ' srcset="' + esc(ev.wide).replace(/\.jpg$/, '-640.jpg') + ' 640w, ' + esc(ev.wide) + ' 2880w"' +
-              ' sizes="720px"' +
-              ' alt="Афиша: ' + esc(ev.title) + '"' +
-              (i ? ' loading="lazy"' : '') + ' width="2880" height="720">' +
+              mobArt +
               '<span class="bb-slide__age">' + esc(ev.age || '18+') + '</span>' +
             '</div>' +
           '</div>';
-      var mobBg =
-          '<div class="bb-slide__bg bb-slide__bg--mob" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>';
       return (
         '<article class="bb-slide bb-slide--wide" role="group" aria-roledescription="слайд" aria-label="' + esc(ev.title) + ', ' + fmtHuman(ev) + '">' +
           /* нижний слой — размытая заливка полей, верхний — панорама целиком
              (окно 3:1 шире, чем арты 12:5; правка Саши 16.08) */
           '<div class="bb-slide__bg bb-slide__bg--wide-fill" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
           '<div class="bb-slide__bg bb-slide__bg--wide" style="background-image:url(\'' + esc(ev.wide) + '\')" aria-hidden="true"></div>' +
-          mobBg +
           slideLink +
           '<div class="bb-slide__stage">' +
             '<div class="bb-slide__chips">' + chips + '</div>' +
@@ -376,12 +426,7 @@
             ' alt="Афиша: ' + esc(ev.title) + '"' +
             (i ? ' loading="lazy"' : '') + ' width="1080" height="1350">';
     } else {
-      art =
-        '<div class="poster poster--' + esc(ev.tone || 'mag') + ' bb-slide__cssposter">' +
-          (ev.photo ? '<img class="poster__photo" src="' + esc(ev.photo) + '" alt="" aria-hidden="true" loading="lazy" width="900" height="900"><div class="poster__tint"></div>' : '') +
-          '<div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">' + esc(ev.kind || '') + '</span></div>' +
-          '<div class="poster__name"><b>' + esc(ev.title) + '</b></div>' +
-        '</div>';
+      art = cssPosterHTML(ev);
     }
     var bg = ev.poster
       ? '<div class="bb-slide__bg" style="background-image:url(\'' + esc(ev.poster) + '\')" aria-hidden="true"></div>'
@@ -893,22 +938,13 @@
       /* «день = шоу»: повторные сеансы дня схлопнуты в одну карточку */
       var list = dedupeSameDay(applySort(filtered(), state.sort));
       if (pageSize && !visible) visible = batchSize();
-      /* Разделитель месяца во всю ширину сетки (правка Анвера 19.08).
-         Лента идёт непрерывно, но месяцы делили один ряд: рядом стояли
-         29 августа и 6 сентября, и подпись над рейкой не понимала, какой
-         месяц показывать. Разделитель начинает новый месяц с новой строки
-         и служит якорем для перемотки стрелками. */
+      /* Лента сплошная, без разделителей месяцев (Саша 28.08): карточки
+         августа и сентября стоят в одном ряду подряд. Разделитель 19.08
+         (строка «СЕНТЯБРЬ» во всю ширину сетки) снят; подпись месяца над
+         рейкой по-прежнему идёт за прокруткой, стрелки ‹ › перематывают
+         к первой карточке месяца. */
       var shown = pageSize ? list.slice(0, visible) : list;
-      var lastMk = null;
-      track.innerHTML = shown.map(function(ev, i){
-        var mk = monthKey(ev.date), head = '';
-        if (mk !== lastMk){
-          lastMk = mk;
-          head = '<div class="afisha__month" data-month="' + mk + '" aria-hidden="true">' +
-                 MONTHS_NOM[parseInt(mk.slice(5), 10) - 1] + '</div>';
-        }
-        return head + cardHTML(ev, i);
-      }).join('');
+      track.innerHTML = shown.map(function(ev, i){ return cardHTML(ev, i); }).join('');
       if (loadBtn) loadBtn.hidden = !pageSize || list.length <= visible;
       if (emptyBox) emptyBox.hidden = list.length > 0;
       markCurrentDay();
@@ -995,12 +1031,14 @@
       if (!daysWrap || !daysWrap.children.length) return;
       var days = state.date ? [state.date]
                : ((state.preset || state.q) ? [] : daysInView());
+      /* Подсветку чисел по прокрутке сняли (Саша 28.08): рейка горела тремя
+         числами сразу и читалась как «выбрано». .is-current теперь ставит
+         только наведение на карточку (hoverDay ниже); рейку по-прежнему
+         подкручиваем к первому видимому дню, чтобы она шла за лентой */
       var btns = daysWrap.children, first = null;
       for (var i = 0; i < btns.length; i++){
         var d = btns[i].getAttribute && btns[i].getAttribute('data-date');
-        var on = !!d && days.indexOf(d) !== -1;
-        btns[i].classList.toggle('is-current', on);
-        if (on && !first) first = btns[i];
+        if (d && days.indexOf(d) !== -1){ first = btns[i]; break; }
       }
       if (first) keepDayVisible(first);
       /* Подпись месяца идёт за лентой: доскроллил до сентябрьских карточек —
@@ -1024,6 +1062,26 @@
         : setTimeout(markCurrentDay, 60);
     }
     window.addEventListener('scroll', scheduleSpy, {passive: true});
+
+    /* Число в рейке горит только под курсором (Саша 28.08): навёл на
+       карточку — подсвечено её число, увёл — погасло. Одно число за раз;
+       выбранная руками дата остаётся белой через aria-pressed и этим не
+       трогается. На тачскринах наведения нет — рейка спокойная */
+    function hoverDay(date){
+      if (!daysWrap) return;
+      var btns = daysWrap.children, hit = null;
+      for (var i = 0; i < btns.length; i++){
+        var on = !!date && !!btns[i].getAttribute && btns[i].getAttribute('data-date') === date;
+        btns[i].classList.toggle('is-current', on);
+        if (on) hit = btns[i];
+      }
+      if (hit) keepDayVisible(hit);
+    }
+    track.addEventListener('mouseover', function(e){
+      var card = e.target.closest ? e.target.closest('[data-date]') : null;
+      hoverDay(card && track.contains(card) ? card.getAttribute('data-date') : null);
+    });
+    track.addEventListener('mouseleave', function(){ hoverDay(null); });
 
     if (presetWrap) presetWrap.addEventListener('click', function(e){
       var b = e.target.closest('[data-preset]');
@@ -1078,13 +1136,10 @@
       if (!mk) return;
       state.date = null; state.preset = null; state.month = mk;
       rerender();
-      /* якорь перемотки — заголовок месяца, он всегда начинает новую строку */
-      var target = track.querySelector('.afisha__month[data-month="' + mk + '"]');
-      if (!target){
-        var cards = eventCards();
-        for (var i = 0; i < cards.length; i++){
-          if (monthKey(cards[i].getAttribute('data-date') || '') === mk){ target = cards[i]; break; }
-        }
+      /* якорь перемотки — первая карточка месяца (разделители сняты 28.08) */
+      var target = null, cards = eventCards();
+      for (var i = 0; i < cards.length; i++){
+        if (monthKey(cards[i].getAttribute('data-date') || '') === mk){ target = cards[i]; break; }
       }
       if (!target) return;
       var head = document.querySelector('.site-header');

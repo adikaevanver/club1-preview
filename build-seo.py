@@ -42,7 +42,7 @@ ORG = {
     'name': 'Клуб №1',
     'alternateName': 'CLUB 1',
     'url': BASE + '/',
-    'logo': BASE + '/assets/logo-white.svg',
+    'logo': BASE + '/assets/logo-metelitsa.png',
     'image': BASE + '/assets/venue/audience.jpg',
     'description': 'Стендап-клуб на Новом Арбате, 21. Сольные концерты, сборные '
                    'вечера и проверки материала от опытных комиков.',
