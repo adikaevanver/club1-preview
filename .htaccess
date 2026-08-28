@@ -1,5 +1,5 @@
 # =====================================================================
-# club1.moscow — конфигурация хостинга reg.ru (Apache)
+# metelitsaclub1.ru (до 28.08.2026 — club1.moscow) — конфигурация хостинга reg.ru (Apache)
 #
 # Сайт открыт 28.08.2026: блок «ЗАКРЫТЫЙ ДОСТУП» (basic-auth + X-Robots-Tag
 # noindex) снят. Закрыть обратно — вернуть блок из истории гита (до #46).
@@ -7,6 +7,12 @@
 
 # ---- HTTPS ----------------------------------------------------------
 RewriteEngine On
+# Переезд 28.08.2026: club1.moscow → metelitsaclub1.ru. ACME и файлы подтверждения остаются на старом домене.
+RewriteCond %{HTTP_HOST} ^(www\.)?club1\.moscow$ [NC]
+RewriteCond %{REQUEST_URI} !^/\.well-known/
+RewriteCond %{REQUEST_URI} !^/(yandex_[0-9a-f]+|google[0-9a-f]+)\.html$
+RewriteRule ^ https://metelitsaclub1.ru%{REQUEST_URI} [R=301,L]
+
 # проверку Let's Encrypt на https не уводим — она ходит по http
 RewriteCond %{REQUEST_URI} !^/\.well-known/
 RewriteCond %{HTTPS} !=on

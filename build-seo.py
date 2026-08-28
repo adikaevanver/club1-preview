@@ -21,7 +21,7 @@ offers не пишется, длительность (endDate) не указыв
 import json, os, re, glob, subprocess, sys, datetime
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-BASE = 'https://adikaevanver.github.io/club1-preview'   # deploy.py заменит на club1.moscow
+BASE = 'https://adikaevanver.github.io/club1-preview'   # deploy.py заменит на metelitsaclub1.ru
 
 PLACE = {
     '@type': 'Place',
