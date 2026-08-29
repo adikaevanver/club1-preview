@@ -482,9 +482,9 @@ def main():
     evs.sort(key=lambda e: (e['date'], e.get('time') or '23:00'))
 
     # файлы подтверждения прав (Вебмастер yandex_*.html, Search Console
-    # google*.html) — не страницы: ни в sitemap, ни noindex им не нужны,
+    # google*.html, Постмастер Mail.ru mailru-verification*.html) — не страницы: ни в sitemap, ни noindex им не нужны,
     # а чужая строка в теле ломает проверку.
-    VERIFY_RE = re.compile(r'^(yandex_[0-9a-f]+|google[0-9a-f]+)\.html$')
+    VERIFY_RE = re.compile(r'^(yandex_[0-9a-f]+|google[0-9a-f]+|mailru-verification[0-9a-f]+)\.html$')
     pages = sorted(os.path.basename(p) for p in glob.glob(os.path.join(ROOT, '*.html'))
                    if not VERIFY_RE.match(os.path.basename(p)))
 

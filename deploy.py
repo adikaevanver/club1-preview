@@ -251,6 +251,7 @@ def main():
     keep = [re.compile(p) for p in (
         r'^yandex_[0-9a-f]+\.html$',
         r'^google[0-9a-f]+\.html$',
+        r'^mailru-verification[0-9a-f]+\.html$',
         r'^\.well-known/',
         r'^cgi-bin/',
         r'^robots\.txt\.bak$',

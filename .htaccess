@@ -10,7 +10,7 @@ RewriteEngine On
 # Переезд 28.08.2026: club1.moscow → metelitsaclub1.ru. ACME и файлы подтверждения остаются на старом домене.
 RewriteCond %{HTTP_HOST} ^(www\.)?club1\.moscow$ [NC]
 RewriteCond %{REQUEST_URI} !^/\.well-known/
-RewriteCond %{REQUEST_URI} !^/(yandex_[0-9a-f]+|google[0-9a-f]+)\.html$
+RewriteCond %{REQUEST_URI} !^/(yandex_[0-9a-f]+|google[0-9a-f]+|mailru-verification[0-9a-f]+)\.html$
 RewriteRule ^ https://metelitsaclub1.ru%{REQUEST_URI} [R=301,L]
 
 # проверку Let's Encrypt на https не уводим — она ходит по http
@@ -38,10 +38,11 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
 RewriteRule ^ / [R=301,L]
 
-# Файлы подтверждения прав (Вебмастер yandex_*.html, Search Console
+# Файлы подтверждения прав (Вебмастер yandex_*.html, Search Console,
+# Постмастер Mail.ru mailru-verification*.html,
 # google*.html) роботы запрашивают по точному адресу с .html и ждут 200 —
 # 301 на короткий адрес ломает проверку (открытие 28.08).
-RewriteCond %{THE_REQUEST} !\s/+(yandex_[0-9a-f]+|google[0-9a-f]+)\.html[\s?] [NC]
+RewriteCond %{THE_REQUEST} !\s/+(yandex_[0-9a-f]+|google[0-9a-f]+|mailru-verification[0-9a-f]+)\.html[\s?] [NC]
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
