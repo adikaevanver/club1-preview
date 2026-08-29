@@ -15,10 +15,12 @@
 
 Блоки помечены data-seo, повторный запуск их заменяет, а не плодит.
 Данных, которых у нас нет, не выдумываем: без подтверждённой цены блок
-offers не пишется, длительность (endDate) не указывается, часы работы у
-организации не проставлены — клуб работает по афише.
+offers не пишется, часы работы у организации не проставлены — клуб работает
+по афише. Длительность шоу клуб публикует не везде, поэтому endDate
+считается по таблице DURATION_MIN — она же единственное место, где эти
+значения правятся.
 """
-import json, os, re, glob, subprocess, sys, datetime
+import json, os, re, glob, subprocess, sys, datetime, html
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 BASE = 'https://adikaevanver.github.io/club1-preview'   # deploy.py заменит на metelitsaclub1.ru
@@ -65,6 +67,76 @@ def events():
     return json.loads(out.stdout)
 
 
+# Длительность шоу — из неё считается endDate. Своего поля в events.js нет,
+# поэтому берём то, что клуб пишет сам: «три комика и ведущий, час живого
+# стендапа» на страницах сборников и «1 час 30 минут» на странице сольного
+# концерта (guram.html). Для остальных форматов длительность нигде не
+# опубликована — держим общие два часа. Правится здесь, одним местом.
+DURATION_MIN = {'ok': 60, 'gorod': 60, 'solniki': 90}
+DURATION_DEFAULT = 120
+
+_DESC = {}
+_SALE = {}
+
+
+def end_date(ev):
+    """Конец события: начало плюс длительность формата.
+
+    У события без подтверждённого времени конец — та же дата, без часов:
+    придумывать время окончания там, где нет начала, нечем.
+    """
+    if not ev.get('time'):
+        return ev['date']
+    start = datetime.datetime.fromisoformat(f"{ev['date']}T{ev['time']}:00")
+    end = start + datetime.timedelta(
+        minutes=DURATION_MIN.get(ev.get('format'), DURATION_DEFAULT))
+    return end.strftime('%Y-%m-%dT%H:%M:%S+03:00')
+
+
+def page_description(slug):
+    """Описание события для JSON-LD — meta description его страницы.
+
+    Отдельный текст под разметку не заводим: описание страницы уже написано
+    под это шоу и правится в одном месте.
+    """
+    if slug not in _DESC:
+        txt = ''
+        try:
+            head = read(os.path.join(ROOT, slug + '.html')).split('</head>', 1)[0]
+            m = re.search(r'<meta name="description" content="([^"]*)"', head)
+            if m:
+                txt = html.unescape(m.group(1)).strip()
+        except OSError:
+            pass
+        _DESC[slug] = txt
+    return _DESC[slug]
+
+
+def sale_start(ev):
+    """validFrom у offers — с какой даты билет продаётся.
+
+    Дату открытия продаж касса не отдаёт, а выдумывать её нельзя. Берём
+    проверяемый факт: коммит, которым сеанс появился в events.js, — к тому
+    дню ссылка на покупку уже работала. Сеанс, ещё не попавший в коммит,
+    продаётся с сегодня.
+    """
+    m = re.search(r'/seance/(\d+)|@(\d+)', ev.get('buy') or '')
+    sid = (m.group(1) or m.group(2)) if m else None
+    if not sid:
+        return None
+    if sid not in _SALE:
+        d = ''
+        try:
+            r = subprocess.run(['git', 'log', '--reverse', '--format=%cs',
+                                '-S', sid, '--', 'assets/data/events.js'],
+                               cwd=ROOT, capture_output=True, text=True)
+            d = (r.stdout.split('\n')[0] or '').strip()
+        except Exception:
+            pass
+        _SALE[sid] = d or datetime.date.today().isoformat()
+    return _SALE[sid]
+
+
 def event_ld(ev):
     name = ev['title']
     if ev.get('format') == 'solniki':
@@ -75,6 +147,7 @@ def event_ld(ev):
         '@type': 'ComedyEvent',
         'name': name,
         'startDate': f"{ev['date']}T{ev['time']}:00+03:00" if ev.get('time') else ev['date'],
+        'endDate': end_date(ev),
         'eventStatus': 'https://schema.org/EventScheduled',
         'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
         'location': PLACE,
@@ -88,10 +161,16 @@ def event_ld(ev):
         # окно на сайте. Поисковику он не нужен и только мусорит в разметке
         ld['url'] = ev['buy'].split('#')[0]
 
+    if ev.get('page') and page_description(ev['page']):
+        ld['description'] = page_description(ev['page'])
+
     # сольник — на сцене конкретный человек; у сборных форматов состав
-    # меняется от даты к дате, выдавать его за постоянный нельзя
+    # меняется от даты к дате, выдавать конкретные имена за постоянные
+    # нельзя — там на сцене труппа клуба без перечисления
     if ev.get('format') == 'solniki':
         ld['performer'] = {'@type': 'Person', 'name': ev['title']}
+    else:
+        ld['performer'] = {'@type': 'PerformingGroup', 'name': 'Артисты Клуба №1'}
 
     # offers пишем только с подтверждённой ценой: Offer без price — невалидная
     # разметка, а придумывать цену нельзя
@@ -105,6 +184,9 @@ def event_ld(ev):
             'url': ev['buy'].split('#')[0],
             'availability': 'https://schema.org/InStock',
         }
+        vf = sale_start(ev)
+        if vf:
+            ld['offers']['validFrom'] = vf
     return ld
 
 
