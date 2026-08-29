@@ -547,8 +547,77 @@
   })();
 
 
+  /* --- Tracking -------------------------------------------------------
+     Проброс рекламных меток в кассу. Гость приходит на сайт по ссылке с
+     utm_*, кликает «Купить билет» — и уходит на intickets/Я.Афишу, где
+     метки уже нет: заказ падает в отчёт кассы как «без источника».
+     Здесь метки из адреса страницы дописываются в ссылки на кассу, чтобы
+     реестр заказов (F-R) показывал, из какого письма или кампании пришла
+     покупка.
+
+     Правится и href, и data-buy: кнопки выбора даты (Datebar) переписывают
+     href значением data-buy, и без правки метка терялась ровно в момент,
+     когда гость переключает сеанс. Отсюда же требование к порядку —
+     Tracking.init() идёт в boot() первым, до Datebar.init().
+
+     Якорь #abiframe обязан пережить правку: параметры кладутся в query,
+     хеш остаётся на месте (иначе касса откроется страницей, а не виджетом).
+  ------------------------------------------------------------------- */
+  var Tracking = (function () {
+    var KEEP = /^(utm_|yclid$|ymclid$|_openstat$|gclid$|fbclid$|from$)/i;
+    var CASH = /(^|\.)intickets\.ru$|(^|\.)afisha\.yandex\.ru$/i;
+    var params = null;
+
+    function collect() {
+      var out = [];
+      try {
+        new URLSearchParams(window.location.search).forEach(function (v, k) {
+          if (KEEP.test(k) && v) out.push([k, v]);
+        });
+      } catch (e) { /* старый браузер — метку не пробрасываем, ссылка живая */ }
+      return out;
+    }
+
+    function decorate(raw) {
+      if (!raw) return raw;
+      var u;
+      try { u = new URL(raw, window.location.href); } catch (e) { return raw; }
+      if (!CASH.test(u.hostname)) return raw;
+      for (var i = 0; i < params.length; i++) {
+        if (!u.searchParams.has(params[i][0])) u.searchParams.set(params[i][0], params[i][1]);
+      }
+      return u.toString();   // хеш URL сохраняет сам
+    }
+
+    function run() {
+      if (!params || !params.length) return;
+      var nodes = document.querySelectorAll('a[href], [data-buy]');
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        if (n.getAttribute('data-utm') === 'done') continue;
+        if (n.hasAttribute('data-buy')) n.setAttribute('data-buy', decorate(n.getAttribute('data-buy')));
+        if (n.tagName === 'A' && n.getAttribute('href')) n.setAttribute('href', decorate(n.getAttribute('href')));
+        n.setAttribute('data-utm', 'done');
+      }
+    }
+
+    function init() {
+      params = collect();
+      if (!params.length) return;
+      run();
+      /* афиша и рейки рисуются скриптом — ловим то, что придёт позже */
+      if (window.MutationObserver) {
+        new MutationObserver(run).observe(document.documentElement,
+          { childList: true, subtree: true });
+      }
+    }
+
+    return { init: init, decorate: function (h) { return params ? decorate(h) : h; } };
+  })();
+
   /* --- boot --------------------------------------------------------- */
   function boot() {
+    Tracking.init();   // до Datebar: он копирует data-buy в href
     Modal.init();
     Tabs.init();
     Slideshow.init();
