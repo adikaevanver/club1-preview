@@ -316,12 +316,12 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-12', time:'21:30', title:'Валентин Сидоров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/sidorov-45.jpg', wide:null, photo:null, tone:'cyan', page:'sidorov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74461145/#abiframe', age:'18+'},
-  /* Давай переиграем, 12.09 — сеанс 74846235 открыт виджетом 26.08: «Сб, 12 сентября
-     2026, 21:30», 800–1 500 ₽. Играют «Любовь и голуби» (описание от Анвера 26.08);
-     арт под дату клуб не прислал (папка 09 - Сентябрь на Диске пустая), поэтому карточка
-     на фирменном CSS-постере, а не на арте 19.08 с «Дьявол носит Прада 2». */
+  /* Давай переиграем, 12.09 — сеанс 74846235 открыт виджетом 26.08 и повторно 01.09:
+     «Сб, 12 сентября 2026, 21:30», 800–1 500 ₽. Играют «Любовь и голуби». Арт под дату
+     Максим прислал 31.08 (папка «Давай переиграем – 12 Сентября» на Диске), 4:5 без даты —
+     отсюда pereigraem1209-45; арт 19.08 с «Дьявол носит Прада 2» остаётся у прошедшей даты. */
   {date:'2026-09-12', time:'21:30', title:'Давай переиграем', kind:'Импровизационное шоу', format:'pereigraem', priceFrom:800,
-   poster:null, wide:null, photo:null, tone:'pur', page:'pereigraem',
+   poster:'assets/posters/pereigraem1209-45.jpg', wide:null, photo:null, tone:'pur', page:'pereigraem',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74846235/#abiframe', age:'18+'},
   /* Бьюти стендап — заведён 13.08 по карточке Максима; время и сеанс из
      кассы (intickets 74087267, сверено 10.08 при заводе на старый сайт),
@@ -357,11 +357,21 @@ window.CLUB1_EVENTS = [
      74432364 открыт живьём: «Вск, 20 сентября 2026, 19:00 · ВИА Ваши
      Краши · CLUB#1», цены 1 200–3 500 ₽. Афиша квадратная 1:1,
      портрет 4:5 заказан Максиму. */
+  /* Артём Винокур, 20.09 — этой датой клуб заменил «В большом городе» 28.08: касса
+     переписала шоу внутри сеанса 74846316, id остался прежним. Виджет открыт 01.09:
+     «Вск, 20 сентября 2026, 18:30 · Артем Винокур. Стендап. Сольный концерт CLUB#1»,
+     1 500–3 500 ₽. Арт 4:5 от Максима 31.08, панорамы 4:1 нет — в слайдер не идёт. */
+  {date:'2026-09-20', time:'18:30', title:'Артём Винокур', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
+   poster:'assets/posters/vinokur2009-45.jpg', wide:null, photo:null, tone:'green', page:'vinokur',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74846316/#abiframe', age:'18+'},
   {date:'2026-09-20', time:'19:00', title:'ВИА Ваши Краши', kind:'Концерт', format:'krashi', priceFrom:1200,
    poster:'assets/posters/krashi2009-45.jpg', wide:'assets/posters/krashi-wide41.jpg', wideFocus:'42%', photo:null, tone:'mag', page:'krashi',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74432364/#abiframe', age:'18+'},
+  /* Стендап Комьюнити, 23.09 — арт 4:5 без даты пришёл 24.08 (папка «Стендап – 23 Сентября»),
+     на нём же читается лайнап: хедлайнер Павел Дедищев, Дима Растопчинов, Геворк Абрамян,
+     Заур Туганов — он совпадает с составом из заявки клуба от 20.08. */
   {date:'2026-09-23', time:'20:00', title:'Стендап Комьюнити', kind:'Комьюнити', format:'community', priceFrom:1000,
-   poster:null, wide:null, photo:null, tone:'green', page:'community',
+   poster:'assets/posters/community-45.jpg', wide:null, photo:null, tone:'green', page:'community',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686575/#abiframe', age:'18+'},
   {date:'2026-09-23', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'open-mic',
@@ -404,10 +414,101 @@ window.CLUB1_EVENTS = [
   {date:'2026-10-04', time:'18:30', title:'Расул Чабдаров', kind:'Сольный концерт', format:'solniki', priceFrom:1500,
    poster:'assets/posters/chabdarov-45.jpg', wide:null, photo:null, tone:'mag', page:'chabdarov',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74316676/#abiframe', age:'18+'},
+  /* Андрей Атлас, второй сольник «Ничего не вышло» — заявка клуба 28.08. Сеанс 74967817
+     открыт виджетом 01.09: «Вск, 4 октября 2026, 21:00 · Андрей Атлас. Стендап. Сольный
+     концерт CLUB#1», 1 200–2 500 ₽. Афишу клуб заказал Максиму 28.08, к 01.09 её нет ни
+     в чате, ни на Диске — карточка идёт на фирменном CSS-постере до прихода арта. */
+  {date:'2026-10-04', time:'21:00', title:'Андрей Атлас', kind:'Сольный концерт', format:'solniki', priceFrom:1200,
+   poster:null, wide:null, photo:null, tone:'gold', page:'atlas',
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74967817/#abiframe', age:'18+'},
   {date:'2026-10-10', time:'19:00', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
    poster:'assets/posters/burlesk-1010-45.jpg', wide:'assets/posters/burlesk-wide41.jpg', wideFocus:'40%', photo:null, tone:'pur', page:'razovoe',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74432352/#abiframe', age:'18+'},
   {date:'2026-10-30', time:'21:30', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
    poster:'assets/posters/burlesk-3010-45.jpg', wide:'assets/posters/burlesk-wide41.jpg', wideFocus:'40%', photo:null, tone:'pur', page:'razovoe',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/74686618/#abiframe', age:'18+'}
+   buy:'https://iframeab-pre7764.intickets.ru/seance/74686618/#abiframe', age:'18+'},
+  /* Пачка от Левана 01.09: «Опытные комики с ТВ» (690 ₽) и «Женская комедия комиков
+     с ТВ» (750 ₽) — сеансы Яндекс.Афиши. Каждый открыт виджетом 01.09, название, дата
+     и цена сверены с экрана. Два расхождения с сообщением: сеанс 70435948 (Опытные,
+     08.09 21:30) виджет не отдаёт — «Страница недоступна» с двух попыток, дата НЕ
+     заведена; у 70332087 Леван написал 05.09 19:00, касса показывает 16:00 — ведём по
+     кассе. Арта у «Женской комедии» нет, карточка на фирменном CSS-постере. */
+  {date:'2026-09-01', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435933?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-02', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435936?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-03', time:'19:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435938?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-06', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435942?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-07', time:'20:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435946?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-09', time:'19:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435953?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-10', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435955?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-14', time:'20:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435957?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-15', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435959?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-16', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435961?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-20', time:'16:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435966?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-20', time:'21:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435963?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-21', time:'20:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435968?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-22', time:'19:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435970?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-23', time:'19:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435976?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-24', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435982?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-01', time:'19:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70331961?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-05', time:'16:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332087?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-06', time:'16:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332089?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-08', time:'19:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332092?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-13', time:'16:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332095?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-15', time:'19:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332099?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-17', time:'19:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332103?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-19', time:'16:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332105?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-22', time:'21:30', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332107?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  {date:'2026-09-26', time:'16:00', title:'Женская комедия', kind:'Женский стендап', format:'zhensky', priceFrom:750,
+   poster:null, wide:null, photo:null, tone:'mag', page:'zhensky',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332109?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
 ];

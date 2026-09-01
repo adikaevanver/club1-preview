@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
-<title>Открытый микрофон · Клуб №1 · CLUB 1 — стендап на Новом Арбате</title>
+<title>Женская комедия · Клуб №1 · CLUB 1 — стендап на Новом Арбате</title>
 
-<meta name="description" content="Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.">
+<meta name="description" content="Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.">
 <meta name="theme-color" content="#0a0810">
-<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/open-mic">
+<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/zhensky">
 
 <!-- Open Graph / social -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Клуб №1 · CLUB 1">
-<meta property="og:title" content="Открытый микрофон — Клуб №1 на Новом Арбате">
-<meta property="og:description" content="Десять вечеров со 2 сентября по 1 октября, Новый Арбат, 21. Билет 390 ₽.">
+<meta property="og:title" content="Женская комедия — Клуб №1 на Новом Арбате">
+<meta property="og:description" content="Комедиантки с ТВ на сцене Клуба №1. Расписание по датам и билеты на сайте, Новый Арбат, 21.">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/open-mic">
-<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg">
+<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/zhensky">
+<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/venue/hall-main.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
@@ -28,27 +28,27 @@
 <link rel="stylesheet" href="styles.css?v=031d1b4a56">
 
 <!-- =====================================================================
-     PAGE-SPECIFIC CSS  ·  Страница разового шоу (razovoe.html only)
-     Reuses shared classes (.poster, .btn, .pill, .event-card, .afisha,
-     .rule, .eyebrow, .glow, .modal, .social-btn …). Everything below is
-     layout unique to this one-off-show template. The comic bios use the
-     shared modal component from styles.css §12 / script.js.
+     PAGE-SPECIFIC CSS  (event-detail template — show.html only)
+     Reuses shared classes (.poster, .btn, .pill, .event-card, .rule,
+     .eyebrow, .glow, and the §12 .modal / .datebar components).
+     Everything below is layout unique to this page.
      ===================================================================== -->
 <style>
-  /* ---- generic section rhythm (matches show.html conventions) ------ */
+  /* ---- generic section rhythm ------------------------------------- */
   .show-section{position:relative;padding:var(--section-y) 0}
   .show-section + .show-section{border-top:1px solid var(--hairline)}
+
   .section-head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,4vw,44px)}
   .section-title{
     font-family:var(--display);font-weight:800;
     font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.06;letter-spacing:-.01em;color:#fff;
   }
-  .section-head__note{color:var(--muted);font-size:1rem;max-width:60ch}
+  .section-sub{color:var(--muted);font-size:1.02rem;line-height:1.55;max-width:62ch}
 
   /* =================================================================
-     1 · HERO — Обложка (афиша) + Краткая информация + кнопки
+     1 · HERO — two columns: poster (left) · event facts (right)
      ================================================================= */
-  .show-hero{position:relative;padding:clamp(24px,4vw,44px) 0 clamp(40px,5vw,64px)}
+  .show-hero{position:relative;padding:var(--section-y) 0 var(--sp-6)}
   .show-hero__glow-a{width:520px;height:520px;top:-120px;left:-180px}
   .show-hero__glow-b{width:440px;height:440px;top:40px;right:-180px}
 
@@ -58,110 +58,130 @@
     gap:clamp(28px,4vw,60px);align-items:start;
   }
 
-  /* left: enlarged shared poster (Обложка / афиша) */
+  /* left: enlarged shared poster */
   .show-poster{width:100%}
   .show-poster .poster{aspect-ratio:4/5}
-  .show-poster .poster__standup{font-size:clamp(2.6rem,5.8vw,3.6rem)}
+  /* the show is a multi-comic bill: scale the STANDUP art up a touch */
+  .show-poster .poster__standup{font-size:clamp(2.9rem,6.2vw,3.9rem)}
 
   /* right column */
-  .show-facts{display:flex;flex-direction:column;gap:clamp(18px,2.4vw,24px)}
-  .show-tag{display:inline-flex;align-items:center;gap:.6em;align-self:flex-start;
-    font-family:var(--body);font-weight:600;font-size:.82rem;letter-spacing:.02em;
-    color:#fff;background:rgba(255,47,109,.14);border:1px solid rgba(255,47,109,.5);
-    padding:6px 12px;border-radius:999px;text-transform:uppercase}
-  .show-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+  .show-facts{display:flex;flex-direction:column;gap:clamp(18px,2.4vw,26px)}
   .show-title{
     font-family:var(--display);font-weight:800;
-    font-size:clamp(2rem,4.8vw,3.1rem);line-height:1.02;letter-spacing:-.02em;color:#fff;
+    font-size:clamp(2rem,4.8vw,3.15rem);line-height:1.03;letter-spacing:-.02em;color:#fff;
   }
-  .show-title span{color:var(--magenta)}
-  .show-lede{color:var(--muted);font-size:1.05rem;line-height:1.6;max-width:56ch}
 
-  /* Краткая информация — 4 facts */
-  .quickfacts{
-    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:14px;margin-top:2px;
-  }
-  .fact{
-    display:flex;align-items:flex-start;gap:14px;
-    padding:16px;border-radius:var(--r);
-    background:var(--panel);border:1px solid var(--hairline);
-  }
-  .fact__ic{
+  /* meta chips row — Краткая информация (длительность · сбор · стоимость) */
+  .event-meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 30px}
+  .meta-chip{display:inline-flex;align-items:center;gap:.7em;font-weight:500;font-size:1.02rem;color:var(--text)}
+  .meta-chip__ic{
     width:40px;height:40px;flex:0 0 auto;border-radius:50%;
     border:1.5px solid var(--hairline-strong);
     display:flex;align-items:center;justify-content:center;color:var(--magenta);
     font-family:var(--display);font-weight:700;font-size:1.05rem;
   }
-  .fact__ic svg{width:19px;height:19px;display:block}
-  .fact__label{display:block;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
-  .fact__value{display:block;font-weight:600;color:#fff;line-height:1.25;margin-top:3px}
-  .fact__value small{display:block;font-weight:400;font-size:.85rem;color:var(--muted)}
+  .meta-chip__ic svg{width:19px;height:19px;display:block}
+
+  .show-lede{color:var(--muted);font-size:1.05rem;line-height:1.6;max-width:56ch}
+  .show-lede + .show-lede{margin-top:-6px}
+  .show-lede b{color:var(--text);font-weight:600}
 
   /* Кнопка подробнее + Кнопка покупки */
-  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
-  .cta-row .btn{min-width:170px}
+  .show-cta-row{display:flex;flex-wrap:wrap;gap:14px;align-self:flex-start;margin-top:2px}
 
   /* =================================================================
-     2 · Подробное описание шоу
+     2 · SCHEDULE — «Перечень шоу и билеты по датам и времени»
+     datebar filter (shared §12 component) + dated rows with buy CTA
      ================================================================= */
-  .desc__copy{max-width:70ch}
-  .desc__copy p{color:var(--muted);font-size:1.05rem;line-height:1.64}
-  .desc__copy p + p{margin-top:16px}
-  .desc__copy p b{color:var(--text);font-weight:600}
-  .desc__note{
-    margin-top:24px;padding:16px 18px;border-radius:var(--r-sm);
-    background:var(--panel);border-left:3px solid var(--magenta);
-    color:var(--muted);font-size:.98rem;
+  .schedule__bar{margin-bottom:clamp(22px,3vw,34px)}
+  .schedule__list{display:flex;flex-direction:column}
+  .sched-row{
+    display:flex;align-items:center;gap:16px 22px;flex-wrap:wrap;
+    padding:16px 0;border-top:1px solid var(--hairline);
+  }
+  .sched-row:first-child{border-top:0}
+  .sched-row[hidden]{display:none}
+  .sched-row__meta{display:flex;align-items:center;gap:14px 26px;flex:1 1 auto;min-width:0}
+  .sched-row__cell{display:inline-flex;align-items:center;gap:.55em;font-weight:500;white-space:nowrap;color:var(--text)}
+  .sched-row__cell svg{width:18px;height:18px;flex:0 0 auto;color:var(--magenta)}
+  .sched-row__cell--day{font-family:var(--display);font-weight:600;font-size:1.05rem;color:#fff}
+  .sched-row .book-btn{flex:0 0 auto;min-width:210px}
+  /* white booking CTA (matches mock) — built on the shared .btn base */
+  .book-btn{background:#fff;color:var(--ink);box-shadow:0 8px 24px -14px rgba(255,255,255,.55)}
+  .book-btn:hover{background:#ece9f5}
+  .book-btn[disabled]{opacity:.4;box-shadow:none;pointer-events:none;background:#fff}
+  .sched-note{margin-top:16px;font-size:.92rem;color:var(--muted)}
+
+  /* =================================================================
+     3 · PRESENTS — Подробная информация о шоу (copy + stage card)
+     ================================================================= */
+  .present__grid{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(30px,4.5vw,64px);align-items:center;
+  }
+  .present__show{color:var(--magenta)}
+  .present__copy p{color:var(--muted);font-size:1.04rem;line-height:1.62}
+  .present__copy p + p{margin-top:16px}
+  .present__copy p b{color:var(--text);font-weight:600}
+
+  .stage-card{
+    position:relative;border-radius:var(--r);overflow:hidden;
+    aspect-ratio:16/11;background:#000;isolation:isolate;
+  }
+  .stage-card img{width:100%;height:100%;object-fit:cover;object-position:50% 32%}
+  /* stage light + vignette so a headshot reads as a live-stage frame */
+  .stage-card::after{
+    content:"";position:absolute;inset:0;z-index:2;
+    background:
+      radial-gradient(55% 46% at 50% 8%, rgba(255,194,75,.30), transparent 62%),
+      radial-gradient(90% 70% at 50% 120%, rgba(180,70,255,.22), transparent 60%),
+      linear-gradient(180deg, transparent 42%, rgba(10,8,16,.55));
+  }
+  .stage-card__tag{
+    position:absolute;left:14px;bottom:14px;z-index:3;
+    font-family:var(--body);font-weight:600;font-size:.8rem;letter-spacing:.02em;
+    color:#fff;background:rgba(0,0,0,.36);border:1px solid rgba(255,255,255,.28);
+    padding:5px 11px;border-radius:8px;backdrop-filter:blur(4px);
   }
 
   /* =================================================================
-     VIDEO PLACEHOLDER — reused big (section) + small (inside bios)
+     4 · VIDEO — «Видео с нарезкой моментов из шоу» (placeholder)
      ================================================================= */
   .video-ph{
-    position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;
-    border:1.5px dashed var(--hairline-strong);
+    position:relative;border-radius:var(--r);overflow:hidden;
+    aspect-ratio:16/9;
     background:
-      radial-gradient(70% 60% at 50% 0%, rgba(180,70,255,.18), transparent 60%),
-      linear-gradient(150deg, var(--panel), var(--ink-2));
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:14px;text-align:center;padding:clamp(20px,4vw,40px);
+      radial-gradient(120% 120% at 50% 0, rgba(255,47,109,.18), transparent 60%),
+      var(--ink-2);
+    border:1px solid var(--hairline);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    text-align:center;padding:24px;
   }
   .video-ph__play{
-    width:76px;height:76px;flex:0 0 auto;border-radius:50%;
-    background:var(--magenta);display:flex;align-items:center;justify-content:center;
-    box-shadow:0 14px 44px -12px rgba(255,47,109,.8);
+    width:78px;height:78px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.06);border:1.5px solid var(--hairline-strong);color:#fff;
   }
-  .video-ph__play::before{
-    content:"";display:block;margin-left:6px;
-    border-style:solid;border-width:13px 0 13px 22px;
-    border-color:transparent transparent transparent #fff;
-  }
-  .video-ph__text{
-    font-family:var(--display);font-weight:600;font-size:1rem;letter-spacing:.04em;
-    text-transform:uppercase;color:var(--text);
-  }
-  .video-ph__sub{font-size:.94rem;color:var(--muted);max-width:46ch}
-  .video-ph--sm{border-radius:var(--r-sm)}
-  .video-ph--sm .video-ph__play{width:54px;height:54px}
-  .video-ph--sm .video-ph__play::before{border-width:9px 0 9px 15px;margin-left:4px}
-  .video-ph--sm .video-ph__text{font-size:.85rem}
-  .video-ph--sm .video-ph__sub{font-size:.86rem}
+  .video-ph__play svg{width:30px;height:30px;margin-left:4px}
+  .video-ph__label{font-family:var(--display);font-weight:600;color:#fff;font-size:1.05rem}
+  .video-ph__hint{color:var(--muted);font-size:.92rem;max-width:46ch}
 
   /* =================================================================
-     3 · Комики на сцене — headshots that open the shared bio modal
+     5 · LINEUP — «Комики на сцене» (headshots open the bio pop-up)
      ================================================================= */
   .lineup{
-    display:grid;grid-template-columns:repeat(4,1fr);
+    display:grid;grid-template-columns:repeat(5,1fr);
     gap:clamp(14px,1.8vw,22px);
   }
-  /* each item is a button that opens the comic pop-up */
+  /* each item is now a <button> that opens the shared .modal — reset it */
   .lineup__item{
-    display:flex;flex-direction:column;gap:12px;text-align:left;
-    background:transparent;border:none;padding:0;cursor:pointer;color:inherit;width:100%;
+    -webkit-appearance:none;appearance:none;background:transparent;border:0;
+    padding:0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%;
+    display:flex;flex-direction:column;gap:12px;
   }
+  .lineup__item:focus-visible{outline:2px solid var(--magenta);outline-offset:4px;border-radius:16px}
   .lineup__photo{
-    position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#151019;
+    display:block;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:#151019;
     border:1px solid var(--hairline);
   }
   .lineup__photo img{
@@ -170,96 +190,81 @@
   }
   .lineup__item:hover .lineup__photo img,
   .lineup__item:focus-visible .lineup__photo img{transform:scale(1.06)}
-  /* "+" affordance — hints the pop-up */
-  .lineup__plus{
-    position:absolute;right:10px;bottom:10px;z-index:2;
-    width:34px;height:34px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    background:rgba(10,8,16,.62);border:1px solid var(--hairline-strong);
-    color:#fff;font-size:1.35rem;line-height:1;backdrop-filter:blur(4px);
-    transition:background .18s,border-color .18s;
+  .lineup__name{display:block;font-weight:600;font-size:1rem;color:#fff;line-height:1.2}
+  .lineup__role{display:block;font-size:.82rem;color:var(--muted);margin-top:2px}
+  .lineup__more{
+    display:inline-block;margin-top:4px;font-size:.8rem;font-weight:600;color:var(--magenta);
+    opacity:0;transform:translateY(-3px);transition:opacity .2s,transform .2s;
   }
-  .lineup__item:hover .lineup__plus,
-  .lineup__item:focus-visible .lineup__plus{background:var(--magenta);border-color:var(--magenta)}
-  .lineup__name{font-weight:600;font-size:1rem;color:#fff;line-height:1.2}
-  .lineup__role{font-size:.82rem;color:var(--muted);margin-top:2px}
+  .lineup__item:hover .lineup__more,
+  .lineup__item:focus-visible .lineup__more{opacity:1;transform:none}
 
   /* =================================================================
-     BIO MODAL sub-blocks (inside the shared .modal__body)
-     ================================================================= */
-  .bio-sub{
-    font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--muted-2);margin:24px 0 12px;
-  }
-  .bio-note{
-    padding:12px 14px;border-radius:var(--r-sm);
-    border:1px dashed var(--hairline-strong);background:rgba(255,255,255,.02);
-    color:var(--muted);font-size:.92rem;
-  }
-  .bio-social{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .bio-social .social-btn{width:42px;height:42px}
-  .bio-social__note{font-size:.88rem;color:var(--muted-2)}
-  .bio-shows{display:flex;flex-direction:column;gap:2px}
-  .bio-shows li{border-top:1px solid var(--hairline)}
-  .bio-shows li:first-child{border-top:none}
-  .bio-shows a{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    padding:11px 0;color:var(--text);font-weight:500;transition:color .18s;
-  }
-  .bio-shows a::after{content:"→";color:var(--magenta);transition:transform .18s}
-  .bio-shows a:hover{color:#fff}
-  .bio-shows a:hover::after{transform:translateX(4px)}
-
-  /* =================================================================
-     4 · Вам может понравиться — shared .afisha / .event-card
+     6 · YOU-MAY-LIKE — reuses shared .afisha / .event-card
      ================================================================= */
   .liked .afisha__track{padding-top:2px}
+
+  /* =================================================================
+     MODAL internals — comic bio sections (shared §12 .modal component)
+     ================================================================= */
+  .bio-sec{margin-top:22px}
+  .bio-sec__h{
+    font-family:var(--display);font-weight:700;font-size:.82rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--magenta);margin-bottom:10px;
+  }
+  .bio-ph{
+    color:var(--muted);font-size:.94rem;border:1px dashed var(--hairline-strong);
+    border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.02);
+  }
+  .bio-video{
+    display:flex;align-items:center;gap:14px;
+    border:1px solid var(--hairline);border-radius:12px;background:var(--ink-2);padding:14px 16px;
+  }
+  .bio-video__play{
+    width:46px;height:46px;flex:0 0 auto;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.06);border:1px solid var(--hairline-strong);color:#fff;
+  }
+  .bio-video__play svg{width:18px;height:18px;margin-left:3px}
+  .bio-video__txt{display:flex;flex-direction:column;gap:2px}
+  .bio-video__txt b{color:#fff;font-weight:600;font-size:.96rem}
+  .bio-video__txt span{color:var(--muted);font-size:.85rem}
+  .bio-social{display:flex;flex-wrap:wrap;gap:10px}
+  .bio-shows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+  .bio-shows li{
+    display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+    padding:11px 0;border-top:1px solid var(--hairline);
+  }
+  .bio-shows li:first-child{border-top:0}
+  .bio-shows a{color:#fff;font-weight:600}
+  .bio-shows a:hover{color:var(--magenta)}
+  .bio-shows span{color:var(--muted);font-size:.85rem}
 
   /* =================================================================
      RESPONSIVE
      ================================================================= */
   @media (max-width:900px){
     .show-hero__grid{grid-template-columns:1fr}
-    .show-poster{max-width:360px;margin-inline:auto}
-    .lineup{grid-template-columns:repeat(4,1fr)}
+    .show-poster{max-width:420px;margin-inline:auto}
+    .present__grid{grid-template-columns:1fr}
+    .lineup{grid-template-columns:repeat(3,1fr)}
   }
-  @media (max-width:640px){
-    .datepick__book{width:100%;min-width:0}
-    .quickfacts{grid-template-columns:1fr}
-    .cta-row .btn{flex:1 1 100%;min-width:0}
-    .lineup{grid-template-columns:repeat(2,1fr);gap:14px}
+  @media (max-width:560px){
+    .lineup{grid-template-columns:repeat(2,1fr)}
+    .sched-row__meta{flex-basis:100%}
+    .sched-row .book-btn{width:100%;min-width:0}
+    .event-meta{gap:12px 22px}
+    .show-cta-row .btn{flex:1 1 auto;text-align:center;justify-content:center}
   }
-  .fee-note{margin-top:12px;font-size:.8rem;color:var(--muted-2)}
-
-  /* =================================================================
-     ВЫБОР ДАТЫ (перенесено со страниц сольников: .datebar общий в styles.css,
-     а .datepick и .book-btn живут в постраничном CSS)
-     ================================================================= */
-  .datepick{
-    margin-top:6px;padding-top:22px;border-top:1px solid var(--hairline);
-    display:flex;flex-direction:column;gap:16px;
-  }
-  .datepick__label{
-    font-family:var(--display);font-weight:700;font-size:1.02rem;color:#fff;
-  }
-  .datepick__note{font-size:.95rem;color:var(--muted)}
-  .datepick__note b{color:var(--gold);font-weight:600}
-  .datepick__book{align-self:flex-start;min-width:230px}
-  /* white booking CTA (matches show.html), built on the shared .btn base */
-  .book-btn{background:#fff;color:var(--ink);box-shadow:0 8px 24px -14px rgba(255,255,255,.55)}
-  .book-btn:hover{background:#ece9f5}
-  /* прозрачность по сбору — рядом с кнопкой брони (ТЗ 07-07) */
-  .datepick__fee{margin-top:10px;font-size:.8rem;color:var(--muted-2)}
-
 </style>
 <script type="application/ld+json" data-seo="events">
 [
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-02T19:00:00+03:00",
-  "endDate": "2026-09-02T21:00:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-01T19:00:00+03:00",
+  "endDate": "2026-09-01T21:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -278,34 +283,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686647/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70331961?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-03T21:30:00+03:00",
-  "endDate": "2026-09-03T23:30:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-05T16:00:00+03:00",
+  "endDate": "2026-09-05T18:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -324,34 +329,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686651/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332087?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-09T21:30:00+03:00",
-  "endDate": "2026-09-09T23:30:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-06T16:00:00+03:00",
+  "endDate": "2026-09-06T18:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -370,34 +375,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686653/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332089?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-10T19:00:00+03:00",
-  "endDate": "2026-09-10T21:00:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-08T19:00:00+03:00",
+  "endDate": "2026-09-08T21:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -416,34 +421,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686661/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332092?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-12T16:00:00+03:00",
-  "endDate": "2026-09-12T18:00:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-13T16:00:00+03:00",
+  "endDate": "2026-09-13T18:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -462,34 +467,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686667/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332095?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-16T19:00:00+03:00",
-  "endDate": "2026-09-16T21:00:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-15T19:00:00+03:00",
+  "endDate": "2026-09-15T21:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -508,34 +513,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686663/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332099?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-17T21:30:00+03:00",
-  "endDate": "2026-09-17T23:30:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-17T19:00:00+03:00",
+  "endDate": "2026-09-17T21:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -554,34 +559,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686655/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332103?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-23T21:30:00+03:00",
-  "endDate": "2026-09-23T23:30:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-19T16:00:00+03:00",
+  "endDate": "2026-09-19T18:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -600,34 +605,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686657/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332105?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-09-24T19:00:00+03:00",
-  "endDate": "2026-09-24T21:00:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-22T21:30:00+03:00",
+  "endDate": "2026-09-22T23:30:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -646,34 +651,34 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686665/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332107?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  },
  {
   "@context": "https://schema.org",
   "@type": "ComedyEvent",
-  "name": "Открытый микрофон",
-  "startDate": "2026-10-01T21:30:00+03:00",
-  "endDate": "2026-10-01T23:30:00+03:00",
+  "name": "Женская комедия",
+  "startDate": "2026-09-26T16:00:00+03:00",
+  "endDate": "2026-09-26T18:00:00+03:00",
   "eventStatus": "https://schema.org/EventScheduled",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "location": {
@@ -692,26 +697,26 @@
    }
   },
   "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/open-mic-45.jpg"
+   "https://adikaevanver.github.io/club1-preview/assets/venue/audience.jpg"
   ],
   "organizer": {
    "@type": "Organization",
    "name": "Клуб №1",
    "url": "https://adikaevanver.github.io/club1-preview/"
   },
-  "url": "https://adikaevanver.github.io/club1-preview/open-mic",
-  "description": "Открытый микрофон в Клубе №1 на Новом Арбате: молодые и опытные комики проверяют новые шутки. Десять вечеров со 2 сентября по 1 октября, билет 390 ₽.",
+  "url": "https://adikaevanver.github.io/club1-preview/zhensky",
+  "description": "Женская комедия в Клубе №1 на Новом Арбате: на сцене комедиантки, которых вы видели на ТВ. Расписание по датам и билеты на сайте.",
   "performer": {
    "@type": "PerformingGroup",
    "name": "Артисты Клуба №1"
   },
   "offers": {
    "@type": "Offer",
-   "price": 390,
+   "price": 750,
    "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686659/",
+   "url": "https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70332109?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213",
    "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
+   "validFrom": "2026-09-01"
   }
  }
 ]
@@ -739,9 +744,7 @@
 <body class="has-sticky-cta">
 
 <!-- =====================================================================
-     SITE HEADER  (reused verbatim on every sub-page)
-     Left: logo lockup · Centre: primary nav · Right: phone + CTA / burger
-     Разовое шоу is not a nav item — no aria-current here.
+     SITE HEADER  (reused verbatim on every sub-page · no active nav item)
      ===================================================================== -->
 <header class="site-header" id="siteHeader">
   <div class="container site-header__inner">
@@ -802,96 +805,56 @@
 
     <div class="show-hero__grid">
 
-      <!-- LEFT · Обложка (афиша) — shared .poster, оформленная под разовое шоу -->
+      <!-- LEFT · Обложка — poster built from the shared .poster component -->
       <div class="show-poster">
-        <div class="poster poster--art">
-          <img class="poster__full" src="assets/posters/open-mic-45.jpg" alt="Афиша: Открытый микрофон в CLUB#1 — молодые и опытные комики проверяют новые шутки" width="1080" height="1350">
-          <div class="poster__badge" data-picked-badge>02.09<small>19:00</small></div>
+        <!-- Афиши «Женской комедии» от дизайна нет — фирменный CSS-постер.
+             Придёт арт 4:5 без даты — заменить на .poster--art с img. -->
+        <div class="poster poster--noname poster--mag">
+          <div class="poster__art"><span class="poster__standup">STANDUP</span><span class="poster__solo">Женская комедия</span></div>
         </div>
       </div>
 
-      <!-- RIGHT · заголовок, краткая информация, кнопки -->
+      <!-- RIGHT · title, Краткая информация, кнопки -->
       <div class="show-facts">
-        <span class="show-tag">Открытый микрофон · десять вечеров</span>
-        <h1 class="show-title" id="show-title">Открытый микрофон</h1>
-        <p class="show-lede">Молодые и опытные комики проверяют новые шутки: материал ещё не обкатан, и реакция зала решает, что останется в программе.</p>
+        <p class="eyebrow">Регулярное шоу · женский стендап</p>
+        <h1 class="show-title" id="show-title">Женская комедия</h1>
 
-        <!-- Краткая информация: время и дата · длительность · сбор гостей · стоимость -->
-        <div class="quickfacts" aria-label="Краткая информация о шоу">
-          <div class="fact">
-            <span class="fact__ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+        <!-- Краткая информация: длительность · сбор гостей · стоимость -->
+        <div class="event-meta">
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
             </span>
-            <span>
-              <span class="fact__label">Время и дата</span>
-              <span class="fact__value" data-all-dates>2 сен 19:00 · 3 сен 21:30 · 9 сен 21:30 · 10 сен 19:00 · 12 сен 16:00 · 16 сен 19:00 · 17 сен 21:30 · 23 сен 21:30 · 24 сен 19:00 · 1 окт 21:30<small>10 дат — выберите ниже</small></span>
+            1 час
+          </span>
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16"/><path d="M6 21V4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v17"/><path d="M12 12h.01"/></svg>
             </span>
-          </div>
-
-          <div class="fact">
-            <span class="fact__ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"/><path d="M3 21h18"/><path d="M12 12h.01"/></svg>
-            </span>
-            <span>
-              <span class="fact__label">Сбор гостей</span>
-              <span class="fact__value">за 30 минут до начала<small>бар и кухня работают весь вечер</small></span>
-            </span>
-          </div>
-
-
-          <div class="fact">
-            <span class="fact__ic" aria-hidden="true">₽</span>
-            <span>
-              <span class="fact__label">Стоимость</span>
-              <span class="fact__value">390 ₽<small>стоимость билета</small></span>
-            </span>
-          </div>
-
-
-
+            Сбор гостей за 30 минут
+          </span>
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">₽</span>
+            от 750 ₽
+          </span>
           <!-- v4: доступность локации прямо в строке данных события -->
-          <div class="fact">
-            <span class="fact__ic" aria-hidden="true">
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </span>
-            <span>
-              <span class="fact__label">Локация</span>
-              <span class="fact__value">Новый Арбат, 21<small>м. «Смоленская» · 5–7 мин пешком · <a href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%9D%D0%BE%D0%B2%D1%8B%D0%B9%20%D0%90%D1%80%D0%B1%D0%B0%D1%82%2C%2021" target="_blank" rel="noopener">Яндекс</a> · <a href="https://2gis.ru/moscow/firm/70000001060656267" target="_blank" rel="noopener">2ГИС</a></small></span>
-            </span>
-          </div>
+            Новый Арбат, 21 · м. «Смоленская»
+          </span>
         </div>
+
+        <!-- Краткое описание -->
+        <p class="show-lede">На сцену выходят комедиантки, которые откровенно рассказывают о том, из чего состоит жизнь: отношения, работа, быт. Вечер, чтобы посмотреть на привычные вещи глазами сильных и независимых женщин.</p>
+        <p class="show-lede"><b>Состав в каждую дату свой</b> — он объявляется в афише.</p>
 
         <!-- Кнопка подробнее + Кнопка покупки -->
-        <div class="cta-row" id="tickets">
-          <a class="btn btn--ghost" href="#about">Подробнее</a>
+        <div class="show-cta-row">
+          <a class="btn btn--ghost" href="#about">Подробнее о шоу</a>
           <a class="btn btn--primary" href="#dates">Бронировать места</a>
         </div>
-
-        <!-- выбор даты (shared DATEBAR) + бронирование -->
-        <div class="datepick" id="dates">
-          <span class="datepick__label">Ближайшие даты открытого микрофона:</span>
-
-          <div class="datebar" data-datebar>
-            <span class="datebar__month">Сентябрь — Октябрь</span>
-            <div class="datebar__days" role="group" aria-label="Выберите дату">
-              <button class="datebar__day" data-date="2026-09-02" data-label="2 сентября" data-time="19:00" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686647/#abiframe" aria-pressed="true"><b>02</b><span>Ср</span></button>
-              <button class="datebar__day" data-date="2026-09-03" data-label="3 сентября" data-time="21:30" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686651/#abiframe" aria-pressed="false"><b>03</b><span>Чт</span></button>
-              <button class="datebar__day" data-date="2026-09-09" data-label="9 сентября" data-time="21:30" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686653/#abiframe" aria-pressed="false"><b>09</b><span>Ср</span></button>
-              <button class="datebar__day" data-date="2026-09-10" data-label="10 сентября" data-time="19:00" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686661/#abiframe" aria-pressed="false"><b>10</b><span>Чт</span></button>
-              <button class="datebar__day" data-date="2026-09-12" data-label="12 сентября" data-time="16:00" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686667/#abiframe" aria-pressed="false"><b>12</b><span>Сб</span></button>
-              <button class="datebar__day" data-date="2026-09-16" data-label="16 сентября" data-time="19:00" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686663/#abiframe" aria-pressed="false"><b>16</b><span>Ср</span></button>
-              <button class="datebar__day" data-date="2026-09-17" data-label="17 сентября" data-time="21:30" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686655/#abiframe" aria-pressed="false"><b>17</b><span>Чт</span></button>
-              <button class="datebar__day" data-date="2026-09-23" data-label="23 сентября" data-time="21:30" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686657/#abiframe" aria-pressed="false"><b>23</b><span>Ср</span></button>
-              <button class="datebar__day" data-date="2026-09-24" data-label="24 сентября" data-time="19:00" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686665/#abiframe" aria-pressed="false"><b>24</b><span>Чт</span></button>
-              <button class="datebar__day" data-date="2026-10-01" data-label="1 октября" data-time="21:30" data-price="от 390 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686659/#abiframe" aria-pressed="false"><b>01</b><span>Чт</span></button>
-            </div>
-          </div>
-
-          <p class="datepick__note">Выбрана дата: <b data-picked-date id="pickedDate">2 сентября</b>, начало в <b data-picked-time id="pickedTime">19:00</b>.</p>
-          <a class="btn book-btn datepick__book" id="pickedBook" data-picked-buy href="https://iframeab-pre7764.intickets.ru/seance/74686647/#abiframe">Бронировать места</a>
-        </div>
-        <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
-        
       </div>
 
     </div>
@@ -899,27 +862,55 @@
 
 
   <!-- =================================================================
-       2 · Подробное описание шоу
+       2 · Перечень шоу и кнопки покупки по датам и времени
        ================================================================= -->
-  <section class="show-section" id="about" aria-labelledby="about-title">
+  <section class="show-section" id="dates" aria-labelledby="dates-title" data-schedule="Женская комедия">
     <div class="section-head">
       <span class="rule" aria-hidden="true"></span>
-      <h2 class="section-title" id="about-title">О шоу</h2>
+      <h2 class="section-title" id="dates-title">Расписание и билеты</h2>
+      <p class="section-sub">Ближайшие показы «Женской комедии». Выберите дату в календаре, чтобы отфильтровать список, и берите билет на удобный вечер.</p>
     </div>
 
-    <div class="desc__copy">
-      <p><b>Открытый микрофон</b> — вечер, где молодые и опытные комики проверяют новые шутки на живом зале.</p>
-      <p>Лучшие комики, участники разных ТВ- и Ютуб-проектов, выступают с лучшими шутками. На площадке работают бар и кухня, сбор гостей за 30 минут до начала программы.</p>
-      <p>Смотреть удобно за столиками. Формат рассчитан на взрослую публику: возрастное ограничение — 18+.</p>
-      <div class="desc__note">Ближайший вечер — 2 сентября в 19:00. Всего десять дат со 2 сентября по 1 октября: выбрать удобную и купить билет можно выше.</div>
-    
+    <!-- DATEBAR (shared §12 component) — filters the list below by дате -->
+    <div class="datebar schedule__bar">
+      <span class="datebar__month" data-sched-month></span>
+      <div class="datebar__days" data-sched-days role="group" aria-label="Выберите дату"></div>
     </div>
-  </div>
+
+    <div class="schedule__list" id="scheduleList" data-sched-list></div>
+
   </section>
 
 
   <!-- =================================================================
-       3 · Видео с нарезкой моментов из шоу (placeholder)
+       3 · Подробная информация о шоу
+       ================================================================= -->
+  <section class="show-section" id="about" aria-labelledby="present-title">
+    <div class="present__grid">
+
+      <div class="present__copy">
+        <div class="section-head">
+          <span class="rule" aria-hidden="true"></span>
+          <h2 class="section-title" id="present-title">CLUB№1 представляет<br><span class="present__show">«STAND UP ОТ ОПЫТНЫХ КОМИКОВ»</span></h2>
+        </div>
+
+        <p>Вас ждут самые опытные комики столицы — те, кто разделит с вами свои лучшие шутки. В составе три комика и ведущий, за плечами которых сотни концертов и открытых микрофонов. Возможно, вы уже видели их на ТНТ, Первом канале или в YouTube.</p>
+        <p>Эти ребята не развлекают вполсилы. Они играют со словами, придумывают образы на ходу и держат зал в нескончаемом потоке смеха. Вечер получится таким, что о нём захочется рассказать друзьям.</p>
+        <p><b>Состав комиков в каждую дату свой.</b> Программа идёт около часа, сбор гостей — за 30 минут до начала.</p>
+        <p>Вас ждут удобные места за столиками. На площадке работают бар и кухня — заказать можно прямо во время шоу.</p>
+      </div>
+
+      <figure class="stage-card">
+        <img src="assets/venue/stage.jpg" alt="Сцена Клуба №1: красный занавес, микрофон и зал за столами" loading="lazy" width="1280" height="853">
+        <figcaption class="stage-card__tag">Живой зал · Новый Арбат, 21</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+
+  <!-- =================================================================
+       4 · Видео с нарезкой моментов из шоу (placeholder)
        ================================================================= -->
   <!-- Видео-блок скрыт по правкам Фигмы 31.07/04.08 (Сергей, #9/#10/#14/#16:
        контента пока нет, плейсхолдер выглядит пусто). Вернуть, когда появятся
@@ -928,41 +919,49 @@
     <div class="section-head">
       <span class="rule" aria-hidden="true"></span>
       <h2 class="section-title" id="video-title">Видео с нарезкой моментов из шоу</h2>
-      <p class="section-head__note">Смонтируем нарезку ярких моментов после первого вечера и добавим её сюда.</p>
+      <p class="section-sub">Смонтированная нарезка ярких моментов с прошлых вечеров — чтобы увидеть атмосферу зала до похода на шоу.</p>
     </div>
 
-    <div class="video-ph" role="img" aria-label="Видео с нарезкой моментов появится позже">
-      <span class="video-ph__play" aria-hidden="true"></span>
-      <span class="video-ph__text">Видео появится позже</span>
-      <span class="video-ph__sub">Здесь будет короткая нарезка лучших моментов шоу.</span>
+    <div class="video-ph" role="img" aria-label="Видео появится позже">
+      <span class="video-ph__play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+      <span class="video-ph__label">Видео появится позже</span>
+      <span class="video-ph__hint">Мы готовим нарезку лучших моментов. Загляните сюда чуть позже — или приходите на ближайший показ.</span>
     </div>
   </section>
 
 
   <!-- =================================================================
-       5 · Вам может понравиться — shared .afisha / .event-card
+       6 · Вам может понравиться — afisha cards (shared markup)
        ================================================================= -->
   <section class="show-section afisha liked" aria-labelledby="liked-title">
     <div class="section-head">
       <span class="rule" aria-hidden="true"></span>
-      <h2 class="section-title" id="liked-title">Вам может понравиться:</h2>
+      <h2 class="section-title" id="liked-title">Ближайшие события на Новом Арбате</h2>
     </div>
 
-    <div class="afisha__track" id="railLiked" role="list"
+    <div class="afisha__track" id="afishaTrack" role="list"
          data-upcoming data-upcoming-limit="8"></div>
 
-    <button class="slider-arrow slider-arrow--next" data-slider="afisha" data-dir="1" aria-label="Показать ещё концерты">›</button>
   </section>
-</main>
 
 
-<!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения -->
+  <!-- =================================================================
+       COMIC BIO POP-UPS — shared §12 .modal component (one per headshot)
+       Content per «структура»: регалии/проекты · видео · соцсети · шоу
+       ================================================================= -->
+
+  <!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения.
+       Цена берётся из events.js (минимум по будущим сеансам) — не вписывать
+       руками: в прошлый раз плашку скопировали с другой страницы вместе
+       с чужой ценой и чужим названием шоу. -->
 <div class="sticky-cta">
   <span class="sticky-cta__info">
-    <span class="sticky-cta__date">Открытый микрофон · <b data-picked-date>2 сентября</b></span>
-    
+    <span class="sticky-cta__date">Женская комедия</span>
+    <span class="sticky-cta__price">от 750 ₽</span>
   </span>
-  <a class="btn btn--primary" href="#tickets">Бронировать</a>
+  <a class="btn btn--primary" href="#dates">Выбрать дату</a>
 </div>
 
 <!-- v4: модалка «Как считается цена» (открывается из строки про сбор) -->
@@ -1034,19 +1033,17 @@
 </footer>
 
 
-<!-- =====================================================================
-     COMIC BIO POP-UPS — shared modal component (styles.css §12 / script.js)
-     Each id matches a data-modal-open on the lineup buttons above.
-     Регалии, видео и соцсети — placeholders (реальных данных пока нет).
-     ===================================================================== -->
+<!-- shared interactive components (modal / tabs / slideshow / datebar) -->
+<script src="script.js?v=226442e45b" defer></script>
+<script src="assets/data/events.js?v=57a59bd2b9" defer></script>
+<script src="afisha.js?v=22c46fd1d6" defer></script>
 
-<!-- Юлия Македонская -->
-<!-- =====================================================================
-     PAGE INLINE SCRIPT — foundation interactions (header · burger · rail).
-     Modals come from the shared script.js below; different attribute
-     names, so the two never collide.
-     ===================================================================== -->
 <script>
+/* ---------------------------------------------------------------------
+   Club №1 — show.html per-page interactions (subset of the foundation):
+   1. header ink-on-scroll   2. burger drawer   3. «Вам может понравиться» rail
+   These use their own attribute names and never collide with script.js.
+   --------------------------------------------------------------------- */
 (function(){
   "use strict";
 
@@ -1104,8 +1101,8 @@
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
-  /* 3 · horizontal rail ("Вам может понравиться") */
-  var tracks = { afisha: document.getElementById('railLiked') };
+  /* 3 · horizontal slider ("Вам может понравиться") */
+  var tracks = { afisha: document.getElementById('afishaTrack') };
   document.querySelectorAll('[data-slider]').forEach(function(btn){
     btn.addEventListener('click', function(){
       var track = tracks[btn.dataset.slider];
@@ -1115,13 +1112,34 @@
       track.scrollBy({left: dir * step, behavior: 'smooth'});
     });
   });
+
+  /* 4 · прошедшие даты не показываем: строки расписания и кнопки дат
+        с датой раньше сегодняшней убираются при загрузке (v4 — «событие
+        прошло» не должно выглядеть как живое предложение) */
+  var todayISO = (function(){
+    var d = new Date();
+    function p(n){ return (n < 10 ? '0' : '') + n; }
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  })();
+  document.querySelectorAll('.sched-row[data-date], .datebar__day[data-date]').forEach(function(el){
+    var d = el.getAttribute('data-date');
+    if (d && d !== 'all' && d < todayISO) el.remove();
+  });
+
+  /* 5 · schedule datebar → filter the dated rows (reacts to the shared
+        datebar:change event fired by script.js; "all" shows everything) */
+  var bar = document.querySelector('[data-datebar]');
+  if (bar) {
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.sched-row[data-date]'));
+    bar.addEventListener('datebar:change', function(e){
+      var d = e.detail && e.detail.date;
+      rows.forEach(function(r){
+        r.hidden = !(!d || d === 'all' || r.getAttribute('data-date') === d);
+      });
+    });
+  }
 })();
 </script>
-
-<!-- shared components: modal (comic bios), tabs, slideshow, datebar -->
-<script src="script.js?v=226442e45b" defer></script>
-<script src="assets/data/events.js?v=57a59bd2b9" defer></script>
-<script src="afisha.js?v=22c46fd1d6" defer></script>
 
 </body>
 </html>
