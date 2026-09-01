@@ -437,10 +437,10 @@ window.CLUB1_EVENTS = [
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686618/#abiframe', age:'18+'},
   /* Пачка от Левана 01.09: «Опытные комики с ТВ» (690 ₽) и «Женская комедия комиков
      с ТВ» (750 ₽) — сеансы Яндекс.Афиши. Каждый открыт виджетом 01.09, название, дата
-     и цена сверены с экрана. Два расхождения с сообщением: сеанс 70435948 (Опытные,
-     08.09 21:30) виджет не отдаёт — «Страница недоступна» с двух попыток, дата НЕ
-     заведена; у 70332087 Леван написал 05.09 19:00, касса показывает 16:00 — ведём по
-     кассе. Арта у «Женской комедии» нет, карточка на фирменном CSS-постере. */
+     и цена сверены с экрана. Два расхождения с сообщением, оба закрыты: сеанс
+     70435948 (Опытные, 08.09 21:30) у кассы мёртв — дата заведена ниже сеансом
+     «Суперпроверки», см. комментарий там; у 70332087 Леван написал 05.09 19:00,
+     касса показывает 16:00 — ведём по кассе, Анвер подтвердил. */
   {date:'2026-09-01', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
    poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435933?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
@@ -456,6 +456,14 @@ window.CLUB1_EVENTS = [
   {date:'2026-09-07', time:'20:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
    poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435946?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
+  /* 08.09 21:30 — ссылка, которую Леван прислал 01.09 (сеанс 70435948), у кассы
+     мертва: виджет отдаёт «Страница недоступна». В расписании площадки на этот
+     вечер «Опытных комиков с ТВ» нет вовсе, а в 21:30 стоит «Суперпроверка
+     комиков с ТВ» — по словам Анвера это то же шоу, поэтому берём её сеанс.
+     Цена у него своя, 750 ₽ вместо обычных 690. */
+  {date:'2026-09-08', time:'21:30', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:750,
+   poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
+   buy:'https://widget.afisha.yandex.ru/w/sessions/MzUwMDh8MzM4MjMxfDI5ODkwNTd8MTc4ODg5MjIwMDAwMA==?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
   {date:'2026-09-09', time:'19:00', title:'Опытные комики', kind:'Проверка материала', format:'ok', priceFrom:690,
    poster:'assets/posters/ok2-45.jpg', wide:'assets/posters/ok2-wide41.jpg', wideFocus:'55%', photo:null, tone:'mono', page:'show',
    buy:'https://widget.afisha.yandex.ru/w/sessions/ticketsteam-8133@70435953?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'18+'},
