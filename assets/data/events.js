@@ -424,10 +424,10 @@ window.CLUB1_EVENTS = [
    buy:'https://iframeab-pre7764.intickets.ru/seance/74316676/#abiframe', age:'18+'},
   /* Андрей Атлас, второй сольник «Ничего не вышло» — заявка клуба 28.08. Сеанс 74967817
      открыт виджетом 01.09: «Вск, 4 октября 2026, 21:00 · Андрей Атлас. Стендап. Сольный
-     концерт CLUB#1», 1 200–2 500 ₽. Афишу клуб заказал Максиму 28.08, к 01.09 её нет ни
-     в чате, ни на Диске — карточка идёт на фирменном CSS-постере до прихода арта. */
+     концерт CLUB#1», 1 200–2 500 ₽. Арт пришёл 02.09 (папка Диска «04», комплект САЙТ):
+     4:5 без даты → atlas-45.jpg; панорамы 4:1 в комплекте нет — в слайдер не идёт. */
   {date:'2026-10-04', time:'21:00', title:'Андрей Атлас', kind:'Сольный концерт', format:'solniki', priceFrom:1200,
-   poster:null, wide:null, photo:null, tone:'gold', page:'atlas',
+   poster:'assets/posters/atlas-45.jpg', wide:null, photo:null, tone:'gold', page:'atlas',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74967817/#abiframe', age:'18+'},
   {date:'2026-10-10', time:'19:00', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
    poster:'assets/posters/burlesk-1010-45.jpg', wide:'assets/posters/burlesk-wide41.jpg', wideFocus:'40%', photo:null, tone:'pur', page:'razovoe',
