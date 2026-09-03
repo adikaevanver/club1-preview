@@ -120,8 +120,14 @@ def sale_start(ev):
     дню ссылка на покупку уже работала. Сеанс, ещё не попавший в коммит,
     продаётся с сегодня.
     """
-    m = re.search(r'/seance/(\d+)|@(\d+)', ev.get('buy') or '')
+    # intickets: номер сеанса; Яндекс Афиша: токен сессии из виджет-ссылки —
+    # у обоих один и тот же проверяемый факт (коммит, где ссылка появилась).
+    buy = ev.get('buy') or ''
+    m = re.search(r'/seance/(\d+)|@(\d+)', buy)
     sid = (m.group(1) or m.group(2)) if m else None
+    if not sid:
+        m = re.search(r'/w/sessions/([A-Za-z0-9=_-]+)', buy)
+        sid = m.group(1) if m else None
     if not sid:
         return None
     if sid not in _SALE:
