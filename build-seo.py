@@ -530,6 +530,10 @@ def main():
     # прошедшие события: страница события (есть в events.js), у которой нет
     # будущих дат — независимо от того, успел ли на ней появиться JSON-LD
     event_pages = {e['page'] for e in events() if e.get('page')}
+    # страница, у которой сняли единственную дату (отмена Комьюнити 23.09, 21.09), из events()
+    # выпадает вовсе и без этой строки оставалась бы в индексе с живым JSON-LD и датой в og —
+    # событийную страницу узнаём ещё и по её блоку JSON-LD событий
+    event_pages |= {f[:-5] for f in pages if 'data-seo="events"' in read(os.path.join(ROOT, f))}
     for f in pages:
         path = os.path.join(ROOT, f)
         if f[:-5] not in event_pages or f in ('index.html', 'afisha.html'):
