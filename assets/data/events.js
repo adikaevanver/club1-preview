@@ -376,9 +376,8 @@ window.CLUB1_EVENTS = [
   /* Стендап Комьюнити, 23.09 — арт 4:5 без даты пришёл 24.08 (папка «Стендап – 23 Сентября»),
      на нём же читается лайнап: хедлайнер Павел Дедищев, Дима Растопчинов, Геворк Абрамян,
      Заур Туганов — он совпадает с составом из заявки клуба от 20.08. */
-  {date:'2026-09-23', time:'20:00', title:'Стендап Комьюнити', kind:'Комьюнити', format:'community', priceFrom:1000,
-   poster:'assets/posters/community-45.jpg', wide:null, photo:null, tone:'green', page:'community',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/74686575/#abiframe', age:'18+'},
+  /* Вечер 23.09 20:00 (сеанс 74686575) отменён клубом 21.09 — запись снята, community.html
+     переведён в уведомление об отмене со ссылкой на возврат. Новой даты не назвали. */
   {date:'2026-09-23', time:'21:30', title:'Открытый микрофон', kind:'Открытый микрофон', format:'special', priceFrom:390,
    poster:'assets/posters/open-mic-45.jpg', wide:'assets/posters/open-mic-wide41.jpg', wideFocus:'42%', photo:null, tone:'mono', page:'open-mic',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74686657/#abiframe', age:'18+'},
@@ -539,27 +538,8 @@ window.CLUB1_EVENTS = [
      Цена зависит от дня: пятница и вечер субботы от 4 500 ₽, остальные от
      4 000 ₽. Панорама 4:1 у событий НЕ ставится: мюзикл держит слайдер
      баннером выше, иначе один и тот же арт шёл бы в слайдер дважды. */
-  {date:'2026-10-07', time:'20:00', title:'О чём молчат женщины', kind:'Гастро-мюзикл', format:'musical', priceFrom:4000,
-   poster:'assets/posters/molchat-v2-45.jpg', wide:null, photo:null, tone:'green', page:'molchat',
-   buy:'https://widget.afisha.yandex.ru/w/sessions/MTA2MjcxfDg3MTMyMXwxNDAwMjU3OHwxNzkxMzkyNDAwMDAw?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'16+'},
-  {date:'2026-10-08', time:'20:00', title:'О чём молчат женщины', kind:'Гастро-мюзикл', format:'musical', priceFrom:4000,
-   poster:'assets/posters/molchat-v2-45.jpg', wide:null, photo:null, tone:'green', page:'molchat',
-   buy:'https://widget.afisha.yandex.ru/w/sessions/MTA2MjcxfDg3MTMyMXwxNDAwMjU3OHwxNzkxNDc4ODAwMDAw?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'16+'},
-  {date:'2026-10-09', time:'20:00', title:'О чём молчат женщины', kind:'Гастро-мюзикл', format:'musical', priceFrom:4500,
-   poster:'assets/posters/molchat-v2-45.jpg', wide:null, photo:null, tone:'green', page:'molchat',
-   buy:'https://widget.afisha.yandex.ru/w/sessions/MTA2MjcxfDg3MTMyMXwxNDAwMjU3OHwxNzkxNTY1MjAwMDAw?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'16+'},
-  {date:'2026-10-10', time:'14:00', title:'О чём молчат женщины', kind:'Гастро-мюзикл', format:'musical', priceFrom:4000,
-   poster:'assets/posters/molchat-v2-45.jpg', wide:null, photo:null, tone:'green', page:'molchat',
-   buy:'https://widget.afisha.yandex.ru/w/sessions/MTA2MjcxfDg3MTMyMXwxNDAwMjU3OHwxNzkxNjMwMDAwMDAw?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'16+'},
-  {date:'2026-10-10', time:'20:00', title:'О чём молчат женщины', kind:'Гастро-мюзикл', format:'musical', priceFrom:4500,
-   poster:'assets/posters/molchat-v2-45.jpg', wide:null, photo:null, tone:'green', page:'molchat',
-   buy:'https://widget.afisha.yandex.ru/w/sessions/MTA2MjcxfDg3MTMyMXwxNDAwMjU3OHwxNzkxNjUxNjAwMDAw?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'16+'},
-  {date:'2026-10-11', time:'14:00', title:'О чём молчат женщины', kind:'Гастро-мюзикл', format:'musical', priceFrom:4000,
-   poster:'assets/posters/molchat-v2-45.jpg', wide:null, photo:null, tone:'green', page:'molchat',
-   buy:'https://widget.afisha.yandex.ru/w/sessions/MTA2MjcxfDg3MTMyMXwxNDAwMjU3OHwxNzkxNzE2NDAwMDAw?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'16+'},
-  {date:'2026-10-11', time:'20:00', title:'О чём молчат женщины', kind:'Гастро-мюзикл', format:'musical', priceFrom:4000,
-   poster:'assets/posters/molchat-v2-45.jpg', wide:null, photo:null, tone:'green', page:'molchat',
-   buy:'https://widget.afisha.yandex.ru/w/sessions/MTA2MjcxfDg3MTMyMXwxNDAwMjU3OHwxNzkxNzM4MDAwMDAw?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'16+'},
+  /* Показы 7–11 октября (семь сеансов) сняты 21.09: организатор написал в чат клуба, что мюзикл
+     переносится на неделю, и попросил убрать афишу этих дат; новых дат не прислали. */
   {date:'2026-10-15', time:'20:00', title:'О чём молчат женщины', kind:'Гастро-мюзикл', format:'musical', priceFrom:4000,
    poster:'assets/posters/molchat-v2-45.jpg', wide:null, photo:null, tone:'green', page:'molchat',
    buy:'https://widget.afisha.yandex.ru/w/sessions/MTA2MjcxfDg3MTMyMXwxNDAwMjU3OHwxNzkyMDgzNjAwMDAw?clientKey=eb57dd5a-829c-45ff-91c5-39268e290ad3&regionId=213', age:'16+'},
