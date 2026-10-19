@@ -38,6 +38,36 @@ PLACE = {
     'geo': {'@type': 'GeoCoordinates', 'latitude': 55.751916, 'longitude': 37.585132},
 }
 
+# Площадка целиком (ТЗ Кузнецова 16.10, раздел 9): мюзикл идёт в Метелице, а не
+# «в Клубе №1»; на главной — EventVenue «Метелица» рядом с организацией клуба.
+VENUE = {
+    '@context': 'https://schema.org',
+    '@type': 'EventVenue',
+    'name': 'Метелица',
+    'alternateName': 'Метелица · Клуб №1',
+    'url': BASE + '/',
+    'image': BASE + '/assets/venue/stage.jpg',
+    'telephone': '+74996869111',
+    'address': PLACE['address'],
+    'geo': PLACE['geo'],
+}
+PLACE_METELITSA = dict(PLACE, name='Метелица')
+
+# Гастрошоу на площадке: тип, название и организатор — свои. Организатор —
+# как в кассе виджета (sessionServices.organizerInfo, 19.10). Ключ — format.
+THEATER = {
+    'musical': {
+        'name': 'О чём молчат женщины — гастромюзикл в Метелице',
+        'organizer': {'@type': 'Organization', 'name': 'ООО «Медиа-дом «Красный квадрат»'},
+        'performer': {'@type': 'PerformingGroup', 'name': 'Труппа гастромюзикла «О чём молчат женщины»'},
+    },
+}
+
+# «Хлебные крошки» страниц шоу: Главная → шоу.
+BREADCRUMBS = {
+    'molchat': 'О чём молчат женщины',
+}
+
 ORG = {
     '@context': 'https://schema.org',
     '@type': 'ComedyClub',
@@ -170,10 +200,19 @@ def event_ld(ev):
     if ev.get('page') and page_description(ev['page']):
         ld['description'] = page_description(ev['page'])
 
+    th = THEATER.get(ev.get('format'))
+    if th:
+        ld['@type'] = 'TheaterEvent'
+        ld['name'] = th['name']
+        ld['location'] = PLACE_METELITSA
+        ld['organizer'] = th['organizer']
+
     # сольник — на сцене конкретный человек; у сборных форматов состав
     # меняется от даты к дате, выдавать конкретные имена за постоянные
     # нельзя — там на сцене труппа клуба без перечисления
-    if ev.get('format') == 'solniki':
+    if th:
+        ld['performer'] = th['performer']
+    elif ev.get('format') == 'solniki':
         ld['performer'] = {'@type': 'Person', 'name': ev['title']}
     else:
         ld['performer'] = {'@type': 'PerformingGroup', 'name': 'Артисты Клуба №1'}
@@ -497,6 +536,18 @@ def main():
     touched = []
     if inject(os.path.join(ROOT, 'index.html'), 'org', ORG):
         touched.append('index.html (организация)')
+    if inject(os.path.join(ROOT, 'index.html'), 'venue', VENUE):
+        touched.append('index.html (площадка)')
+    for slug, title in BREADCRUMBS.items():
+        path = os.path.join(ROOT, slug + '.html')
+        if os.path.exists(path) and inject(path, 'breadcrumbs', {
+                '@context': 'https://schema.org',
+                '@type': 'BreadcrumbList',
+                'itemListElement': [
+                    {'@type': 'ListItem', 'position': 1, 'name': 'Метелица', 'item': BASE + '/'},
+                    {'@type': 'ListItem', 'position': 2, 'name': title, 'item': f'{BASE}/{slug}'},
+                ]}):
+            touched.append(f'{slug}.html (хлебные крошки)')
 
     # афиша целиком — на главной и на странице афиши
     all_ld = [event_ld(e) for e in evs]
