@@ -204,6 +204,9 @@
 
   function initTelegramInvite(){
     if (tgMuted()) return;
+    /* ТЗ Кузнецова 16.10, 6.1: на странице флагмана никаких всплывашек,
+       кроме кассы, — приглашение туда не выводим */
+    if (isMolchat()) return;
     var shown = false, acted = false, timer = null;
 
     function markAction(){ acted = true; }
@@ -321,9 +324,99 @@
     timer = setTimeout(show, 45000);
   }
 
+  /* ===================================================================
+     Цели этапа 1 по ТЗ Кузнецова 16.10 (раздел 7.2). Каждая цель заведена
+     в счётчике 111571199 (19.10). Показы уходят один раз за просмотр.
+     =================================================================== */
+  var MOLCHAT_DATE = 'club1-molchat-date';
+  function isMolchat(){ return /(^|\/)molchat(\.html)?$/.test(location.pathname); }
+  function fromPage(){ return location.pathname.replace(/^.*\//, '').replace(/\.html$/, '') || 'index'; }
+  /* «выбранная» дата мюзикла — последняя, по которой нажали покупку в этой
+     сессии; без неё — ближайший показ (его подставит сам блок) */
+  function molchatDate(){
+    try { return sessionStorage.getItem(MOLCHAT_DATE) || ''; } catch (e) { return ''; }
+  }
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('a[href]');
+
+    /* дата мюзикла, по которой нажали покупку */
+    if (a && CASHDESK.test(a.getAttribute('href') || '') &&
+        (isMolchat() || a.closest('[data-flagship]'))){
+      var dated = a.closest('[data-date]');
+      if (dated){
+        try { sessionStorage.setItem(MOLCHAT_DATE, dated.getAttribute('data-date')); } catch (e) {}
+      }
+    }
+
+    /* «Афиша Метелицы» в шапке, шторке и подвале страницы флагмана */
+    if (a && isMolchat() && /(^|\/)afisha(\.html)?$/.test(a.getAttribute('href') || '')){
+      goal('nav_afisha_click', {
+        from_page: fromPage(),
+        place: a.closest('#mobileMenu') ? 'burger' : (a.closest('.site-footer') ? 'footer' : 'header')
+      });
+    }
+
+    /* первый экран флагмана на главной */
+    var fl = t.closest('[data-flagship]');
+    if (a && fl){
+      var dateBtn = a.closest('.fl-date:not(.fl-date--all)');
+      var href = a.getAttribute('href') || '';
+      goal('home_flagship_click', dateBtn
+        ? {target: 'date_btn', date: dateBtn.getAttribute('data-date') || ''}
+        : {target: href.indexOf('#dates') !== -1 ? 'dates' : 'about'});
+    }
+
+    /* клик в блоке допродажи */
+    var xs = t.closest('[data-xsell]');
+    if (a && xs){
+      var card = a.closest('[data-xsell-show]');
+      goal('xsell_click', {
+        from_page: fromPage(),
+        block: xs.getAttribute('data-xsell'),
+        show: card ? card.getAttribute('data-xsell-show') : '',
+        show_date: card ? (card.getAttribute('data-xsell-date') || '') : '',
+        molchat_date: molchatDate(),
+        rule: card ? card.getAttribute('data-xsell-rule') : ''
+      });
+    }
+  }, true);
+
+  /* раскрыл вопрос в «Вопросах» */
+  document.addEventListener('toggle', function (ev) {
+    var d = ev.target;
+    if (!d || !d.open || !d.closest || !d.closest('[data-faq]')) return;
+    goal('faq_open', {q: d.getAttribute('data-q') || ''});
+  }, true);
+
+  /* показ блока допродажи и дочитывание до блоков страницы флагмана */
+  function watchSections(){
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        /* «попал в экран хотя бы на 50 %»: половина блока видна или блок
+           занял половину экрана (высокий блок на телефоне целиком не влезает) */
+        if (!e.isIntersecting ||
+            (e.intersectionRatio < 0.5 && e.intersectionRect.height < window.innerHeight * 0.5)) return;
+        var el = e.target;
+        io.unobserve(el);
+        if (el.hasAttribute('data-xsell')){
+          goal('xsell_view', {from_page: fromPage(), block: el.getAttribute('data-xsell')});
+        } else {
+          goal('molchat_section', {section: el.getAttribute('data-goal-section')});
+        }
+      });
+    }, {threshold: [0.1, 0.25, 0.5, 0.75]});
+    document.querySelectorAll('[data-xsell], [data-goal-section]').forEach(function (el) {
+      io.observe(el);
+    });
+  }
+
   if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ watchSlides(); initTelegramInvite(); });
+    document.addEventListener('DOMContentLoaded', function(){ watchSlides(); initTelegramInvite(); watchSections(); });
   } else {
-    watchSlides(); initTelegramInvite();
+    watchSlides(); initTelegramInvite(); watchSections();
   }
 })();
