@@ -30,11 +30,14 @@
 
   var EVENTS  = window.CLUB1_EVENTS  || [];
   var FORMATS = window.CLUB1_FORMATS || {};
+  var FOLD    = window.CLUB1_FOLD    || [];
 
   var MONTHS_NOM = ['Январь','Февраль','Март','Апрель','Май','Июнь',
                     'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
   var MONTHS_GEN = ['января','февраля','марта','апреля','мая','июня',
                     'июля','августа','сентября','октября','ноября','декабря'];
+  var MONTHS_PREP = ['январе','феврале','марте','апреле','мае','июне',
+                     'июле','августе','сентябре','октябре','ноябре','декабре'];
   var DAYS_SHORT = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
   var DAYS_FULL  = ['Воскресенье','Понедельник','Вторник','Среда',
                     'Четверг','Пятница','Суббота'];
@@ -94,6 +97,43 @@
     return out;
   }
 
+  /* Шоу из CLUB1_FOLD идут в ленте одной карточкой «Все даты» (письмо
+     Кузнецова 16.10, макет главной): карточка стоит на месте ближайшего
+     сеанса, несёт число показов, месяцы проката и самую низкую цену.
+     Считается по всем будущим сеансам шоу, а не по отфильтрованным. */
+  function plural(n, one, few, many){
+    var m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return one;
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+    return many;
+  }
+  function foldShows(list){
+    if (!FOLD.length) return list;
+    var done = {}, out = [];
+    list.forEach(function(ev){
+      if (FOLD.indexOf(ev.page) === -1){ out.push(ev); return; }
+      if (done[ev.page]) return;
+      done[ev.page] = true;
+      var all = upcoming().filter(function(x){ return x.page === ev.page; });
+      var mons = [], min = null;
+      all.forEach(function(x){
+        var m = parseInt(x.date.slice(5, 7), 10) - 1;
+        if (mons.indexOf(m) === -1) mons.push(m);
+        if (x.priceFrom && (min === null || x.priceFrom < min)) min = x.priceFrom;
+      });
+      var copy = Object.assign({}, ev);
+      copy.fold = {
+        count: all.length,
+        months: mons.length > 1
+          ? MONTHS_PREP[mons[0]] + '–' + MONTHS_PREP[mons[mons.length - 1]]
+          : MONTHS_PREP[mons[0]]
+      };
+      if (min !== null) copy.priceFrom = min;
+      out.push(copy);
+    });
+    return out;
+  }
+
   function nextForFormat(key){
     return upcoming().filter(function(ev){ return ev.format === key; })[0] || null;
   }
@@ -130,8 +170,10 @@
     /* два сеанса в день — оба времени и в плашке (Анвер 26.08: в плашке одно
        время, а в подписи два) */
     var badgeTimes = (ev.times && ev.times.length ? ev.times : (ev.time ? [ev.time] : [])).map(esc).join(' / ');
-    var badge = '<div class="poster__badge">' + fmtShort(ev) +
-                '<small>' + (badgeTimes || DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
+    var badge = ev.fold
+      ? '<div class="poster__badge">Все<small>даты</small></div>'
+      : '<div class="poster__badge">' + fmtShort(ev) +
+        '<small>' + (badgeTimes || DAYS_SHORT[dateOf(ev).getDay()]) + '</small></div>';
     /* 18+ рисует сайт на каждой афише (созвон 21.07: алкоголь ⇒ всё 18+) */
     var age = '<span class="poster__age">' + esc(ev.age || '18+') + '</span>';
     /* бейдж срочности — только из реальных данных: дата/время события,
@@ -150,6 +192,7 @@
     } else if (ev.date === shiftISO(1)){
       when = '<span class="poster__when">Завтра</span>';
     }
+    if (ev.fold) when = '';   /* «Сегодня» на карточке всех дат читалось бы как единственный показ */
     /* дата — слева сверху, «завтра/сегодня» — справа сверху, 18+ — справа
        снизу; логотип на CSS-постер не ставим (решение созвона 21.07: афиши
        чистые, служебное рисует сайт) */
@@ -215,7 +258,9 @@
                ' aria-label="Билеты: ' + esc(ev.title) + '">' + poster + '</a>';
     }
     var cta;
-    if (ev.soldOut){
+    if (ev.fold){
+      cta = '<a class="btn btn--primary btn--sm" href="' + esc(ev.page) + '#dates">Все даты</a>';
+    } else if (ev.soldOut){
       cta = '<a class="btn btn--ghost btn--sm" href="#contacts">Узнать о доп. датах</a>';
     } else if (ev.moved){
       cta = '<a class="btn btn--ghost btn--sm" href="' + esc(ev.page) + '">Смотреть новую дату</a>';
@@ -237,8 +282,11 @@
       '<article class="event-card" role="listitem" data-date="' + esc(ev.date) + '">' +
         poster +
         '<h3 class="event-card__title">' + esc(ev.title) + '</h3>' +
-        '<p class="event-card__meta">' + DAYS_FULL[dateOf(ev).getDay()] + ', ' + fmtShort(ev) +
-          (times ? ' · ' + times : '') + ' · Новый Арбат, 21</p>' +
+        '<p class="event-card__meta">' +
+          (ev.fold
+            ? ev.fold.count + ' ' + plural(ev.fold.count, 'показ', 'показа', 'показов') + ' в ' + ev.fold.months
+            : DAYS_FULL[dateOf(ev).getDay()] + ', ' + fmtShort(ev) + (times ? ' · ' + times : '')) +
+          ' · Новый Арбат, 21</p>' +
         price +
         /* ТЗ Сергея 17.08: в карточке одна кнопка — покупка. «Подробнее»
            снята, на страницу события ведёт сама карточка (растянутая ссылка
@@ -937,6 +985,9 @@
 
       /* «день = шоу»: повторные сеансы дня схлопнуты в одну карточку */
       var list = dedupeSameDay(applySort(filtered(), state.sort));
+      /* сплошная лента — шоу из CLUB1_FOLD одной карточкой; выбранный день,
+         пресет или поиск показывают его сеансы как обычно */
+      if (!state.date && !state.preset && !state.q) list = foldShows(list);
       if (pageSize && !visible) visible = batchSize();
       /* Лента сплошная, без разделителей месяцев (Саша 28.08): карточки
          августа и сентября стоят в одном ряду подряд. Разделитель 19.08
