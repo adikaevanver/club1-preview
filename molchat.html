@@ -128,6 +128,45 @@
   .present__copy p + p{margin-top:16px}
   .present__copy p b{color:var(--text);font-weight:600}
 
+  /* =================================================================
+     Этап 1 ТЗ Кузнецова (16.10): подменю, вкладки месяцев, «Как проходит
+     вечер», «Вопросы», «Продолжите вечер в Метелице»
+     ================================================================= */
+  .mx-sub{position:sticky;top:var(--header-h);z-index:40;background:rgba(10,8,16,.92);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--hairline)}
+  .mx-sub .container{display:flex;gap:22px;align-items:center;overflow-x:auto;scrollbar-width:none;padding-top:12px;padding-bottom:12px}
+  .mx-sub .container::-webkit-scrollbar{display:none}
+  .mx-sub a{font:600 12px var(--display);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);white-space:nowrap;text-decoration:none}
+  .mx-sub a:hover,.mx-sub a:focus-visible{color:var(--text)}
+  .show-section,.sched-row[id]{scroll-margin-top:calc(var(--header-h) + 58px)}
+  .sched-tabs{display:flex;margin-bottom:16px}
+  .sched-tabs + .datebar .datebar__month{display:none}   /* месяц уже на вкладке */
+  .datebar__day[hidden]{display:none}
+  [data-sched-tabs] .sched-row__meta{flex-wrap:wrap}
+  .sched-row__price{color:var(--muted);font-weight:500}
+  .sched-row__tag{display:inline-flex;align-items:center;padding:.25em .7em;border-radius:999px;
+    border:1px solid var(--hairline);font-size:.8rem;color:var(--gold);white-space:nowrap}
+  .mx-steps{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+  .mx-step{background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r);padding:20px}
+  .mx-step b{display:block;font:800 26px var(--display);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px}
+  .mx-step h3{font:700 1rem var(--display);text-transform:uppercase;margin:0 0 8px;color:#fff}
+  .mx-step p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.5}
+  .mx-step a{color:var(--text)}
+  .mx-note{margin-top:18px;font-size:.92rem;color:var(--muted)}
+  .mx-after{margin-top:24px}
+  .mx-faq{max-width:860px;margin-top:24px}
+  .mx-faq details{background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r-sm);padding:16px 20px;margin-bottom:10px}
+  .mx-faq summary{cursor:pointer;font-weight:600;font-size:1rem;color:var(--text)}
+  .mx-faq p{margin:12px 0 0;color:var(--muted);line-height:1.6}
+  .mx-faq a{color:var(--text)}
+  .xs-card .xs-card__body{display:flex;flex-direction:column;justify-content:flex-end;gap:10px;aspect-ratio:4/5;
+    padding:22px;border-radius:var(--r);border:1px solid var(--hairline);text-decoration:none;color:var(--text);
+    background:radial-gradient(120% 80% at 0% 0%,rgba(255,59,130,.22),transparent 60%),var(--panel)}
+  .xs-card__kicker{font:600 12px var(--display);text-transform:uppercase;letter-spacing:.08em;color:var(--gold)}
+  .xs-card__title{font:800 1.4rem var(--display);text-transform:uppercase;line-height:1.1;color:#fff}
+  .xs-card__text{color:var(--muted);font-size:.95rem;line-height:1.45}
+  .xs-card .btn{align-self:flex-start}
+
   .stage-card{
     position:relative;border-radius:var(--r);overflow:hidden;
     aspect-ratio:16/11;background:#000;isolation:isolate;
@@ -1630,11 +1669,91 @@
    ym(111571199, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111571199" style="position:absolute; left:-9999px;" alt=""></div></noscript>
-<script src="analytics.js?v=f515014320" defer></script>
+<script src="analytics.js?v=f603ced5ef" defer></script>
   <!-- intickets widget: обязательный код (модальное окно вместо новой вкладки) -->
   <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
   <script src="//s3.intickets.ru/intickets.js"></script>
 <meta name="robots" content="noindex, nofollow" data-preview-only>
+<script type="application/ld+json" data-faq-ld>
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Можно ли прийти без ужина?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да. Ужин в билет не входит: авторский сет добавляют к заказу при покупке, после выбора мест. Во время вечера можно заказать блюда из меню бара."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие есть меню?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Три сета: мясной, рыбный и вегетарианский. Сет выбирается при покупке билета."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Сколько длится вечер?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Около трёх часов, с двумя антрактами."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "С какого возраста?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "16+: в постановке есть сцены курения и употребления алкоголя."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Можно ли выбрать стол?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да, места выбираются на схеме зала при покупке билета."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Есть ли дресс-код?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Вечерний: он часть атмосферы спектакля."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Входят ли напитки?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "На входе гостей ждёт приветственный напиток — комплимент от Метелицы. Остальные напитки из барного меню оплачиваются на месте."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Как вернуть билет?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Билеты продаёт Яндекс Афиша, возврат оформляется у неё."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Где проходит спектакль?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "В Метелице: Москва, Новый Арбат, 21."
+      }
+    }
+  ]
+}
+</script>
 <script type="application/ld+json" data-seo="breadcrumbs">
 {
  "@context": "https://schema.org",
@@ -1685,7 +1804,7 @@
       
       <div class="social social--header"><a class="social-btn" href="https://t.me/club1standup?utm_source=club1_site&utm_medium=header&utm_campaign=social_subscription" target="_blank" rel="noopener noreferrer" aria-label="Telegram CLUB#1" title="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a class="social-btn" href="https://vk.ru/standupclubnaarbate?utm_source=club1_site&utm_medium=header&utm_campaign=social_subscription" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте CLUB#1" title="ВКонтакте"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg></a></div>
       <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="afisha">Смотреть афишу</a>
+      <a class="btn btn--primary" href="#dates">Купить билет</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
       </button>
@@ -1709,6 +1828,14 @@
   </nav>
 
 
+
+<!-- Подменю шоу (ТЗ Кузнецова 16.10, п. 1.1): липкая полоса под шапкой, ведёт
+     только по этой странице. Пункты «Ужин», «Зал», «Отзывы», «Компаниям» — с их блоками. -->
+<nav class="mx-sub" aria-label="Разделы шоу">
+  <div class="container">
+    <a href="#about">О шоу</a><a href="#dates">Расписание</a><a href="#vecher">Как проходит вечер</a><a href="#faq">Вопросы</a>
+  </div>
+</nav>
 
 <main id="main">
 
@@ -1786,11 +1913,11 @@
   <!-- =================================================================
        2 · Перечень шоу и кнопки покупки по датам и времени
        ================================================================= -->
-  <section class="show-section" id="dates" aria-labelledby="dates-title" data-schedule="О чём молчат женщины">
+  <section class="show-section" id="dates" aria-labelledby="dates-title" data-schedule="О чём молчат женщины" data-sched-tabs>
     <div class="section-head">
       <span class="rule" aria-hidden="true"></span>
       <h2 class="section-title" id="dates-title">Расписание и билеты</h2>
-      <p class="section-sub">Спектакли идут до 29 ноября. Выберите дату в календаре, чтобы отфильтровать список, и берите билет на удобный вечер.</p>
+      <p class="section-sub">Спектакли идут до 29 ноября. Выберите месяц и дату — касса откроет схему зала этого показа.</p>
     </div>
 
     <!-- DATEBAR (shared §12 component) — filters the list below by дате -->
@@ -1838,6 +1965,28 @@
 
 
   <!-- =================================================================
+       3a · Как проходит вечер (ТЗ Кузнецова, блок 5, п. 1.4). Только то, что
+       подтверждено: страница шоу на Яндекс Афише (19.10) и ТЗ. Время прихода
+       и состав welcome drink сверх «комплимента» не объявляли — не пишем.
+       ================================================================= -->
+  <section class="show-section" id="vecher" aria-labelledby="vecher-title" data-goal-section="vecher">
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="vecher-title">Как проходит вечер</h2>
+    </div>
+    <ol class="mx-steps">
+      <li class="mx-step"><b>01</b><h3>Встреча</h3><p>На входе гостей ждёт приветственный напиток — комплимент от Метелицы. Дресс-код вечерний.</p></li>
+      <li class="mx-step"><b>02</b><h3>Спектакль и ужин</h3><p>Ужин из трёх блюд подают по ходу спектакля. Сет — мясной, рыбный или вегетарианский — добавляют к билету при покупке, после выбора мест.</p></li>
+      <li class="mx-step"><b>03</b><h3>Два антракта</h3><p>Бар открыт: напитки и блюда из меню бара — за отдельную плату.</p></li>
+      <li class="mx-step"><b>04</b><h3>Финал</h3><p data-ends="molchat" data-ends-min="180">Спектакль идёт около трёх часов.</p></li>
+      <li class="mx-step"><b>05</b><h3>После спектакля</h3><p>Вечер можно продолжить в Метелице — <a href="#eshche">что ещё идёт на площадке</a>.</p></li>
+    </ol>
+    <p class="mx-note">16+: в постановке есть сцены курения и употребления алкоголя.</p>
+    <div class="mx-after"><a class="btn btn--primary" href="#dates">Выбрать дату</a></div>
+  </section>
+
+
+  <!-- =================================================================
        4 · Видео с нарезкой моментов из шоу (placeholder)
        ================================================================= -->
   <!-- Видео-блок скрыт по правкам Фигмы 31.07/04.08 (Сергей, #9/#10/#14/#16:
@@ -1863,15 +2012,41 @@
   <!-- =================================================================
        6 · Вам может понравиться — afisha cards (shared markup)
        ================================================================= -->
-  <section class="show-section afisha liked" aria-labelledby="liked-title">
+  <!-- ТЗ Кузнецова, блок 11 (этап 1 упрощённо, раздел 6): ниже расписания и
+       описания, карточки рисует afisha.js (initEshche) из events.js. -->
+  <section class="show-section afisha liked" id="eshche" aria-labelledby="eshche-title" data-xsell="eshche">
     <div class="section-head">
       <span class="rule" aria-hidden="true"></span>
-      <h2 class="section-title" id="liked-title">Ближайшие события на Новом Арбате</h2>
+      <h2 class="section-title" id="eshche-title">Продолжите вечер в Метелице</h2>
     </div>
 
-    <div class="afisha__track" id="afishaTrack" role="list"
-         data-upcoming data-upcoming-except="О чём молчат женщины" data-upcoming-limit="8"></div>
+    <div class="afisha__track" id="afishaTrack" role="list" data-eshche="molchat"></div>
 
+  </section>
+
+
+  <!-- =================================================================
+       13 · Вопросы (ТЗ Кузнецова, 4.1, п. 1.4): только подтверждённые ответы.
+       Цена пакетом, детское меню, группы, парковка — ждут ответа, не ставим.
+       FAQPage в <head> собран из этого же списка (data-faq-ld).
+       ================================================================= -->
+  <section class="show-section" id="faq" aria-labelledby="faq-title" data-goal-section="faq">
+    <div class="section-head">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="section-title" id="faq-title">Вопросы</h2>
+    </div>
+    <div class="mx-faq" data-faq>
+      <details data-q="1"><summary>Можно ли прийти без ужина?</summary><p>Да. Ужин в билет не входит: авторский сет добавляют к заказу при покупке, после выбора мест. Во время вечера можно заказать блюда из меню бара.</p></details>
+      <details data-q="2"><summary>Какие есть меню?</summary><p>Три сета: мясной, рыбный и вегетарианский. Сет выбирается при покупке билета. <a href="assets/docs/molchat-menu.pdf" target="_blank" rel="noopener">Авторское меню (PDF)</a>.</p></details>
+      <details data-q="3"><summary>Сколько длится вечер?</summary><p>Около трёх часов, с двумя антрактами.</p></details>
+      <details data-q="4"><summary>С какого возраста?</summary><p>16+: в постановке есть сцены курения и употребления алкоголя.</p></details>
+      <details data-q="5"><summary>Можно ли выбрать стол?</summary><p>Да, места выбираются на схеме зала при покупке билета.</p></details>
+      <details data-q="6"><summary>Есть ли дресс-код?</summary><p>Вечерний: он часть атмосферы спектакля.</p></details>
+      <details data-q="7"><summary>Входят ли напитки?</summary><p>На входе гостей ждёт приветственный напиток — комплимент от Метелицы. Остальные напитки из барного меню оплачиваются на месте.</p></details>
+      <details data-q="8"><summary>Как вернуть билет?</summary><p>Билеты продаёт Яндекс Афиша, возврат оформляется у неё. <a href="https://widget.afisha.yandex.ru/refund" target="_blank" rel="noopener" data-keep-link>Форма возврата</a>.</p></details>
+      <details data-q="9"><summary>Где проходит спектакль?</summary><p>В Метелице: Москва, Новый Арбат, 21.</p></details>
+    </div>
+    <div class="mx-after"><a class="btn btn--primary" href="#dates">Выбрать дату</a></div>
   </section>
 
 
@@ -1967,7 +2142,7 @@
 <!-- shared interactive components (modal / tabs / slideshow / datebar) -->
 <script src="script.js?v=226442e45b" defer></script>
 <script src="assets/data/events.js?v=267425db54" defer></script>
-<script src="afisha.js?v=5a56607da1" defer></script>
+<script src="afisha.js?v=4477811221" defer></script>
 
 <script>
 /* ---------------------------------------------------------------------

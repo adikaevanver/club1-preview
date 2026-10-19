@@ -533,9 +533,43 @@
       var list = upcoming().filter(function(ev){ return ev.title === title && ev.buy; });
       if (!list.length){ root.hidden = true; return; }
 
+      /* Вкладки месяцев (ТЗ Кузнецова 16.10, п. 1.3) — только там, где у
+         корня стоит data-sched-tabs: длинный прокат (мюзикл, 30 показов).
+         У строки якорь d-ГГГГ-ММ-ДД-ЧЧММ и полный день недели («6 ноября,
+         пятница»), у показа до 17:00 — пометка «Дневной показ». Остальные
+         страницы с расписанием живут как раньше. */
+      var tabs = root.hasAttribute('data-sched-tabs');
+      var months = [];
+      list.forEach(function(ev){
+        var mk = monthKey(ev.date);
+        if (months.indexOf(mk) === -1) months.push(mk);
+      });
+      var curMonth = months[0];
+      function rowId(ev){
+        return 'd-' + ev.date + '-' + (ev.time || '0000').replace(':', '');
+      }
+      function monthName(mk){ return MONTHS_NOM[parseInt(mk.slice(5, 7), 10) - 1]; }
+
       function humanDay(isoDate){
         var d = new Date(isoDate + 'T00:00:00');
+        if (tabs) return d.getDate() + ' ' + MONTHS_GEN[d.getMonth()] + ', ' + DAYS_FULL[d.getDay()].toLowerCase();
         return d.getDate() + ' ' + MONTHS_GEN[d.getMonth()] + ', ' + DAYS_SHORT[d.getDay()];
+      }
+      if (tabs && months.length > 1){
+        var tabsEl = document.createElement('div');
+        tabsEl.className = 'sched-tabs';
+        tabsEl.setAttribute('role', 'group');
+        tabsEl.setAttribute('aria-label', 'Месяц');
+        tabsEl.innerHTML = months.map(function(mk, i){
+          return '<button class="af-tab" type="button" data-month="' + mk + '" aria-pressed="' + String(i === 0) + '">' +
+                 monthName(mk) + '</button>';
+        }).join('');
+        var bar = root.querySelector('.datebar') || listEl;
+        bar.parentNode.insertBefore(tabsEl, bar);
+        tabsEl.addEventListener('click', function(e){
+          var b = e.target.closest('[data-month]');
+          if (b) setMonth(b.getAttribute('data-month'));
+        });
       }
       if (monEl){
         var mons = [];
@@ -543,7 +577,8 @@
           var m = MONTHS_NOM[parseInt(ev.date.slice(5, 7), 10) - 1];
           if (mons.indexOf(m) === -1) mons.push(m);
         });
-        monEl.textContent = mons.length > 1 ? mons[0] + ' — ' + mons[mons.length - 1] : mons[0];
+        monEl.textContent = tabs ? monthName(curMonth)
+          : (mons.length > 1 ? mons[0] + ' — ' + mons[mons.length - 1] : mons[0]);
       }
       if (daysEl){
         var dates = [];
@@ -552,7 +587,8 @@
           '<button class="datebar__day" type="button" data-date="all" aria-pressed="true"><b>Все</b><span>даты</span></button>' +
           dates.map(function(d){
             var dt = new Date(d + 'T00:00:00');
-            return '<button class="datebar__day" type="button" data-date="' + d + '" aria-pressed="false">' +
+            return '<button class="datebar__day" type="button" data-date="' + d + '" data-month="' + monthKey(d) + '"' +
+                   (tabs && monthKey(d) !== curMonth ? ' hidden' : '') + ' aria-pressed="false">' +
                    '<b>' + d.slice(8, 10) + '</b><span>' + DAYS_SHORT[dt.getDay()] + '</span></button>';
           }).join('');
         daysEl.addEventListener('click', function(e){
@@ -566,36 +602,83 @@
         });
       }
       listEl.innerHTML = list.map(function(ev){
-        return '<div class="sched-row" data-date="' + ev.date + '">' +
+        if (!tabs){
+          return '<div class="sched-row" data-date="' + ev.date + '">' +
+                   '<span class="sched-row__meta">' +
+                     '<span class="sched-row__cell sched-row__cell--day">' + SVG_CAL + ' ' + humanDay(ev.date) + '</span>' +
+                     '<span class="sched-row__cell">' + SVG_CLK + ' ' + esc(ev.time || '') + '</span>' +
+                   '</span>' +
+                   '<a class="btn book-btn" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>' +
+                 '</div>';
+        }
+        var day = ev.time && ev.time < '17:00';
+        return '<div class="sched-row" id="' + rowId(ev) + '" data-date="' + ev.date + '" data-month="' + monthKey(ev.date) + '">' +
                  '<span class="sched-row__meta">' +
                    '<span class="sched-row__cell sched-row__cell--day">' + SVG_CAL + ' ' + humanDay(ev.date) + '</span>' +
                    '<span class="sched-row__cell">' + SVG_CLK + ' ' + esc(ev.time || '') + '</span>' +
+                   (ev.priceFrom ? '<span class="sched-row__cell sched-row__price">от ' + ev.priceFrom.toLocaleString('ru-RU') + ' ₽</span>' : '') +
+                   (day ? '<span class="sched-row__tag">Дневной показ</span>' : '') +
                  '</span>' +
-                 '<a class="btn book-btn" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>' +
+                 '<a class="btn book-btn" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Купить билеты</a>' +
                '</div>';
       }).join('');
 
       /* Правка Фигмы 31.07 (#7): простыня сеансов свёрнута — первые три
          строки, дальше кнопка «Показать все даты (N)». Выбор дня в
-         датапике показывает его сеансы целиком независимо от свёртки. */
+         датапике показывает его сеансы целиком независимо от свёртки.
+         Во вкладках свёртка считается внутри выбранного месяца. */
       var curPick  = 'all';
       var expanded = list.length <= 3;
       var moreBtn  = null;
+      function inMonth(row){ return !tabs || row.getAttribute('data-month') === curMonth; }
+      function monthCount(){
+        return Array.prototype.filter.call(listEl.children, inMonth).length;
+      }
       function applyCollapse(){
         var shown = 0;
         Array.prototype.forEach.call(listEl.children, function(row){
-          var byDay  = curPick !== 'all' && row.getAttribute('data-date') !== curPick;
-          var byFold = !expanded && curPick === 'all' && shown >= 3;
-          row.hidden = byDay || byFold;
-          if (!byDay) shown++;
+          var byMonth = !inMonth(row);
+          var byDay   = curPick !== 'all' && row.getAttribute('data-date') !== curPick;
+          var byFold  = !expanded && curPick === 'all' && shown >= 3;
+          row.hidden = byMonth || byDay || byFold;
+          if (!byMonth && !byDay) shown++;
         });
-        if (moreBtn) moreBtn.hidden = expanded || curPick !== 'all';
+        if (moreBtn){
+          moreBtn.textContent = 'Показать все даты (' + monthCount() + ')';
+          moreBtn.hidden = expanded || curPick !== 'all' || monthCount() <= 3;
+        }
+      }
+      function setMonth(mk, keepPick){
+        if (!tabs || months.indexOf(mk) === -1) return;
+        curMonth = mk;
+        if (!keepPick) curPick = 'all';
+        root.querySelectorAll('.sched-tabs [data-month]').forEach(function(b){
+          b.setAttribute('aria-pressed', String(b.getAttribute('data-month') === mk));
+        });
+        if (daysEl){
+          Array.prototype.forEach.call(daysEl.querySelectorAll('[data-date]'), function(b){
+            var d = b.getAttribute('data-date');
+            if (d !== 'all') b.hidden = b.getAttribute('data-month') !== mk;
+            b.setAttribute('aria-pressed', String(d === curPick));
+          });
+        }
+        if (monEl) monEl.textContent = monthName(mk);
+        applyCollapse();
+      }
+      /* ссылка на дату (#d-2026-11-06-2000) открывает её месяц и строку */
+      function openHash(){
+        if (!tabs || !/^#d-\d{4}-\d{2}-\d{2}-\d{4}$/.test(location.hash)) return;
+        var row = document.getElementById(location.hash.slice(1));
+        if (!row || !listEl.contains(row)) return;
+        expanded = true;
+        setMonth(row.getAttribute('data-month'));
+        row.scrollIntoView({block: 'center'});
       }
       if (!expanded){
         moreBtn = document.createElement('button');
         moreBtn.type = 'button';
         moreBtn.className = 'btn btn--ghost sched-more';
-        moreBtn.textContent = 'Показать все даты (' + list.length + ')';
+        moreBtn.textContent = 'Показать все даты (' + monthCount() + ')';
         moreBtn.addEventListener('click', function(){
           /* Кнопка прячет саму себя, и фокус вместе с ней улетал в body:
              дальше Tab шёл с начала страницы, а раскрытые кнопки брони
@@ -612,6 +695,11 @@
         });
         listEl.parentNode.insertBefore(moreBtn, listEl.nextSibling);
         applyCollapse();
+      }
+      if (tabs){
+        applyCollapse();
+        openHash();
+        window.addEventListener('hashchange', openHash);
       }
     });
   }
@@ -1612,6 +1700,7 @@
     return all.slice(0, count).map(function(ev){
       var label = fmtHuman(ev) + (ev.time ? ', ' + ev.time : '');
       return '<a class="fl-date" href="' + esc(ev.buy) + '" target="_blank" rel="noopener"' +
+               ' data-date="' + esc(ev.date) + '" data-time="' + esc(ev.time || '') + '"' +
                ' aria-label="Билеты: ' + esc(label) + '">' +
                '<b>' + esc(fmtHuman(ev)) + '</b><span>' + esc(ev.time || '') + '</span></a>';
     }).join('') +
@@ -1670,6 +1759,72 @@
     root.hidden = false;
   }
 
+  /* =================================================================
+     «Продолжите вечер в Метелице»  [data-eshche]   (ТЗ Кузнецова, блок 11,
+     этап 1 упрощённо). Стоит ниже расписания и описания шоу (правило 6.1.1).
+     Карточки: 1–2 ближайших открытых события площадки в 30 дней (не само
+     шоу и не другие его сеансы) + «Бар и кухня»; событий нет — подписка.
+     Пустым блок не бывает (правило 6.1.5). Цели xsell_* ставит analytics.js
+     по data-xsell-* на карточках.
+     ================================================================= */
+  function initEshche(el){
+    var except = el.getAttribute('data-eshche');
+    var limit = shiftISO(30);
+    var seen = {}, picks = [];
+    upcoming().forEach(function(ev){
+      if (ev.page === except || ev.date > limit || seen[ev.title] || picks.length >= 2) return;
+      seen[ev.title] = true;
+      picks.push(ev);
+    });
+    var cards = picks.map(function(ev, i){
+      return cardHTML(Object.assign({}, ev, {times: ev.time ? [ev.time] : []}), i + 10)
+        .replace('<article class="event-card"',
+                 '<article class="event-card" data-xsell-show="' + esc(ev.page || '') + '"' +
+                 ' data-xsell-date="' + esc(ev.date) + '" data-xsell-rule="more"');
+    });
+    cards.push(
+      '<article class="event-card xs-card" role="listitem" data-xsell-show="eda" data-xsell-rule="bar">' +
+        '<a class="xs-card__body" href="eda">' +
+          '<span class="xs-card__kicker">Метелица</span>' +
+          '<span class="xs-card__title">Бар и кухня</span>' +
+          '<span class="xs-card__text">Меню бара и кухни — на странице «Еда и напитки»</span>' +
+          '<span class="btn btn--ghost btn--sm">Смотреть меню</span>' +
+        '</a>' +
+      '</article>');
+    if (!picks.length){
+      cards.push(
+        '<article class="event-card xs-card" role="listitem" data-xsell-show="telegram" data-xsell-rule="subscribe">' +
+          '<a class="xs-card__body" href="https://t.me/club1standup?utm_source=club1_site&utm_medium=xsell&utm_campaign=molchat"' +
+            ' target="_blank" rel="noopener">' +
+            '<span class="xs-card__kicker">Telegram</span>' +
+            '<span class="xs-card__title">Новые вечера в Метелице</span>' +
+            '<span class="xs-card__text">Анонсы и даты в канале клуба</span>' +
+            '<span class="btn btn--ghost btn--sm">Подписаться</span>' +
+          '</a>' +
+        '</article>');
+    }
+    var track = el.querySelector('[data-eshche-track]') || el;
+    track.innerHTML = cards.join('');
+  }
+
+  /* «Как проходит вечер»: когда заканчивается показ — из времени начала
+     будущих сеансов шоу плюс длительность (DURATION шоу в минутах на узле) */
+  function initEnds(el){
+    var page = el.getAttribute('data-ends'), dur = parseInt(el.getAttribute('data-ends-min'), 10) || 180;
+    var times = [];
+    upcoming().forEach(function(ev){
+      if (ev.page === page && ev.time && times.indexOf(ev.time) === -1) times.push(ev.time);
+    });
+    if (!times.length){ el.hidden = true; return; }
+    times.sort().reverse();
+    var parts = times.map(function(t, i){
+      var hm = t.split(':'), m = (+hm[0]) * 60 + (+hm[1]) + dur;
+      var end = pad2(Math.floor(m / 60) % 24) + ':' + pad2(m % 60);
+      return (i === 0 ? 'показ в ' + t + ' заканчивается около ' : 'в ' + t + ' — около ') + end;
+    });
+    el.textContent = parts.join(', ').replace(/^./, function(c){ return c.toUpperCase(); }) + '.';
+  }
+
   /* --- boot ---------------------------------------------------------- */
   function boot(){
     initPastEvent();
@@ -1684,6 +1839,8 @@
     initFlagshipHooks();
     document.querySelectorAll('[data-afisha]').forEach(initAfisha);
     document.querySelectorAll('[data-upcoming]').forEach(initUpcoming);
+    document.querySelectorAll('[data-eshche]').forEach(initEshche);
+    document.querySelectorAll('[data-ends]').forEach(initEnds);
     document.querySelectorAll('[data-all-dates]').forEach(initAllDates);
     initSchedule();
     initFormatCards();
