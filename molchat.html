@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=031d1b4a56">
+<link rel="stylesheet" href="styles.css?v=ed75c93fb4">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS  (event-detail template — show.html only)
@@ -46,49 +46,52 @@
   .section-sub{color:var(--muted);font-size:1.02rem;line-height:1.55;max-width:62ch}
 
   /* =================================================================
-     1 · HERO — two columns: poster (left) · event facts (right)
+     1 · ПЕРВЫЙ ЭКРАН — бриф Кузнецова 16.10, блок 1 (макет molchat-maket):
+     фон во всю ширину — фото нашего зала, текст слева, постер справа
      ================================================================= */
-  .show-hero{position:relative;padding:var(--section-y) 0 var(--sp-6)}
-  .show-hero__glow-a{width:520px;height:520px;top:-120px;left:-180px}
-  .show-hero__glow-b{width:440px;height:440px;top:40px;right:-180px}
-
-  .show-hero__grid{
-    position:relative;z-index:1;
-    display:grid;grid-template-columns:minmax(280px,430px) minmax(0,1fr);
-    gap:clamp(28px,4vw,60px);align-items:start;
+  .mx-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--hairline);isolation:isolate}
+  .mx-hero__bg{
+    position:absolute;inset:0;z-index:-1;
+    background:url(assets/venue/stage.jpg) center 40%/cover no-repeat;
+    filter:saturate(.9) brightness(.42);
   }
-
-  /* left: enlarged shared poster */
-  .show-poster{width:100%}
-  .show-poster .poster{aspect-ratio:4/5}
-  /* the show is a multi-comic bill: scale the STANDUP art up a touch */
-  .show-poster .poster__standup{font-size:clamp(2.9rem,6.2vw,3.9rem)}
-
-  /* right column */
-  .show-facts{display:flex;flex-direction:column;gap:clamp(18px,2.4vw,26px)}
-  .show-title{
-    font-family:var(--display);font-weight:800;
-    font-size:clamp(2rem,4.8vw,3.15rem);line-height:1.03;letter-spacing:-.02em;color:#fff;
+  .mx-hero__bg::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(10,8,16,.15) 25%,var(--ink) 97%);
   }
+  .mx-hero__in{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,320px);
+    gap:clamp(24px,4vw,64px);align-items:end;
+    padding-top:clamp(56px,10vh,130px);padding-bottom:clamp(32px,5vh,56px);
+  }
+  .mx-hero__title{
+    font-family:var(--display);font-weight:900;text-transform:uppercase;color:#fff;
+    font-size:clamp(2.4rem,7vw,6.2rem);line-height:.95;letter-spacing:-.01em;margin:14px 0 18px;
+  }
+  .mx-hero__promise{font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.45;color:var(--text);max-width:38ch;margin-bottom:22px}
+  .mx-hero__poster{border-radius:var(--r);overflow:hidden;border:1px solid var(--hairline);box-shadow:0 30px 60px -20px rgba(0,0,0,.9)}
+  .mx-hero__poster img{display:block;width:100%;height:auto}
 
-  /* meta chips row — Краткая информация (длительность · сбор · стоимость) */
+  /* meta chips row — факты первого экрана */
   .event-meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 30px}
   .meta-chip{display:inline-flex;align-items:center;gap:.7em;font-weight:500;font-size:1.02rem;color:var(--text)}
   .meta-chip__ic{
     width:40px;height:40px;flex:0 0 auto;border-radius:50%;
     border:1.5px solid var(--hairline-strong);
     display:flex;align-items:center;justify-content:center;color:var(--magenta);
-    font-family:var(--display);font-weight:700;font-size:1.05rem;
+    font-family:var(--display);font-weight:700;font-size:.82rem;letter-spacing:.01em;
   }
   .meta-chip__ic svg{width:19px;height:19px;display:block}
-  .meta-chip__ic{font-size:.82rem;letter-spacing:.01em}
 
-  .show-lede{color:var(--muted);font-size:1.05rem;line-height:1.6;max-width:56ch}
-  .show-lede + .show-lede{margin-top:-6px}
-  .show-lede b{color:var(--text);font-weight:600}
+  .show-cta-row{display:flex;flex-wrap:wrap;gap:14px;align-self:flex-start;margin-top:22px}
 
-  /* Кнопка подробнее + Кнопка покупки */
-  .show-cta-row{display:flex;flex-wrap:wrap;gap:14px;align-self:flex-start;margin-top:2px}
+  /* 1а · полоса ближайших дат под первым экраном */
+  .fl-strip{padding-top:clamp(18px,2.4vw,28px)}
+  .fl-strip__label{
+    font-family:var(--display);font-weight:600;font-size:.78rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .fl-strip .fl-dates{margin-top:12px}
 
   /* =================================================================
      2 · SCHEDULE — «Перечень шоу и билеты по датам и времени»
@@ -245,8 +248,8 @@
      RESPONSIVE
      ================================================================= */
   @media (max-width:900px){
-    .show-hero__grid{grid-template-columns:1fr}
-    .show-poster{max-width:420px;margin-inline:auto}
+    .mx-hero__in{grid-template-columns:1fr;align-items:start;padding-top:24px}
+    .mx-hero__poster{max-width:200px;order:-1}
     .present__grid{grid-template-columns:1fr}
     .lineup{grid-template-columns:repeat(3,1fr)}
   }
@@ -254,7 +257,9 @@
     .lineup{grid-template-columns:repeat(2,1fr)}
     .sched-row__meta{flex-basis:100%}
     .sched-row .book-btn{width:100%;min-width:0}
-    .event-meta{gap:12px 22px}
+    .event-meta{gap:10px 20px}
+    .meta-chip{font-size:.95rem}
+    .meta-chip__ic{width:34px;height:34px}
     .show-cta-row .btn{flex:1 1 auto;text-align:center;justify-content:center}
   }
 </style>
@@ -1705,37 +1710,26 @@
 
 
 
-<main class="container" id="main">
+<main id="main">
 
   <!-- =================================================================
-       1 · HERO — Обложка (афиша) + Краткая информация + кнопки
+       1 · ПЕРВЫЙ ЭКРАН — бриф Кузнецова 16.10, блок 1: что это, где, когда
+       и сколько стоит. Цена — одна формулировка на сайт (CLUB1_FLAGSHIP.price
+       в events.js), без неё «от N ₽» по сеансам; вписывает afisha.js.
        ================================================================= -->
-  <section class="show-hero" aria-labelledby="show-title">
-    <div class="glow glow--mag show-hero__glow-a" aria-hidden="true"></div>
-    <div class="glow glow--pur show-hero__glow-b" aria-hidden="true"></div>
+  <section class="mx-hero" aria-labelledby="show-title">
+    <!-- после согласования КК: фоном трейлер 10–15 с без звука (из материалов
+         шоу), до тех пор — фото нашего зала -->
+    <div class="mx-hero__bg" aria-hidden="true"></div>
+    <div class="container mx-hero__in">
+      <div class="mx-hero__text">
+        <p class="eyebrow">Гастро-мюзикл в Метелице · Новый Арбат, 21</p>
+        <h1 class="mx-hero__title" id="show-title">О чём молчат женщины</h1>
+        <p class="mx-hero__promise">Спектакль, песни о любви и ужин из трёх блюд — одна история за вашим столом.</p>
 
-    <div class="show-hero__grid">
-
-      <!-- LEFT · Обложка — poster built from the shared .poster component -->
-      <div class="show-poster">
-        <!-- Афиша 4:5 от Максима (САЙТ_1080x1350, 01.09), без даты:
-             прокат идёт до 29.11, даты держит расписание ниже. -->
-        <div class="poster poster--art">
-          <img class="poster__full" src="assets/posters/molchat-v2-45.jpg" alt="Афиша: «О чём молчат женщины» — романтический гастро-мюзикл в Метелице" width="1080" height="1350">
-        </div>
-      </div>
-
-      <!-- RIGHT · title, Краткая информация, кнопки -->
-      <div class="show-facts">
-        <p class="eyebrow">Премьера · гастро-мюзикл</p>
-        <h1 class="show-title" id="show-title">О чём молчат женщины</h1>
-
-        <!-- Краткая информация: длительность · сбор гостей · стоимость -->
+        <!-- факты: даты — по расписанию ниже, длительность (180 минут, два
+             антракта) и возраст — со страницы Яндекс Афиши -->
         <div class="event-meta">
-          <!-- в чипах только подтверждённое: даты держит расписание ниже,
-               возраст, цена и длительность (180 минут, два антракта) — со
-               страницы Яндекс Афиши, гастросет из описания шоу; время сбора
-               гостей не объявляли -->
           <span class="meta-chip">
             <span class="meta-chip__ic" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
@@ -1750,33 +1744,42 @@
           </span>
           <span class="meta-chip">
             <span class="meta-chip__ic" aria-hidden="true">16+</span>
-            Гастросет из трёх блюд
+            от 16 лет
           </span>
-          <span class="meta-chip">
-            <span class="meta-chip__ic" aria-hidden="true">₽</span>
-            от 4 000 ₽
-          </span>
-          <!-- v4: доступность локации прямо в строке данных события -->
           <span class="meta-chip">
             <span class="meta-chip__ic" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </span>
-            Новый Арбат, 21 · м. «Смоленская»
+            Метелица · Новый Арбат, 21
           </span>
         </div>
 
-        <!-- Краткое описание -->
-        <p class="show-lede">Романтический гастро-мюзикл, где театральное шоу, культовые песни о любви и авторская гастрономия — части одной истории. Её можно не только увидеть и услышать, но и попробовать на вкус.</p>
-        <p class="show-lede"><b>Гастрономический сет из трёх блюд</b> — каждая подача про одно из чувств героев. <a href="assets/docs/molchat-menu.pdf" target="_blank" rel="noopener">Авторское меню (PDF)</a></p>
+        <p class="mx-hero__price" data-fl-price data-fl-page="molchat"></p>
 
-        <!-- Кнопка подробнее + Кнопка покупки -->
         <div class="show-cta-row">
-          <a class="btn btn--ghost" href="#about">Подробнее о шоу</a>
-          <a class="btn btn--primary" href="#dates">Бронировать места</a>
+          <a class="btn btn--primary" href="#dates">Выбрать дату</a>
+          <a class="btn btn--ghost" href="#about">О шоу</a>
         </div>
       </div>
 
+      <!-- Афиша 4:5 от Максима (САЙТ_1080x1350, 01.09), без даты -->
+      <div class="mx-hero__poster">
+        <img src="assets/posters/molchat-v2-45.jpg"
+             srcset="assets/posters/molchat-v2-45-540.jpg 540w, assets/posters/molchat-v2-45-640.jpg 640w, assets/posters/molchat-v2-45.jpg 1080w"
+             sizes="(max-width:900px) 200px, 320px"
+             alt="Афиша: «О чём молчат женщины» — романтический гастро-мюзикл в Метелице"
+             width="1080" height="1350" fetchpriority="high">
+      </div>
     </div>
+  </section>
+
+  <div class="container">
+
+  <!-- 1а · Ближайшие показы (бриф, блок 2): кнопка даты ведёт в кассу своего
+       сеанса, последняя — к расписанию. Рисует afisha.js из events.js. -->
+  <section class="fl-strip" data-fl-strip aria-label="Ближайшие показы">
+    <p class="fl-strip__label">Ближайшие показы</p>
+    <div class="fl-dates" data-fl-dates data-fl-page="molchat" data-fl-count="6" data-fl-all="#dates"></div>
   </section>
 
 
@@ -1877,6 +1880,9 @@
        Content per «структура»: регалии/проекты · видео · соцсети · шоу
        ================================================================= -->
 
+  </div>
+</main>
+
   <!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения.
        Цена берётся из events.js (минимум по будущим сеансам) — не вписывать
        руками: в прошлый раз плашку скопировали с другой страницы вместе
@@ -1884,7 +1890,7 @@
 <div class="sticky-cta">
   <span class="sticky-cta__info">
     <span class="sticky-cta__date">О чём молчат женщины</span>
-    <span class="sticky-cta__price">от 4 000 ₽</span>
+    <span class="sticky-cta__price" data-fl-price-short data-fl-page="molchat">от 4 000 ₽</span>
   </span>
   <a class="btn btn--primary" href="#dates">Выбрать дату</a>
 </div>
@@ -1960,8 +1966,8 @@
 
 <!-- shared interactive components (modal / tabs / slideshow / datebar) -->
 <script src="script.js?v=226442e45b" defer></script>
-<script src="assets/data/events.js?v=3597961d35" defer></script>
-<script src="afisha.js?v=35255fe1c2" defer></script>
+<script src="assets/data/events.js?v=267425db54" defer></script>
+<script src="afisha.js?v=5a56607da1" defer></script>
 
 <script>
 /* ---------------------------------------------------------------------
