@@ -31,6 +31,7 @@
   var EVENTS  = window.CLUB1_EVENTS  || [];
   var FORMATS = window.CLUB1_FORMATS || {};
   var FOLD    = window.CLUB1_FOLD    || [];
+  var FLAGSHIP = window.CLUB1_FLAGSHIP || null;
 
   var MONTHS_NOM = ['Январь','Февраль','Март','Апрель','Май','Июнь',
                     'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
@@ -1575,11 +1576,112 @@
     );
   }
 
+  /* =================================================================
+     Флагман площадки  [data-flagship] · [data-fl-dates] · [data-fl-price]
+     ----------------------------------------------------------------
+     Письмо Кузнецова 16.10, макеты главной и /molchat. Пока идёт прокат
+     флагмана (CLUB1_FLAGSHIP), главная показывает его блок на месте
+     хиро-слайдера. Полоса ближайших дат — на главной и под первым экраном
+     страницы шоу: каждая кнопка ведёт в кассу своего сеанса (ТЗ: «покупка
+     в 1 клик»), последняя — ко всему расписанию. Цена — одна формулировка
+     на весь сайт: CLUB1_FLAGSHIP.price, без неё «от N ₽» по сеансам.
+     ================================================================= */
+  function showSessions(page){
+    return upcoming().filter(function(ev){ return ev.page === page && ev.buy; });
+  }
+  function flagshipActive(){
+    if (!FLAGSHIP || !FLAGSHIP.page) return false;
+    if (FLAGSHIP.until && FLAGSHIP.until < todayISO()) return false;
+    return showSessions(FLAGSHIP.page).length > 0;
+  }
+  function rub(n){ return n.toLocaleString('ru-RU') + ' ₽'; }
+  function showPrice(page){
+    if (FLAGSHIP && FLAGSHIP.page === page && FLAGSHIP.price) return FLAGSHIP.price;
+    var min = null;
+    showSessions(page).forEach(function(ev){
+      if (ev.priceFrom && (min === null || ev.priceFrom < min)) min = ev.priceFrom;
+    });
+    if (min === null) return null;
+    return { label: 'Билеты от ' + rub(min),
+             note: 'Авторский ужин из трёх блюд добавляется к билету при покупке',
+             short: 'от ' + rub(min) };
+  }
+  function flDatesHTML(page, count, allHref){
+    var all = showSessions(page);
+    if (!all.length) return '';
+    return all.slice(0, count).map(function(ev){
+      var label = fmtHuman(ev) + (ev.time ? ', ' + ev.time : '');
+      return '<a class="fl-date" href="' + esc(ev.buy) + '" target="_blank" rel="noopener"' +
+               ' aria-label="Билеты: ' + esc(label) + '">' +
+               '<b>' + esc(fmtHuman(ev)) + '</b><span>' + esc(ev.time || '') + '</span></a>';
+    }).join('') +
+      '<a class="fl-date fl-date--all" href="' + esc(allHref) + '">' +
+        '<b>Все даты</b><span>' + all.length + ' ' + plural(all.length, 'показ', 'показа', 'показов') + '</span></a>';
+  }
+  function priceHTML(p){
+    return esc(p.label) + (p.note ? '<small>' + esc(p.note) + '</small>' : '');
+  }
+  /* хуки страницы шоу: полоса дат, цена первого экрана, цена липкой кнопки */
+  function initFlagshipHooks(){
+    document.querySelectorAll('[data-fl-dates]').forEach(function(el){
+      var page = el.getAttribute('data-fl-page');
+      var html = flDatesHTML(page, parseInt(el.getAttribute('data-fl-count'), 10) || 5,
+                             el.getAttribute('data-fl-all') || '#dates');
+      if (!html){ (el.closest('[data-fl-strip]') || el).hidden = true; return; }
+      el.innerHTML = html;
+    });
+    document.querySelectorAll('[data-fl-price]').forEach(function(el){
+      var p = showPrice(el.getAttribute('data-fl-page'));
+      if (p) el.innerHTML = priceHTML(p); else el.hidden = true;
+    });
+    document.querySelectorAll('[data-fl-price-short]').forEach(function(el){
+      var p = showPrice(el.getAttribute('data-fl-page'));
+      if (p) el.textContent = p.short;
+    });
+  }
+  /* блок флагмана на главной (рисуется целиком из CLUB1_FLAGSHIP) */
+  function initFlagship(root){
+    if (!flagshipActive()){ root.hidden = true; return; }
+    var f = FLAGSHIP, p = showPrice(f.page);
+    var poster = esc(f.poster);
+    root.innerHTML =
+      '<div class="container">' +
+        '<p class="hero__tagline">Стендап и шоу в центре Москвы — Новый Арбат, 21</p>' +
+        '<div class="flagship__card">' +
+          '<a class="flagship__poster" href="' + esc(f.page) + '" aria-label="Подробнее: ' + esc(f.title) + '">' +
+            '<img src="' + poster + '" srcset="' + poster.replace(/\.jpg$/, '-540.jpg') + ' 540w, ' +
+              poster.replace(/\.jpg$/, '-640.jpg') + ' 640w, ' + poster + ' 1080w"' +
+              ' sizes="(max-width:760px) 46vw, 340px" alt="Афиша: ' + esc(f.title) + '"' +
+              ' width="1080" height="1350" fetchpriority="high"></a>' +
+          '<div class="flagship__body">' +
+            '<p class="eyebrow">' + esc(f.eyebrow || '') + '</p>' +
+            '<h2 class="flagship__title" id="flagship-title">' + esc(f.title) + '</h2>' +
+            '<p class="flagship__promise">' + esc(f.promise || '') + '</p>' +
+            (p ? '<p class="flagship__price">' + priceHTML(p) + '</p>' : '') +
+            '<div class="fl-dates">' + flDatesHTML(f.page, 5, f.page + '#dates') + '</div>' +
+            '<div class="flagship__cta">' +
+              '<a class="btn btn--primary" href="' + esc(f.page) + '#dates">Выбрать дату</a>' +
+              '<a class="btn btn--ghost" href="' + esc(f.page) + '">О шоу</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    root.setAttribute('aria-labelledby', 'flagship-title');
+    root.hidden = false;
+  }
+
   /* --- boot ---------------------------------------------------------- */
   function boot(){
     initPastEvent();
     initTicker();
-    document.querySelectorAll('[data-hero-slider]').forEach(initHeroSlider);
+    var flagOn = flagshipActive() && !!document.querySelector('[data-flagship]');
+    document.querySelectorAll('[data-flagship]').forEach(initFlagship);
+    /* пока идёт прокат флагмана, его блок стоит на месте слайдера */
+    document.querySelectorAll('[data-hero-slider]').forEach(function(root){
+      if (flagOn){ root.hidden = true; root.style.display = 'none'; return; }
+      initHeroSlider(root);
+    });
+    initFlagshipHooks();
     document.querySelectorAll('[data-afisha]').forEach(initAfisha);
     document.querySelectorAll('[data-upcoming]').forEach(initUpcoming);
     document.querySelectorAll('[data-all-dates]').forEach(initAllDates);

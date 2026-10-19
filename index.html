@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=031d1b4a56">
+<link rel="stylesheet" href="styles.css?v=ed75c93fb4">
 <script type="application/ld+json" data-seo="org">
 {
  "@context": "https://schema.org",
@@ -1577,6 +1577,14 @@
        Большая афиша на весь экран с автопрокруткой; слайды рендерит
        afisha.js из events.js (продукты в приоритете продаж).
        ================================================================= -->
+  <!-- =================================================================
+       ФЛАГМАН — блок главного шоу на месте слайдера (письмо Кузнецова
+       16.10, макет главной). Рисует afisha.js из CLUB1_FLAGSHIP в
+       events.js; пока он задан и прокат идёт, слайдер ниже спрятан.
+       Вернуть слайдер — CLUB1_FLAGSHIP = null.
+       ================================================================= -->
+  <section class="flagship" data-flagship hidden></section>
+
   <section class="hero-billboard" data-hero-slider aria-labelledby="hero-title">
     <h2 id="hero-title" class="sr-only">Главные события клуба</h2>
 
@@ -2041,8 +2049,8 @@
 <script src="script.js?v=226442e45b" defer></script>
 
 <!-- живая афиша: данные + рендер -->
-<script src="assets/data/events.js?v=3597961d35" defer></script>
-<script src="afisha.js?v=35255fe1c2" defer></script>
+<script src="assets/data/events.js?v=267425db54" defer></script>
+<script src="afisha.js?v=5a56607da1" defer></script>
 
 </body>
 </html>

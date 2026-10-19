@@ -1934,3 +1934,52 @@ html:has(.mobile-menu.is-open) .tg-invite{display:none}
    блок откроется сам. */
 section:has(> .socials):not(:has(.soc-link[href]:not([href="#"]))),
 .socials:not(:has(.soc-link[href]:not([href="#"]))){display:none}
+
+/* =====================================================================
+   Флагман площадки (письмо Кузнецова 16.10, макет главной): блок шоу на
+   месте хиро-слайдера и полоса ближайших дат — общая для главной и
+   страницы шоу. Оформление сайта, айдентика шоу — только в постере.
+   ===================================================================== */
+.flagship{position:relative;padding-top:18px;padding-bottom:clamp(8px,2vw,20px)}
+.flagship__card{
+  position:relative;overflow:hidden;border-radius:var(--r);border:1px solid var(--hairline);
+  display:grid;grid-template-columns:minmax(220px,340px) minmax(0,1fr);
+  gap:clamp(20px,4vw,48px);align-items:center;padding:clamp(18px,3vw,36px);
+  background:radial-gradient(120% 140% at 100% 0%,rgba(180,70,255,.18),transparent 60%),var(--panel);
+}
+.flagship__poster{display:block;border-radius:var(--r-sm);overflow:hidden}
+.flagship__poster img{display:block;width:100%;height:auto}
+.flagship__body{min-width:0}
+.flagship__title{
+  font-family:var(--display);font-weight:900;text-transform:uppercase;color:#fff;
+  font-size:clamp(1.9rem,4.6vw,4rem);line-height:.98;letter-spacing:-.01em;margin:12px 0 14px;
+}
+.flagship__promise{font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.45;color:var(--text);max-width:40ch}
+.flagship__price,.mx-hero__price{
+  font-family:var(--display);font-weight:700;font-size:clamp(1.1rem,2vw,1.5rem);color:#fff;margin-top:18px;
+}
+.flagship__price small,.mx-hero__price small{
+  display:block;margin-top:6px;font-family:var(--body);font-weight:400;font-size:.9rem;color:var(--muted);
+}
+.flagship__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+
+.fl-dates{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.fl-date{
+  display:flex;flex-direction:column;gap:2px;min-width:92px;
+  border:1px solid var(--hairline-strong);border-radius:var(--r-sm);padding:9px 12px;
+  font:500 .82rem/1.2 var(--body);color:var(--muted);text-decoration:none;
+  transition:border-color .2s, background .2s;
+}
+.fl-date b{font:700 .9rem/1.2 var(--display);color:#fff}
+.fl-date:hover,.fl-date:focus-visible{border-color:var(--magenta);background:rgba(255,47,109,.08)}
+.fl-date--all{border-style:dashed}
+@media (max-width:760px){
+  .flagship{padding-top:10px}
+  .flagship__card{grid-template-columns:1fr;gap:16px}
+  .flagship__poster{max-width:260px}
+  .flagship__cta .btn{flex:1 1 auto;justify-content:center;text-align:center}
+  /* полоса дат на телефоне едет вбок, а не в три строки */
+  .fl-dates{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:calc(var(--gutter) * -1);padding-inline:var(--gutter)}
+  .fl-dates::-webkit-scrollbar{display:none}
+  .fl-date{flex:0 0 auto}
+}
