@@ -428,12 +428,9 @@ window.CLUB1_EVENTS = [
   {date:'2026-10-04', time:'21:00', title:'Андрей Атлас', kind:'Сольный концерт', format:'solniki', priceFrom:1200,
    poster:'assets/posters/atlas-45.jpg', wide:null, photo:null, tone:'gold', page:'atlas',
    buy:'https://iframeab-pre7764.intickets.ru/seance/74967817/#abiframe', age:'18+'},
-  {date:'2026-10-10', time:'19:00', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
-   poster:'assets/posters/burlesk-1010-45.jpg', wide:'assets/posters/burlesk-wide41.jpg', wideFocus:'40%', photo:null, tone:'pur', page:'razovoe',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/74432352/#abiframe', age:'18+'},
-  {date:'2026-10-30', time:'21:30', title:'Burlesque & Stand Up', kind:'Шоу', format:'burlesque', priceFrom:1700,
-   poster:'assets/posters/burlesk-3010-45.jpg', wide:'assets/posters/burlesk-wide41.jpg', wideFocus:'40%', photo:null, tone:'pur', page:'razovoe',
-   buy:'https://iframeab-pre7764.intickets.ru/seance/74686618/#abiframe', age:'18+'},
+  /* Burlesque & Stand Up 10.10 19:00 (сеанс 74432352) и 30.10 21:30 (74686618) сняты 22.10:
+     шоу отменено (Анвер; в «Графике мероприятий» площадки 10.10 — «ОТМЕНА», 30.10 бурлеска нет).
+     Последний прошедший показ — 26.09. */
   /* Пачка от Левана 01.09: «Опытные комики с ТВ» (690 ₽) и «Женская комедия комиков
      с ТВ» (750 ₽) — сеансы Яндекс.Афиши. Каждый открыт виджетом 01.09, название, дата
      и цена сверены с экрана. Два расхождения с сообщением, оба закрыты: сеанс

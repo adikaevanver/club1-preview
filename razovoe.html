@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Клуб №1 · CLUB 1">
 <meta property="og:title" content="Burlesque &amp; Stand Up — разовое шоу в Клубе №1">
-<meta property="og:description" content="Один вечер, два жанра: бурлеск и стендап на сцене на Новом Арбате, 21. Ближайшие показы — в афише шоу.">
+<meta property="og:description" content="Даты и билеты на сайте Клуба №1 — стендап-клуб на Новом Арбате, 21.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://adikaevanver.github.io/club1-preview/razovoe">
 <meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/posters/burlesk-0409-45.jpg">
@@ -253,54 +253,7 @@
 
 </style>
 <script type="application/ld+json" data-seo="events">
-[
- {
-  "@context": "https://schema.org",
-  "@type": "ComedyEvent",
-  "name": "Burlesque & Stand Up",
-  "startDate": "2026-10-30T21:30:00+03:00",
-  "endDate": "2026-10-30T23:30:00+03:00",
-  "eventStatus": "https://schema.org/EventScheduled",
-  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-  "location": {
-   "@type": "Place",
-   "name": "Клуб №1",
-   "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Новый Арбат, 21",
-    "addressLocality": "Москва",
-    "addressCountry": "RU"
-   },
-   "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 55.751916,
-    "longitude": 37.585132
-   }
-  },
-  "image": [
-   "https://adikaevanver.github.io/club1-preview/assets/posters/burlesk-3010-45.jpg"
-  ],
-  "organizer": {
-   "@type": "Organization",
-   "name": "Клуб №1",
-   "url": "https://adikaevanver.github.io/club1-preview/"
-  },
-  "url": "https://adikaevanver.github.io/club1-preview/razovoe",
-  "description": "Burlesque & Stand Up в Клубе №1 на Новом Арбате: артистки бурлеска и живой стендап в одном вечере. Ближайшие даты, время, сбор гостей, стоимость и билеты на сайте.",
-  "performer": {
-   "@type": "PerformingGroup",
-   "name": "Артисты Клуба №1"
-  },
-  "offers": {
-   "@type": "Offer",
-   "price": 1700,
-   "priceCurrency": "RUB",
-   "url": "https://iframeab-pre7764.intickets.ru/seance/74686618/",
-   "availability": "https://schema.org/InStock",
-   "validFrom": "2026-08-21"
-  }
- }
-]
+[]
 </script>
 
 <!-- Яндекс.Метрика metelitsaclub1.ru. Тот же номер стоит в analytics.js
@@ -320,6 +273,7 @@
   <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
   <script src="//s3.intickets.ru/intickets.js"></script>
 <meta name="robots" content="noindex, nofollow" data-preview-only>
+<meta name="robots" content="noindex, follow" data-seo="past">
 </head>
 
 <body class="has-sticky-cta">
@@ -392,15 +346,15 @@
       <div class="show-poster">
         <div class="poster poster--art">
           <img class="poster__full" src="assets/posters/burlesk-0409-45.jpg" alt="Афиша: Burlesque and Stand Up" width="1080" height="1350">
-          <div class="poster__badge" data-picked-badge>30.10<small>21:30</small></div>
+          <div class="poster__badge">30.10<small>отменён</small></div>
         </div>
       </div>
 
       <!-- RIGHT · заголовок, краткая информация, кнопки -->
       <div class="show-facts">
-        <span class="show-tag">Шоу · пять вечеров в сентябре и октябре</span>
+        <span class="show-tag">Шоу · показы отменены</span>
         <h1 class="show-title" id="show-title">Burlesque <span>&amp;</span> Stand Up</h1>
-        <p class="show-lede">Один вечер и два жанра на сцене на Новом Арбате: номера бурлеска сменяются живым стендапом, а ведущая держит зал между выходами артисток. Программу играют несколько вечеров подряд — ближайшие показы в сентябре и октябре.</p>
+        <p class="show-lede">Один вечер и два жанра на сцене на Новом Арбате: номера бурлеска сменяются живым стендапом, а ведущая держит зал между выходами артисток.</p>
 
         <!-- Краткая информация: время и дата · длительность · сбор гостей · стоимость -->
         <div class="quickfacts" aria-label="Краткая информация о шоу">
@@ -410,7 +364,7 @@
             </span>
             <span>
               <span class="fact__label">Время и дата</span>
-              <span class="fact__value" data-all-dates>30 октября<small>начало в 21:30</small></span>
+              <span class="fact__value">показы отменены<small>новых дат пока нет</small></span>
             </span>
           </div>
 
@@ -457,25 +411,28 @@
         <!-- Кнопка подробнее + Кнопка покупки -->
         <div class="cta-row" id="tickets">
           <a class="btn btn--ghost" href="#about">Подробнее</a>
-          <a class="btn btn--primary" href="#dates">Бронировать места</a>
+          <a class="btn btn--primary" href="afisha">Смотреть афишу клуба</a>
         </div>
+        <!-- 22.10: шоу отменено, показы 10.10 и 30.10 сняты; при новой дате — запись в events.js,
+             вернуть бейдж, факт «Время и дата», кнопки брони и снять hidden у .datepick -->
+        <p class="desc__note" data-past-note>Показы 10 и 30 октября отменены. Вернуть купленные на них билеты можно на <a href="https://intickets.ru/refund" target="_blank" rel="noopener" data-keep-link>intickets.ru/refund</a>.</p>
 
         <!-- выбор даты (shared DATEBAR) + бронирование: у шоу пять вечеров -->
-        <div class="datepick" id="dates">
+        <div class="datepick" id="dates" hidden style="display:none">
           <span class="datepick__label">Ближайшие даты шоу:</span>
 
           <div class="datebar" data-datebar>
             <span class="datebar__month">Октябрь</span>
             <div class="datebar__days" role="group" aria-label="Выберите дату шоу">
-              <button class="datebar__day" data-date="2026-10-30" data-label="30 октября" data-time="21:30" data-price="от 1 700 ₽" data-buy="https://iframeab-pre7764.intickets.ru/seance/74686618/#abiframe" aria-pressed="true"><b>30</b><span>Пт</span></button>
+              <!-- будущих дат нет: показы 10.10 и 30.10 отменены -->
             </div>
           </div>
 
-          <p class="datepick__note">Выбрана дата: <b data-picked-date id="pickedDate">30 октября</b>, начало в <b data-picked-time id="pickedTime">21:30</b>.</p>
-          <a class="btn book-btn datepick__book" id="pickedBook" data-picked-buy href="https://iframeab-pre7764.intickets.ru/seance/74686618/#abiframe">Бронировать места</a>
+          <p class="datepick__note">Выбрана дата: <b data-picked-date id="pickedDate">—</b>, начало в <b data-picked-time id="pickedTime">—</b>.</p>
+          <a class="btn book-btn datepick__book" id="pickedBook" data-picked-buy href="afisha">Бронировать места</a>
         </div>
         <!-- v4: прозрачная цена — билет финальный, сбор только на еду -->
-        <p class="fee-note">Билет — <b data-picked-price>от 1 700 ₽</b>, сбором не облагается. К счёту за еду и напитки в зале добавляется сервисный сбор 10%. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
+        <p class="fee-note" hidden>Билет — <b data-picked-price>от 1 700 ₽</b>, сбором не облагается. К счёту за еду и напитки в зале добавляется сервисный сбор 10%. <button class="fee-link" type="button" data-modal-open="priceModal">Как считается цена →</button></p>
       </div>
 
     </div>
@@ -495,7 +452,6 @@
       <p><b>Burlesque &amp; Stand Up</b> — вечер, который собирает под одной крышей два жанра, живущих на энергии зала. Артистки бурлеска выходят с постановочными номерами в духе кабаре, а между их выходами сцену забирают комики и работают вживую, без заготовленного порядка.</p>
       <p>Ведущая связывает вечер в одну историю: представляет артисток, подхватывает реакцию зала и не даёт паузам провиснуть. Программа собрана специально под эту дату, поэтому набор номеров и составы комиков вы больше нигде не увидите.</p>
       <p>Смотреть удобно за столиками, весь вечер работают бар и кухня. Формат рассчитан на взрослую публику: возрастное ограничение — 18+.</p>
-      <div class="desc__note">Показ 4 сентября перенесён на 26 сентября, начало в 19:00 — купленные на 4 сентября билеты действительны на новую дату. Показ 18 сентября отменён, билеты на него можно вернуть на <a href="https://intickets.ru/refund" target="_blank" rel="noopener" data-keep-link>intickets.ru/refund</a>. Ближайшие показы — 26 сентября, 10 октября и 30 октября в 21:30. Выбрать вечер и купить билет можно выше.</div>
     </div>
   </section>
 
@@ -595,10 +551,9 @@
 <!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения -->
 <div class="sticky-cta">
   <span class="sticky-cta__info">
-    <span class="sticky-cta__date">Burlesque &amp; Stand Up · <b data-picked-date>30 октября</b></span>
-    <span class="sticky-cta__price">от 1 700 ₽</span>
+    <span class="sticky-cta__date">Burlesque &amp; Stand Up · <b>показы отменены</b></span>
   </span>
-  <a class="btn btn--primary" data-picked-buy href="https://iframeab-pre7764.intickets.ru/seance/74686618/#abiframe">Бронировать</a>
+  <a class="btn btn--primary" href="afisha">Афиша клуба</a>
 </div>
 
 <!-- v4: модалка «Как считается цена» (открывается из строки про сбор) -->
@@ -908,7 +863,7 @@
 
 <!-- shared components: modal (comic bios), tabs, slideshow, datebar -->
 <script src="script.js?v=226442e45b" defer></script>
-<script src="assets/data/events.js?v=6467a051f7" defer></script>
+<script src="assets/data/events.js?v=98f0b74677" defer></script>
 <script src="afisha.js?v=35255fe1c2" defer></script>
 
 </body>
