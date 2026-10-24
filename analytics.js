@@ -202,8 +202,15 @@
     try { localStorage.setItem(TG_KEY, String(Date.now() + days * 864e5)); } catch (e) {}
   }
 
+  /* «не чаще раза за визит»: показ помечается в sessionStorage — раньше
+     панель появлялась заново на каждой следующей странице (аудит 24.10) */
+  var TG_SEEN = 'club1-tg-invite-seen';
+  function tgSeen(){
+    try { return sessionStorage.getItem(TG_SEEN) === '1'; } catch (e) { return false; }
+  }
+
   function initTelegramInvite(){
-    if (tgMuted()) return;
+    if (tgMuted() || tgSeen()) return;
     var shown = false, acted = false, timer = null;
 
     function markAction(){ acted = true; }
@@ -240,6 +247,7 @@
       document.body.appendChild(box);
       requestAnimationFrame(function(){ box.classList.add('is-in'); });
       goal('telegram_invite_shown');
+      try { sessionStorage.setItem(TG_SEEN, '1'); } catch (e) {}
 
       /* ТЗ Сергея 17.08: окно «не закрывающее карточки и CTA». В правом
          нижнем углу широкого экрана карточки доходят до самого края, и
@@ -274,7 +282,7 @@
       function hitsSomething(){
         var b = box.getBoundingClientRect();
         var els = document.querySelectorAll(
-          '.event-card__actions a, .poster-link, .site-footer a, .social-btn, .sticky-cta a');
+          '.event-card__actions a, .poster-link, .site-footer a, .social-btn, .sticky-cta a, .book-btn');
         for (var i = 0; i < els.length; i++){
           var r = els[i].getBoundingClientRect();
           if (r.bottom < 0 || r.top > window.innerHeight) continue;

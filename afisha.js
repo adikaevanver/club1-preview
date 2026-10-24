@@ -286,7 +286,7 @@
           (ev.fold
             ? ev.fold.count + ' ' + plural(ev.fold.count, 'показ', 'показа', 'показов') + ' в ' + ev.fold.months
             : DAYS_FULL[dateOf(ev).getDay()] + ', ' + fmtShort(ev) + (times ? ' · ' + times : '')) +
-          ' · Новый Арбат, 21</p>' +
+          ' · Новый&nbsp;Арбат,&nbsp;21</p>' +
         price +
         /* ТЗ Сергея 17.08: в карточке одна кнопка — покупка. «Подробнее»
            снята, на страницу события ведёт сама карточка (растянутая ссылка
@@ -383,7 +383,14 @@
        весь слайд — внешняя ссылка. На телефоне — афиша 4:5 и одна кнопка
        под ней (ряд кнопок у событий там же), на десктопе кнопка скрыта CSS */
     if (item.banner){
-      var bLink = '<a class="bb-slide__link" href="' + esc(ev.href) + '" target="_blank" rel="noopener"' +
+      /* внешний адрес — в новой вкладке; своя страница — в этой же (24.10:
+         баннер мюзикла ведёт на /molchat, и новая вкладка была лишней).
+         Кнопка под афишей на телефоне идёт по buy, если он задан, —
+         «Купить билеты» сразу к расписанию, а не в начало страницы */
+      var bExt = /^https?:/i.test(ev.href) ? ' target="_blank" rel="noopener"' : '';
+      var bBuy = ev.buy || ev.href;
+      var bBuyExt = /^https?:/i.test(bBuy) ? ' target="_blank" rel="noopener"' : '';
+      var bLink = '<a class="bb-slide__link" href="' + esc(ev.href) + '"' + bExt +
                   ' aria-label="' + esc(ev.title) + '"></a>';
       var bMob = ev.poster
         ? '<div class="bb-slide__mob"><div class="bb-slide__frame">' + mobPictureHTML(ev, i) + '</div></div>'
@@ -396,7 +403,7 @@
           '<div class="bb-slide__stage">' +
             bMob +
             '<div class="bb-slide__actions">' +
-              '<a class="btn btn--primary" href="' + esc(ev.href) + '" target="_blank" rel="noopener">Купить билеты</a>' +
+              '<a class="btn btn--primary" href="' + esc(bBuy) + '"' + bBuyExt + '>Купить билеты</a>' +
             '</div>' +
           '</div>' +
         '</article>'
@@ -569,6 +576,10 @@
                  '<span class="sched-row__meta">' +
                    '<span class="sched-row__cell sched-row__cell--day">' + SVG_CAL + ' ' + humanDay(ev.date) + '</span>' +
                    '<span class="sched-row__cell">' + SVG_CLK + ' ' + esc(ev.time || '') + '</span>' +
+                   /* цена у каждого сеанса своя (24.10: 3 500, 4 000, 4 500 ₽) —
+                      без неё гость узнавал её только в кассе */
+                   (ev.priceFrom ? '<span class="sched-row__cell sched-row__cell--price">от ' +
+                     ev.priceFrom.toLocaleString('ru-RU') + ' ₽</span>' : '') +
                  '</span>' +
                  '<a class="btn book-btn" href="' + esc(ev.buy) + '" target="_blank" rel="noopener">Бронировать места</a>' +
                '</div>';
@@ -612,6 +623,24 @@
         listEl.parentNode.insertBefore(moreBtn, listEl.nextSibling);
         applyCollapse();
       }
+    });
+  }
+
+  /* =================================================================
+     0в · Цена шоу «от N ₽»  [data-min-price="Название"]
+     ----------------------------------------------------------------
+     Минимум priceFrom по будущим сеансам шоу из events.js. В HTML
+     остаётся запасной текст: чип первого экрана /molchat был вписан
+     руками «от 4 000 ₽», пока касса продавала 24.10 от 3 500 ₽.
+     ================================================================= */
+  function initMinPrice(){
+    document.querySelectorAll('[data-min-price]').forEach(function(el){
+      var title = el.getAttribute('data-min-price');
+      var min = null;
+      upcoming().forEach(function(ev){
+        if (ev.title === title && ev.priceFrom && (min === null || ev.priceFrom < min)) min = ev.priceFrom;
+      });
+      if (min !== null) el.textContent = 'от ' + min.toLocaleString('ru-RU') + ' ₽';
     });
   }
 
@@ -1187,6 +1216,25 @@
       if (!mk) return;
       state.date = null; state.preset = null; state.month = mk;
       rerender();
+      /* подпись, стрелки и рейка идут к месяцу всегда — и когда его карточки
+         в ленте нет: шоу из CLUB1_FOLD свёрнуто в одну карточку «Все даты»
+         с датой первого сеанса, и «›» раньше молча выходил (24.10) */
+      if (monthLabel) monthLabel.textContent = MONTHS_NOM[parseInt(mk.slice(5), 10) - 1];
+      var mi = months.indexOf(mk);
+      if (monthPrev) monthPrev.disabled = mi <= 0;
+      if (monthNext) monthNext.disabled = mi >= months.length - 1;
+      if (daysWrap){
+        var dbtn = daysWrap.children;
+        for (var j = 0; j < dbtn.length; j++){
+          var dd = dbtn[j].getAttribute && dbtn[j].getAttribute('data-date');
+          if (dd && monthKey(dd) === mk){
+            var dx = dbtn[j].getBoundingClientRect().left - daysWrap.getBoundingClientRect().left - 8;
+            try { daysWrap.scrollBy({left: dx, behavior: 'smooth'}); }
+            catch (e) { daysWrap.scrollLeft += dx; }
+            break;
+          }
+        }
+      }
       /* якорь перемотки — первая карточка месяца (разделители сняты 28.08) */
       var target = null, cards = eventCards();
       for (var i = 0; i < cards.length; i++){
@@ -1361,6 +1409,11 @@
       }
     }
     el.innerHTML = picked.slice(0, limit).map(cardHTML).join('');
+    /* рекомендовать нечего — секцию прячем целиком, иначе под заголовком
+       «Ближайшие события» пусто (аудит 24.10: в афише одно шоу, и на его
+       собственной странице подборка без него пустая) */
+    var host = el.closest('section');
+    if (host) host.hidden = !picked.length;
   }
 
   /* =================================================================
@@ -1554,6 +1607,28 @@
       a.textContent = 'Смотреть афишу клуба';
     });
 
+    /* кнопки «к датам» (#dates) вели в спрятанный выбор дат, бейдж афиши
+       показывал дату без пометки, а липкая плашка — заглушку «6 сентября»
+       из шаблона (аудит 24.10, komarov). Плашку с возвратом билетов
+       (data-keep-link — отменённые шоу) оставляем */
+    Array.prototype.forEach.call(document.querySelectorAll('a[href="#dates"]:not([data-keep-link])'), function(a){
+      a.setAttribute('href', 'afisha');
+      a.textContent = 'Смотреть афишу клуба';
+    });
+    /* бейдж «03.10<small>18:30</small>» → «03.10<small>прошёл</small>»,
+       как «отменён» у отменённых шоу */
+    Array.prototype.forEach.call(document.querySelectorAll('.poster__badge'), function(b){
+      if (/отмен|прош/i.test(b.textContent)) return;
+      var sm = b.querySelector('small');
+      if (!sm){ sm = document.createElement('small'); b.appendChild(sm); }
+      sm.textContent = 'прошёл';
+    });
+    var stickyBar = document.querySelector('.sticky-cta');
+    if (stickyBar && !stickyBar.querySelector('[data-keep-link]')){
+      stickyBar.hidden = true;
+      document.body.classList.remove('has-sticky-cta');
+    }
+
     /* строку ставим один раз, рядом с первой парой кнопок */
     if (!document.querySelector('[data-past-note]')){
       var host = document.querySelector('.hero-cta, .cta-row, .datepick__book');
@@ -1584,6 +1659,7 @@
     document.querySelectorAll('[data-upcoming]').forEach(initUpcoming);
     document.querySelectorAll('[data-all-dates]').forEach(initAllDates);
     initSchedule();
+    initMinPrice();
     initFormatCards();
     initComics();
   }

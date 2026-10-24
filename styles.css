@@ -93,6 +93,14 @@
    2. RESET & BASE
    ===================================================================== */
 *{margin:0;padding:0;box-sizing:border-box}
+/* hidden прячет всегда. Правила вида .btn{display:inline-flex} перебивали
+   атрибут, и спрятанное скриптом оставалось на экране (24.10, с живого сайта):
+   «Показать все даты» после раскрытия, стрелки и точка слайдера при одном
+   слайде, выбор дат на страницах прошедших концертов */
+[hidden]{display:none !important}
+/* переход по якорю (#dates, #about, #foto…) ставил заголовок раздела под
+   липкую шапку: на телефоне он скрывался целиком (аудит 24.10) */
+section[id]{scroll-margin-top:calc(var(--header-h) + 16px)}
 html{scroll-behavior:smooth}
 
 body{
@@ -1044,8 +1052,9 @@ a.social-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#
   border-top:1px solid var(--hairline);
 }
 .sticky-cta__info{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+/* до двух строк: в одну «О чём молчат женщины» обрезалось до «…женщ…» на 390 (аудит 24.10) */
 .sticky-cta__date{font-family:var(--display);font-weight:700;font-size:.82rem;color:#fff;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.2}
 .sticky-cta__price{font-size:.78rem;color:var(--gold);font-weight:600}
 .sticky-cta .btn{flex:0 0 auto}
 
@@ -1461,6 +1470,11 @@ html{overflow-x:clip}
 .legal-page li{padding-left:18px;position:relative}
 .legal-page li::before{content:"—";position:absolute;left:0;color:var(--muted-2)}
 .legal-page a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+/* кнопки на 404 (та же разметка .legal-page) красились как ссылки в тексте —
+   жёлтым с подчёркиванием (аудит 24.10) */
+.legal-page a.btn{text-decoration:none}
+.legal-page a.btn--primary{color:#fff}
+.legal-page a.btn--ghost{color:var(--text)}
 .legal-page .rule{margin:22px 0 6px}
 .legal-page .legal-note{font-size:.85rem;color:var(--muted-2)}
 
@@ -1754,7 +1768,7 @@ html{overflow-x:clip}
   /* Панель стоит поверх нижней части экрана и накрывала кнопку «Позвонить»
      в блоке «Готовы к вечеру?» (прогон QA 19.08). Пока панель на экране,
      страница получает запас снизу — до кнопок можно дотянуться. */
-  body:has(.tg-invite.is-in){padding-bottom:180px}
+  body:has(.tg-invite.is-in:not(.is-mini)){padding-bottom:180px}
   /* На страницах событий внизу живёт липкая кнопка брони (.sticky-cta,
      тот же z-index 120): панель ложилась ровно на неё и закрывала покупку
      (аудит перед открытием 26.08). Поднимаем панель над кнопкой. */
@@ -1763,7 +1777,7 @@ html{overflow-x:clip}
     border-radius:var(--r);border-bottom:1px solid var(--hairline-strong);
     left:12px;right:12px;padding-bottom:16px;
   }
-  body.has-sticky-cta:has(.tg-invite.is-in){padding-bottom:260px}
+  body.has-sticky-cta:has(.tg-invite.is-in:not(.is-mini)){padding-bottom:260px}
 }
 @media (prefers-reduced-motion: reduce){
   .tg-invite{transition:none}
@@ -1858,16 +1872,15 @@ html:has(.mobile-menu.is-open) .tg-invite{display:none}
 .tg-invite.is-mini .tg-invite__close{display:none}
 .tg-invite.is-mini .tg-invite__peek{display:flex;color:#fff}
 @media (max-width:760px){
-  /* на телефоне панель нижняя и на кнопки не ложится — сворачивать нечего */
-  .tg-invite.is-mini{
-    width:auto;border-radius:var(--r) var(--r) 0 0;background:var(--ink-2);
-    border-color:var(--hairline-strong);padding:18px 18px 16px;gap:12px;
+  /* На телефоне панель тоже ужимается в иконку справа внизу (аудит 24.10):
+     развёрнутая нижняя панель на треть экрана ложилась на цены и кнопки
+     «Бронировать места», пока гость листал афишу. Запас снизу у body
+     нужен только развёрнутой панели. */
+  .tg-invite.is-mini{left:auto;right:12px;bottom:calc(12px + env(safe-area-inset-bottom, 0px))}
+  body.has-sticky-cta .tg-invite.is-mini{
+    left:auto;right:12px;padding-bottom:0;border-radius:50%;border-bottom:0;
+    bottom:calc(78px + env(safe-area-inset-bottom, 0px));
   }
-  .tg-invite.is-mini .tg-invite__title,
-  .tg-invite.is-mini .tg-invite__cta,
-  .tg-invite.is-mini .tg-invite__close{display:revert}
-  .tg-invite.is-mini .tg-invite__cta{display:inline-flex}
-  .tg-invite.is-mini .tg-invite__peek{display:none}
 }
 
 /* =====================================================================
@@ -1934,3 +1947,12 @@ html:has(.mobile-menu.is-open) .tg-invite{display:none}
    блок откроется сам. */
 section:has(> .socials):not(:has(.soc-link[href]:not([href="#"]))),
 .socials:not(:has(.soc-link[href]:not([href="#"]))){display:none}
+
+/* Пресеты дат на планшете (аудит 24.10): на 768 пятая вкладка «На следующей
+   неделе» уезжала отдельной строкой под ряд. Вкладки чуть уже и в одну
+   строку; не влезли — строка листается, как на телефоне. */
+@media (min-width:761px) and (max-width:1023px){
+  .filters__presets{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+  .filters__presets::-webkit-scrollbar{display:none}
+  .filters__presets .af-tab{flex:0 0 auto;padding:.62em .85em;font-size:.88rem}
+}
