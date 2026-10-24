@@ -407,9 +407,12 @@
       /* Прятаться надо не только над герой-кнопками: на странице аренды
          плашка закрывала собой кнопку отправки формы, и заявку нельзя
          было отправить с телефона, не проскроллив страницу вслепую. */
-      var anchors = document.querySelectorAll(
-        '.hero-cta, .cta-row, .datepick__book, .req-form button[type="submit"]');
-      if (!anchors.length) return;
+      /* .show-cta-row — кнопки первого экрана /molchat, .book-btn — кнопки
+         строк расписания (аудит 24.10: на телефоне плашка «Выбрать дату»
+         висела прямо над расписанием и вела туда же, где гость уже стоит).
+         Строки расписания рисует afisha.js уже после этого файла, поэтому
+         после загрузки страницы якоря собираются ещё раз. */
+      var SEL = '.hero-cta, .cta-row, .show-cta-row, .datepick__book, .book-btn, .req-form button[type="submit"]';
       var visible = new Set();
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
@@ -417,7 +420,11 @@
         });
         sticky.classList.toggle('is-suppressed', visible.size > 0);
       }, { threshold: 0.4 });
-      Array.prototype.forEach.call(anchors, function (el) { io.observe(el); });
+      function watch() {
+        Array.prototype.forEach.call(document.querySelectorAll(SEL), function (el) { io.observe(el); });
+      }
+      watch();
+      window.addEventListener('load', watch);
     }
     return { init: init };
   })();

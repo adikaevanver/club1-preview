@@ -58,7 +58,7 @@ PLACE_METELITSA = dict(PLACE, name='Метелица')
 THEATER = {
     'musical': {
         'name': 'О чём молчат женщины — гастрошоу в Метелице',
-        'organizer': {'@type': 'Organization', 'name': 'ООО «Медиа-дом «Красный квадрат»'},
+        'organizer': {'@type': 'Organization', 'name': 'ООО «Медиа-дом «Красный квадрат»»'},
         'performer': {'@type': 'PerformingGroup', 'name': 'Труппа гастрошоу «О чём молчат женщины»'},
     },
 }

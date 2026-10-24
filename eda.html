@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=031d1b4a56">
+<link rel="stylesheet" href="styles.css?v=9efa447668">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS — «Еда и напитки»
@@ -125,8 +125,10 @@
     display:block;margin-top:4px;color:var(--muted-2);
     font-size:.78rem;letter-spacing:.04em;
   }
-  .menu-item__row{display:flex;align-items:baseline;gap:10px}
-  .menu-item__name{font-weight:600;font-size:1.04rem;color:var(--text);min-width:0}
+  /* имя не сжимается под свою ширину — «Knickerbocker» налезал на цену
+     в узкой колонке на 768 и 360 (аудит 24.10); не влезло — цена ниже */
+  .menu-item__row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+  .menu-item__name{font-weight:600;font-size:1.04rem;color:var(--text)}
   .menu-item__lead{
     flex:1 1 auto;min-width:14px;height:0;align-self:center;
     border-bottom:1px dotted var(--hairline-strong);transform:translateY(3px);
@@ -223,7 +225,7 @@
    ym(111571199, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111571199" style="position:absolute; left:-9999px;" alt=""></div></noscript>
-<script src="analytics.js?v=f515014320" defer></script>
+<script src="analytics.js?v=e9259aa897" defer></script>
   <!-- intickets widget: обязательный код (модальное окно вместо новой вкладки) -->
   <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
   <script src="//s3.intickets.ru/intickets.js"></script>
@@ -830,7 +832,7 @@
 </script>
 
 <!-- shared interactive components (tabs used on this page) -->
-<script src="script.js?v=226442e45b" defer></script>
+<script src="script.js?v=7980c4460b" defer></script>
 
 </body>
 </html>

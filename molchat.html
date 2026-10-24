@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=031d1b4a56">
+<link rel="stylesheet" href="styles.css?v=9efa447668">
 
 <!-- =====================================================================
      PAGE-SPECIFIC CSS  (event-detail template — show.html only)
@@ -106,6 +106,7 @@
   .sched-row__cell{display:inline-flex;align-items:center;gap:.55em;font-weight:500;white-space:nowrap;color:var(--text)}
   .sched-row__cell svg{width:18px;height:18px;flex:0 0 auto;color:var(--magenta)}
   .sched-row__cell--day{font-family:var(--display);font-weight:600;font-size:1.05rem;color:#fff}
+  .sched-row__cell--price{color:var(--muted)}
   .sched-row .book-btn{flex:0 0 auto;min-width:210px}
   /* white booking CTA (matches mock) — built on the shared .btn base */
   .book-btn{background:#fff;color:var(--ink);box-shadow:0 8px 24px -14px rgba(255,255,255,.55)}
@@ -138,6 +139,27 @@
       radial-gradient(90% 70% at 50% 120%, rgba(180,70,255,.22), transparent 60%),
       linear-gradient(180deg, transparent 42%, rgba(10,8,16,.55));
   }
+  /* кадр со спектакля: свой свет уже есть, оставляем только затемнение под подписью */
+  .stage-card--show{aspect-ratio:3/2}
+  .stage-card--show img{object-position:50% 50%}
+  .stage-card--show::after{background:linear-gradient(180deg, transparent 60%, rgba(10,8,16,.5))}
+
+  /* ссылка на меню ужина — видно, что это ссылка */
+  .menu-link{
+    display:inline-flex;align-items:center;gap:8px;margin-top:12px;
+    font-weight:600;font-size:1rem;color:#fff;text-decoration:none;transition:color .18s;
+  }
+  .menu-link__txt{
+    text-decoration:underline;text-decoration-color:var(--magenta);
+    text-decoration-thickness:2px;text-underline-offset:5px;
+  }
+  .menu-link svg{width:20px;height:20px;flex:0 0 auto;color:var(--magenta)}
+  .menu-link:hover,.menu-link:focus-visible{color:var(--magenta)}
+  .menu-link__fmt{
+    display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.06em;color:var(--muted);text-decoration:none;
+    border:1px solid var(--hairline-strong);border-radius:5px;padding:2px 5px;
+  }
+
   .stage-card__tag{
     position:absolute;left:14px;bottom:14px;z-index:3;
     font-family:var(--body);font-weight:600;font-size:.8rem;letter-spacing:.02em;
@@ -158,6 +180,18 @@
   .mx-photos .headliner__frame img,
   .mx-photos .headliner:hover .headliner__frame img{transform:none;object-position:50% 50%}
   .mx-photos__credit{margin-top:12px;font-size:.85rem;color:var(--muted)}
+  /* без тёмной подложки под кадрами (пустые полосы сверху и снизу) и с
+     погашенными стрелками на краях ленты (аудит 24.10) */
+  .mx-photos .headliners{background:none;overflow:visible}
+  .mx-photos .headliners__track{padding:4px 0 6px}
+  .mx-photos .slider-arrow[disabled]{opacity:.3;pointer-events:none}
+
+  /* ссылки внутри текста «О шоу» — видно, что это ссылки */
+  .present__copy a{
+    color:#fff;text-decoration:underline;text-decoration-color:var(--magenta);
+    text-decoration-thickness:2px;text-underline-offset:4px;
+  }
+  .present__copy a:hover{color:var(--magenta)}
 
   /* =================================================================
      4 · VIDEO — «Видео с нарезкой моментов из шоу» (placeholder)
@@ -302,7 +336,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -347,7 +381,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -392,7 +426,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -437,7 +471,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -482,7 +516,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -527,7 +561,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -572,7 +606,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -617,7 +651,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -662,7 +696,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -707,7 +741,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -752,7 +786,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -797,7 +831,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -842,7 +876,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -887,7 +921,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -932,7 +966,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -977,7 +1011,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -1022,7 +1056,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -1067,7 +1101,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -1112,7 +1146,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -1157,7 +1191,7 @@
   ],
   "organizer": {
    "@type": "Organization",
-   "name": "ООО «Медиа-дом «Красный квадрат»"
+   "name": "ООО «Медиа-дом «Красный квадрат»»"
   },
   "url": "https://adikaevanver.github.io/club1-preview/molchat",
   "description": "Спектакль с ужином в легендарной Метелице: песни о любви и авторский сет из трёх блюд. Показы до 29 ноября. Расписание и билеты.",
@@ -1189,10 +1223,9 @@
    ym(111571199, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111571199" style="position:absolute; left:-9999px;" alt=""></div></noscript>
-<script src="analytics.js?v=f515014320" defer></script>
-  <!-- intickets widget: обязательный код (модальное окно вместо новой вкладки) -->
-  <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
-  <script src="//s3.intickets.ru/intickets.js"></script>
+<script src="analytics.js?v=e9259aa897" defer></script>
+  <!-- код виджета intickets снят (24.10): билеты на шоу продаёт только
+       Яндекс Афиша, а блокирующие css и js кассы задерживали первый экран -->
 <meta name="robots" content="noindex, nofollow" data-preview-only>
 <script type="application/ld+json" data-seo="breadcrumbs">
 {
@@ -1315,12 +1348,23 @@
             3 часа · 2 антракта
           </span>
           <span class="meta-chip">
-            <span class="meta-chip__ic" aria-hidden="true">16+</span>
-            Гастросет из трёх блюд
+            <span class="meta-chip__ic" aria-hidden="true">₽</span>
+            <!-- минимум по будущим сеансам считает afisha.js (initMinPrice) -->
+            <span data-min-price="О чём молчат женщины">от 4 000 ₽</span>
+          </span>
+          <!-- ужин — отдельным чипом и с ценой: «Гастросет из трёх блюд» рядом
+               с ценой билета читался как включённый в билет, а он идёт сверху
+               (2 200 ₽, только при покупке билета — описание команды 22.10).
+               «16+» раньше стоял иконкой у гастросета (аудит 24.10) -->
+          <span class="meta-chip">
+            <span class="meta-chip__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7M4.5 3v4.5a2.5 2.5 0 0 0 5 0V3M7 10v11M17 21V3c-2 1-3.5 3.5-3.5 7 0 1.7.9 3 3.5 3"/></svg>
+            </span>
+            Ужин из трёх блюд +2&nbsp;200&nbsp;₽ к&nbsp;билету
           </span>
           <span class="meta-chip">
-            <span class="meta-chip__ic" aria-hidden="true">₽</span>
-            от 4 000 ₽
+            <span class="meta-chip__ic" aria-hidden="true">16+</span>
+            Зрителям от 16 лет
           </span>
           <!-- v4: доступность локации прямо в строке данных события -->
           <span class="meta-chip">
@@ -1333,7 +1377,12 @@
 
         <!-- Краткое описание -->
         <p class="show-lede">Романтическое гастрошоу, где спектакль, культовые песни о любви и авторская гастрономия — части одной истории. Её можно не только увидеть и услышать, но и попробовать на вкус.</p>
-        <p class="show-lede"><b>Гастрономический сет из трёх блюд</b> — каждая подача про одно из чувств героев. <a href="assets/docs/molchat-menu.pdf" target="_blank" rel="noopener">Авторское меню (PDF)</a></p>
+        <p class="show-lede"><b>Ужин из трёх блюд</b> — каждая подача про одно из чувств героев. Его заказывают вместе с билетом: 2&nbsp;200&nbsp;₽ за&nbsp;сет.</p>
+        <!-- ссылка на меню выглядела серым текстом, и её не узнавали (Анвер 24.10) -->
+        <a class="menu-link" href="assets/docs/molchat-menu.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h6"/></svg>
+          <span class="menu-link__txt">Посмотреть меню ужина</span> <span class="menu-link__fmt">PDF</span>
+        </a>
 
         <!-- Кнопка подробнее + Кнопка покупки -->
         <div class="show-cta-row">
@@ -1383,20 +1432,22 @@
              для Яндекс.docx»), фамилия Гогадзе — по странице Яндекс Афиши;
              меню — копия PDF с Афиши (storage.mds.yandex.net), три сета в нём есть -->
         <p>Вы когда-нибудь пробовали чувства на вкус?</p>
-        <p>«О чём молчат женщины» — гастрошоу в легендарной «Метелице» на Новом Арбате, которое объединяет музыкальную комедию об отношениях, любимые песни в живом исполнении и авторский ужин. Здесь историю любви можно не только увидеть со сцены, но и попробовать на вкус.</p>
-        <p>Особенно приятно разделить такое событие с близкими: вместе подпевать, танцевать, а после — делиться впечатлениями. Это отличный вариант для свидания, вечера с друзьями или особого повода.</p>
+        <p>«О чём молчат женщины»&nbsp;— гастрошоу в легендарной «Метелице» на Новом Арбате, которое объединяет музыкальную комедию об отношениях, любимые песни в живом исполнении и авторский ужин. Здесь историю любви можно не только увидеть со сцены, но и попробовать на вкус.</p>
+        <p>Особенно приятно разделить такое событие с близкими: вместе подпевать, танцевать, а после&nbsp;— делиться впечатлениями. Это отличный вариант для свидания, вечера с друзьями или особого повода.</p>
         <p>Музыка задаёт особое настроение вечера. Культовые песни Леонида Агутина, «Руки Вверх!», Ирины Аллегровой, Григория Лепса, Андрея Губина, Глюкозы, Сергея Трофимова, «Стрелок», «Маша и Медведи» возвращают нас к моментам, когда мы влюблялись, переживали расставание или признавались в чувствах.</p>
-        <p>На сцене разворачивается романтическая комедия о Ксюше и Вите, бывших возлюбленных, которые теперь оказались конкурентами в ресторанном бизнесе. Ксюша открывает ресторан своей мечты, а Витя, владелец соседнего заведения, пытается помешать её успеху. После удара током он получает необычный дар — начинает слышать женщин. Это история не только о чувствах, в которых не всегда удаётся признаться, но и о том, как снова стать ближе и начать слышать друг друга.</p>
+        <p>На сцене разворачивается романтическая комедия о Ксюше и Вите, бывших возлюбленных, которые теперь оказались конкурентами в ресторанном бизнесе. Ксюша открывает ресторан своей мечты, а Витя, владелец соседнего заведения, пытается помешать её успеху. После удара током он получает необычный дар&nbsp;— начинает слышать женщин. Это история не только о чувствах, в которых не всегда удаётся признаться, но и о том, как снова стать ближе и начать слышать друг друга.</p>
         <p><b>Гастрономическая часть шоу</b> продолжает историю героев: в меню нашли отражение нежность, влечение, ревность и терпение. Эмоции переданы через сочетания вкусов, текстур и авторскую подачу. Гости смогут выбрать один из трёх сетов: мясной, рыбный и вегетарианский. Каждый из них включает горячее блюдо, закуску и салат, созданные с учётом гастрономических трендов. <a href="assets/docs/molchat-menu.pdf" target="_blank" rel="noopener">Посмотреть авторское меню</a>.</p>
-        <p>Легендарная «Метелица» на Новом Арбате, известная своими масштабными вечеринками, становится местом встречи музыки, шоу и гастрономии. «О чём молчат женщины» — ещё один повод провести особенный вечер с близкими.</p>
-        <p><b>Ужин и напитки.</b> Авторский ужин из трёх блюд не входит в стоимость билета. Его можно добавить к заказу после выбора мест в зале по специальной цене 2 200 ₽ — только в момент оформления билета, без билета ужин не продаётся. На месте авторский сет стоит от 6 000 до 8 000 ₽ в зависимости от меню. Не успели заказать ужин заранее — во время вечера можно заказать блюда из меню бара, предварительный заказ не нужен. Напитки из барного меню приобретаются отдельно на месте. На входе гостей ждёт приветственный напиток — комплимент от «Метелицы».</p>
-        <p><b>VIP-билет</b> включает комплимент от шефа — сет мезе: нежный хумус, мухаммара из запечённого сладкого перца, дымный бабагануш и оливки Каламата.</p>
-        <p>Спектакли идут до 29 ноября. Вечерние показы начинаются в 20:00, по воскресеньям и 4 ноября — в 18:30; точное время каждого показа — в расписании. Продолжительность — 3 часа, включая два антракта. Вечерний дресс-код станет дополнением к атмосфере мероприятия. Возрастное ограничение — 16+: в постановке есть сцены курения и употребления алкоголя — это часть художественного замысла.</p>
-        <p>Режиссёр-постановщик и автор пьесы — Андрей Фурманчук, сорежиссёр и хореограф — Алексей Карпенко, режиссёр цирковых номеров — Андрей Кольцов, музыкальный руководитель — Павел Гогадзе.</p>
+        <p>Легендарная «Метелица» на Новом Арбате, известная своими масштабными вечеринками, становится местом встречи музыки, шоу и гастрономии. «О чём молчат женщины»&nbsp;— ещё один повод провести особенный вечер с близкими.</p>
+        <p><b>Ужин и напитки.</b> Авторский ужин из трёх блюд не входит в стоимость билета. Его можно добавить к заказу после выбора мест в зале по специальной цене 2&nbsp;200&nbsp;₽&nbsp;— только в момент оформления билета, без билета ужин не продаётся. На месте авторский сет стоит от 6&nbsp;000 до 8&nbsp;000&nbsp;₽ в зависимости от меню. Не успели заказать ужин заранее&nbsp;— во время вечера можно заказать блюда из меню бара, предварительный заказ не нужен. Напитки из барного меню приобретаются отдельно на месте. На входе гостей ждёт приветственный напиток&nbsp;— комплимент от «Метелицы».</p>
+        <p><b>VIP-билет</b> включает комплимент от шефа&nbsp;— сет мезе: нежный хумус, мухаммара из запечённого сладкого перца, дымный бабагануш и оливки Каламата.</p>
+        <p>Спектакли идут до 29 ноября. Вечерние показы начинаются в 20:00, по воскресеньям и 4 ноября&nbsp;— в 18:30; точное время каждого показа&nbsp;— в расписании. Продолжительность&nbsp;— 3 часа, включая два антракта. Вечерний дресс-код станет дополнением к атмосфере мероприятия. Возрастное ограничение&nbsp;— 16+: в постановке есть сцены курения и употребления алкоголя&nbsp;— это часть художественного замысла.</p>
+        <p>Режиссёр-постановщик и автор пьесы&nbsp;— Андрей Фурманчук, сорежиссёр и хореограф&nbsp;— Алексей Карпенко, режиссёр цирковых номеров&nbsp;— Андрей Кольцов, музыкальный руководитель&nbsp;— Павел Гогадзе.</p>
       </div>
 
-      <figure class="stage-card">
-        <img src="assets/venue/stage.jpg" alt="Сцена Клуба №1: красный занавес, микрофон и зал за столами" loading="lazy" width="1280" height="853">
+      <!-- кадр со спектакля вместо фото пустого зала («похоже на мёртвый», Анвер 24.10);
+           3:2, как сам кадр, — вотермарка фотографа в углу не срезается -->
+      <figure class="stage-card stage-card--show">
+        <img src="assets/molchat/foto-13.jpg" srcset="assets/molchat/foto-13-sm.jpg 720w, assets/molchat/foto-13.jpg 1920w" sizes="(max-width:900px) 100vw, 50vw" alt="Спектакль «О чём молчат женщины» в Метелице: артистки на сцене и полный зал за столиками" loading="lazy" width="1920" height="1280">
         <figcaption class="stage-card__tag">Живой зал · Новый Арбат, 21</figcaption>
       </figure>
 
@@ -1486,6 +1537,8 @@
        Content per «структура»: регалии/проекты · видео · соцсети · шоу
        ================================================================= -->
 
+</main>
+
   <!-- v4: sticky-CTA — на мобильном кнопка брони всегда в поле зрения.
        Цена берётся из events.js (минимум по будущим сеансам) — не вписывать
        руками: в прошлый раз плашку скопировали с другой страницы вместе
@@ -1493,7 +1546,7 @@
 <div class="sticky-cta">
   <span class="sticky-cta__info">
     <span class="sticky-cta__date">О чём молчат женщины</span>
-    <span class="sticky-cta__price">от 4 000 ₽</span>
+    <span class="sticky-cta__price" data-min-price="О чём молчат женщины">от 4 000 ₽</span>
   </span>
   <a class="btn btn--primary" href="#dates">Выбрать дату</a>
 </div>
@@ -1568,9 +1621,9 @@
 
 
 <!-- shared interactive components (modal / tabs / slideshow / datebar) -->
-<script src="script.js?v=226442e45b" defer></script>
-<script src="assets/data/events.js?v=7304527920" defer></script>
-<script src="afisha.js?v=35255fe1c2" defer></script>
+<script src="script.js?v=7980c4460b" defer></script>
+<script src="assets/data/events.js?v=65a06c0c35" defer></script>
+<script src="afisha.js?v=deef37aaf3" defer></script>
 
 <script>
 /* ---------------------------------------------------------------------
@@ -1646,6 +1699,21 @@
       track.scrollBy({left: dir * step, behavior: 'smooth'});
     });
   });
+  /* стрелки ленты фото гаснут на краях — в начале и в конце обе выглядели
+     живыми и ничего не делали (аудит 24.10) */
+  if (tracks.photos){
+    var pPrev = document.querySelector('[data-slider="photos"][data-dir="-1"]');
+    var pNext = document.querySelector('[data-slider="photos"][data-dir="1"]');
+    var syncArrows = function(){
+      var t = tracks.photos, max = t.scrollWidth - t.clientWidth;
+      if (pPrev) pPrev.disabled = t.scrollLeft <= 2;
+      if (pNext) pNext.disabled = t.scrollLeft >= max - 2;
+    };
+    tracks.photos.addEventListener('scroll', syncArrows, {passive:true});
+    window.addEventListener('resize', syncArrows);
+    window.addEventListener('load', syncArrows);
+    syncArrows();
+  }
 
   /* 4 · прошедшие даты не показываем: строки расписания и кнопки дат
         с датой раньше сегодняшней убираются при загрузке (v4 — «событие

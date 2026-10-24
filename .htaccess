@@ -62,11 +62,15 @@ RewriteRule ^solnik/?$ /guram [R=301,L]
 # удалена, адрес уводим на главную, чтобы не остался пустой хвост.
 RewriteRule ^formaty/?$ / [R=301,L]
 
-# короткий адрес → реальный файл (внутренняя подстановка, без редиректа)
+# короткий адрес → реальный файл (внутренняя подстановка, без редиректа).
+# Только один сегмент: все страницы лежат в корне. С ^(.+)$ адрес вида
+# /afisha/x крутился по кругу (REQUEST_FILENAME = …/afisha с хвостом пути,
+# afisha.html есть → afisha/x.html → afisha/x.html.html…) и отдавал 500
+# вместо 404 (аудит 24.10)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^(.+)$ $1.html [L]
+RewriteRule ^([^/]+)$ $1.html [L]
 
 DirectoryIndex index.html
 
