@@ -57,9 +57,9 @@ PLACE_METELITSA = dict(PLACE, name='Метелица')
 # как в кассе виджета (sessionServices.organizerInfo, 19.10). Ключ — format.
 THEATER = {
     'musical': {
-        'name': 'О чём молчат женщины — гастромюзикл в Метелице',
+        'name': 'О чём молчат женщины — гастрошоу в Метелице',
         'organizer': {'@type': 'Organization', 'name': 'ООО «Медиа-дом «Красный квадрат»'},
-        'performer': {'@type': 'PerformingGroup', 'name': 'Труппа гастромюзикла «О чём молчат женщины»'},
+        'performer': {'@type': 'PerformingGroup', 'name': 'Труппа гастрошоу «О чём молчат женщины»'},
     },
 }
 
