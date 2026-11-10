@@ -31,6 +31,12 @@
   var EVENTS  = window.CLUB1_EVENTS  || [];
   var FORMATS = window.CLUB1_FORMATS || {};
   var FOLD    = window.CLUB1_FOLD    || [];
+  /* цена шоу «от» по слову команды: сводная цена не опускается ниже неё */
+  var PRICE_FLOOR = window.CLUB1_PRICE_FLOOR || {};
+  function showPriceFrom(title, min){
+    var floor = PRICE_FLOOR[title];
+    return (min !== null && floor && min < floor) ? floor : min;
+  }
 
   var MONTHS_NOM = ['Январь','Февраль','Март','Апрель','Май','Июнь',
                     'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
@@ -128,6 +134,7 @@
           ? MONTHS_PREP[mons[0]] + '–' + MONTHS_PREP[mons[mons.length - 1]]
           : MONTHS_PREP[mons[0]]
       };
+      min = showPriceFrom(ev.title, min);
       if (min !== null) copy.priceFrom = min;
       out.push(copy);
     });
@@ -556,9 +563,13 @@
         list.forEach(function(ev){ if (dates.indexOf(ev.date) === -1) dates.push(ev.date); });
         daysEl.innerHTML =
           '<button class="datebar__day" type="button" data-date="all" aria-pressed="true"><b>Все</b><span>даты</span></button>' +
-          dates.map(function(d){
+          dates.map(function(d, i){
             var dt = new Date(d + 'T00:00:00');
-            return '<button class="datebar__day" type="button" data-date="' + d + '" aria-pressed="false">' +
+            /* смена месяца помечается в самой ленте, как в рейке афиши:
+               «27 Вс» декабря сразу после «28 Сб» ноября читалось как ноябрь */
+            var mark = (i && d.slice(0, 7) !== dates[i - 1].slice(0, 7))
+              ? '<span class="datebar__mark">' + MONTHS_NOM[dt.getMonth()] + '</span>' : '';
+            return mark + '<button class="datebar__day" type="button" data-date="' + d + '" aria-pressed="false">' +
                    '<b>' + d.slice(8, 10) + '</b><span>' + DAYS_SHORT[dt.getDay()] + '</span></button>';
           }).join('');
         daysEl.addEventListener('click', function(e){
@@ -640,6 +651,7 @@
       upcoming().forEach(function(ev){
         if (ev.title === title && ev.priceFrom && (min === null || ev.priceFrom < min)) min = ev.priceFrom;
       });
+      min = showPriceFrom(title, min);
       if (min !== null) el.textContent = 'от ' + min.toLocaleString('ru-RU') + ' ₽';
     });
   }
