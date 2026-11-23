@@ -63,6 +63,18 @@ def main(src):
                 shutil.copyfile(full, dst)
             new.append(rel)
 
+    # наши правки поверх пакета — в конец его site.css (позже по каскаду = главнее)
+    fixes = os.path.join(ROOT, 'tools', 'molchat-fixes.css')
+    css = os.path.join(ROOT, 'site.css')
+    if os.path.exists(fixes) and os.path.exists(css):
+        with open(fixes, encoding='utf-8') as fh:
+            add = fh.read()
+        with open(css, encoding='utf-8') as fh:
+            cur = fh.read()
+        if add.strip() not in cur:
+            with open(css, 'a', encoding='utf-8') as fh:
+                fh.write(add)
+
     old = []
     if os.path.exists(MANIFEST):
         old = [l.strip() for l in open(MANIFEST, encoding='utf-8') if l.strip()]
