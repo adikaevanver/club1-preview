@@ -491,7 +491,7 @@ def mark_preview(path):
     return write_if_changed(path, s, s.replace('</head>', PREVIEW_META + '</head>', 1))
 
 
-VERSIONED = ['styles.css', 'script.js', 'afisha.js', 'analytics.js', 'assets/data/events.js']
+VERSIONED = ['styles.css', 'site.css', 'script.js', 'afisha.js', 'analytics.js', 'assets/data/events.js']
 
 
 def stamp_versions(pages):
@@ -505,7 +505,7 @@ def stamp_versions(pages):
         fp = os.path.join(ROOT, f)
         if os.path.exists(fp):
             hashes[f] = hashlib.sha256(open(fp, 'rb').read()).hexdigest()[:10]
-    pat = re.compile(r'((?:assets/data/)?(?:styles\.css|script\.js|afisha\.js|analytics\.js|events\.js))\?v=[A-Za-z0-9._-]+')
+    pat = re.compile(r'((?:assets/data/)?(?:styles\.css|site\.css|script\.js|afisha\.js|analytics\.js|events\.js))\?v=[A-Za-z0-9._-]+')
     def sub(m):
         key = m.group(1)
         if key == 'events.js':
