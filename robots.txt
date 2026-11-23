@@ -8,4 +8,3 @@ Allow: /
 Disallow: /send.php
 
 Sitemap: https://adikaevanver.github.io/club1-preview/sitemap.xml
-Sitemap: https://adikaevanver.github.io/club1-preview/molchat/sitemap.xml

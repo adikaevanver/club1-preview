@@ -534,8 +534,8 @@ def main():
                    if not VERIFY_RE.match(os.path.basename(p)))
 
     touched = []
-    if inject(os.path.join(ROOT, 'index.html'), 'org', ORG):
-        touched.append('index.html (организация)')
+    # ORG «Клуб №1 — ComedyClub» на главной не ставим: с 23.11.2026 главная — сайт шоу
+    # «О чём молчат женщины» (пакет Кузнецова, tools/molchat_to_root.py)
     if inject(os.path.join(ROOT, 'index.html'), 'venue', VENUE):
         touched.append('index.html (площадка)')
     for slug, title in BREADCRUMBS.items():

@@ -1,838 +1,175 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
-<title>Еда и напитки · Клуб №1 — бар и кухня во время шоу на Новом Арбате</title>
+<meta charset="utf-8">
 
-<meta name="description" content="Бар и кухня Клуба №1 работают весь вечер: авторские коктейли, вино, крафтовое пиво, горячее и закуски. Удобная посадка за столами, заказ приносят к вашему месту. Новый Арбат, 21.">
-<meta name="theme-color" content="#0a0810">
-<link rel="canonical" href="https://adikaevanver.github.io/club1-preview/eda">
-
-<!-- Open Graph / social -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Клуб №1 · CLUB 1">
-<meta property="og:title" content="Еда и напитки — бар и кухня Клуба №1">
-<meta property="og:description" content="Авторские коктейли, вино и крафт, горячее и закуски — весь вечер, пока идёт шоу. Удобная посадка за столами в центре Москвы, Новый Арбат, 21.">
-<meta property="og:locale" content="ru_RU">
-<meta property="og:url" content="https://adikaevanver.github.io/club1-preview/eda">
-<meta property="og:image" content="https://adikaevanver.github.io/club1-preview/assets/venue/bar.jpg">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Еда и напитки — авторский ужин в шоу «О чём молчат женщины»</title>
+<meta name="description" content="Авторский ужин — три блюда и десерт по ходу спектакля: 2 100 ₽ за сет при покупке билета (на месте — 6 000–8 000 ₽). Авторские коктейли бара Метелицы.">
+<link rel="canonical" href="https://metelitsaclub1.ru/eda">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Метелица Клуб1">
+<meta property="og:title" content="Еда и напитки — авторский ужин в шоу «О чём молчат женщины»"><meta property="og:description" content="Авторский ужин — три блюда и десерт по ходу спектакля: 2 100 ₽ за сет при покупке билета (на месте — 6 000–8 000 ₽). Авторские коктейли бара Метелицы.">
+<meta property="og:locale" content="ru_RU"><meta property="og:url" content="https://metelitsaclub1.ru/eda"><meta property="og:image" content="https://metelitsaclub1.ru/img/our/flirt-zal.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="styles.css?v=9efa447668">
-
-<!-- =====================================================================
-     PAGE-SPECIFIC CSS — «Еда и напитки»
-     Menu-style layout built on top of the shared design system. Scoped to
-     this page only (inline) so the shared styles.css stays untouched.
-     Reuses: .container .eyebrow .rule .glow .badge1 .btn .site-header .site-footer
-     ===================================================================== -->
-<style>
-  /* ---- hero ------------------------------------------------------- */
-  .eda-hero{position:relative;padding:var(--section-y) 0 var(--sp-6)}
-  .eda-hero__glow-a{width:520px;height:520px;top:-170px;left:-190px}
-  .eda-hero__glow-b{width:420px;height:420px;top:-70px;right:-170px}
-  .eda-hero__inner{position:relative;z-index:1;max-width:860px}
-  .eda-hero__kicker{display:flex;align-items:center;gap:16px}
-  .eda-hero h1{
-    font-family:var(--display);font-weight:900;
-    font-size:clamp(2.4rem,8vw,4.8rem);line-height:.92;
-    text-transform:uppercase;letter-spacing:-.015em;margin-top:20px;
-  }
-  .eda-lede{
-    font-size:clamp(1.05rem,2.2vw,1.32rem);line-height:1.5;
-    color:var(--muted);max-width:680px;margin-top:22px;
-  }
-  .eda-lede b{color:var(--text);font-weight:600}
-
-  /* hero facts — three quick promises */
-  .eda-facts{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
-  .eda-fact{
-    flex:1 1 210px;min-width:0;
-    background:var(--panel);border:1px solid var(--hairline);
-    border-radius:var(--r);padding:18px 20px;
-  }
-  .eda-fact__k{
-    font-family:var(--display);font-weight:700;font-size:.72rem;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);
-  }
-  .eda-fact__v{font-size:1.04rem;color:var(--text);margin-top:8px;font-weight:600}
-  .eda-fact__d{font-size:.88rem;color:var(--muted);margin-top:4px;line-height:1.4}
-
-  /* ---- «sample menu» callout ------------------------------------- */
-  .eda-callout{
-    display:flex;align-items:flex-start;gap:18px;
-    background:var(--panel-2);border:1px solid var(--hairline-strong);
-    border-radius:var(--r);padding:20px 24px;margin:var(--sp-6) 0;
-  }
-  /* Полоса растянута на высоту карточки, а skewX смещает её тем сильнее,
-     чем она выше. На телефоне текст переносится, карточка вырастает до
-     полуэкрана — и полоса уезжала наискось прямо по заголовку и абзацу
-     (правка Анвера 09.08). Наклон у растянутой полосы убран. */
-  .eda-callout__bar{
-    flex:0 0 auto;width:8px;align-self:stretch;border-radius:3px;
-    background:var(--grad);
-  }
-  .eda-callout__t{font-family:var(--display);font-weight:700;font-size:.98rem;
-    text-transform:uppercase;letter-spacing:.03em;color:#fff}
-  .eda-callout__p{font-size:.95rem;color:var(--muted);margin-top:6px;line-height:1.5;max-width:64ch}
-
-  /* ---- menu categories ------------------------------------------- */
-  .eda-menu{display:flex;flex-direction:column;gap:26px;padding:22px 0 8px}
-  .menu-cat{
-    background:var(--panel);border:1px solid var(--hairline);
-    border-radius:var(--r);padding:clamp(22px,4vw,40px);
-  }
-  .menu-cat__head{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
-  .menu-cat__head h2{
-    font-family:var(--display);font-weight:800;
-    font-size:clamp(1.5rem,4vw,2.2rem);line-height:1;
-    text-transform:uppercase;letter-spacing:-.01em;
-  }
-  .menu-cat__tag{
-    font-family:var(--body);font-weight:600;font-size:.68rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--gold-soft);
-    border:1px solid rgba(255,194,75,.42);border-radius:999px;
-    padding:.32em .8em;line-height:1;
-  }
-  .menu-cat__sub{width:100%;color:var(--muted);font-size:.98rem;margin-top:var(--sp-1)}
-  .menu-cat__rule{margin-top:var(--sp-4)}
-
-  .menu-list{
-    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-    column-gap:48px;row-gap:2px;margin-top:16px;
-  }
-  .menu-item{padding:13px 0;border-top:1px solid var(--hairline)}
-  /* Позиции со съёмкой. Коктейли — папка Диска, названная по коктейлям;
-     кухня — карточки живого меню FoodPicasso, где фото уже привязано к
-     блюду. Ни одно фото не подобрано «на глаз». */
-  .menu-item--photo{
-    display:grid;grid-template-columns:clamp(92px,8.5vw,116px) minmax(0,1fr);
-    gap:var(--sp-4);align-items:center;padding:var(--sp-4) 0;
-  }
-  .menu-item__thumb{
-    width:100%;aspect-ratio:1;height:auto;border-radius:12px;display:block;
-    object-fit:cover;background:var(--panel-2);border:1px solid var(--hairline);
-  }
-  .menu-item__text{min-width:0}
-  .menu-item__weight{
-    display:block;margin-top:4px;color:var(--muted-2);
-    font-size:.78rem;letter-spacing:.04em;
-  }
-  /* имя не сжимается под свою ширину — «Knickerbocker» налезал на цену
-     в узкой колонке на 768 и 360 (аудит 24.10); не влезло — цена ниже */
-  .menu-item__row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
-  .menu-item__name{font-weight:600;font-size:1.04rem;color:var(--text)}
-  .menu-item__lead{
-    flex:1 1 auto;min-width:14px;height:0;align-self:center;
-    border-bottom:1px dotted var(--hairline-strong);transform:translateY(3px);
-  }
-  .menu-item__price{
-    flex:0 0 auto;white-space:nowrap;color:var(--gold);
-    font-family:var(--display);font-weight:700;font-size:.9rem;letter-spacing:.01em;
-  }
-  .menu-item__desc{margin-top:4px;color:var(--muted);font-size:.86rem;line-height:1.4;max-width:46ch}
-  /* max-width:64ch из styles.css обрезал линейку на середине карточки —
-     разделитель должен идти во всю ширину блока меню. */
-  .menu-legal{
-    margin-top:var(--sp-5);padding-top:var(--sp-4);border-top:1px solid var(--hairline);
-    color:var(--muted-2);font-size:.82rem;line-height:1.5;max-width:none;
-  }
-
-  /* ---- tabbed menu  (Бар / Кухня  →  категории) ------------------ */
-  /* Two nested levels of the shared .tabs component. The top level's
-     panels live as siblings AFTER the top [data-tabs] wrapper (linked
-     by aria-controls id), so the top group only owns its two tabs and
-     the inner category [data-tabs] groups stay self-contained. */
-  .eda-menu-tabs{padding:var(--section-y) 0}
-  .menu-shell{
-    background:var(--panel);border:1px solid var(--hairline);
-    border-radius:var(--r);padding:clamp(22px,4vw,40px);
-  }
-  /* top level (Бар / Кухня) reads a touch louder than the category level */
-  .eda-tabs--top{margin-top:var(--sp-5)}
-  .eda-tabs--top .tab{
-    font-family:var(--display);font-weight:700;font-size:.92rem;
-    letter-spacing:.04em;text-transform:uppercase;padding:.72em 1.6em;
-  }
-  /* each top panel drops its own category tabs a little lower */
-  .eda-toppanel{margin-top:var(--sp-5)}
-  .eda-toppanel > .tabs{gap:var(--sp-4)}
-  .eda-toppanel .menu-list{margin-top:var(--sp-4)}
-  .eda-cat-note{color:var(--muted);font-size:.92rem;line-height:1.45;margin:0 0 var(--sp-4);max-width:60ch}
-  @media (max-width:640px){
-    .eda-tabs--top .tab{font-size:.82rem;padding:.66em 1.15em}
-  }
-
-  /* ---- atmosphere band ------------------------------------------- */
-  .eda-atmos{
-    position:relative;overflow:hidden;border-radius:var(--r);
-    background:
-      radial-gradient(120% 130% at 88% -10%, rgba(180,70,255,.22), transparent 58%),
-      radial-gradient(100% 120% at 0% 110%, rgba(255,47,109,.20), transparent 60%),
-      var(--ink-2);
-    border:1px solid var(--hairline);
-    padding:var(--sp-6);margin:0;
-  }
-  .eda-atmos__inner{position:relative;z-index:1;max-width:640px}
-  .eda-atmos h2{
-    font-family:var(--display);font-weight:800;
-    font-size:clamp(1.5rem,4.4vw,2.4rem);line-height:1.02;
-    text-transform:uppercase;letter-spacing:-.01em;margin-top:14px;
-  }
-  .eda-atmos p{font-size:clamp(1rem,2vw,1.14rem);line-height:1.55;color:var(--muted);margin-top:16px}
-  .eda-atmos p b{color:var(--text);font-weight:600}
-  .eda-atmos__mark{
-    position:absolute;right:clamp(-30px,-2vw,-10px);bottom:-40px;z-index:0;
-    --s:220px;opacity:.10;
-  }
-
-  /* ---- closing note: full menu at the venue ---------------------- */
-  .eda-endnote{
-    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-    gap:var(--sp-4) var(--sp-5);border-top:1px solid var(--hairline);
-    margin-top:0;padding:var(--section-y) 0 var(--sp-1);
-  }
-  .eda-endnote__t{font-family:var(--display);font-weight:700;font-size:1.06rem;color:#fff;max-width:34ch}
-  .eda-endnote__d{font-size:.9rem;color:var(--muted);margin-top:8px;max-width:52ch;line-height:1.5}
-  .eda-endnote__cta{flex:0 0 auto}
-
-  /* ---- responsive ------------------------------------------------- */
-  @media (max-width:720px){
-    .menu-list{grid-template-columns:1fr;column-gap:0}
-    .eda-callout{padding:18px 18px;gap:14px}
-    .eda-atmos__mark{--s:150px;bottom:-30px;opacity:.08}
-    .eda-endnote__cta{width:100%}
-    .eda-endnote__cta .btn{width:100%}
-  }
-</style>
-
-<!-- Яндекс.Метрика metelitsaclub1.ru. Тот же номер стоит в analytics.js
-     (там он нужен для целей) — менять оба места разом -->
-<script>
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();
-   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=111571199", "ym");
-
-   ym(111571199, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/111571199" style="position:absolute; left:-9999px;" alt=""></div></noscript>
-<script src="analytics.js?v=e9259aa897" defer></script>
-  <!-- intickets widget: обязательный код (модальное окно вместо новой вкладки) -->
-  <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
-  <script src="//s3.intickets.ru/intickets.js"></script>
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<script>if(/[?&]chk\b/.test(location.search))document.documentElement.classList.add('chk-on')</script>
+<script>window.MOLCHAT_SALE_MODE='addon'</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Yeseva+One&family=Oswald:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap&subset=cyrillic" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="styles-base.css?v=11230146">
+<link rel="stylesheet" href="styles-show.css?v=11230146">
+<link rel="stylesheet" href="styles-sets.css?v=11230146">
+<link rel="stylesheet" href="molchat-5.css?v=11230146">
+<link rel="stylesheet" href="site.css?v=11230146">
+<!-- Метрика 111571199 (как на живом сайте); на прототипе не включается -->
+<script>if(/metelitsaclub1\.ru$/.test(location.hostname)){(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id=111571199","ym");ym(111571199,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});}</script>
 <meta name="robots" content="noindex, nofollow" data-preview-only>
 </head>
-
-<body>
-
-<!-- =====================================================================
-     SITE HEADER  (reused verbatim on every sub-page)
-     Left: logo lockup · Centre: primary nav · Right: phone + CTA / burger
-     ===================================================================== -->
-<header class="site-header" id="siteHeader">
-  <div class="container site-header__inner">
-
-    <!-- logo lockup: КЛУБ / НОМЕР / ОДИН · CLUB · [1] -->
-    <a class="logo" href="./" aria-label="Клуб Номер Один — CLUB 1, на главную">
-      <img src="assets/logo-metelitsa.png" alt="Метелица · Клуб Номер Один · CLUB 1" width="465" height="240">
-    </a>
-
-    <!-- primary navigation -->
-    <nav class="main-nav" aria-label="Основная навигация">
-      <ul class="main-nav__list">
-        <li><a class="main-nav__link" href="./">Главная</a></li>
-        <li><a class="main-nav__link" href="afisha">Афиша</a></li>
-        <li><a class="main-nav__link" href="eda" aria-current="page">Еда и напитки</a></li>
-        <li><a class="main-nav__link" href="o-klube">О клубе</a></li>
-        <li><a class="main-nav__link" href="arenda">Аренда площадки</a></li>
-      </ul>
-    </nav>
-
-    <div class="header-actions">
-      
-      <div class="social social--header"><a class="social-btn" href="https://t.me/club1standup?utm_source=club1_site&utm_medium=header&utm_campaign=social_subscription" target="_blank" rel="noopener noreferrer" aria-label="Telegram CLUB#1" title="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a class="social-btn" href="https://vk.ru/standupclubnaarbate?utm_source=club1_site&utm_medium=header&utm_campaign=social_subscription" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте CLUB#1" title="ВКонтакте"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg></a></div>
-      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <a class="btn btn--primary" href="afisha">Смотреть афишу</a>
-      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
-        <span></span>
-      </button>
-    </div>
+<body data-page="eda" data-kind="content"><svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false"><symbol id="chip-pink" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-pinksb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#E0409E"/><stop offset="1" stop-color="#8E1460"/></radialGradient>
+  <radialGradient id="chg-pinksf" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FBF3E6"/><stop offset="1" stop-color="#FBF3E6" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-pinksh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-pinksb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#F7EAD4" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-pinksf)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="1.6 1.4"/><path d="M32 18.5c.9 7.1 3.6 9.8 11.2 11.2-7.6 1.4-10.3 4.1-11.2 11.2-.9-7.1-3.6-9.8-11.2-11.2 7.6-1.4 10.3-4.1 11.2-11.2Z" fill="#C82285"/><circle cx="32" cy="32" r="1.6" fill="#FBF3E6"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-pinksh)"/></symbol><symbol id="chipf-pink" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-pinkfb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#E0409E"/><stop offset="1" stop-color="#8E1460"/></radialGradient>
+  <radialGradient id="chg-pinkff" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FBF3E6"/><stop offset="1" stop-color="#FBF3E6" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-pinkfh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-pinkfb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#C82285" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#F7EAD4" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-pinkff)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="1.6 1.4"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-pinkfh)"/></symbol><symbol id="chip-green" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-greensb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#13A065"/><stop offset="1" stop-color="#00472A"/></radialGradient>
+  <radialGradient id="chg-greensf" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FBF3E6"/><stop offset="1" stop-color="#FBF3E6" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-greensh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-greensb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#F7EAD4" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-greensf)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="1.6 1.4"/><path d="M32 18.5c.9 7.1 3.6 9.8 11.2 11.2-7.6 1.4-10.3 4.1-11.2 11.2-.9-7.1-3.6-9.8-11.2-11.2 7.6-1.4 10.3-4.1 11.2-11.2Z" fill="#007A48"/><circle cx="32" cy="32" r="1.6" fill="#FBF3E6"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-greensh)"/></symbol><symbol id="chipf-green" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-greenfb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#13A065"/><stop offset="1" stop-color="#00472A"/></radialGradient>
+  <radialGradient id="chg-greenff" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FBF3E6"/><stop offset="1" stop-color="#FBF3E6" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-greenfh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-greenfb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#F7EAD4"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#007A48" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#F7EAD4" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#F7EAD4" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-greenff)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="1.6 1.4"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-greenfh)"/></symbol><symbol id="chip-black" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-blacksb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#3A2E25"/><stop offset="1" stop-color="#0C0805"/></radialGradient>
+  <radialGradient id="chg-blacksf" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#1E1611"/><stop offset="1" stop-color="#1E1611" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-blacksh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-blacksb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#D4AF37" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-blacksf)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="1.6 1.4"/><path d="M32 18.5c.9 7.1 3.6 9.8 11.2 11.2-7.6 1.4-10.3 4.1-11.2 11.2-.9-7.1-3.6-9.8-11.2-11.2 7.6-1.4 10.3-4.1 11.2-11.2Z" fill="#F0D98A"/><circle cx="32" cy="32" r="1.6" fill="#1E1611"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-blacksh)"/></symbol><symbol id="chipf-black" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-blackfb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#3A2E25"/><stop offset="1" stop-color="#0C0805"/></radialGradient>
+  <radialGradient id="chg-blackff" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#1E1611"/><stop offset="1" stop-color="#1E1611" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-blackfh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-blackfb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#D4AF37"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8F6B16" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#D4AF37" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-blackff)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="1.6 1.4"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-blackfh)"/></symbol><symbol id="chip-gold" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-goldsb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#F4D777"/><stop offset="1" stop-color="#9C7417"/></radialGradient>
+  <radialGradient id="chg-goldsf" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FBF3E6"/><stop offset="1" stop-color="#FBF3E6" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-goldsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-goldsb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#120B07" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-goldsf)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#9C7417" stroke-width="1" stroke-dasharray="1.6 1.4"/><path d="M32 18.5c.9 7.1 3.6 9.8 11.2 11.2-7.6 1.4-10.3 4.1-11.2 11.2-.9-7.1-3.6-9.8-11.2-11.2 7.6-1.4 10.3-4.1 11.2-11.2Z" fill="#9C7417"/><circle cx="32" cy="32" r="1.6" fill="#FBF3E6"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-goldsh)"/></symbol><symbol id="chipf-gold" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-goldfb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#F4D777"/><stop offset="1" stop-color="#9C7417"/></radialGradient>
+  <radialGradient id="chg-goldff" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FBF3E6"/><stop offset="1" stop-color="#FBF3E6" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-goldfh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-goldfb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#120B07"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#3A2A10" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#120B07" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#120B07" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-goldff)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#9C7417" stroke-width="1" stroke-dasharray="1.6 1.4"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-goldfh)"/></symbol><symbol id="chip-cream" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-creamsb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FFF8EC"/><stop offset="1" stop-color="#CDB590"/></radialGradient>
+  <radialGradient id="chg-creamsf" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-creamsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-creamsb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#C82285" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-creamsf)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="1.6 1.4"/><path d="M32 18.5c.9 7.1 3.6 9.8 11.2 11.2-7.6 1.4-10.3 4.1-11.2 11.2-.9-7.1-3.6-9.8-11.2-11.2 7.6-1.4 10.3-4.1 11.2-11.2Z" fill="#C82285"/><circle cx="32" cy="32" r="1.6" fill="#FFFFFF"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-creamsh)"/></symbol><symbol id="chipf-cream" viewBox="0 0 64 64"><defs>
+  <radialGradient id="chg-creamfb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FFF8EC"/><stop offset="1" stop-color="#CDB590"/></radialGradient>
+  <radialGradient id="chg-creamff" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".86"/></radialGradient>
+  <linearGradient id="chg-creamfh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs><circle cx="32" cy="32" r="31" fill="url(#chg-creamfb)"/><circle cx="32" cy="32" r="30.4" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="1.2"/><g transform="rotate(0.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(45.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(90.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(135.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(180.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(225.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(270.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(315.0 32 32)"><path d="M28.2 1.4h7.6l-.9 8.2h-5.8z" fill="#C82285"/><path d="M30 2.6v6M32 2.6v6.4M34 2.6v6" stroke="#8E1460" stroke-width=".7" stroke-linecap="round"/></g><g transform="rotate(22.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(67.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(112.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(157.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(202.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(247.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(292.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><g transform="rotate(337.5 32 32)"><path d="M32 3.2v3.4" stroke="#C82285" stroke-opacity=".55" stroke-width="1"/></g><circle cx="32" cy="32" r="21.6" fill="none" stroke="#C82285" stroke-width="1.6"/><circle cx="32" cy="32" r="19.2" fill="url(#chg-creamff)"/><circle cx="32" cy="32" r="17.4" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="1.6 1.4"/><ellipse cx="32" cy="20" rx="24" ry="15" fill="url(#chg-creamfh)"/></symbol></svg>
+<header class="hdr"><div class="in">
+  <a class="hlogo" href="index.html"><img src="img/logo-metelitsa-rgba.png" width="465" height="240" alt="Метелица Клуб1 — на главную"></a>
+  <nav class="thread" id="mainnav"><a href="afisha.html"><span>Афиша</span></a><a href="o-myuzikle.html"><span>О шоу</span></a><a href="komanda.html"><span>Команда</span></a><a href="eda.html" aria-current="page"><span>Еда и напитки</span></a><a href="korporativnym.html"><span>Компаниям</span></a><a href="sertifikat.html"><span>Сертификат</span></a><a href="faq.html"><span>Вопросы</span></a><a href="galereya.html"><span>Фотогалерея</span></a><a href="kontakty.html"><span>Контакты</span></a><i class="ember"></i></nav>
+  <a class="btn-c" href="#dates" data-buy-nav>Купить билет</a>
+  <button class="burger" aria-label="Открыть меню" aria-controls="mainnav" aria-expanded="false"><i></i><i></i><i></i></button>
+</div></header>
+<main>
+<section class="phero" style="--bg:url('img/our/flirt-zal.jpg')"><div class="wrap">
+  <p class="kick caps"><span class="suit r" aria-hidden="true">♦</span>Еда и напитки</p><h1 class="title goldtext">Авторский ужин и бар</h1><p class="lead">Три сета на выбор: три блюда и десерт по ходу спектакля. Ужин добавляется в той же покупке после выбора мест — 2 100 ₽ за сет вместо 6 000⁠–⁠8 000 ₽ на месте.</p>
+  <div class="center"><a class="bbtn " href="#dates"><svg class="chip" aria-hidden="true"><use href="#chip-pink"/></svg><span>Выбрать дату</span></a></div>
+</div></section><section class="sec show" id="dinner">
+  <img class="bbscript" src="img/bb-poprobovat.svg" alt="" data-a="fade">
+  <div class="wrap">
+    <p class="kick caps" data-a="fade"><span class="suit" aria-hidden="true">♠</span>Авторский ужин из четырёх блюд</p>
+    <h2 class="title goldtext" data-a="up">Попробуйте чувства на вкус</h2>
+    <p class="sub" data-a="up">История любви продолжается за вашим столом: каждое блюдо передаёт чувства героев через сочетание вкусов. Выберите один из трёх сетов: мясной, рыбный или вегетарианский. Нажмите на блюдо — покажем, как его подают в зале.</p>
+    <div class="stabs" data-a="fade"><button class="stab on" data-set="0">Мясной сет /01</button><button class="stab" data-set="1">Рыбный сет /02</button><button class="stab" data-set="2">Вегетарианский сет /03</button></div>
+    <div class="spane on" data-set="0"><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/паштет-А.jpg" data-a-src="img/menu/паштет-А.mp4" data-b-src="img/menu/паштет-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Закуска</p><h3>Женское терпение</h3><p>Нежный паштет из печени цыплёнка с ягодной глазурью. Подаётся с вареньем из красного лука и кремом из чернослива, апельсинового сока, перца халапеньо и ферментированного чёрного чеснока.</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/мясо-2-салат-А.jpg" data-a-src="img/menu/мясо-2-салат-А.mp4" data-b-src="img/menu/мясо-2-салат-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Салат</p><h3>Гордость</h3><p>Хрустящие листья салата с кремом из вяленых томатов и запечённого сладкого перца, сочными узбекскими томатами и кунжутной кимчи-заправкой на основе мёда, дижонской горчицы и соевого соуса. Дополняется ростбифом из говяжьей вырезки и свежей кинзой.</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/ребро-А.jpg" data-a-src="img/menu/ребро-А.mp4" data-b-src="img/menu/ребро-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Горячее</p><h3>Влечение</h3><p>Томлёное говяжье ребро в насыщенной устричной глазури. Подаётся с кремом из запечённого батата конфи и маринованным шпинатом.</p></figcaption></figure></div><div class="spane" data-set="1"><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/сашими-А.jpg" data-a-src="img/menu/сашими-А.mp4" data-b-src="img/menu/сашими-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Закуска</p><h3>Робкий флирт</h3><p>Сашими из свежего лосося и морского гребешка с сочными сегментами грейпфрута и нежным авокадо. Подаётся с ароматной заправкой из свежей кинзы, сока лайма и соуса мирин.</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/рыба-2-салат-А.jpg" data-a-src="img/menu/рыба-2-салат-А.mp4" data-b-src="img/menu/рыба-2-салат-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Салат</p><h3>Воодушевление</h3><p>Салат из свежего манго и авокадо с обжаренной королевской креветкой в кисло-сладком соусе. Дополняется узбекскими томатами, хрустящими листьями салата и лёгкой заправкой на основе ананасового сока.</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/лосось-А.jpg" data-a-src="img/menu/лосось-А.mp4" data-b-src="img/menu/лосось-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Горячее</p><h3>Ревность</h3><p>Лосось, обжаренный на углях, с фирменной соевой глазурью. Подаётся с бланшированным и обжаренным пак-чой, грибами вешенками, кремом из солёного арахиса и домашним зелёным соусом кресса.</p></figcaption></figure></div><div class="spane" data-set="2"><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/вег-1-баклажан-А.jpg" data-a-src="img/menu/вег-1-баклажан-А.mp4" data-b-src="img/menu/вег-1-баклажан-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Закуска</p><h3>Любопытство</h3><p>Запечённый и обжаренный баклажан на кунжутном масле с восточным мезе: нежным хумусом, бабаганушем и соусом мухаммара из запечённого сладкого перца. Подаётся с зёрнами граната и ароматными восточными специями.</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/вег-2-фатуш-А.jpg" data-a-src="img/menu/вег-2-фатуш-А.mp4" data-b-src="img/menu/вег-2-фатуш-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Салат</p><h3>Предвкушение</h3><p>Леванский салат «Фатуш» с хрустящим карамелизированным тестом фило, свежим огурцом, узбекскими томатами и сладким перцем ромиро. Заправляется ароматными восточными специями, красным луком и дополняется брынзой.</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/вег-3-мусака-А.jpg" data-a-src="img/menu/вег-3-мусака-А.mp4" data-b-src="img/menu/вег-3-мусака-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Горячее</p><h3>Блаженство</h3><p>Мусака из запечённых овощей с пряным соусом и сальсой из протёртых томатов. Подаётся с базиликом, копчёным сырным муссом, рубленой фисташкой и ароматной специей заатар.</p></figcaption></figure></div>
+    <div class="gift5" data-a="up"><svg class="gift5-i" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 20h32v22H8zM6 14h36v6H6zM24 14v28" fill="none" stroke="currentColor" stroke-width="2"/><path d="M24 14c-3-7-12-8-12-3 0 3 6 3 12 3zm0 0c3-7 12-8 12-3 0 3-6 3-12 3z" fill="none" stroke="currentColor" stroke-width="2"/></svg><p class="gift5-k">Подарок к каждому сету</p><h3 class="gift5-t">Секретный сладкий сюрприз</h3><p class="gift5-d">Десерт с плотным шоколадным бисквитом, сочными кусочками мочёной вишни и воздушным кремом.</p></div>
+    <div class="center" style="margin-top:28px"><button class="lnk" data-menu="0" id="fullmenu">Полный состав сета</button></div>
+    <div hidden><div class="track"></div><button class="arr prev"></button><button class="arr next"></button></div>
+    <p class="kick caps" style="margin-top:56px" data-a="fade"><span class="suit r" aria-hidden="true">♥</span>Авторские коктейли</p>
+    <div class="spane on cocktails"><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/bar-sprtz-А.jpg" data-a-src="img/menu/bar-sprtz-А.mp4" data-b-src="img/menu/bar-sprtz-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Авторский · 300 мл · 1 400 ₽</p><h3>Метелица Sprtz</h3><p>Aperol · клубничный кордиал · игристое · апельсин</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/bar-basil-А.jpg" data-a-src="img/menu/bar-basil-А.mp4" data-b-src="img/menu/bar-basil-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Авторский · 200 мл · 1 400 ₽</p><h3>Basil Oleum</h3><p>джин · базиликовый кордиал · вода алоэ · лимон</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/bar-golden-А.jpg" data-a-src="img/menu/bar-golden-А.mp4" data-b-src="img/menu/bar-golden-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Авторский · 150 мл · 1 400 ₽</p><h3>Golden Mirage</h3><p>ром · манго, маракуйя, кокос · лайм</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/притяжение-А.jpg" data-a-src="img/menu/притяжение-А.mp4" data-b-src="img/menu/притяжение-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Бар · подача с шоу</p><h3>«Притяжение»</h3><p>коктейль, который подают с огнём</p></figcaption></figure><figure class="dish" data-a="up"><div class="dv"><video aria-hidden="true" muted loop playsinline preload="none" poster="img/menu/тайна-А.jpg" data-a-src="img/menu/тайна-А.mp4" data-b-src="img/menu/тайна-Б.mp4"></video><span class="dtag">крупно</span></div>
+<figcaption><p class="dact caps">Бар · подача с шоу</p><h3>«Тайна»</h3><p>изумрудный коктейль с золотом и мятой</p></figcaption></figure></div>
+    <p class="sub svc svc" style="font-size:12px"><span class="chk">[Состав — по меню womanmusical.ru (сверка 01.11) · «Притяжение» и «Тайна» — в барной карте их нет, Ал решает подпись; цены авторских — QR-меню 1 400 ₽ (в «Основном» 1 200 ₽); названия-чувства «Эйфория», «Нежность», «Флирт», «Терпение» — художественные]</span></p>
   </div>
-
-</header>
-  <!-- mobile drawer -->
-  <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильная навигация">
-    <button class="mobile-menu__close" type="button" aria-label="Закрыть меню"><span aria-hidden="true">&times;</span></button>
-    <a class="main-nav__link" href="./">Главная</a>
-    <a class="main-nav__link" href="afisha">Афиша</a>
-    <a class="main-nav__link" href="eda" aria-current="page">Еда и напитки</a>
-    <a class="main-nav__link" href="o-klube">О клубе</a>
-    <a class="main-nav__link" href="arenda">Аренда площадки</a>
-    <div class="mobile-menu__foot">
-      <div class="social social--menu"><a class="social-btn" href="https://t.me/club1standup?utm_source=club1_site&utm_medium=mobile_menu&utm_campaign=social_subscription" target="_blank" rel="noopener noreferrer" aria-label="Telegram CLUB#1" title="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a class="social-btn" href="https://vk.ru/standupclubnaarbate?utm_source=club1_site&utm_medium=mobile_menu&utm_campaign=social_subscription" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте CLUB#1" title="ВКонтакте"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg></a></div>
-      <a class="phone" href="tel:+74996869111">+7 (499) 686 91 11</a>
-      <!-- «Смотреть афишу» из мобильного меню снята (макет Максима 06.08) -->
-    </div>
-  </nav>
-
-
-
-<main class="container" id="main">
-
-  <!-- =================================================================
-       HERO — Еда и напитки
-       ================================================================= -->
-  <section class="eda-hero" aria-labelledby="page-title">
-    <div class="glow glow--mag eda-hero__glow-a" aria-hidden="true"></div>
-    <div class="glow glow--pur eda-hero__glow-b" aria-hidden="true"></div>
-
-    <div class="eda-hero__inner">
-      <div class="eda-hero__kicker">
-        <span class="badge1" aria-hidden="true" style="--s:44px"><b>1</b></span>
-        <span class="eyebrow">Бар · Кухня</span>
-      </div>
-
-      <h1 id="page-title">Еда и напитки</h1>
-
-      <p class="eda-lede">
-        Наш бар и кухня открыты <b>весь вечер — до, во время и после шоу</b>.
-        Можно взять коктейль к выступлению, разделить закуски на компанию или
-        поужинать перед сольником. Заказ приносят прямо к столику, так что
-        уходить со своего места не придётся.
-      </p>
-
-      <div class="eda-facts">
-        <div class="eda-fact">
-          <div class="eda-fact__k">Бар</div>
-          <div class="eda-fact__v">Работает весь вечер</div>
-          <div class="eda-fact__d">Открыт до последнего гостя</div>
-        </div>
-        <div class="eda-fact">
-          <div class="eda-fact__k">Кухня</div>
-          <div class="eda-fact__v">Горячее и закуски</div>
-          <div class="eda-fact__d">Заказ приносят к столу</div>
-        </div>
-        <div class="eda-fact">
-          <div class="eda-fact__k">За столом</div>
-          <div class="eda-fact__v">Обслуживание к месту</div>
-          <div class="eda-fact__d">Официант подойдёт к вашему столику</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- =================================================================
-       SAMPLE-MENU CALLOUT
-       ================================================================= -->
-  <div class="eda-callout" role="note">
-    <span class="eda-callout__bar" aria-hidden="true"></span>
-    <div>
-      <div class="eda-callout__t">Пример меню</div>
-      <p class="eda-callout__p">
-        Ниже — ориентир по позициям и порядку цен, чтобы вы понимали, чего ждать.
-        Полная барная карта и меню кухни, а также актуальные цены — в клубе;
-        состав и предложения могут меняться от сезона к сезону.
-        К счёту за еду и напитки добавляется сервисный сбор 10%. Билеты сбором не облагаются.
-      </p>
-    </div>
+</section><section class="m5 bar5" id="bar">
+  <video class="bar5-v" muted loop playsinline autoplay preload="metadata" poster="img/bar-loop.jpg" data-src-d="img/bar-loop.mp4" data-src-m="img/bar-loop-m.mp4" aria-hidden="true"></video>
+  <div class="bar5-in wrap">
+    <p class="kick caps" data-a="fade"><span class="suit" aria-hidden="true">♣</span>Бар Метелицы</p>
+    <h2 class="bar5-h" data-a="up">Коктейль<br>к каждой главе</h2>
+    <p class="bar5-p" data-a="up">Авторские коктейли бара «Метелицы» — по желанию, по ходу вечера. Напитки бара в билет не входят и оплачиваются отдельно.</p>
+    <div class="bar5-row" data-a="up"><a class="bar5-more" href="#dinner">К сетам ужина →</a></div>
+    <p class="note svc"><span class="chk">[подача с огнём — подтвердить у бара]</span></p>
   </div>
-
-
-  <!-- =================================================================
-       MENU — вкладки «Бар / Кухня» → категории (пример)
-       Two nested levels of the shared .tabs component. The top-level
-       panels (#panel-bar / #panel-kitchen) are placed as siblings AFTER
-       the top [data-tabs] wrapper and linked by aria-controls, so the
-       top group owns only its two tabs and each inner category [data-tabs]
-       stays self-contained (no descendant-tab bleed).
-       ================================================================= -->
-  <section class="eda-menu-tabs" aria-labelledby="menu-title">
-    <div class="menu-shell">
-
-      <header class="menu-cat__head">
-        <h2 id="menu-title">Меню</h2>
-        <span class="menu-cat__tag">Пример меню</span>
-        <p class="menu-cat__sub">Выберите бар или кухню, затем — категорию</p>
-      </header>
-      <div class="rule menu-cat__rule" aria-hidden="true"></div>
-
-      <!-- ── TOP LEVEL: Бар / Кухня ── -->
-      <div class="tabs eda-tabs eda-tabs--top" data-tabs>
-        <div class="tabs__list" role="tablist" aria-label="Бар или кухня">
-          <button class="tab" id="tab-bar" role="tab" aria-controls="panel-bar" aria-selected="true">Бар</button>
-          <button class="tab" id="tab-kitchen" role="tab" aria-controls="panel-kitchen">Кухня</button>
-        </div>
-      </div>
-
-      <!-- ── TOP PANEL: Бар ──  (sibling of the top [data-tabs], linked by id) -->
-      <div class="tab-panel eda-toppanel" id="panel-bar" role="tabpanel" aria-labelledby="tab-bar">
-        <p class="eda-cat-note">Бар работает весь вечер — заказ приносят прямо к столику.</p>
-
-        <div class="tabs eda-tabs" data-tabs>
-          <div class="tabs__list" role="tablist" aria-label="Категории бара">
-            <button class="tab" id="tab-cocktails" role="tab" aria-controls="panel-cocktails" aria-selected="true">Коктейли</button>
-            <button class="tab" id="tab-drinks" role="tab" aria-controls="panel-drinks">Напитки</button>
-          </div>
-          <div class="tabs__panels">
-
-            <!-- Коктейли · позиции и цены сняты с живого бар-меню клуба
-                 (clubnaarbate21.ru/menubar, 2026-07-20) -->
-            <div class="tab-panel" id="panel-cocktails" role="tabpanel" aria-labelledby="tab-cocktails">
-              <ul class="menu-list menu-list--photos">
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/aperol.jpg" alt="Коктейль Aperol Spritz в баре Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Aperol Spritz</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 000 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">апероль, игристое, содовая</p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/negroni.jpg" alt="Коктейль Negroni в баре Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Negroni</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 000 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">джин, кампари, красный вермут</p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/daiquiri.jpg" alt="Коктейль Daiquiri в баре Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Daiquiri</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">900 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">ром, лайм, сахарный сироп</p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/gimlet.jpg" alt="Коктейль Gimlet в баре Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Gimlet</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">900 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">джин, лайм, сахарный сироп</p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/clover-club.jpg" alt="Коктейль Clover Club в баре Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Clover Club</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 000 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">джин, малина, лимон, белок</p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/knickerbocker.jpg" alt="Коктейль Knickerbocker в баре Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Knickerbocker</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 000 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">ром, малина, лимон, кюрасао</p>
-                  </div>
-                </li>
-                              <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/gin-tonic.jpg" alt="Gin-Tonic в баре Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Gin-Tonic</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">800 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">джин, тоник, лайм</p>
-                  </div>
-                </li>                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/martini-fiero.jpg" alt="Martini Fiero-tonic в баре Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Martini Fiero-tonic</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">800 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">мартини фьеро, тоник, апельсин</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Напитки -->
-            <div class="tab-panel" id="panel-drinks" role="tabpanel" aria-labelledby="tab-drinks" hidden>
-              <ul class="menu-list menu-list--photos">
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Пиво, разлив</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">800 ₽</span>
-                  </div>
-                  <p class="menu-item__desc">Spaten München Hell, Franziskaner — 0,5 л</p>
-                </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Бокал вина</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">от 900 ₽</span>
-                  </div>
-                  <p class="menu-item__desc">Cabernet Sauvignon, Pinot Noir — 150 мл</p>
-                </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Aperol Spritz Zero</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">800 ₽</span>
-                  </div>
-                  <p class="menu-item__desc">безалкогольная версия апероль-шприца</p>
-                </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Домашний лимонад</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">550 ₽</span>
-                  </div>
-                  <p class="menu-item__desc">классический — 300 мл</p>
-                </li>
-                <li class="menu-item">
-                  <div class="menu-item__row">
-                    <span class="menu-item__name">Кофе</span>
-                    <span class="menu-item__lead" aria-hidden="true"></span>
-                    <span class="menu-item__price">от 250 ₽</span>
-                  </div>
-                  <p class="menu-item__desc">эспрессо, капучино, латте</p>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- ── TOP PANEL: Кухня ──  (sibling of the top [data-tabs], linked by id) -->
-      <div class="tab-panel eda-toppanel" id="panel-kitchen" role="tabpanel" aria-labelledby="tab-kitchen" hidden>
-        <p class="eda-cat-note">Кухня работает в вечер шоу — от лёгких закусок до горячего.</p>
-
-        <div class="tabs eda-tabs" data-tabs>
-          <div class="tabs__list" role="tablist" aria-label="Категории кухни">
-            <button class="tab" id="tab-snacks" role="tab" aria-controls="panel-snacks" aria-selected="true">Закуски</button>
-            <button class="tab" id="tab-hot" role="tab" aria-controls="panel-hot">Горячее</button>
-          </div>
-          <div class="tabs__panels">
-
-            <!-- Закуски -->
-            <div class="tab-panel" id="panel-snacks" role="tabpanel" aria-labelledby="tab-snacks">
-              <ul class="menu-list menu-list--photos">
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/antipasti.jpg" alt="Антипасти — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Антипасти</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 950 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Ассорти сыров и мясных деликатесов с оливками, гриссини и джемом из инжира<span class="menu-item__weight">550 г</span></p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/cheese.jpg" alt="Сырное ассорти — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Сырное ассорти</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 950 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Ассорти сыров, подается с виноградом, мёдом, гранатом и розмарином<span class="menu-item__weight">540 г</span></p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/shrimp.jpg" alt="Креветки темпура — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Креветки темпура</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 150 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Креветки в хрустящей панировке, подаются с соусом айоли халапеньо<span class="menu-item__weight">130 г</span></p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/wings.jpg" alt="Крылья барбекю — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Крылья барбекю</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">740 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Куриные крылья в соусе BBQ, подаются с морковью, сельдереем и свежей кинзой<span class="menu-item__weight">270 г</span></p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/greek.jpg" alt="Греческий салат — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Греческий салат</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">990 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Огурцы, томаты, маринованный красный лук, сыр фета, оливки, перец рамиро и каперсы в грече<span class="menu-item__weight">330 г</span></p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/tacos.jpg" alt="Тако говядина — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Тако говядина</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 190 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Лепешка с томлёной говядиной, сыром гауда, огуречным соусом и яблочной сальсой, с долькой<span class="menu-item__weight">200 г</span></p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Горячее · позиции и цены сняты с живого меню клуба
-                 (clubnaarbate21.ru/menukitchen, 2026-07-20) -->
-            <div class="tab-panel" id="panel-hot" role="tabpanel" aria-labelledby="tab-hot" hidden>
-              <ul class="menu-list menu-list--photos">
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/ribs.jpg" alt="Ребрышки барбекю — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Ребрышки барбекю</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">950 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Свиные ребра в соусе BBQ, подаются с картофелем по-деревенски<span class="menu-item__weight">370 г</span></p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/pasta.jpg" alt="Паста с морепродуктами — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Паста с морепродуктами</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 860 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Паппарделле в сливочном перечном соусе с тигровыми креветками, кальмаром и мидиями<span class="menu-item__weight">280 г</span></p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/tomyam.jpg" alt="Том-ям — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Том-ям</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">940 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Пряно-сливочный бульон с тигровыми креветками, кальмаром, мидиями, рисом и свежей кинзой<span class="menu-item__weight">500 г</span></p>
-                  </div>
-                </li>
-                <li class="menu-item menu-item--photo">
-                  <img class="menu-item__thumb" src="assets/menu/pizza.jpg" alt="Пицца с Чоризо — кухня Клуба №1" loading="lazy" width="420" height="420">
-                  <div class="menu-item__text">
-                    <div class="menu-item__row">
-                      <span class="menu-item__name">Пицца с Чоризо</span>
-                      <span class="menu-item__lead" aria-hidden="true"></span>
-                      <span class="menu-item__price">1 150 ₽</span>
-                    </div>
-                    <p class="menu-item__desc">Римская пицца с томатным соусом, чоризо, моцареллой, печёным перцем и джемом из бекона<span class="menu-item__weight">280 г</span></p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- созвон 21.07: сбор — мелким шрифтом в самом блоке меню,
-           чтобы на него можно было сослаться (юридическую формулировку
-           Саша сверяет с юристами через Диму) -->
-      <p class="menu-legal">К счёту за еду и напитки добавляется сервисный сбор 10%. Билеты сбором не облагаются.</p>
-
-    </div>
-  </section>
-
-
-  <!-- =================================================================
-       ATMOSPHERE — посадка за столами
-       ================================================================= -->
-  <section class="eda-atmos" aria-labelledby="atmos-title">
-    <span class="badge1 eda-atmos__mark" aria-hidden="true"><b>1</b></span>
-    <div class="eda-atmos__inner">
-      <span class="eyebrow">Атмосфера</span>
-      <h2 id="atmos-title">За столом, а не в очереди</h2>
-      <p>
-        В зале <b>посадка за столами</b>. Место закреплено за билетом: вы
-        выбираете его при покупке и весь вечер сидите за своим столом.
-        Официант принимает заказ и приносит его прямо к столу, в том числе
-        во время выступления.
-      </p>
-    </div>
-  </section>
-
-
-  <!-- =================================================================
-       CLOSING NOTE — полное меню в клубе
-       ================================================================= -->
-  <div class="eda-endnote">
-    <div>
-      <div class="eda-endnote__t">Полное меню — в клубе</div>
-      <p class="eda-endnote__d">
-        Актуальная барная карта, меню кухни и цены — на месте, на Новом Арбате, 21.
-        Места за столами выбираются при покупке билета. 18+.
-      </p>
-    </div>
-    <div class="eda-endnote__cta">
-      <a class="btn btn--gold" href="./#afisha">Выбрать вечер и стол</a>
-    </div>
+</section><section class="sec m5" id="extra">
+  <div class="wrap">
+    <p class="kick caps" data-a="fade"><span class="suit r" aria-hidden="true">♦</span>Меню бара и кухни</p>
+    <h2 class="title goldtext" data-a="up">Можно заказать дополнительно</h2>
+    <p class="sub" data-a="up">Во время шоу можно дозаказать закуски и напитки по QR-меню на вашем столе. Оплачиваются отдельно.</p>
+    <div class="xtabs" data-a="fade"><button class="xtab on" data-x="0">К столу</button><button class="xtab" data-x="1">Коктейли</button><button class="xtab" data-x="2">Без алкоголя</button><button class="xtab" data-x="3">Вино и шампанское</button><button class="xtab" data-x="4">Крепкое</button><button class="xtab" data-x="5">Пиво</button><button class="xtab" data-x="6">Чай и кофе</button></div>
+    <div class="xpane on" data-x="0"><div class="xcards"><figure class="xcard xk"><img src="img/fp/651.jpg" alt="Ассорти мясных деликатесов" loading="lazy"><figcaption><b>Ассорти мясных деликатесов</b><span>555 г · 5 500 ₽</span></figcaption></figure><figure class="xcard xk"><img src="img/fp/616.jpg" alt="Ассорти из премиальных сыров" loading="lazy"><figcaption><b>Ассорти из премиальных сыров</b><span>525 г · 3 700 ₽</span></figcaption></figure><figure class="xcard xk"><img src="img/fp/656.jpg" alt="Ассорти фруктов и ягод" loading="lazy"><figcaption><b>Ассорти фруктов и ягод</b><span>5 150 ₽</span></figcaption></figure><figure class="xcard xk"><img src="img/fp/657.jpg" alt="Мезе сет" loading="lazy"><figcaption><b>Мезе сет</b><span>850 ₽</span></figcaption></figure><figure class="xcard xk"><img src="img/fp/628.jpg" alt="Взбитое масло" loading="lazy"><figcaption><b>Взбитое масло</b><span>300 ₽</span></figcaption></figure><figure class="xcard xk"><img src="img/fp/624.jpg" alt="Хлебная тарелка" loading="lazy"><figcaption><b>Хлебная тарелка</b><span>350 ₽</span></figcaption></figure></div></div><div class="xpane" data-x="1"><h4 class="xg">Авторские</h4><div class="xcards"><figure class="xcard"><img src="img/fp/704.jpg" alt="Метелица Sprtz" loading="lazy"><figcaption><b>Метелица Sprtz</b><span>300 мл · 1 400 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/659.jpg" alt="Basil Oleum" loading="lazy"><figcaption><b>Basil Oleum</b><span>200 мл · 1 400 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/607.jpg" alt="Golden Mirage" loading="lazy"><figcaption><b>Golden Mirage</b><span>150 мл · 1 400 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/new-prityazhenie.jpg" alt="«Притяжение»" loading="lazy"><figcaption><b>«Притяжение»</b><span>новинка · подаём с огнём · 1 400 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/new-tayna.jpg" alt="«Тайна»" loading="lazy"><figcaption><b>«Тайна»</b><span>новинка · 1 400 ₽</span></figcaption></figure></div><h4 class="xg">Классика</h4><div class="xcards"><figure class="xcard"><img src="img/fp/636.jpg" alt="Long Island Ice Tea" loading="lazy"><figcaption><b>Long Island Ice Tea</b><span>300 мл · 1 300 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/617.jpg" alt="Aperol spritz" loading="lazy"><figcaption><b>Aperol spritz</b><span>350 мл · 1 400 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/647.jpg" alt="Mai Tai" loading="lazy"><figcaption><b>Mai Tai</b><span>300 мл · 1 100 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/621.jpg" alt="Daiquiri" loading="lazy"><figcaption><b>Daiquiri</b><span>150 мл · 1 000 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/638.jpg" alt="Gimlet" loading="lazy"><figcaption><b>Gimlet</b><span>150 мл · 1 000 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/675.jpg" alt="Negroni" loading="lazy"><figcaption><b>Negroni</b><span>120 мл · 1 100 ₽</span></figcaption></figure></div><h4 class="xg">Новая классика</h4><div class="xcards"><figure class="xcard"><img src="img/fp/686.jpg" alt="Porn Star Martini" loading="lazy"><figcaption><b>Porn Star Martini</b><span>150 мл · 1 100 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/594.jpg" alt="Whiskey sour" loading="lazy"><figcaption><b>Whiskey sour</b><span>170 мл · 1 100 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/677.jpg" alt="Clover club" loading="lazy"><figcaption><b>Clover club</b><span>150 мл · 1 100 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/682.jpg" alt="Knickerbocker" loading="lazy"><figcaption><b>Knickerbocker</b><span>180 мл · 1 100 ₽</span></figcaption></figure></div><h4 class="xg">Миксы</h4><div class="xcards"><figure class="xcard"><img src="img/fp/618.jpg" alt="Martini Fiero-tonic" loading="lazy"><figcaption><b>Martini Fiero-tonic</b><span>350 мл · 1 000 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/709.jpg" alt="Gin-Tonic" loading="lazy"><figcaption><b>Gin-Tonic</b><span>200 мл · 1 000 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/646.jpg" alt="Whiskey-Cola" loading="lazy"><figcaption><b>Whiskey-Cola</b><span>200 мл · 1 000 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/613.jpg" alt="Cuba Libre" loading="lazy"><figcaption><b>Cuba Libre</b><span>200 мл · 1 000 ₽</span></figcaption></figure><figure class="xcard"><img src="img/fp/595.jpg" alt="Vodka-Red Bull" loading="lazy"><figcaption><b>Vodka-Red Bull</b><span>200 мл · 1 100 ₽</span></figcaption></figure></div></div><div class="xpane" data-x="2"><h4 class="xg">Лимонады и безалкогольные коктейли</h4><ul class="xlist"><li><span class="xn">Aperol spritz zero <i>200 мл</i></span><span class="xd"></span><span class="xp">900 ₽</span></li><li><span class="xn">Japanese cloud <i>200 мл</i></span><span class="xd"></span><span class="xp">1 000 ₽</span></li><li><span class="xn">Classic lemonade 300мл <i>300 мл</i></span><span class="xd"></span><span class="xp">650 ₽</span></li><li><span class="xn">Passion-mango lemonade 300мл <i>300 мл</i></span><span class="xd"></span><span class="xp">650 ₽</span></li><li><span class="xn">Classic lemonade 1000мл <i>1000 мл</i></span><span class="xd"></span><span class="xp">1 300 ₽</span></li><li><span class="xn">Passion-mango lemonade 1000мл <i>1000 мл</i></span><span class="xd"></span><span class="xp">1 300 ₽</span></li></ul><h4 class="xg">Напитки</h4><ul class="xlist"><li><span class="xn">Baikal still 750мл <i>750 мл</i></span><span class="xd"></span><span class="xp">800 ₽</span></li><li><span class="xn">Baikal sparkling750мл <i>750 мл</i></span><span class="xd"></span><span class="xp">800 ₽</span></li><li><span class="xn">Baikal still 250мл <i>250 мл</i></span><span class="xd"></span><span class="xp">400 ₽</span></li><li><span class="xn">Baikal sparkling 250мл <i>250 мл</i></span><span class="xd"></span><span class="xp">400 ₽</span></li><li><span class="xn">Cola-cola 330мл <i>330 мл</i></span><span class="xd"></span><span class="xp">450 ₽</span></li><li><span class="xn">Cola-cola Zero 330мл <i>330 мл</i></span><span class="xd"></span><span class="xp">450 ₽</span></li><li><span class="xn">Evervess tonic 330мл <i>330 мл</i></span><span class="xd"></span><span class="xp">450 ₽</span></li><li><span class="xn">Red Bull 250мл <i>250 мл</i></span><span class="xd"></span><span class="xp">550 ₽</span></li><li><span class="xn">Red Bull Sugarfree 250мл <i>250 мл</i></span><span class="xd"></span><span class="xp">550 ₽</span></li><li><span class="xn">Rich 200мл <i>200 мл</i></span><span class="xd"></span><span class="xp">450 ₽</span></li></ul></div><div class="xpane" data-x="3"><h4 class="xg">Игристое</h4><ul class="xlist"><li><span class="xn">150мл Abbazia, Fiorino d’Oro Prosecco Spumante DOC <i>150 мл</i></span><span class="xd"></span><span class="xp">1 200 ₽</span></li><li><span class="xn">750мл Bellenda, &quot;Sei Uno&quot;, Conegliano Valdobbiadene DOCG Prosecco Superiore <i>750 мл</i></span><span class="xd"></span><span class="xp">8 000 ₽</span></li><li><span class="xn">750мл Josep Ventosa Cava Brut Premium DOG Prosecco Superiore <i>750 мл</i></span><span class="xd"></span><span class="xp">6 000 ₽</span></li><li><span class="xn">750мл Louis Bouillot Crémant de Bourgogne Brut AOC <i>750 мл</i></span><span class="xd"></span><span class="xp">7 000 ₽</span></li></ul><h4 class="xg">Шампанское</h4><ul class="xlist"><li><span class="xn">750мл Moet &amp; Chandon Brut Imperial <i>750 мл</i></span><span class="xd"></span><span class="xp">22 000 ₽</span></li><li><span class="xn">750мл Veuve Clicquot Brut <i>750 мл</i></span><span class="xd"></span><span class="xp">29 000 ₽</span></li><li><span class="xn">750мл Louis Roederer Cristal Brut <i>750 мл</i></span><span class="xd"></span><span class="xp">140 000 ₽</span></li></ul><h4 class="xg">Белое</h4><ul class="xlist"><li><span class="xn">150мл KWV Sauvignon Blanc <i>150 мл</i></span><span class="xd"></span><span class="xp">900 ₽</span></li><li><span class="xn">150мл Cambridge Crossing Riesling <i>150 мл</i></span><span class="xd"></span><span class="xp">1 100 ₽</span></li><li><span class="xn">750мл The Ned Sauvignon blanc сух <i>750 мл</i></span><span class="xd"></span><span class="xp">5 500 ₽</span></li><li><span class="xn">750мл Peter Mertes Riesling п/сух <i>750 мл</i></span><span class="xd"></span><span class="xp">3 800 ₽</span></li><li><span class="xn">750мл Villa Wolf Gewurztraminer п/сух <i>750 мл</i></span><span class="xd"></span><span class="xp">4 500 ₽</span></li><li><span class="xn">750мл KWV Classic Collection Chardonnay сух <i>750 мл</i></span><span class="xd"></span><span class="xp">4 000 ₽</span></li><li><span class="xn">750мл Laroche Chablis Les Chanoines AOC сух <i>750 мл</i></span><span class="xd"></span><span class="xp">10 000 ₽</span></li></ul><h4 class="xg">Красное</h4><ul class="xlist"><li><span class="xn">150мл Bodegas San Valero Celebrities Cabernet Sauvignon <i>150 мл</i></span><span class="xd"></span><span class="xp">1 000 ₽</span></li><li><span class="xn">150мл Kris Pinot Noir <i>150 мл</i></span><span class="xd"></span><span class="xp">1 200 ₽</span></li><li><span class="xn">750мл Speri Valpolicella Classico DOC сух <i>750 мл</i></span><span class="xd"></span><span class="xp">5 500 ₽</span></li><li><span class="xn">750мл Tamari Malbec Mendosa сух <i>750 мл</i></span><span class="xd"></span><span class="xp">4 000 ₽</span></li><li><span class="xn">750мл Laroch Pinot Noir La Chevaliere IGP сух <i>750 мл</i></span><span class="xd"></span><span class="xp">4 800 ₽</span></li><li><span class="xn">750мл KWV Classic Collection Shiraz сух <i>750 мл</i></span><span class="xd"></span><span class="xp">4 000 ₽</span></li></ul><h4 class="xg">Вино к ужину</h4><ul class="xlist"><li><span class="xn">Samos CAVINO 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">900 ₽</span></li><li><span class="xn">Neige Tsumitate no Zeitaku Hanaya Fukaminoaruca 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">1 000 ₽</span></li><li><span class="xn">Vismino Brut 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">900 ₽</span></li><li><span class="xn">Hirooka Perry Wine Riko 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">1 600 ₽</span></li><li><span class="xn">Аюрау Дюрсо Brut D&#x27;Or Riesling 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">1 200 ₽</span></li><li><span class="xn">Conde de Caralt Blanc 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">800 ₽</span></li><li><span class="xn">Bodegas San Valero Celebrities Cava Brut 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">900 ₽</span></li><li><span class="xn">Mega Spileo Rose 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">1 000 ₽</span></li><li><span class="xn">Diario Rosado 100мл <i>100 мл</i></span><span class="xd"></span><span class="xp">800 ₽</span></li></ul></div><div class="xpane" data-x="4"><h4 class="xg">Водка</h4><ul class="xlist"><li><span class="xn">JJ Whitley Artisanal <i>50 мл</i></span><span class="xd"></span><span class="xp">500 ₽</span></li><li><span class="xn">Mamont <i>50 мл</i></span><span class="xd"></span><span class="xp">750 ₽</span></li></ul><h4 class="xg">Ром</h4><ul class="xlist"><li><span class="xn">Aguanile Silver Dry <i>50 мл</i></span><span class="xd"></span><span class="xp">750 ₽</span></li><li><span class="xn">Zacapa 23 years <i>50 мл</i></span><span class="xd"></span><span class="xp">2 000 ₽</span></li></ul><h4 class="xg">Джин</h4><ul class="xlist"><li><span class="xn">Whitley Neill London Dry <i>50 мл</i></span><span class="xd"></span><span class="xp">650 ₽</span></li><li><span class="xn">Tanqueray London Dry <i>50 мл</i></span><span class="xd"></span><span class="xp">850 ₽</span></li><li><span class="xn">Hendriks <i>50 мл</i></span><span class="xd"></span><span class="xp">1 300 ₽</span></li></ul><h4 class="xg">Виски</h4><ul class="xlist"><li><span class="xn">Glengarry Scotland Blended <i>50 мл</i></span><span class="xd"></span><span class="xp">750 ₽</span></li><li><span class="xn">Jack Daniels <i>50 мл</i></span><span class="xd"></span><span class="xp">900 ₽</span></li><li><span class="xn">Jameson Irish <i>50 мл</i></span><span class="xd"></span><span class="xp">900 ₽</span></li><li><span class="xn">Chivas Regal 12 years <i>50 мл</i></span><span class="xd"></span><span class="xp">1 200 ₽</span></li><li><span class="xn">Macallan 12 years <i>50 мл</i></span><span class="xd"></span><span class="xp">2 900 ₽</span></li></ul><h4 class="xg">Текила</h4><ul class="xlist"><li><span class="xn">De Los Dorados silver <i>50 мл</i></span><span class="xd"></span><span class="xp">850 ₽</span></li><li><span class="xn">Jose Cuervo 1800 Anejo <i>50 мл</i></span><span class="xd"></span><span class="xp">950 ₽</span></li><li><span class="xn">Don Julio Reposado <i>50 мл</i></span><span class="xd"></span><span class="xp">2 000 ₽</span></li></ul><h4 class="xg">Коньяк</h4><ul class="xlist"><li><span class="xn">Hennessy VS <i>50 мл</i></span><span class="xd"></span><span class="xp">1 200 ₽</span></li><li><span class="xn">Hennessy XO <i>50 мл</i></span><span class="xd"></span><span class="xp">2 800 ₽</span></li></ul><h4 class="xg">Ликёры</h4><ul class="xlist"><li><span class="xn">Jagermeister <i>50 мл</i></span><span class="xd"></span><span class="xp">850 ₽</span></li><li><span class="xn">Limoncello <i>50 мл</i></span><span class="xd"></span><span class="xp">850 ₽</span></li></ul></div><div class="xpane" data-x="5"><h4 class="xg">Разливное</h4><ul class="xlist"><li><span class="xn">Spaten Munchen Hell <i>500 мл</i></span><span class="xd"></span><span class="xp">800 ₽</span></li><li><span class="xn">Franziskaner <i>500 мл</i></span><span class="xd"></span><span class="xp">800 ₽</span></li></ul><h4 class="xg">В бутылке</h4><ul class="xlist"><li><span class="xn">Corona Extra <i>385 мл</i></span><span class="xd"></span><span class="xp">700 ₽</span></li><li><span class="xn">Velkopopovicky Kozel Svetly <i>450 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li><li><span class="xn">Abbe Blond <i>330 мл</i></span><span class="xd"></span><span class="xp">700 ₽</span></li><li><span class="xn">Velkopopovicky Kozel Cerny <i>450 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li><li><span class="xn">Abbe Brune <i>330 мл</i></span><span class="xd"></span><span class="xp">700 ₽</span></li><li><span class="xn">Hoegaarden <i>440 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li></ul><h4 class="xg">Безалкогольное</h4><ul class="xlist"><li><span class="xn">Stella Artois БА <i>440 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li></ul></div><div class="xpane" data-x="6"><h4 class="xg">Кофе</h4><ul class="xlist"><li><span class="xn">Espresso <i>18 г</i></span><span class="xd"></span><span class="xp">300 ₽</span></li><li><span class="xn">Double espresso <i>18 г</i></span><span class="xd"></span><span class="xp">350 ₽</span></li><li><span class="xn">Americano <i>18 г</i></span><span class="xd"></span><span class="xp">350 ₽</span></li><li><span class="xn">Cappuccino <i>168 г</i></span><span class="xd"></span><span class="xp">450 ₽</span></li><li><span class="xn">Latte <i>218 г</i></span><span class="xd"></span><span class="xp">450 ₽</span></li><li><span class="xn">Raf <i>238 г</i></span><span class="xd"></span><span class="xp">500 ₽</span></li></ul><h4 class="xg">Чай</h4><ul class="xlist"><li><span class="xn">Assam 500мл <i>500 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li><li><span class="xn">Earl grey 500мл <i>500 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li><li><span class="xn">Sencha 500мл <i>500 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li><li><span class="xn">Jasmine 500мл <i>500 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li><li><span class="xn">Milk Oolong 500мл <i>500 мл</i></span><span class="xd"></span><span class="xp">600 ₽</span></li><li><span class="xn">Shu Pu-er 500мл <i>500 мл</i></span><span class="xd"></span><span class="xp">700 ₽</span></li></ul><h4 class="xg">Не чай</h4><ul class="xlist"><li><span class="xn">Облепиховый чай 500мл <i>500 мл</i></span><span class="xd"></span><span class="xp">700 ₽</span></li><li><span class="xn">Малина Мята 500мл <i>500 мл</i></span><span class="xd"></span><span class="xp">700 ₽</span></li></ul></div>
   </div>
-
+  <script>document.addEventListener('click',function(e){var b=e.target.closest('.xtab');if(!b)return;var r=b.closest('#extra');r.querySelectorAll('.xtab').forEach(function(t){t.classList.toggle('on',t===b)});r.querySelectorAll('.xpane').forEach(function(p){p.classList.toggle('on',p.dataset.x===b.dataset.x)})});</script>
+</section>
+<section class="sec show" id="today">
+  <img class="bborn r" src="img/bb-star.svg" alt="" style="top:70px">
+  <div class="wrap">
+    <div class="msep" aria-hidden="true"><span>♠</span><span class="r">♥</span><span>♣</span><span class="r">♦</span></div>
+    <p class="kick caps" data-a="fade"><span class="suit" aria-hidden="true">♠</span>Ближайшие показы</p>
+    <h2 class="title goldtext" data-a="up">Выберите свой вечер</h2>
+    <p class="sub" data-a="up">Гастрошоу о том, о чём молчат женщины, хиты 90⁠–⁠2000⁠-⁠х живьём и авторский ужин — три блюда и десерт — за вашим столом.</p>
+    <div class="kv" data-a="zoom">
+      <img src="img/our/titr-zal.jpg" width="1920" height="1080" alt="«О чём молчат женщины» — зал Метелицы" data-par="0.12">
+      <div class="on"><p>Пробуй. Пой. Танцуй.</p></div>
+    </div>
+    <ol class="how four" data-a="up"><li><b>1</b><span>Дата</span><small>выберите вечер ниже</small></li><li><b>2</b><span>Место</span><small>на схеме зала в кассе</small></li><li><b>3</b><span>Ужин</span><small>+2 100 ₽ за сет, в той же покупке</small></li><li><b>4</b><span>Оплата</span><small>место от 4 000 ₽ + ужин 2 100 ₽</small></li></ol>
+    <div class="dates5" id="dates" data-live-dates="О чём молчат женщины"></div>
+    <p class="sub dfoot">Нажмите на дату — откроется касса Яндекс Афиши: выберите места на схеме зала, для каждого места — сет ужина (мясной, рыбный или вегетарианский), и оплатите.</p>
+  </div>
+</section>
 </main>
-
-
-<!-- =====================================================================
-     SITE FOOTER  (reused verbatim on every sub-page)
-     ===================================================================== -->
-<footer class="site-footer">
-  <div class="container site-footer__grid">
-
-    <div class="footer-brand">
-      <a class="logo logo--sm" href="./" aria-label="Клуб Номер Один — CLUB 1, на главную">
-        <img src="assets/logo-metelitsa.png" alt="Метелица · Клуб Номер Один · CLUB 1" width="465" height="240">
-      </a>
-      <p>Клуб стендапа на Новом Арбате, 21. Здесь выступают известные комики и те, о ком скоро будут говорить все.</p>
-    </div>
-
-    <div class="footer-col" id="contacts">
-      <h3>Контакты</h3>
-      <ul>
-        <li><span class="muted">Телефон</span><br><a href="tel:+74996869111">+7 (499) 686 91 11</a></li>
-        <li><span class="muted">Электронная почта</span><br><a href="mailto:Club1promo@yandex.ru">Club1promo@yandex.ru</a></li>
-        <li><span class="muted">Адрес</span><br>Москва, Новый Арбат, 21</li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h3>Информация</h3>
-      <ul>
-        <li><a href="vozvrat">Возврат билетов</a></li>
-        <li><a href="privacy">Политика конфиденциальности</a></li>
-        <li><a href="oferta">Договор оферты</a></li>
-        <li><a href="arenda">Аренда площадки</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col footer-social-col">
-      <h3>Мы в соцсетях</h3>
-      <div class="social">
-        <a class="social-btn" href="https://vk.ru/standupclubnaarbate?utm_source=club1_site&utm_medium=footer&utm_campaign=social_subscription" target="_blank" rel="noopener" aria-label="ВКонтакте">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.863-.525-2.049-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.678.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
-        </a>
-        <a class="social-btn" href="https://t.me/club1standup?utm_source=club1_site&utm_medium=footer&utm_campaign=social_subscription" target="_blank" rel="noopener" aria-label="Telegram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-        </a>
-      </div>
-    </div>
-
+<footer class="foot site-foot">
+  <div class="fgrid wrap">
+    <div class="fabout"><img src="img/logo-metelitsa-rgba.png" width="155" height="80" alt="Метелица Клуб1"><p>Гастрошоу «О чём молчат женщины» в легендарной «Метелице».<br>Москва, Новый Арбат, 21 · м. Арбатская, Смоленская</p><p class="age">16+</p></div>
+    <div><h4>Шоу</h4><a href="afisha.html">Афиша и билеты</a><a href="o-myuzikle.html">О шоу</a><a href="komanda.html">Команда</a><a href="eda.html">Еда и напитки</a><a href="galereya.html">Фотогалерея</a></div>
+    <div><h4>Гостям</h4><a href="korporativnym.html">Корпоративным клиентам</a><a href="sertifikat.html">Сертификат</a><a href="faq.html">Частые вопросы</a><a href="kontakty.html">Контакты</a></div>
+    <div><h4>Контакты</h4><a href="tel:+74996869111">+7 (499) 686-91-11</a><a href="mailto:Club1promo@yandex.ru">Club1promo@yandex.ru</a>
+</div>
   </div>
-
-  <div class="container footer-bottom">
-    <p>ООО «Продюсерский центр Клуб Номер Один» · ИНН 9704127352 · К счёту за еду и напитки добавляется сервисный сбор 10%, билеты сбором не облагаются.</p>
-  </div>
+  <div class="partners5 wrap"><span>Вместе с</span>
+    <img src="img/logo-metelitsa-rgba.png" alt="Метелица Клуб1" class="pm">
+    <img src="img/partners/yandex-afisha.svg" alt="Яндекс Афиша">
+    <img src="img/partners/krasny-kvadrat.svg" alt="Красный Квадрат">
+    <img src="img/partners/placebo25.svg" alt="Placebo/25"></div>
+  <div class="legal wrap"><a href="oferta.html">Условия продажи билетов</a><a href="vozvrat.html">Возврат билетов</a><a href="privacy.html">Политика конфиденциальности</a>
+    <span>Организатор — ООО «Медиа-дом «Красный квадрат» · ОГРН 1167746072680 · <a href="mailto:tickets@womanmusical.ru">tickets@womanmusical.ru</a></span>
+    <span>Продавец билетов — ООО «Продюсерский центр Клуб Номер Один» · ИНН 9704127352 · касса — Яндекс Афиша</span>
+    <span>Билеты продаёт Яндекс Афиша. Место в зале — от 4 000 ₽, авторский ужин — 2 100 ₽ за сет, добавляется в той же покупке (на месте — 6 000⁠–⁠8 000 ₽). Напитки бара — за отдельную плату.</span></div>
 </footer>
-
-
-<script>
-/* ---------------------------------------------------------------------
-   Club №1 — foundation interactions (vanilla, no deps)
-   1. header ink-on-scroll   2. burger drawer
-   Shared with index.html; slider/filter blocks are guarded and simply
-   no-op on pages (like this one) that don't contain those components.
-   --------------------------------------------------------------------- */
-(function(){
-  "use strict";
-
-  /* 1 · sticky header goes ink once the page scrolls */
-  var header = document.getElementById('siteHeader');
-  var onScroll = function(){
-    header.classList.toggle('is-scrolled', window.scrollY > 24);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, {passive:true});
-
-  /* 2 · burger / mobile drawer */
-  var burger = document.getElementById('burger');
-  var menu   = document.getElementById('mobileMenu');
-  var menuReturnFocus = null;
-  var menuItems = function(){
-    return menu.querySelectorAll('a[href], button:not([disabled])');
-  };
-  var setMenu = function(open){
-    menu.classList.toggle('is-open', open);
-    burger.setAttribute('aria-expanded', String(open));
-    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
-    /* прокрутку держит html (у него overflow-x:clip), поэтому замок
-       вешаем на оба элемента — иначе страница под шторкой уезжала */
-    document.body.style.overflow = open ? 'hidden' : '';
-    document.documentElement.style.overflow = open ? 'hidden' : '';
-    /* закрытая шторка не должна ловить Tab: она невидима, но её ссылки
-       оставались в порядке обхода и фокус проваливался «за экран» */
-    if (open) { menu.removeAttribute('inert'); } else { menu.setAttribute('inert', ''); }
-    if (open) {
-      menuReturnFocus = document.activeElement;
-      var first = menuItems()[0];
-      if (first) first.focus();
-    } else if (menuReturnFocus) {
-      menuReturnFocus.focus();
-      menuReturnFocus = null;
-    }
-  };
-  menu.setAttribute('inert', '');
-  burger.addEventListener('click', function(){
-    setMenu(!menu.classList.contains('is-open'));
-  });
-  menu.addEventListener('click', function(e){
-    if (e.target.closest('a')) setMenu(false);
-  });
-  window.addEventListener('keydown', function(e){
-    if (!menu.classList.contains('is-open')) return;
-    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
-    if (e.key !== 'Tab') return;
-    /* пока меню открыто, обход ходит по кругу внутри него */
-    var items = menuItems();
-    if (!items.length) return;
-    var first = items[0], last = items[items.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  });
-})();
-</script>
-
-<!-- shared interactive components (tabs used on this page) -->
-<script src="script.js?v=7980c4460b" defer></script>
-
+<dialog id="menu"><button class="x" aria-label="Закрыть">×</button><div class="body"></div>
+  <p class="fine">Сет добавляется в той же покупке после выбора мест — 2 100 ₽ за сет (на месте — 6 000⁠–⁠8 000 ₽), только вместе с билетом. Напитки бара — за отдельную плату.</p></dialog>
+<canvas id="embers" aria-hidden="true"></canvas>
+<script src="assets/data/events.js?v=c8815d07b1"></script>
+<script src="scripts-show.js?v=11230146"></script>
+<script src="scripts-sets.js?v=11230146"></script>
+<script>window.MOLCHAT_CENY={"updated": "2026-11-23 01:07", "seat_min": 4000, "sessions": [{"d": "2026-11-27", "t": "20:00", "min": 4200, "s": "available"}, {"d": "2026-11-28", "t": "20:00", "min": 4200, "s": "available"}, {"d": "2026-12-05", "t": "20:00", "min": 4000, "s": "available"}, {"d": "2026-12-06", "t": "18:30", "min": 4000, "s": "available"}, {"d": "2026-12-27", "t": "18:30", "min": 5000, "s": "available"}, {"d": "2026-12-28", "t": "20:00", "min": 5000, "s": "available"}, {"d": "2026-12-30", "t": "20:00", "min": 5000, "s": "available"}, {"d": "2026-12-31", "t": "15:00", "min": 5000, "s": "available"}, {"d": "2027-01-02", "t": "20:00", "min": 5200, "s": "available"}, {"d": "2027-01-03", "t": "14:00", "min": 4800, "s": "available"}, {"d": "2027-01-03", "t": "20:00", "min": 5200, "s": "available"}, {"d": "2027-01-04", "t": "14:00", "min": 4800, "s": "available"}, {"d": "2027-01-04", "t": "20:00", "min": 5200, "s": "available"}, {"d": "2027-01-05", "t": "14:00", "min": 4800, "s": "available"}, {"d": "2027-01-05", "t": "20:00", "min": 5200, "s": "available"}, {"d": "2027-01-06", "t": "20:00", "min": 5200, "s": "available"}, {"d": "2027-01-07", "t": "20:00", "min": 5200, "s": "available"}, {"d": "2027-01-08", "t": "20:00", "min": 5200, "s": "available"}, {"d": "2027-01-09", "t": "20:00", "min": 5200, "s": "available"}]}</script>
+<script src="dates-live.js?v=11230146"></script>
+<script src="analytics.js?v=3782a83054"></script>
+<script src="site.js?v=11230146"></script>
+<script src="ads.js?v=11230146"></script>
 </body>
 </html>

@@ -33,7 +33,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 
 EXCLUDE_DIRS = {
     '.git', '.claude', '.playwright-cli', 'backups', 'sweeps',
-    'node_modules', '__pycache__', '.idea', '.vscode',
+    'node_modules', '__pycache__', '.idea', '.vscode', 'tools',
 }
 # '.git' есть и в EXCLUDE_DIRS, и здесь: в обычном клоне это папка, а в
 # git worktree — файл со строкой «gitdir: /Users/…/worktrees/<имя>». Фильтр
@@ -41,7 +41,8 @@ EXCLUDE_DIRS = {
 # лежит .git с локальным путём чужого worktree. Пароль его прикрывает, но
 # после открытия сайта это был бы наружу торчащий путь с машины.
 EXCLUDE_FILES = {'.DS_Store', '.env', '.gitignore', '.git', 'deploy.py', 'deploy.sh',
-                 'build-seo.py', '.deploy-state.json', 'README.md'}
+                 'build-seo.py', '.deploy-state.json', 'README.md',
+                 'molchat-root-files.txt'}
 # текстовое содержимое: правка может не изменить размер, поэтому при
 # отсутствии известного хеша такие файлы заливаем не глядя
 TEXT_EXT = ('.html', '.css', '.js', '.xml', '.txt', '.php', '.json', '.svg', '.htaccess')
