@@ -1,0 +1,184 @@
+/* Демо-4 · первый экран как у Одеона, три слоя: видео → прозрачное название (knockout) → стеклянные плашки.
+   Блоки ниже — из демо-3 (демо-3.css подключён раньше). */
+.h4{position:relative;height:230vh}
+.h4 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#050307}
+/* слой 2: видео */
+.h4 video,.h4 .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right bottom}
+/* слой 1: вуаль с буквами-окнами */
+.h4 svg.ko{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.h4 .ko text{font-family:var(--ko-font);font-weight:var(--ko-w)}
+.h4 .ko .rim{fill:none;stroke:url(#kogold);stroke-width:1.6;filter:url(#koglow)}
+.h4 .sub4{position:absolute;left:0;right:0;z-index:3;text-align:center;font:500 clamp(11px,1.1vw,15px)/1 var(--sans);letter-spacing:.6em;color:var(--gold2);text-indent:.6em;text-shadow:0 2px 12px #000}
+/* слой 3: плашки */
+.glass{background:rgba(14,9,16,.42);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(212,175,55,.38);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.h4 .ui{position:absolute;inset:0;z-index:4;pointer-events:none}
+.h4 .ui>*{pointer-events:auto}
+.h4 .today{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:22px;padding:12px 12px 12px 22px;white-space:nowrap}
+.h4 .today p{font-size:14px;color:var(--cream)}
+.h4 .today p b{font:600 20px/1.2 var(--serif);color:var(--gold2);display:block}
+.h4 .line{position:absolute;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.36em;color:rgba(243,233,216,.85);text-shadow:0 2px 10px #000;padding:0 16px}
+.h4 .cards{position:absolute;left:0;right:0;bottom:22px;display:flex;justify-content:center;gap:14px;padding:0 20px}
+.h4 .card{display:flex;flex-direction:column;gap:4px;width:280px;padding:14px 18px;text-decoration:none;transition:transform .5s,border-color .5s,background .5s}
+.h4 .card:hover{transform:translateY(-4px);border-color:var(--gold);background:rgba(20,12,18,.55)}
+.h4 .card small{font:600 10px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.h4 .card b{font:600 21px/1.15 var(--serif);color:var(--cream)}
+.h4 .card span{font-size:13px;color:var(--muted)}
+.h4 .card .chk{align-self:flex-start;margin-top:2px}
+/* плавное появление */
+.rise{opacity:0;translate:0 24px;transition:opacity 1.4s cubic-bezier(.2,.7,.2,1),translate 1.4s cubic-bezier(.2,.7,.2,1)}
+.ready .rise{opacity:1;translate:0 0}
+.fontpick{position:fixed;left:12px;bottom:12px;z-index:90;display:flex;gap:6px;font-size:11px}
+.fontpick a{padding:6px 9px;border:1px solid rgba(212,175,55,.5);border-radius:6px;background:rgba(7,5,10,.8);text-decoration:none;color:var(--gold2)}
+.fontpick a.on{background:var(--gold);color:#1a1006}
+@media (max-width:700px){
+  .h4 .today{width:calc(100% - 32px);white-space:normal;justify-content:space-between;gap:12px;padding:10px 10px 10px 14px}
+  .h4 .today p{font-size:12px}.h4 .today p b{font-size:17px}
+  .h4 .line{font-size:10px;letter-spacing:.22em}
+  .h4 .cards{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;bottom:14px;padding:0 16px;scrollbar-width:none}
+  .h4 .cards::-webkit-scrollbar{display:none}
+  .h4 .card{flex:0 0 72%;scroll-snap-align:start;padding:12px 14px}
+  .h4 .card b{font-size:18px}
+  .fontpick{bottom:auto;top:72px}
+}
+@media (prefers-reduced-motion:reduce){.rise{opacity:1;translate:none;transition:none}.h4{height:auto}.h4 .stage{position:relative}}
+.h4 .poster{transition:opacity .8s}
+@media (max-width:700px){.h4 .today .ticket span{white-space:nowrap;font-size:11px;padding:0 10px 0 14px;letter-spacing:.08em}.h4 .today p{min-width:0}}
+/* демо-4б: название мюзикла в центре */
+.h4 .sub4{letter-spacing:normal;text-indent:0}
+.h4 .k4{font:500 clamp(10px,1vw,13px)/1 var(--sans);letter-spacing:.5em;text-indent:.5em;text-transform:uppercase;color:var(--gold2)}
+.h4 .slog4{margin-top:10px;font:600 italic clamp(22px,2.4vw,34px)/1.1 var(--serif);background:var(--gg);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:breathe 9s ease-in-out infinite;text-shadow:none}
+.h4 .note4{margin-top:4px;font-size:10px;letter-spacing:.14em;color:rgba(243,233,216,.6)}
+.h4 .sub4.side .k4{text-indent:0}
+
+/* ===== демо-4в: название мюзикла — сплошной логотип шоу поверх видео (как у Одеона); knockout — только ?mode=knockout ===== */
+:root{--bb-green:#002717;--bb-green2:#007A48;--bb-cream:#F7EAD4;--bb-peach:#FEDEA9;--bb-pink:#C82285;--bb-coral:#FA876B}
+.h4 .dim4{position:absolute;inset:0;z-index:1;background:radial-gradient(120% 95% at 50% 42%,rgba(5,3,7,.38) 0%,rgba(5,3,7,.55) 55%,rgba(5,3,7,.85) 100%),linear-gradient(180deg,rgba(5,3,7,.45),transparent 25%,transparent 65%,rgba(5,3,7,.7));pointer-events:none}
+.h4 .showlogo{position:absolute;z-index:2;left:50%;height:auto;transform-origin:50% 55%;filter:drop-shadow(0 6px 30px rgba(0,0,0,.65)) drop-shadow(0 0 1px rgba(0,0,0,.6));opacity:0;transition:opacity 1.8s cubic-bezier(.2,.7,.2,1) .2s;will-change:transform,opacity}
+.ready .h4 .showlogo{opacity:1}
+[data-mode="knockout"] .h4 .showlogo,[data-mode="knockout"] .h4 .dim4,[data-mode="knockout"] .h4 .bbline{display:none}
+:root:not([data-mode="knockout"]) .h4 svg.ko{display:none}
+:root:not([data-mode="knockout"]) .h4 .k4{color:var(--bb-peach)}
+:root:not([data-mode="knockout"]) .h4 .slog4{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--bb-cream);animation:none}
+:root:not([data-mode="knockout"]) .h4 .slog4 i{color:#ff7fbf;font-style:italic}
+.h4 .bbline{display:block;width:min(300px,70vw);margin:0 auto 12px;opacity:.9}
+.bborn{position:absolute;width:36px;opacity:.9;z-index:1}.bborn.r{right:max(24px,calc(50% - 600px))}
+.bbscript{display:block;width:min(360px,70vw);margin:0 auto 18px;opacity:.95}
+.fontpick .mode{margin-left:10px}
+
+/* ===== демо-4г: разгрузка первого экрана до уровня Одеона ===== */
+.h4 .dim4{background:radial-gradient(130% 100% at 50% 40%,rgba(5,3,7,.3) 0%,rgba(5,3,7,.4) 60%,rgba(5,3,7,.62) 100%),linear-gradient(180deg,rgba(5,3,7,.38),transparent 22%,transparent 72%,rgba(5,3,7,.55))}
+.h4 .cta4{position:absolute;left:50%;transform:translateX(-50%)}
+.h4 .cta4 .ticket{height:40px}.h4 .cta4 .ticket span{font-size:13px;padding:0 16px 0 20px}
+.h4 .tline{position:absolute;left:0;right:0;bottom:66px;text-align:center;text-decoration:none;font:500 11px/1.4 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:rgba(243,233,216,.85);text-shadow:0 1px 8px rgba(0,0,0,.8);padding:0 16px}
+.h4 .tline:hover{color:var(--gold2)}
+.h4 .drip4{position:absolute;left:50%;bottom:14px;width:1px;height:40px;background:linear-gradient(var(--gold),transparent);animation:drip 2.6s ease-in-out infinite}
+.after4{position:relative;padding:clamp(80px,10vw,140px) 0 clamp(40px,6vw,80px);text-align:center}
+.a4title{font:600 clamp(34px,4.8vw,68px)/1.08 var(--serif);margin-bottom:clamp(40px,6vw,70px)}
+.a4row{display:grid;grid-template-columns:repeat(3,1fr);max-width:1000px;margin:0 auto}
+.a4{display:flex;flex-direction:column;gap:6px;padding:8px 28px;text-decoration:none;border-left:1px solid rgba(212,175,55,.35)}
+.a4:first-child{border-left:0}
+.a4 small{font:600 10px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.a4 b{font:600 26px/1.15 var(--serif);color:var(--cream);transition:color .4s}
+.a4:hover b{color:var(--gold2)}
+.a4 span{font-size:13px;color:var(--muted)}
+@media (max-width:700px){
+  .h4 .tline{font-size:9.5px;letter-spacing:.18em;bottom:62px}
+  .a4row{grid-template-columns:1fr}
+  .a4{border-left:0;border-top:1px solid rgba(212,175,55,.3);padding:22px 8px}
+  .a4:first-child{border-top:0}
+}
+.fontpick[hidden]{display:none!important}
+
+/* ===== демо-4д: свои элементы вместо приёмов Одеона =====
+   Площадка — хром/серебро и холодное сияние метели (ДНК логотипа «Метелица CLUB 1»).
+   Мюзикл — палитра брендбука КК: тёмно-зелёный, кремовый, малиновый, коралл. Золото — только тёплый свет в видео и искрах. */
+:root{--chrome:linear-gradient(180deg,#ffffff 0%,#eceef2 16%,#c3c8d0 46%,#8e949e 52%,#cfd4db 80%,#f6f7f9 100%);
+  --chrome-text:linear-gradient(180deg,#ffffff 0%,#e6e9ee 40%,#9aa1ab 52%,#dfe3e8 70%,#ffffff 100%);--ice:#cfe6ff}
+.rails{display:none}
+.orn.fan-r,.orn.fan-l{display:none}
+.orn.flake{color:#d9e2ec;opacity:.7}
+/* кнопка площадки: хромированная плашка, как «CLUB 1» в логотипе */
+.chrome{position:relative;display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 22px;border-radius:8px;text-decoration:none;
+  transform:skewX(-9deg);background:var(--chrome);color:#0c0d10;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -2px 3px rgba(0,0,0,.38),0 0 0 1px #15171c,0 0 0 2px rgba(225,230,238,.55),0 8px 22px rgba(0,0,0,.5);
+  transition:box-shadow .4s,filter .4s}
+.chrome span{display:inline-block;transform:skewX(9deg);font:800 13px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase}
+.chrome::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:overlay;
+  background:linear-gradient(110deg,transparent 0 38%,rgba(255,255,255,.95) 50%,transparent 62% 100%);background-size:300% 100%;background-position:120% 0}
+.chrome:hover::before{background-position:-20% 0;transition:background-position .9s cubic-bezier(.3,.6,.2,1)}
+.chrome:hover{box-shadow:inset 0 1px 0 #fff,inset 0 -2px 3px rgba(0,0,0,.38),0 0 0 1px #15171c,0 0 0 2px rgba(225,230,238,.7),0 0 26px rgba(190,225,255,.45),0 8px 22px rgba(0,0,0,.5)}
+.chrome .spark{position:absolute;right:-12px;top:-14px;width:28px;height:28px;pointer-events:none;opacity:0;transform:skewX(9deg) scale(.2) rotate(-40deg);
+  filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 10px var(--ice));transition:opacity .35s,transform .6s cubic-bezier(.2,1.6,.4,1)}
+.chrome:hover .spark,.chrome:focus-visible .spark{opacity:1;transform:skewX(9deg) scale(1) rotate(0)}
+.chrome.lg{height:50px;padding:0 30px}.chrome.lg span{font-size:14px}
+/* кнопка мюзикла: капсула брендбука */
+.bbtn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 24px 0 18px;border-radius:999px;text-decoration:none;
+  background:var(--bb-cream);color:var(--bb-green);font:700 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  box-shadow:0 8px 26px rgba(0,0,0,.35);transition:background .4s,color .4s,box-shadow .4s}
+.bbtn svg{width:15px;height:15px;fill:var(--bb-pink);transition:fill .4s}
+.bbtn:hover{background:var(--bb-pink);color:var(--bb-cream);box-shadow:0 8px 30px rgba(200,34,133,.45)}
+.bbtn:hover svg{fill:var(--bb-cream);animation:bbtw 1.1s ease-in-out infinite}
+.bbtn.pink{background:var(--bb-pink);color:var(--bb-cream)}.bbtn.pink svg{fill:var(--bb-cream)}
+.bbtn.pink:hover{background:var(--bb-cream);color:var(--bb-green)}.bbtn.pink:hover svg{fill:var(--bb-pink)}
+@keyframes bbtw{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.35) rotate(45deg)}}
+.h4 .cta4 .bbtn{height:40px}
+/* тексты площадки — хром */
+.chromtext{background:var(--chrome-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.after4 .kick,#hall .kick{color:#b9c6d4}
+.a4 small{color:#b9c6d4}.a4{border-color:rgba(200,215,230,.25)}.a4:hover b{color:#fff}
+.nav a:hover{color:#fff;text-shadow:0 0 12px rgba(190,225,255,.6)}
+.hall img{border-color:rgba(200,215,230,.25)}
+.foot a{color:#d6dde6}
+/* территория мюзикла — палитра ББ */
+.show .goldtext{background:none;color:var(--bb-cream);-webkit-background-clip:border-box;background-clip:border-box;animation:none}
+.show .kick{color:var(--bb-peach)}
+.show .kv{border-color:rgba(247,234,212,.25)}
+.show .kv .on p{color:#ff8fc4}
+.show .dates a{border-color:rgba(247,234,212,.3)}.show .dates a:hover{background:rgba(200,34,133,.14);border-color:var(--bb-pink)}
+.ptm.show .pA .w{color:var(--bb-cream)}.ptm.show .pB .w{color:#ff7fbf}.ptm.show .pC .w{color:var(--bb-peach)}
+.ptm.show .gbeam{background:linear-gradient(rgba(255,127,191,.6),rgba(255,127,191,0) 80%)}
+.ptm.show .gbeam.b{background:linear-gradient(rgba(247,234,212,.6),rgba(247,234,212,0) 80%)}
+.ptm.show .dots i{border-color:var(--bb-cream)}.ptm.show .dots i.on{background:var(--bb-pink);border-color:var(--bb-pink)}
+.ptm.show .pC .portrait{border-color:rgba(247,234,212,.4)}
+.show .slide .num{color:var(--bb-pink)}.show .slide .pic{border-color:rgba(247,234,212,.4);box-shadow:0 0 0 14px rgba(0,122,72,.12),0 40px 80px rgba(0,0,0,.5)}
+.show .lnk{border-color:var(--bb-pink);color:var(--bb-cream)}
+.show .arr{border-color:rgba(247,234,212,.5);color:var(--bb-cream)}
+.show .cdots button{background:rgba(247,234,212,.25)}.show .cdots button.on{background:var(--bb-pink)}
+dialog{border-color:rgba(247,234,212,.4)}dialog dt{color:var(--bb-pink)}
+.h4 .drip4{background:linear-gradient(var(--bb-cream),transparent)}
+dialog .goldtext{background:none;color:var(--bb-cream);-webkit-background-clip:border-box;background-clip:border-box;animation:none}
+
+/* ===== демо-4е: «Метель и костёр» — тёплое золото/янтарь ~70%, тёплая ночь ~20%, хром/серебро ~10% (кромка кнопки, логотип, снег) ===== */
+:root{--bg:#120B07;--bg2:#1A100A;--honey:#F6C46A;--amber:#E9A23B;--ember:#C9772B;--glow:#FFD58A;--night:#120B07;--night2:#1A100A;
+  --fire:linear-gradient(100deg,#C9772B 0%,#F6C46A 28%,#FFD58A 44%,#E9A23B 60%,#F6C46A 80%,#C9772B 100%)}
+body{background:var(--night)}
+.hdr.solid{background:rgba(18,11,7,.86)}
+.h4 .stage{background:var(--night)}
+.ptm .stick{background:var(--night)}
+.ptm .pane .dim{background:radial-gradient(90% 80% at 50% 50%,rgba(18,11,7,.2),rgba(18,11,7,.88))}
+.sec,.after4{background:transparent}
+.foot{background:#0e0805;border-color:rgba(233,162,59,.25)}
+/* тёплое затемнение видео: коричнево-янтарная виньетка */
+.h4 .dim4{background:radial-gradient(125% 100% at 50% 42%,rgba(40,20,6,.22) 0%,rgba(30,15,6,.4) 58%,rgba(18,9,3,.7) 100%),linear-gradient(180deg,rgba(18,11,7,.42),transparent 24%,transparent 70%,rgba(18,11,7,.6))}
+/* кнопка площадки: тлеющая золото-янтарная плашка с тонкой хромовой кромкой */
+.chrome{background:linear-gradient(180deg,#FFE3A6 0%,var(--glow) 14%,var(--honey) 40%,var(--amber) 66%,var(--ember) 100%);color:#2a1504;
+  box-shadow:inset 0 1px 0 rgba(255,246,220,.9),inset 0 -2px 4px rgba(110,50,8,.55),0 0 0 1px #2a1709,0 0 0 2px rgba(226,230,236,.55),0 0 18px rgba(233,162,59,.35),0 8px 22px rgba(0,0,0,.45);
+  animation:smolder 3.4s ease-in-out infinite}
+@keyframes smolder{0%,100%{filter:brightness(1)}50%{filter:brightness(1.08) saturate(1.08)}}
+.chrome:hover{box-shadow:inset 0 1px 0 #fff6dc,inset 0 -2px 4px rgba(110,50,8,.5),0 0 0 1px #2a1709,0 0 0 2px rgba(236,238,242,.7),0 0 34px rgba(255,190,90,.75),0 0 70px rgba(233,140,40,.35),0 8px 22px rgba(0,0,0,.45);animation:none;filter:brightness(1.12)}
+.chrome::before{mix-blend-mode:soft-light}
+.chrome .spark{filter:drop-shadow(0 0 4px #fff3c4) drop-shadow(0 0 12px rgba(255,190,90,.9))}
+.chrome::after{content:"";position:absolute;left:8%;right:8%;bottom:70%;height:56px;pointer-events:none;opacity:0;transform:skewX(9deg);
+  background:radial-gradient(2px 2px at 18% 88%,#FFD58A 60%,transparent),radial-gradient(1.6px 1.6px at 42% 96%,#fff0c0 60%,transparent),radial-gradient(2.2px 2.2px at 66% 90%,#F6C46A 60%,transparent),radial-gradient(1.5px 1.5px at 84% 98%,#ffd58a 60%,transparent),radial-gradient(1.4px 1.4px at 30% 70%,#E9A23B 60%,transparent),radial-gradient(1.8px 1.8px at 58% 75%,#FFD58A 60%,transparent)}
+.chrome:hover::after{animation:sparkup 1s ease-out infinite}
+@keyframes sparkup{0%{opacity:0;translate:0 14px}25%{opacity:1}100%{opacity:0;translate:0 -26px}}
+/* площадочные заголовки — тёплое золото с лёгким мерцанием */
+.chromtext{background:var(--fire);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:breathe 8s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(233,162,59,.25))}
+.after4 .kick,#hall .kick,.a4 small{color:var(--amber)}
+.a4{border-color:rgba(233,162,59,.3)}.a4:hover b{color:var(--glow)}
+.nav a:hover{color:var(--glow);text-shadow:0 0 12px rgba(255,190,90,.55)}
+.hall img{border-color:rgba(233,162,59,.3)}
+.foot a{color:var(--honey)}
+.h4 .tline{color:rgba(255,232,190,.9)}.h4 .tline:hover{color:var(--glow)}
+#embers{position:fixed;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;mix-blend-mode:screen}
+@media (prefers-reduced-motion:reduce){.chrome{animation:none}.chromtext{animation:none}#embers{display:none}}

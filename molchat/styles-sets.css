@@ -1,0 +1,135 @@
+/* демо-5: меню с живыми подачами и трейлер */
+.stabs{display:flex;justify-content:center;gap:8px;margin:40px auto 34px;flex-wrap:wrap}
+.stab{height:44px;padding:0 24px;border-radius:999px;border:1px solid rgba(240,217,138,.3);background:transparent;color:var(--cream);
+  font:500 italic 20px/1 var(--serif);cursor:pointer;transition:background .35s,color .35s,border-color .35s}
+.stab:hover{border-color:var(--gold2)}
+.stab.on{background:linear-gradient(180deg,#ffe2a6,#e9a24a);color:#1d1006;border-color:transparent;box-shadow:0 0 26px rgba(233,162,74,.45)}
+.spane{display:none;grid-template-columns:repeat(3,1fr);gap:22px}
+.spane.on{display:grid;animation:paneIn .6s ease both}
+.spane.cocktails{grid-template-columns:repeat(6,1fr);margin:0 auto}.spane.cocktails>.dish{grid-column:span 2}.spane.cocktails>.dish:nth-child(4){grid-column:2/4}.spane.cocktails>.dish:nth-child(5){grid-column:4/6}
+@keyframes paneIn{from{opacity:0;transform:translateY(14px)}}
+.dish{margin:0;cursor:pointer}
+.dv{position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;background:#140c07;
+  box-shadow:0 0 0 1px rgba(240,217,138,.14),0 24px 50px rgba(0,0,0,.5)}
+.dv video{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter .5s}
+.dish:hover .dv video{transform:scale(1.04)}
+.dv video.swap{filter:blur(6px) brightness(.7)}
+.dtag{position:absolute;left:12px;top:12px;padding:6px 10px;border-radius:999px;background:rgba(10,6,4,.6);backdrop-filter:blur(6px);
+  font:600 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold2)}
+.dish figcaption{padding:16px 4px 0}
+.dact{color:var(--gold);font-size:10px;margin-bottom:8px}
+.dish h3{font:500 italic 26px/1.15 var(--serif);color:var(--cream);margin-bottom:6px}
+.dish figcaption p:last-child{color:var(--muted);font-size:14px;line-height:1.5}
+.tbox{position:relative;max-width:1100px;margin:40px auto 0;border-radius:18px;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(240,217,138,.2),0 40px 90px rgba(0,0,0,.6),0 0 120px rgba(233,162,74,.12)}
+.tbox video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.tplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:16px;border:0;cursor:pointer;
+  background:radial-gradient(60% 60% at 50% 50%,rgba(10,6,4,.25),rgba(10,6,4,.7));color:var(--cream);font:500 italic 24px/1 var(--serif);transition:opacity .4s}
+.tplay svg{width:54px;height:54px;fill:#ffd99a;filter:drop-shadow(0 0 14px rgba(233,162,74,.9));transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.tplay:hover svg{transform:rotate(135deg) scale(1.15)}
+.tbox.playing .tplay{opacity:0;pointer-events:none}
+#trailer .title{font-size:clamp(30px,4vw,56px);text-transform:none;font-style:italic;max-width:980px;margin:0 auto}
+@media (max-width:820px){.spane,.spane.cocktails{grid-template-columns:1fr}.spane.cocktails>.dish,.spane.cocktails>.dish:nth-child(n){grid-column:auto}.tplay span{display:none}}
+
+/* шапка C «Тлеющая нить» (выбор Ал 01.11) — нить под словами, не зачёркивает */
+.hdr{--ember:#e9a24a;--ember-hi:#ffd99a;--ember-lo:#b8621f}
+.hdr .thread{position:relative;flex:1;display:flex;justify-content:center;gap:clamp(18px,3vw,46px);padding-bottom:12px;margin:0 30px}
+.hdr .thread::before{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(243,230,207,.2) 12%,rgba(243,230,207,.2) 88%,transparent)}
+.hdr .thread a{font:400 clamp(17px,1.4vw,21px)/1 "Cormorant Garamond",Georgia,serif;color:rgba(243,233,216,.72);text-decoration:none;transition:color .35s,text-shadow .35s}
+.hdr .thread a:hover{color:var(--ember-hi);text-shadow:0 0 14px rgba(233,162,74,.55)}
+.hdr .thread .ember{position:absolute;bottom:-1px;width:54px;height:3px;border-radius:3px;pointer-events:none;opacity:0;
+  background:radial-gradient(closest-side,var(--ember-hi),var(--ember) 50%,transparent);box-shadow:0 0 14px 3px rgba(233,162,74,.6);
+  transition:left .55s cubic-bezier(.2,.7,.2,1),opacity .4s}
+.btn-c{position:relative;display:inline-flex;align-items:center;height:46px;padding:0 28px;border-radius:999px;isolation:isolate;text-decoration:none;
+  font:500 italic 20px/1 "Cormorant Garamond",Georgia,serif;color:#F3E9D8;white-space:nowrap}
+.btn-c::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;z-index:-1;
+  background:conic-gradient(from var(--a),transparent 0 55%,var(--ember-lo) 70%,var(--ember-hi) 80%,var(--ember) 86%,transparent 95%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spinA 5s linear infinite}
+.btn-c::after{content:"";position:absolute;inset:1px;border-radius:inherit;z-index:-2;background:rgba(20,11,6,.72);backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px rgba(243,230,207,.12)}
+.btn-c:hover{color:var(--ember-hi);text-shadow:0 0 16px rgba(233,162,74,.7)}
+.btn-c:hover::before{animation-duration:1.6s}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spinA{to{--a:360deg}}
+@media (max-width:820px){.hdr .thread{display:none}}
+
+/* логотип шоу полупрозрачный — видео просвечивает (Ал 01.11 17:17) */
+
+/* убрана строка «Сегодня в Метелице…» и чёрточка под ней (Ал 01.11 17:21) */
+.h4 .tline,.h4 .drip4{display:none!important}
+
+/* ── варианты логотипа шоу (Ал 01.11 17:26 «попробуем разные варианты») ── */
+.h4 .lfx,.h4 .veilfx{display:none;position:absolute;pointer-events:none;z-index:2}
+.h4 .lfx{transform-origin:50% 55%;-webkit-mask:url(img/show-logo-cream.svg) center/100% 100% no-repeat;mask:url(img/show-logo-cream.svg) center/100% 100% no-repeat}
+[data-logo="1"] .h4 .showlogo{filter:opacity(.5) drop-shadow(0 4px 24px rgba(0,0,0,.35))}
+[data-logo="2"] .h4 .showlogo,[data-logo="3"] .h4 .showlogo,[data-logo="4"] .h4 .showlogo{filter:opacity(0)}
+[data-logo="2"] .h4 .lfx{display:block;background:rgba(255,244,226,.22);backdrop-filter:blur(9px) brightness(1.45) saturate(1.15);-webkit-backdrop-filter:blur(9px) brightness(1.45)}
+[data-logo="3"] .h4 .lfx{display:block;background:linear-gradient(105deg,#9c6a1c 0%,#ffe7a3 18%,#d1a040 34%,#fff6d6 48%,#b8862c 64%,#ffdf96 82%,#9c6a1c 100%);background-size:260% 100%;animation:goldrun 6s linear infinite}
+@keyframes goldrun{to{background-position:-260% 0}}
+[data-logo="4"] .h4 .veilfx{display:block;inset:0;background:rgba(9,5,3,.8);
+  -webkit-mask:url(img/show-logo-cream.svg) var(--lx) var(--ly)/var(--lw) var(--lh) no-repeat,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:url(img/show-logo-cream.svg) var(--lx) var(--ly)/var(--lw) var(--lh) no-repeat exclude,linear-gradient(#000 0 0)}
+[data-logo="5"] .h4 .showlogo{filter:drop-shadow(0 0 4px #ffe2b0) drop-shadow(0 0 16px #f0a24a) drop-shadow(0 0 40px rgba(233,140,50,.75));animation:neon 5s infinite}
+@keyframes neon{0%,18%,22%,62%,100%{filter:drop-shadow(0 0 4px #ffe2b0) drop-shadow(0 0 16px #f0a24a) drop-shadow(0 0 40px rgba(233,140,50,.75))}20%,60%{filter:drop-shadow(0 0 2px #ffe2b0) drop-shadow(0 0 8px #f0a24a)}}
+[data-logo="6"] .h4 .showlogo{filter:drop-shadow(0 6px 34px rgba(0,0,0,.8)) drop-shadow(0 0 2px rgba(0,0,0,.6))}
+[data-logo="6"] .h4 .dim4{background:radial-gradient(60% 45% at 50% 62%,rgba(8,5,3,.55),transparent 75%)}
+[data-logo="7"] .h4 .showlogo{mix-blend-mode:overlay;filter:brightness(1.6) contrast(1.1)}
+.lsw{position:fixed;left:14px;bottom:14px;z-index:60;display:flex;flex-direction:column;gap:4px;padding:10px;border-radius:14px;
+  background:rgba(10,6,4,.82);backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(240,217,138,.2);font:500 12px/1 Manrope,system-ui,sans-serif}
+.lsw b{font:600 10px/1 Manrope,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#e9a24a;margin:2px 4px 6px}
+.lsw button{all:unset;cursor:pointer;padding:7px 10px;border-radius:8px;color:#f3e9d8}
+.lsw button:hover{background:rgba(240,217,138,.12)}.lsw button.on{background:#e9a24a;color:#1d1006}
+
+/* панель вариантов скрыта после выбора; показать — ?logo=N&sw */
+.lsw{display:none}
+[data-sw] .lsw{display:flex}
+
+/* меню шапки — сплошной кремовый, как логотип шоу (Ал 01.11 17:31) */
+.hdr .thread a{color:#F7EAD4;text-shadow:0 1px 2px rgba(0,0,0,.7),0 2px 14px rgba(0,0,0,.6)}
+.hdr .thread a:hover{color:#ffd99a;text-shadow:0 1px 2px rgba(0,0,0,.7),0 0 14px rgba(233,162,74,.6)}
+.hdr .thread::before{background:linear-gradient(90deg,transparent,rgba(247,234,212,.45) 12%,rgba(247,234,212,.45) 88%,transparent)}
+.btn-c{color:#F7EAD4}
+
+/* навигация по разделам внутри страницы (Ал 01.11 17:32) */
+html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:70px}
+
+/* кнопка первого экрана — в одну строку на телефоне (аудит 01.11) */
+.h4 .cta4 .bbtn{white-space:nowrap}
+@media (max-width:420px){.h4 .cta4 .bbtn{font-size:12px;padding:0 20px;letter-spacing:.1em}}
+
+/* первый экран = ровно экран: убран хвост прокрутки «влёт в логотип» (230vh) — «непонятный тёмный переход» (Ал 01.11 19:30) */
+.h4{height:100vh!important;height:100svh!important;min-height:0!important}
+.h4 .stage{position:relative!important}
+.h4 .showlogo{transform:none!important}
+.ready .h4 .showlogo{opacity:1!important}
+.h4 + .sec,.h4 + section{padding-top:clamp(64px,7vw,110px)!important}
+
+/* кремовая кнопка «Выбрать место и сет» — вокруг вращается свет, как у «Купить билет» (Ал 01.11 21:24) */
+@property --ba{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes bbspin{to{--ba:360deg}}
+.bbtn{position:relative;isolation:isolate;overflow:visible}
+.bbtn::before{content:"";position:absolute;inset:-3px;border-radius:inherit;padding:3px;z-index:-1;pointer-events:none;
+  background:conic-gradient(from var(--ba),transparent 0 52%,#9b4a14 66%,#ffd99a 78%,#fff3d6 82%,#e9a24a 88%,transparent 97%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:bbspin 4.5s linear infinite;filter:drop-shadow(0 0 6px rgba(233,162,74,.75))}
+.bbtn::after{content:"";position:absolute;inset:-14px;border-radius:inherit;z-index:-2;pointer-events:none;
+  background:conic-gradient(from var(--ba),transparent 0 60%,rgba(233,162,74,.35) 80%,transparent 95%);filter:blur(14px);animation:bbspin 4.5s linear infinite}
+.bbtn:hover::before,.bbtn:hover::after{animation-duration:1.6s}
+@media (prefers-reduced-motion:reduce){.bbtn::before,.bbtn::after{animation:none}}
+
+/* ЕДИНАЯ кнопка действия — кремовая, звезда, бегущий свет по кромке (Ал 01.11 21:31 «везде так делаем») */
+.bbtn,.bbtn.pink,main .btn-c,section .btn-c,.db{background:#F7EAD4!important;color:#0f2a1c!important;text-shadow:none!important}
+.bbtn.pink svg{fill:#c82285!important}
+.bbtn:hover,.bbtn.pink:hover,main .btn-c:hover,section .btn-c:hover,.db:hover{background:#fff4df!important;color:#0f2a1c!important;box-shadow:0 0 34px rgba(233,162,74,.45)!important}
+.bbtn:hover svg,.bbtn.pink:hover svg{fill:#c82285!important}
+main .btn-c,section .btn-c{font:700 13px/1 Manrope,sans-serif!important;letter-spacing:.14em!important;text-transform:uppercase;height:48px;padding:0 26px}
+main .btn-c::after,section .btn-c::after{background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+.db{position:relative;isolation:isolate;overflow:visible}
+.db::before{content:"";position:absolute;inset:-3px;border-radius:inherit;padding:3px;z-index:-1;pointer-events:none;
+  background:conic-gradient(from var(--ba),transparent 0 52%,#9b4a14 66%,#ffd99a 78%,#fff3d6 82%,#e9a24a 88%,transparent 97%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:bbspin 4.5s linear infinite;filter:drop-shadow(0 0 6px rgba(233,162,74,.75))}
+main .btn-c::before,section .btn-c::before{inset:-3px!important;padding:3px!important;
+  background:conic-gradient(from var(--ba),transparent 0 52%,#9b4a14 66%,#ffd99a 78%,#fff3d6 82%,#e9a24a 88%,transparent 97%)!important;
+  animation:bbspin 4.5s linear infinite!important;filter:drop-shadow(0 0 6px rgba(233,162,74,.75))}
