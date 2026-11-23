@@ -1,0 +1,224 @@
+/* Демо-2 «Метелица Клуб1» · 28.10.2026 · подача по мотивам zakat.odeon.show: дым-вьюга, антиква золотом, ар-деко веера, спокойные появления */
+:root{--bg:#07050a;--bg2:#0d0910;--gold:#D4AF37;--gold2:#F0D98A;--gold3:#a97c22;--cream:#F3E9D8;--muted:#b7aa98;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;
+  --gg:linear-gradient(100deg,#9c7220 0%,#e9cf7e 22%,#fff2c4 32%,#d4ae4c 46%,#8f6a1d 60%,#e4c470 78%,#f7e6a8 88%,#a57b25 100%)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--cream);font:400 16px/1.6 var(--sans);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px;position:relative}
+.caps{font:500 13px/1.7 var(--sans);letter-spacing:.32em;text-transform:uppercase}
+.goldtext{background:var(--gg);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:breathe 9s ease-in-out infinite}
+@keyframes breathe{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.chk{display:inline-block;font:600 10px/1 var(--sans);letter-spacing:.04em;color:#ffcf5a;border:1px dashed #ffcf5a;border-radius:4px;padding:3px 5px;vertical-align:middle;text-transform:none}
+.chk.need{color:#ff8fb3;border-color:#ff8fb3}
+
+/* боковые золотые линии, как у Одеона */
+.rails{position:fixed;inset:0;pointer-events:none;z-index:1}
+.rails::before,.rails::after{content:"";position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(transparent,rgba(212,175,55,.35) 15%,rgba(212,175,55,.35) 85%,transparent)}
+.rails::before{left:max(16px,calc(50% - 650px))}.rails::after{right:max(16px,calc(50% - 650px))}
+
+/* шапка */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .5s,backdrop-filter .5s}
+.hdr.solid{background:rgba(7,5,10,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hdr .in{display:flex;align-items:center;gap:26px;height:76px;padding:0 clamp(16px,3vw,40px)}
+.logo{text-decoration:none;font:600 22px/0.95 var(--serif);text-align:center}
+.logo small{display:block;font:500 9px/1 var(--sans);letter-spacing:.42em;color:var(--gold);margin-top:4px}
+.nav{display:flex;gap:22px;margin-left:auto}
+.nav a{text-decoration:none;font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;opacity:.82;transition:opacity .3s,color .3s}
+.nav a:hover{opacity:1;color:var(--gold2)}
+/* кнопка-билет */
+.ticket{position:relative;display:inline-flex;align-items:stretch;height:46px;text-decoration:none;color:#2a1904;
+  background:var(--gg);background-size:220% 100%;animation:breathe 9s ease-in-out infinite;
+  -webkit-mask:radial-gradient(circle 7px at 0 50%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 7px at 100% 50%,#0000 97%,#000) right/51% 100% no-repeat;
+          mask:radial-gradient(circle 7px at 0 50%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 7px at 100% 50%,#0000 97%,#000) right/51% 100% no-repeat;
+  transition:transform .35s ease,filter .35s}
+.ticket:hover{transform:translateY(-2px);filter:brightness(1.08) drop-shadow(0 8px 20px rgba(212,175,55,.35))}
+.ticket span{display:flex;align-items:center;padding:0 18px 0 22px;font:600 14px/1 var(--serif);letter-spacing:.16em;text-transform:uppercase}
+.ticket i{width:0;border-left:2px dotted rgba(42,25,4,.55);margin:7px 0}
+.ticket b{display:flex;align-items:center;padding:0 12px 0 9px;font:700 8px/1 var(--sans);letter-spacing:.12em;writing-mode:vertical-rl;transform:rotate(180deg);opacity:.75}
+.ticket.big{height:56px}.ticket.big span{font-size:16px;padding:0 26px 0 30px}
+.hdr .ticket{margin-left:10px}
+
+/* ===== первый экран: дым-вьюга ===== */
+.hero{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#050307}
+.hero .scene{position:absolute;inset:-4%;}
+.hero .scene img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.42) saturate(.9) contrast(1.05);transform:scale(1.12);animation:kb 28s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.02) translate(-1.2%,-1%)}}
+#smoke{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.hero .shade{position:absolute;inset:0;z-index:3;background:radial-gradient(120% 90% at 50% 45%,transparent 35%,rgba(5,3,7,.75) 100%),linear-gradient(180deg,rgba(5,3,7,.55),transparent 22%,transparent 70%,rgba(7,5,10,1))}
+.hero .copy{position:absolute;z-index:4;left:0;right:0;top:50%;transform:translateY(-46%);padding:0 clamp(16px,6vw,96px)}
+.hero h1{font:600 clamp(84px,17vw,280px)/.82 var(--serif);letter-spacing:-.01em}
+.hero h1 .l1{display:block;margin-left:2vw}
+.hero h1 .l2{display:block;font-size:.38em;line-height:1;margin:.12em 0 0 34vw;letter-spacing:.06em}
+.hero h1 .ch{display:inline-block}
+.hero .side{position:absolute;right:clamp(16px,6vw,96px);top:52%;max-width:360px;color:var(--cream);font-size:14px;letter-spacing:.34em;line-height:1.9}
+.hero .cta{position:absolute;z-index:4;left:0;right:0;bottom:clamp(30px,7vh,70px);display:flex;flex-direction:column;align-items:center;gap:18px}
+.hero .cta .caps{font-size:11px;color:rgba(243,233,216,.6)}
+.hero .scroll{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);animation:drip 2.6s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== орнамент ===== */
+.orn{position:absolute;pointer-events:none;z-index:1;color:var(--gold);opacity:.55}
+.orn svg{display:block;width:100%;height:auto;overflow:visible}
+.orn path,.orn line,.orn circle{fill:none;stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.6s cubic-bezier(.6,.1,.2,1)}
+.orn.in path,.orn.in line,.orn.in circle{stroke-dashoffset:0}
+.orn.fan-r{right:-40px;width:clamp(160px,22vw,330px)}
+.orn.fan-l{left:-40px;width:clamp(160px,22vw,330px);transform:scaleX(-1)}
+.orn.flake{width:64px;left:50%;margin-left:-32px;opacity:.8}
+
+/* ===== секции ===== */
+.sec{position:relative;padding:clamp(90px,12vw,170px) 0;overflow:hidden}
+.title{text-align:center;font:600 clamp(40px,6.4vw,92px)/1 var(--serif);letter-spacing:.02em;text-transform:uppercase}
+.sub{text-align:center;color:var(--muted);max-width:640px;margin:22px auto 0;font-size:clamp(16px,1.5vw,19px)}
+.kick{text-align:center;color:var(--gold);margin-bottom:22px;font-size:11px}
+
+/* появления */
+[data-a]{transition:opacity 1.3s cubic-bezier(.2,.7,.2,1),transform 1.3s cubic-bezier(.2,.7,.2,1),filter 1.3s}
+[data-a="up"]{opacity:0;transform:translateY(46px)}
+[data-a="fade"]{opacity:0}
+[data-a="zoom"]{opacity:0;transform:scale(.93)}
+[data-a="blur"]{opacity:0;filter:blur(12px)}
+[data-a].in{opacity:1;transform:none;filter:none}
+
+/* сегодня в метелице */
+.kv{position:relative;margin:clamp(40px,6vw,70px) auto 0;max-width:1100px;aspect-ratio:16/8;border-radius:4px;overflow:hidden;border:1px solid rgba(212,175,55,.35)}
+.kv img{position:absolute;left:0;top:-14%;width:100%;height:128%;object-fit:cover;object-position:center 35%;will-change:transform}
+.kv::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(7,5,10,.85));pointer-events:none}
+.kv .on{position:absolute;left:0;right:0;bottom:24px;z-index:2;text-align:center}
+.kv .on h3{font:600 clamp(28px,4vw,56px)/1 var(--serif)}
+.kv .on p{color:var(--gold2);font:500 italic clamp(18px,2vw,26px)/1.3 var(--serif);margin-top:8px}
+.dates{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:34px 0 34px}
+.dates a{text-decoration:none;border:1px solid rgba(212,175,55,.45);padding:12px 18px;text-align:center;min-width:132px;transition:background .4s,border-color .4s}
+.dates a:hover{background:rgba(212,175,55,.1);border-color:var(--gold)}
+.dates b{display:block;font:600 20px/1.1 var(--serif)}
+.dates small{font-size:12px;color:var(--muted)}
+.center{display:flex;justify-content:center}
+
+/* сцена «Пробуй. Танцуй. Мечтай.» — sticky, без библиотек */
+.ptm{position:relative;height:340vh}
+.ptm .stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#060408}
+.ptm .pane{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+.ptm .pane.on{opacity:1}
+.ptm .pane .bg{position:absolute;inset:-6%;will-change:transform}
+.ptm .pane .bg img{width:100%;height:100%;object-fit:cover}
+.ptm .pane .dim{position:absolute;inset:0;background:radial-gradient(90% 80% at 50% 50%,rgba(6,4,8,.25),rgba(6,4,8,.9))}
+.ptm .w{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font:600 clamp(80px,15vw,230px)/.9 var(--serif);z-index:4;transition:transform 1.4s cubic-bezier(.2,.7,.2,1),opacity 1.2s,filter 1.2s}
+.ptm .pane:not(.on) .w{opacity:0;transform:translateY(-40%);filter:blur(8px)}
+.ptm .note{position:absolute;left:0;right:0;bottom:12vh;text-align:center;z-index:4;font:500 italic clamp(18px,2vw,26px)/1.3 var(--serif);color:var(--cream);padding:0 16px}
+.ptm .pA .bg img{object-fit:cover;filter:brightness(.55) sepia(.35) saturate(.8)}
+.ptm .pB .bg img{filter:brightness(.6) saturate(.7) sepia(.25)}
+.ptm .pC .bg img{filter:blur(30px) brightness(.35)}
+.ptm .pC .portrait{position:absolute;left:50%;top:50%;height:min(78vh,980px);aspect-ratio:2/3;transform:translate(-50%,-50%);border:1px solid rgba(212,175,55,.45);z-index:2;overflow:hidden}
+.ptm .pC .portrait img{width:100%;height:100%;object-fit:cover;filter:brightness(.82)}
+.ptm .pC .w{top:auto;bottom:22vh;transform:none}
+.ptm .pC:not(.on) .w{transform:translateY(30px)}
+.gbeam{position:absolute;top:-10%;width:30vw;min-width:200px;height:130%;transform-origin:50% 0;mix-blend-mode:screen;filter:blur(10px);opacity:.42;
+  background:linear-gradient(rgba(240,217,138,.75),rgba(240,217,138,0) 80%);clip-path:polygon(47% 0,53% 0,100% 100%,0 100%);animation:sway 7s ease-in-out infinite alternate;z-index:3}
+.gbeam.a{left:8%;--a:-16deg;--b:8deg}.gbeam.b{left:35%;--a:10deg;--b:-12deg;animation-duration:9s}.gbeam.c{left:62%;--a:-8deg;--b:16deg;animation-duration:8s}
+@keyframes sway{from{transform:rotate(var(--a))}to{transform:rotate(var(--b))}}
+.lamp{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,45%),transparent 0,transparent 10vmax,rgba(6,4,8,.45) 22vmax,rgba(6,4,8,.7) 36vmax)}
+#gsnow{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.ptm .dots{position:absolute;right:clamp(16px,3vw,40px);top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;gap:12px}
+.ptm .dots i{width:7px;height:7px;border:1px solid var(--gold);border-radius:50%;transition:background .4s}
+.ptm .dots i.on{background:var(--gold)}
+.ptm .ft{position:absolute;left:0;right:0;bottom:5vh;z-index:6;display:flex;justify-content:center}
+
+/* ужин: карусель */
+.car{position:relative;max-width:1100px;margin:clamp(40px,6vw,70px) auto 0}
+.track{display:flex;transition:transform 1s cubic-bezier(.6,.05,.2,1)}
+.slide{flex:0 0 100%;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,60px);align-items:center;padding:0 clamp(0px,4vw,56px)}
+.viewport{overflow:hidden}
+.slide .pic{aspect-ratio:1;border-radius:50%;overflow:hidden;border:1px solid rgba(212,175,55,.5);box-shadow:0 0 0 14px rgba(212,175,55,.04),0 40px 80px rgba(0,0,0,.5);max-width:480px;width:100%;justify-self:center}
+.slide .pic img{width:100%;height:100%;object-fit:cover;transform:scale(1.5);transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.slide.cur .pic img{transform:scale(1.32) rotate(-8deg)}
+.slide .num{color:var(--gold);font-size:11px}
+.slide h3{font:600 clamp(36px,4.6vw,64px)/1 var(--serif);margin:12px 0 16px}
+.slide p{color:var(--muted);margin-bottom:26px}
+.lnk{background:none;border:0;border-bottom:1px solid var(--gold);color:var(--gold2);padding:6px 0;font:500 12px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase}
+.arr{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:1px solid rgba(212,175,55,.55);border-radius:50%;background:rgba(7,5,10,.6);color:var(--gold2);font-size:20px;z-index:3}
+.arr.prev{left:-6px}.arr.next{right:-6px}
+.cdots{display:flex;justify-content:center;gap:10px;margin-top:34px}
+.cdots button{width:34px;height:2px;border:0;background:rgba(212,175,55,.3)}
+.cdots button.on{background:var(--gold)}
+dialog{margin:auto;border:1px solid rgba(212,175,55,.5);background:#0d0910;color:var(--cream);padding:clamp(24px,4vw,44px);max-width:560px;width:calc(100% - 32px)}
+dialog::backdrop{background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
+dialog h3{font:600 36px/1 var(--serif);margin-bottom:18px}
+dialog dt{color:var(--gold);font-size:11px;letter-spacing:.24em;text-transform:uppercase;margin-top:16px}
+dialog dd{color:#dccfbd;margin-top:4px}
+dialog .x{position:absolute;right:16px;top:10px;background:none;border:0;color:var(--muted);font-size:28px}
+dialog .fine{font-size:12px;color:var(--muted);margin-top:20px}
+
+/* зал */
+.hall{max-width:1100px;margin:clamp(40px,6vw,70px) auto 0}
+.hall img{width:100%;height:auto;border:1px solid rgba(212,175,55,.35)}
+.hall .cap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
+.plaque{margin:28px auto 0;max-width:640px;border:1px dashed rgba(255,143,179,.55);padding:16px 20px;text-align:center;color:#ffc0d5;font-size:14px}
+
+.foot{border-top:1px solid rgba(212,175,55,.25);padding:60px 20px 120px;text-align:center;color:var(--muted);font-size:14px}
+.foot .row{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.foot a{color:var(--gold2)}
+
+@media (max-width:980px){.nav{display:none}}
+@media (max-width:700px){
+  .hdr .in{height:64px;gap:10px}
+  .logo{font-size:18px}
+  .ticket{height:40px}.ticket span{font-size:12px;padding:0 12px 0 16px;letter-spacing:.1em}.ticket b{display:none}.ticket i{display:none}
+  .ticket.big{height:52px}.ticket.big span{font-size:14px;padding:0 22px}
+  .hero .copy{top:40%}
+  .hero h1 .l1{margin-left:0}
+  .hero h1 .l2{margin-left:38vw}
+  .hero .side{position:static;margin-top:26px;font-size:11px;letter-spacing:.26em;max-width:300px}
+  .kv{aspect-ratio:4/5}
+  .slide{grid-template-columns:1fr;text-align:center}
+  .slide .pic{max-width:300px}
+  .arr{top:150px}.arr.prev{left:4px}.arr.next{right:4px}
+  .ptm .pC .portrait{height:auto;width:76vw;top:42%}
+  .ptm .pC .w{bottom:18vh}
+  .orn.fan-r,.orn.fan-l{width:150px;opacity:.35}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .goldtext,.ticket,.hero .scene img,.gbeam,.hero .scroll{animation:none}
+  [data-a]{opacity:1!important;transform:none!important;filter:none!important;transition:none}
+  .orn path,.orn line,.orn circle{stroke-dashoffset:0;transition:none}
+  .ptm{height:auto}.ptm .stick{position:relative;height:auto}
+  .ptm .pane{position:relative;opacity:1;height:100vh;height:100svh}
+  .ptm .pane:not(.on) .w{opacity:1;transform:translateY(-50%);filter:none}
+  .ptm .pC:not(.on) .w{transform:none}
+  .ptm .dots{display:none}
+}
+@media (min-width:701px){.hero h1{font-size:clamp(84px,15vw,240px)}.hero .side{top:auto;bottom:calc(50% - 15vw);max-width:330px}}
+
+/* ===== демо-3: фирменный логотип на первом экране ===== */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hlogo img{height:44px;width:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
+.copy3{position:absolute;z-index:4;left:0;right:0;top:46%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px}
+/* исходник 465 px: шире ~520 px растр мутнеет — ограничиваем */
+.lg{position:relative;width:min(520px,86vw);aspect-ratio:465/240;transition:transform .9s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.lg-float{position:absolute;inset:0;animation:float 6s ease-in-out infinite;
+  opacity:0;filter:blur(18px) brightness(1.6);transform:scale(.92);transition:opacity 2.4s cubic-bezier(.2,.7,.2,1) 1.8s,filter 2.6s cubic-bezier(.2,.7,.2,1) 1.8s,transform 2.8s cubic-bezier(.2,.7,.2,1) 1.8s}
+.lg.on .lg-float{opacity:1;filter:none;transform:scale(1)}
+@keyframes float{0%,100%{translate:0 -3px}50%{translate:0 3px}}
+.lg-img{width:100%;height:auto;filter:drop-shadow(0 18px 40px rgba(0,0,0,.65)) drop-shadow(0 0 30px rgba(240,217,138,.12))}
+.lg-glint{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
+  -webkit-mask:url(img/logo-metelitsa-rgba.png) center/100% 100% no-repeat;mask:url(img/logo-metelitsa-rgba.png) center/100% 100% no-repeat;
+  background:linear-gradient(115deg,transparent 0 42%,rgba(255,255,255,.0) 44%,rgba(255,250,235,.95) 50%,rgba(255,240,200,.0) 56%,transparent 58% 100%);
+  background-size:300% 100%;background-position:120% 0;animation:glint 6s ease-in-out 4.6s infinite}
+@keyframes glint{0%{background-position:120% 0}28%{background-position:-20% 0}100%{background-position:-20% 0}}
+.lg-star{position:absolute;left:55.9%;top:19.6%;width:24%;aspect-ratio:1;translate:-50% -50%;pointer-events:none;mix-blend-mode:screen;
+  filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 18px rgba(240,217,138,.9));opacity:0;scale:.2;animation:twinkle 4.2s ease-in-out 3.8s infinite}
+@keyframes twinkle{0%{opacity:0;scale:.2;rotate:0deg}12%{opacity:1;scale:1.15;rotate:20deg}22%{opacity:.85;scale:.7;rotate:30deg}34%{opacity:.0;scale:.3;rotate:45deg}
+  55%{opacity:.5;scale:.55;rotate:45deg}62%{opacity:0;scale:.3}100%{opacity:0;scale:.2}}
+.lg-sparks{position:absolute;left:-30%;top:-40%;width:160%;height:180%;pointer-events:none}
+.lg-note{margin-top:8px}
+.side3{margin-top:clamp(22px,4vh,40px);font-size:clamp(11px,1vw,14px);letter-spacing:.34em;color:var(--cream);opacity:0;transform:translateY(16px);transition:opacity 1.6s 3s,transform 1.6s 3s}
+.lg.on~.side3{opacity:1;transform:none}
+@media (max-width:700px){.hlogo img{height:34px}.copy3{top:44%}.side3{letter-spacing:.24em;max-width:300px}}
+@media (prefers-reduced-motion:reduce){
+  .lg-float{opacity:1;filter:none;transform:none;animation:none;transition:none}
+  .lg-glint,.lg-star{animation:none}
+  .side3{opacity:1;transform:none;transition:none}
+}

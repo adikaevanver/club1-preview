@@ -1,0 +1,275 @@
+/* страница мюзикла в стиле демо-5 (01.11) */
+.m5{--cr:#F7EAD4;--em:#e9a24a;--emh:#ffd99a}
+.m5 .left{text-align:left}
+.m5 .narrow{max-width:860px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:center}
+.grid2.rev .ph{order:2}
+.m5 .ph{margin:0;position:relative;border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgba(240,217,138,.16),0 40px 80px rgba(0,0,0,.55)}
+.m5 .ph img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.m5 .ph:hover img{transform:scale(1.04)}
+.m5 .ph figcaption,.dance .credit{position:absolute;left:14px;bottom:12px;font:500 10px/1 Manrope,sans-serif;letter-spacing:.12em;color:rgba(247,234,212,.7)}
+.m5 .txt .kick{text-align:left}
+.voice{margin:0;font:400 italic clamp(22px,2.2vw,32px)/1.35 "Cormorant Garamond",Georgia,serif;color:var(--cr)}
+.voice em{color:var(--emh)}
+.who{display:flex;align-items:baseline;gap:10px;margin:22px 0 0}
+.who b{font:500 italic 22px/1 "Cormorant Garamond",serif;color:var(--emh)}
+.who span{font:500 11px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#b7aa98}
+.m5 .note{margin-top:14px;font-size:12px}.m5 .note.center{text-align:center}
+.m5 .lead{color:#d9ccb8;font-size:clamp(16px,1.3vw,19px);line-height:1.6;margin-top:18px;max-width:560px}
+.m5 .title.left{text-align:left;font-size:clamp(34px,4vw,62px)}
+.m5 .center{text-align:left}
+#vecher .center,#reviews .center{text-align:center}
+.steps{list-style:none;padding:0;margin:56px 0 30px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.steps li{position:relative;padding:28px 26px 30px;border-radius:18px;background:linear-gradient(180deg,rgba(255,228,180,.06),rgba(255,228,180,.015));box-shadow:inset 0 0 0 1px rgba(240,217,138,.14)}
+.steps .n{font:500 11px/1 Manrope,sans-serif;letter-spacing:.2em;color:var(--em)}
+.steps h3{font:500 italic 34px/1 "Cormorant Garamond",serif;color:var(--cr);margin:14px 0 10px}
+.steps p{color:#cbbfae;font-size:15px;line-height:1.55;margin:0}
+#vecher .who{justify-content:center}
+.songs{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:10px}
+.songs li{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(240,217,138,.16);
+  font:500 italic 24px/1.1 "Cormorant Garamond",serif;color:var(--cr);transition:background .3s}
+.songs li:hover{background:rgba(233,162,74,.12)}
+.songs i{font-style:normal;color:var(--em);font-size:18px}
+.songs small{margin-left:auto;font:500 10px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8f826f}
+.warn{counter-reset:w;list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px}
+.warn li{counter-increment:w;position:relative;padding-left:46px;color:#e3d6c2;font-size:16px;line-height:1.55}
+.warn li::before{content:"0" counter(w);position:absolute;left:0;top:2px;font:500 italic 22px/1 "Cormorant Garamond",serif;color:var(--em)}
+.legal{margin-top:22px;font-size:11px;line-height:1.5;color:#8f826f}
+.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+.revs blockquote{margin:0;padding:28px;border-radius:18px;box-shadow:inset 0 0 0 1px rgba(240,217,138,.14)}
+.revs p{font:400 italic 40px/1 "Cormorant Garamond",serif;color:var(--em);margin:0 0 14px}
+.press{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(240,217,138,.14);border-radius:16px;overflow:hidden;margin-top:24px}
+.press div{background:#0d0806;padding:22px}
+.press b{display:block;font:600 11px/1 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--em);margin-bottom:10px}
+.press span{font:400 italic 19px/1.3 "Cormorant Garamond",serif;color:var(--cr)}
+.dance{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden}
+.dance>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dance::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(8,5,3,.92) 0%,rgba(8,5,3,.6) 45%,rgba(8,5,3,.1) 100%)}
+.dance-in{position:relative;z-index:2;width:100%}
+.dance .title{max-width:640px}
+.dance .credit{z-index:2;left:auto;right:18px}
+.giftf{display:grid;gap:12px;margin-top:26px;max-width:460px}
+.giftf input:not([type=checkbox]){height:50px;padding:0 18px;border-radius:12px;border:1px solid rgba(240,217,138,.25);background:rgba(255,240,220,.04);color:var(--cr);font:500 15px Manrope,sans-serif}
+.giftf label{font-size:12px;color:#b7aa98;display:flex;gap:8px;align-items:center}
+.giftf .bbtn{justify-self:start;border:0;cursor:pointer}
+.giftf .ok{display:none;color:var(--emh);font-size:14px}.giftf.sent .ok{display:block}
+.faq{margin-top:40px;border-top:1px solid rgba(240,217,138,.16)}
+.faq details{border-bottom:1px solid rgba(240,217,138,.16)}
+.faq summary{list-style:none;cursor:pointer;padding:22px 40px 22px 0;position:relative;font:500 italic 24px/1.25 "Cormorant Garamond",serif;color:var(--cr)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"✦";position:absolute;right:6px;top:22px;color:var(--em);transition:transform .4s}
+.faq details[open] summary::after{transform:rotate(135deg)}
+.faq details p{margin:0 0 22px;color:#cbbfae;line-height:1.6}
+@media (max-width:820px){.grid2,.steps,.revs,.press{grid-template-columns:1fr}.grid2.rev .ph{order:0}.dance::before{background:rgba(8,5,3,.72)}}
+/* даты из живых данных */
+.drows{display:grid;gap:10px;max-width:900px;margin:40px auto 0}
+.drow{display:grid;grid-template-columns:110px 1fr auto auto;align-items:center;gap:22px;padding:16px 16px 16px 24px;border-radius:16px;text-decoration:none;
+  background:linear-gradient(90deg,rgba(255,228,180,.06),rgba(255,228,180,.015));box-shadow:inset 0 0 0 1px rgba(240,217,138,.16);transition:background .3s,box-shadow .3s,transform .3s}
+.drow:hover{background:linear-gradient(90deg,rgba(233,162,74,.2),rgba(233,162,74,.04));box-shadow:inset 0 0 0 1px rgba(255,217,154,.5);transform:translateX(4px)}
+.drow.more{display:none}[data-live-dates].open .drow.more{display:grid}
+.dd{display:flex;align-items:baseline;gap:8px}.dd b{font:500 40px/1 "Cormorant Garamond",serif;color:#F7EAD4}.dd i{font:500 italic 18px/1 "Cormorant Garamond",serif;color:#cbbfae}
+.dw{font:600 12px/1.4 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#d9ccb8}
+.dw em{display:block;font:500 italic 15px/1.3 "Cormorant Garamond",serif;letter-spacing:0;text-transform:none;color:#ffd99a;margin-top:4px}
+.dp{font:500 italic 22px/1 "Cormorant Garamond",serif;color:#F7EAD4;white-space:nowrap}
+.db{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;background:#F7EAD4;color:#1d1006;font:700 12px/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.db svg{width:14px;height:14px;fill:#c82285}
+.dmore{all:unset;cursor:pointer;margin-top:22px;padding:12px 22px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(240,217,138,.35);color:#F7EAD4;font:500 italic 19px/1 "Cormorant Garamond",serif}
+.dmore:hover{background:rgba(233,162,74,.15)}
+@media (max-width:700px){.drow{grid-template-columns:1fr auto;row-gap:10px}.dp{grid-column:1}.db{grid-column:2;grid-row:1/3}}
+.dp small{display:block;font:600 9px/1.4 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#a99a85;margin-top:4px}
+.dnote{text-align:center;color:#cbbfae;font-size:14px;margin:26px auto 0;max-width:700px}
+.how{list-style:none;padding:0;margin:44px auto 0;max-width:900px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.how li{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center;padding:18px 20px;border-radius:16px;box-shadow:inset 0 0 0 1px rgba(240,217,138,.18)}
+.how b{grid-row:span 2;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#F7EAD4;color:#1d1006;font:600 18px/1 "Cormorant Garamond",serif}
+.how span{font:500 italic 22px/1.1 "Cormorant Garamond",serif;color:#F7EAD4}
+.how small{font-size:12px;color:#b7aa98;margin-top:4px}
+@media (max-width:700px){.how{grid-template-columns:1fr}}
+/* корпоративам — Метелица Event Hall */
+.corp .facts{display:flex;justify-content:center;gap:clamp(20px,5vw,70px);margin:40px 0 50px;flex-wrap:wrap}
+.corp .facts div{text-align:center}.corp .facts b{display:block;font:500 clamp(34px,4vw,54px)/1 "Cormorant Garamond",serif;color:#F7EAD4}
+.corp .facts span{font:600 11px/1 Manrope,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#e9a24a}
+.cfs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cf{margin:0;border-radius:18px;overflow:hidden;background:#140c07;box-shadow:0 0 0 1px rgba(240,217,138,.14)}
+.cf img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}.cf:hover img{transform:scale(1.05)}
+.cf figcaption{padding:18px 18px 22px}.cf h3{font:500 italic 24px/1.1 "Cormorant Garamond",serif;color:#F7EAD4;margin:0 0 8px}.cf p{margin:0;color:#b7aa98;font-size:14px;line-height:1.5}
+.gal{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px;margin-top:16px}
+.gal img{width:100%;height:220px;object-fit:cover;border-radius:14px}
+.clead{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:56px;padding:clamp(24px,4vw,44px);border-radius:22px;
+  background:radial-gradient(120% 140% at 0% 0%,rgba(233,162,74,.18),rgba(233,162,74,.02));box-shadow:inset 0 0 0 1px rgba(240,217,138,.2)}
+.clead h3{font:500 italic clamp(28px,3vw,40px)/1.1 "Cormorant Garamond",serif;color:#F7EAD4;margin:0 0 12px}.clead p{color:#cbbfae}
+.ph5 a{font:500 32px/1 "Cormorant Garamond",serif;color:#ffd99a;text-decoration:none}.ph5 small{display:block;margin-top:6px;color:#8f826f;font-size:12px}
+@media (max-width:900px){.cfs{grid-template-columns:1fr 1fr}.gal{grid-template-columns:1fr 1fr}.clead{grid-template-columns:1fr}}
+
+/* D «Журнал» — страница мюзикла (01.11, выбор Ала) */
+.jrn-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(30px,5vw,80px);align-items:center}
+.jrn-q .kick{text-align:left}
+.jrn-drop{font:400 clamp(24px,2.5vw,40px)/1.32 "Cormorant Garamond",Georgia,serif;color:#F7EAD4;margin-top:22px}
+.jrn-drop::first-letter{float:left;font:500 clamp(96px,10vw,160px)/.8 "Cormorant Garamond",serif;color:#e9a24a;margin:8px 14px 0 0}
+.jrn-sm{font:400 italic clamp(22px,2vw,30px)/1.3 "Cormorant Garamond",serif;color:#ffd99a;margin-top:20px}
+.jrn-meta{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:30px}.jrn-meta .who{margin:0}
+.jrn-pic{position:relative;padding:0 0 12% 18%}
+.jrn-big{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px;transform:rotate(2deg);box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.jrn-small{position:absolute;left:0;bottom:0;width:52%;aspect-ratio:1;object-fit:cover;transform:rotate(-5deg);border:8px solid #f3e6cf;box-shadow:0 20px 40px rgba(0,0,0,.55)}
+@media (max-width:860px){.jrn-grid{grid-template-columns:1fr}.jrn-pic{order:-1;padding:0 0 18% 0;max-width:520px;margin:0 auto}.jrn-small{left:auto;right:-4%;width:46%}}
+/* F «Три кадра» — главная и посадочные; подписи проявляются по словам */
+.f3-list{list-style:none;padding:0;margin:44px 0 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.f3-list figure{position:relative;margin:0;border-radius:18px;overflow:hidden;box-shadow:0 0 0 1px rgba(240,217,138,.14),0 30px 60px rgba(0,0,0,.5)}
+.f3-list img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.f3-list li:hover img{transform:scale(1.04)}
+.f3-n{position:absolute;left:16px;top:10px;font:500 66px/1 "Cormorant Garamond",serif;color:#F7EAD4;text-shadow:0 4px 20px rgba(0,0,0,.7)}
+.f3-cap{font:400 italic clamp(20px,1.8vw,27px)/1.35 "Cormorant Garamond",serif;margin-top:18px;text-align:center}
+.f3-cap span{color:rgba(247,234,212,.16);transition:color .5s;transition-delay:calc(.35s + var(--i)*70ms)}
+.f3-list li.in .f3-cap span{color:#F7EAD4}
+@media (max-width:860px){.f3-list{grid-template-columns:1fr}.f3-list img{aspect-ratio:4/3}}
+@media (prefers-reduced-motion:reduce){.f3-cap span{color:#F7EAD4;transition:none}}
+
+/* всплывашка Telegram CLUB#1 из analytics.js живого сайта — не для мюзикла, стилей нет (аудит 01.11) */
+.tg-invite{display:none!important}
+
+/* без пустоты после первого экрана на внутренних страницах (Ал 01.11 19:36) */
+.phero + .sec,.phero + section{padding-top:clamp(48px,5vw,80px)!important}
+.sec.m5{padding-top:clamp(64px,7vw,110px);padding-bottom:clamp(64px,7vw,110px)}
+.jrn-grid{align-items:start}
+.jrn-q{padding-top:clamp(0px,2vw,30px)}
+
+/* «тёмный провал» убран совсем: низ первого экрана растворяется в фоне, история сразу (Ал 01.11 19:37) */
+.phero{position:relative}
+.phero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:38%;pointer-events:none;background:linear-gradient(180deg,rgba(13,8,6,0),#0d0806 92%)}
+.phero + .sec,.phero + section{padding-top:24px!important}
+.h4 + .sec,.h4 + section{padding-top:clamp(40px,4vw,64px)!important}
+.phero::after{z-index:1}
+.phero > .wrap,.phero .wrap{position:relative;z-index:2}
+
+/* «Меню вечера» — шесть шагов (выбор Ала 01.11, вариант C) */
+.mv{background:radial-gradient(60% 60% at 50% 40%,rgba(233,162,74,.08),transparent)}
+.mv-card{max-width:820px;margin:0 auto;padding:clamp(36px,5vw,64px) clamp(22px,5vw,70px);border:1px solid rgba(240,217,138,.35);outline:1px solid rgba(240,217,138,.16);outline-offset:8px;border-radius:4px;background:#120b07}
+.mv-card .kick{text-align:center}
+.mv-h{text-align:center;font:500 clamp(42px,5vw,72px)/1 "Cormorant Garamond",serif;color:#F7EAD4;margin:14px 0 6px}
+.mv-orn{text-align:center;color:#e9a24a;letter-spacing:.6em;margin:6px 0 30px}
+.mv-list{list-style:none;padding:0;margin:0}
+.mv-row{position:relative;display:grid;grid-template-columns:0 1fr;align-items:start;transition:grid-template-columns .5s cubic-bezier(.2,.7,.2,1),gap .5s;gap:0;padding:10px 0}
+.mv-th{width:72px;height:72px;border-radius:50%;object-fit:cover;opacity:0;transform:scale(.6);transition:opacity .4s,transform .5s;border:2px solid rgba(255,217,154,.6)}
+.mv-row:hover{grid-template-columns:72px 1fr;gap:20px}
+.mv-row:hover .mv-th{opacity:1;transform:none}
+.mv-li{display:flex;align-items:baseline;gap:12px}
+.mv-t{font:500 italic clamp(28px,2.6vw,38px)/1.1 "Cormorant Garamond",serif;color:#F7EAD4}
+.mv-dots{flex:1;border-bottom:1px dotted rgba(240,217,138,.45);transform:translateY(-6px)}
+.mv-st{font:600 10px/1 Manrope,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#e9a24a;white-space:nowrap}
+.mv-d{font:400 italic clamp(17px,1.4vw,20px)/1.45 "Cormorant Garamond",serif;color:rgba(247,234,212,.72);margin:4px 0 14px}
+.mv-foot{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;margin-top:26px;padding-top:26px;border-top:1px solid rgba(240,217,138,.2)}
+.mv-foot .who{margin:0}
+@media (hover:none),(max-width:700px){.mv-row,.mv-row:hover{grid-template-columns:56px 1fr;gap:14px}.mv-th{width:56px;height:56px;opacity:1;transform:none}.mv-st{display:none}}
+
+/* «Меню вечера» — шаг открывается подробно (Ал 01.11 20:16) */
+.mv-row{cursor:pointer;border-radius:10px;transition:background .3s,grid-template-columns .5s,gap .5s}
+.mv-row:hover,.mv-row:focus-visible{background:rgba(233,162,74,.06);outline:none}
+.mv-row .mv-t::after{content:" ›";color:#e9a24a;font-style:normal;opacity:0;transition:opacity .3s}
+.mv-row:hover .mv-t::after{opacity:1}
+.mv-hint{text-align:center;font:500 italic 16px/1 "Cormorant Garamond",serif;color:#b7aa98;margin-top:16px}
+.mvd{width:min(1040px,94vw);max-height:90vh;padding:0;border:0;border-radius:20px;overflow:hidden;background:#140c07;color:#F7EAD4;box-shadow:0 0 0 1px rgba(240,217,138,.3),0 40px 120px rgba(0,0,0,.8)}
+.mvd[open]{display:grid;grid-template-columns:1fr 1fr;animation:mvdIn .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes mvdIn{from{opacity:0;transform:translateY(24px) scale(.97)}}
+.mvd::backdrop{background:rgba(5,3,2,.78);backdrop-filter:blur(6px)}
+.mvd-media{position:relative;min-height:420px;background:#000}
+.mvd-media img,.mvd-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mvd-body{padding:clamp(26px,3.5vw,48px);overflow:auto;max-height:90vh}
+.mvd-k{text-align:left}
+.mvd-t{font:500 italic clamp(44px,4.4vw,66px)/1 "Cormorant Garamond",serif;margin:12px 0 18px}
+.mvd-p p{font:400 17px/1.6 Manrope,sans-serif;color:rgba(247,234,212,.82);margin:0 0 12px}
+.mvd-f{margin:18px 0 0;border-top:1px solid rgba(240,217,138,.2)}
+.mvd-f div{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:10px 0;border-bottom:1px solid rgba(240,217,138,.12)}
+.mvd-f dt{font:600 10px/1.6 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#e9a24a}
+.mvd-f dd{margin:0;font:400 italic 19px/1.35 "Cormorant Garamond",serif}
+.mvd-nav{display:flex;align-items:center;gap:12px;margin-top:26px}
+.mvd-nav button{all:unset;cursor:pointer;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(240,217,138,.35);color:#ffd99a;font-size:18px}
+.mvd-nav button:hover{background:rgba(233,162,74,.18)}
+.mvd-x{all:unset;position:absolute;right:14px;top:10px;z-index:3;cursor:pointer;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:rgba(10,6,4,.7);color:#F7EAD4;font-size:26px}
+@media (max-width:760px){.mvd[open]{grid-template-columns:1fr}.mvd-media{min-height:0;aspect-ratio:16/10}.mvd{max-height:94vh;overflow:auto}.mvd-body{max-height:none}.mvd-f div{grid-template-columns:96px 1fr}}
+dialog.mvd{width:min(1040px,94vw)!important;max-width:none!important;margin:auto!important}
+.mvd .mvd-k{text-align:left!important}
+
+/* «Бар» — полноэкранная вставка с роликом коктейлей (Ал 01.11) */
+.bar5{position:relative;min-height:86vh;display:flex;align-items:center;overflow:hidden}
+.bar5-v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bar5::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(8,5,3,.92) 0%,rgba(8,5,3,.55) 42%,rgba(8,5,3,0) 75%),linear-gradient(0deg,rgba(13,8,6,1) 0%,rgba(13,8,6,0) 18%),linear-gradient(180deg,rgba(13,8,6,1) 0%,rgba(13,8,6,0) 14%)}
+.bar5-in{position:relative;z-index:2;width:100%}
+.bar5 .kick{text-align:left}
+.bar5-h{font:500 italic clamp(44px,5.6vw,88px)/1.02 "Cormorant Garamond",serif;color:#F7EAD4;margin:14px 0 18px;max-width:640px}
+.bar5-p{color:#e3d6c2;font-size:clamp(16px,1.3vw,19px);line-height:1.6;max-width:520px}
+.bar5-row{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:30px}
+.bar5-more{color:#ffd99a;font:500 italic 22px/1 "Cormorant Garamond",serif;text-decoration:none}
+@media (max-width:700px){.bar5{min-height:92vh;align-items:flex-end;padding-bottom:40px}.bar5::before{background:linear-gradient(0deg,rgba(8,5,3,.95) 0%,rgba(8,5,3,.55) 55%,rgba(8,5,3,.1) 100%)}}
+/* СМИ о нас — обложки (как на womanmusical) */
+.press5{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px}
+.pr5{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:#F7EAD4}
+.pr5-i{display:block;aspect-ratio:16/10;border-radius:16px;overflow:hidden;box-shadow:0 0 0 1px rgba(240,217,138,.18)}
+.pr5-i img{width:100%;height:100%;object-fit:cover;transition:transform 1s}.pr5:hover .pr5-i img{transform:scale(1.05)}
+.pr5 b{font:600 10px/1 Manrope,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#e9a24a;margin-top:6px}
+.pr5 span:last-child{font:400 italic 20px/1.3 "Cormorant Garamond",serif}
+@media (max-width:860px){.press5{grid-template-columns:1fr 1fr}}
+
+/* ===== Приёмка 03.11 (Анвер): общие правки прототипа и сайта ===== */
+/* п.07 служебные пометки — только с ?chk в адресе */
+.chk,.svc,.plaque{display:none!important}
+html.chk-on .chk{display:inline-block!important}html.chk-on .svc,html.chk-on .plaque{display:block!important}
+/* п.12 пока открыто окно, страница под ним не прокручивается */
+html:has(dialog[open]){overflow:hidden}
+/* п.16, п.39 метки «крупно / на вашем столе» убраны */
+.dtag{display:none!important}
+/* п.33 мелкий текст — не меньше 12 px и контрастнее */
+.dp small{font-size:12px;letter-spacing:.06em;text-transform:none;color:#cbbfae}
+.h4 .note4{font-size:13px;color:rgba(247,234,212,.9);text-shadow:0 1px 6px rgba(0,0,0,.8)}
+.legal{font-size:13px;color:#b7aa98}
+/* п.42 песни — простой список, не плеер */
+.songs li{cursor:default}.songs li:hover{background:none}
+/* п.30 картинка над датами: кадр целиком, без обрезанного названия */
+.kv img{top:0;height:100%;object-position:center top;transform:none!important}
+@media (max-width:700px){.kv{aspect-ratio:16/9!important}}
+/* п.28 подпись под датами — с отступом */
+.dfoot{font-size:14px;margin-top:28px}
+#dates{scroll-margin-top:96px}
+/* п.34, п.36 окна «Шесть шагов»: постоянный размер, кнопки всегда видны */
+@media (min-width:761px){.mvd[open]{height:min(640px,90vh)}.mvd-body{display:flex;flex-direction:column;max-height:none;height:100%;box-sizing:border-box}.mvd-nav{margin-top:auto;padding-top:22px}}
+.mvd-nav .bbtn{white-space:nowrap}
+@media (max-width:760px){.mvd-body{overflow:visible}.mvd-nav{position:sticky;bottom:0;z-index:2;margin:18px -4px 0;padding:12px 4px 4px;background:linear-gradient(180deg,rgba(20,12,7,0),#140c07 30%)}
+  .mvd-nav .bbtn{flex:1;justify-content:center;min-width:0}.mvd-nav .bbtn span{overflow:hidden;text-overflow:ellipsis}
+  .mvd-f div{grid-template-columns:1fr;gap:2px}}
+/* п.40 «Полный состав сета» — как остальные окна, с названиями блюд */
+dialog#menu{max-width:640px;border:0;border-radius:22px;background:#140c07;box-shadow:0 0 0 1px rgba(240,217,138,.3),0 40px 120px rgba(0,0,0,.8)}
+dialog#menu::backdrop{background:rgba(5,3,2,.78);backdrop-filter:blur(6px)}
+dialog#menu .kick{text-align:left;margin:0 0 8px}
+dialog#menu h3{font:500 italic 40px/1.05 "Cormorant Garamond",serif;color:#F7EAD4;margin:0 0 14px}
+dialog#menu dl>div{padding:12px 0;border-bottom:1px solid rgba(240,217,138,.12)}
+dialog#menu dt{color:#e9a24a;margin:0}dialog#menu dd{margin:6px 0 0;color:rgba(247,234,212,.82);line-height:1.55}
+dialog#menu dd b{display:block;font:500 italic 22px/1.2 "Cormorant Garamond",serif;color:#F7EAD4;margin-bottom:4px}
+dialog#menu .x{all:unset;position:absolute;right:14px;top:10px;cursor:pointer;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;color:#F7EAD4;font-size:26px}
+/* круг 3: одна сумма за вечер, подсказка у кнопок, 4 шага */
+.dp small.dx{font-size:12px;color:#a99a85;letter-spacing:0;text-transform:none;margin-top:2px}
+.dhint{max-width:900px;margin:14px auto -26px;text-align:right;font-size:13px;color:#e9c98a;padding-right:16px}
+.how.four{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.how.four{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.dhint{text-align:center;margin-bottom:-26px;padding:0}.how.four{grid-template-columns:1fr}}
+/* п.37 точки слайдов — кликабельные */
+.ptm .dots i{cursor:pointer;width:11px;height:11px}
+@media (max-width:760px){.mvd[open]{grid-template-columns:minmax(0,1fr)}.mvd-body{min-width:0}}
+@media (max-width:700px){.drow{grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:14px 12px 14px 16px}.dp{white-space:normal}.dp small{white-space:normal}.db{padding-left:12px!important;padding-right:12px!important}}
+@media (max-width:700px){.drow .db{grid-row:1/2!important;align-self:start}.drow .dp{grid-column:1/-1!important}.dp small.dx{white-space:nowrap}}
+/* ===== Приёмка-2 (круг 5, 04.11) ===== */
+/* п.34, п.36: окно шагов — текст прокручивается, ряд кнопок всегда внизу и на одной высоте */
+@media (min-width:761px){.mvd-body{overflow:auto;padding-bottom:0}.mvd-nav{position:sticky;bottom:0;z-index:2;margin-top:auto;padding:16px 0 22px;background:linear-gradient(180deg,rgba(20,12,7,0),#140c07 28%)}}
+@media (max-width:760px){
+  .mvd-nav{background:#140c07;padding-bottom:10px}
+  .mvd-nav .bbtn{white-space:normal;text-align:center;line-height:1.2;padding-top:10px;padding-bottom:10px}
+  .mvd-nav .bbtn span{overflow:visible;text-overflow:clip}
+  /* п.109: крестик закреплён в углу, пока текст окна прокручивается */
+  .mvd-x{position:sticky;top:10px;right:auto;left:auto;z-index:5;justify-self:end;align-self:start;margin:10px 10px 0 0;grid-row:1/3;grid-column:1}
+  .mvd-media{grid-row:1;grid-column:1}.mvd-body{grid-row:2;grid-column:1}
+}
+/* п.39: смена видео в сете без долгого размытия */
+.dv video.swap{filter:none;opacity:.85;transition:opacity .2s}
+/* п.110: карточки шагов покупки — одинаковые */
+.how.four li{grid-template-columns:38px 1fr;grid-template-rows:auto auto;align-content:center;align-items:start;min-height:92px;row-gap:4px}
+.how.four li b{grid-row:1/3;align-self:center}
+.how.four li span{align-self:end}.how.four li small{align-self:start;margin-top:0}
+/* 11.11 строка под надписью первого экрана (Ал) */
+.h4 .lead4{margin:6px auto 2px;max-width:560px;font:500 clamp(14px,1.15vw,17px)/1.45 Manrope,sans-serif;color:#F7EAD4;text-shadow:0 1px 8px rgba(0,0,0,.85)}

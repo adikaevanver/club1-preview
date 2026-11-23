@@ -1,0 +1,534 @@
+/* Сайт шоу: общие дополнения к стилям прототипа (демо-3/4/5, molchat-5) */
+main{display:block}
+.hdr .thread a[aria-current=page] span{color:var(--emh,#ffd99a)}
+.hdr .thread a span{white-space:nowrap}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;flex-direction:column;justify-content:center;gap:5px;padding:10px}
+.burger i{display:block;height:2px;background:var(--cr,#F7EAD4);border-radius:2px}
+@media (max-width:1100px){
+  .hdr .thread{position:fixed;inset:64px 0 auto 0;display:none;flex-direction:column;gap:2px;padding:16px 20px 24px;background:rgba(18,11,7,.97);border-bottom:1px solid rgba(240,217,138,.2);z-index:60}
+  .hdr .thread a{padding:12px 4px;font-size:17px}
+  .hdr.navopen .thread{display:flex}
+  .burger{display:flex}
+}
+@media (max-width:640px){.hdr .btn-c{padding:8px 14px;font-size:13px}}
+/* малый герой внутренних страниц */
+.phero{position:relative;min-height:62vh;display:flex;align-items:flex-end;padding:140px 0 70px;background:linear-gradient(180deg,rgba(7,5,10,.35),rgba(7,5,10,.92)),var(--bg) center/cover no-repeat;text-align:center}
+.phero .lead{max-width:680px;margin:14px auto 28px;color:var(--cr,#F7EAD4);font-size:18px;line-height:1.55}
+.phero h1.title{margin:6px 0 0}
+/* формы */
+.giftf .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.giftf .err{display:none;color:#ff9f8f;font-size:14px}.giftf.fail .err{display:block}
+.giftf.busy .bbtn{opacity:.6;pointer-events:none}
+/* команда */
+.heroes{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px;margin-top:34px}
+.hero-card{margin:0;border-radius:18px;overflow:hidden;background:rgba(255,240,220,.04);border:1px solid rgba(240,217,138,.16)}
+.hero-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.hero-card figcaption{padding:16px 18px 20px}.hero-card h3{margin:0 0 6px;font-family:var(--serif);font-size:26px;color:var(--gold2,#F0D98A)}
+.hero-card p{margin:0;color:#cfc2ae;font-size:14px;line-height:1.5}
+.team{list-style:none;padding:0;margin:30px 0;display:grid;gap:14px}
+.team li{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid rgba(240,217,138,.14);padding:12px 0}
+.team b{font-family:var(--serif);font-size:22px;color:var(--cr)}.team span{color:#b7aa98;text-align:right}
+/* галерея */
+.gal5{columns:3 280px;column-gap:16px}.gal5 .gi{display:block;margin:0 0 16px;break-inside:avoid;border-radius:14px;overflow:hidden}
+.gal5 img{width:100%;display:block;transition:transform .6s}.gal5 .gi:hover img{transform:scale(1.04)}
+.vgal{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:20px}.vgal.two{max-width:820px;margin:30px auto 0}
+.gv{margin:0;border-radius:16px;overflow:hidden;background:#000}.gv video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+.gv figcaption{padding:10px 14px;color:var(--cr);font-size:14px}
+#lb{border:0;padding:0;background:transparent;max-width:94vw;max-height:94vh}#lb::backdrop{background:rgba(0,0,0,.88)}
+#lb img{max-width:94vw;max-height:90vh;display:block;border-radius:10px}#lb .x{position:fixed;top:14px;right:18px;font-size:36px;background:none;border:0;color:#fff;cursor:pointer}
+/* контакты */
+.contacts h3{font-family:var(--serif);color:var(--gold2,#F0D98A);font-size:22px;margin:22px 0 6px}.contacts p{color:var(--cr);line-height:1.6;margin:0}
+.contacts a{color:var(--emh,#ffd99a)}.map iframe{width:100%;min-height:440px;border:0;border-radius:18px}
+/* юридические */
+.legaltxt{padding-top:140px}.legaltxt h1,.legaltxt h2,.legaltxt h3{font-family:var(--serif);color:var(--gold2,#F0D98A)}
+.legaltxt p,.legaltxt li{color:#d8ccb8;line-height:1.65;font-size:15px}.legaltxt a{color:var(--emh,#ffd99a)}
+/* посадочные */
+.lpp{list-style:none;padding:0;margin:0;display:grid;gap:16px}.lpp li{padding:20px 24px;border-radius:16px;background:rgba(255,240,220,.04);border:1px solid rgba(240,217,138,.16);color:var(--cr);font-size:18px}
+.lpp li::before{content:"✦ ";color:var(--em,#e9a24a)}
+/* подвал */
+.site-foot{padding:60px 0 30px;text-align:left}
+.site-foot .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
+.site-foot h4{font-family:var(--serif);color:var(--gold2,#F0D98A);font-size:20px;margin:0 0 12px}
+.site-foot a{display:block;color:var(--cr,#F7EAD4);text-decoration:none;padding:4px 0;font-size:14px}.site-foot a:hover{color:var(--emh)}
+.site-foot p{color:#b7aa98;font-size:14px;line-height:1.6}.site-foot .age{font-size:20px;color:var(--cr)}
+.site-foot .legal{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:34px;padding-top:20px;border-top:1px solid rgba(240,217,138,.14);font-size:12px;color:#8f8473}
+.site-foot .legal a{display:inline;font-size:12px;color:#b7aa98}
+@media (max-width:820px){.site-foot .fgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.site-foot .fgrid{grid-template-columns:1fr}}
+/* шапка: 8 пунктов + логотип + кнопка помещаются (01.11, сессия 66) */
+.hdr .in{display:flex;align-items:center;gap:16px}
+.hdr .hlogo,.hdr .btn-c,.burger{flex:0 0 auto}
+.hdr .hlogo img{height:46px;width:auto}
+.hdr .thread{flex:1 1 auto;min-width:0;margin:0 10px;gap:clamp(10px,1.3vw,26px)}
+.hdr .thread a{font-size:clamp(15px,1.08vw,19px)}
+@media (max-width:1100px){.hdr .btn-c{margin-left:auto}}
+
+/* всплывашка Telegram CLUB#1 из analytics.js живого сайта — не для мюзикла, стилей нет (аудит 01.11) */
+.tg-invite{display:none!important}
+/* «Как добраться» (Ал 01.11 20:25: красивая навигация вместо виджета с рекламой) */
+.nav5-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(24px,4vw,56px);align-items:stretch}
+.nav5-map{position:relative;min-height:520px;border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px rgba(240,217,138,.2),0 30px 70px rgba(0,0,0,.55)}
+#map5{position:absolute;inset:0;background:#0d0806}
+#map5 .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.82) contrast(.92) sepia(.45) saturate(1.25) hue-rotate(-8deg)}
+.nav5-map::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px rgba(13,8,6,.85);z-index:401}
+.nav5-pin{position:absolute;left:18px;top:16px;z-index:402;padding:10px 16px;border-radius:14px;background:rgba(13,8,6,.82);backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px rgba(240,217,138,.3)}
+.nav5-pin b{display:block;font:500 italic 22px/1.1 "Cormorant Garamond",serif;color:#F7EAD4}.nav5-pin span{font-size:12px;color:#cbbfae}
+.pin5{position:relative}
+.pin5-dot{position:absolute;left:-22px;top:-22px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fff0c8,#e9a24a 60%,#9b4a14);box-shadow:0 0 0 3px rgba(13,8,6,.8),0 0 30px rgba(233,162,74,.9)}
+.pin5-dot svg{width:20px;height:20px;fill:#5a1238}
+.pin5-pulse{position:absolute;left:-22px;top:-22px;width:44px;height:44px;border-radius:50%;background:rgba(233,162,74,.5);animation:pin5 2.2s ease-out infinite}
+@keyframes pin5{to{transform:scale(3.2);opacity:0}}
+.pin5-lab{position:absolute;left:30px;top:-14px;white-space:nowrap;font:600 italic 20px/1 "Cormorant Garamond",serif;color:#ffd99a;text-shadow:0 2px 10px #000}
+.metro5{position:relative}.metro5>*{position:relative}
+.metro5{display:block}.metro5 .m5i{position:absolute;left:-12px;top:-12px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#1b5fd1;color:#fff;font:700 12px/1 Manrope,sans-serif;box-shadow:0 0 0 2px #0d0806}
+.metro5 span:last-child{position:absolute;left:18px;top:-9px;white-space:nowrap;font:600 12px/1 Manrope,sans-serif;color:#cfe0ff;text-shadow:0 1px 6px #000}
+.leaflet-control-attribution{background:rgba(13,8,6,.7)!important;color:#8f826f!important;font-size:10px}.leaflet-control-attribution a{color:#b7aa98!important}
+.leaflet-bar a{background:#1a100a!important;color:#ffd99a!important;border-color:#2a1c12!important}
+.nav5-side .kick{text-align:left}
+.nav5-h{font:500 clamp(38px,4vw,60px)/1 "Cormorant Garamond",serif;color:#F7EAD4;margin:12px 0 14px}
+.nav5-lead{color:#cbbfae;line-height:1.6}
+.nav5-metro{list-style:none;padding:0;margin:22px 0;display:grid;gap:10px}
+.nav5-metro li{display:grid;grid-template-columns:22px auto 1fr;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(240,217,138,.16)}
+.mline{width:14px;height:14px;border-radius:50%;background:#1b5fd1;box-shadow:0 0 0 3px rgba(27,95,209,.25)}
+.nav5-metro b{font:500 italic 22px/1 "Cormorant Garamond",serif;color:#F7EAD4}.nav5-metro span{color:#b7aa98;font-size:14px;text-align:right}
+.nav5-routes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 18px}
+.rt{position:relative;display:flex;flex-direction:column;gap:4px;padding:14px 40px 14px 16px;border-radius:14px;text-decoration:none;background:linear-gradient(180deg,rgba(255,228,180,.07),rgba(255,228,180,.02));box-shadow:inset 0 0 0 1px rgba(240,217,138,.22);transition:background .3s,box-shadow .3s,transform .3s}
+.rt b{font:600 14px/1 Manrope,sans-serif;color:#F7EAD4}.rt span{font-size:12px;color:#b7aa98}
+.rt i{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-style:normal;color:#e9a24a;transition:transform .3s}
+.rt:hover{background:rgba(233,162,74,.16);box-shadow:inset 0 0 0 1px rgba(255,217,154,.55);transform:translateY(-2px)}.rt:hover i{transform:translate(4px,-50%)}
+.nav5-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.nav5-cards>div{padding:22px 24px;border-radius:18px;box-shadow:inset 0 0 0 1px rgba(240,217,138,.14)}
+.nav5-cards h3{font:600 11px/1.4 Manrope,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#e9a24a;margin:0 0 10px}
+.nav5-cards p{margin:0;color:#F7EAD4;line-height:1.7}.nav5-cards a{color:#ffd99a}
+@media (max-width:900px){.nav5-grid,.nav5-cards{grid-template-columns:1fr}.nav5-map{min-height:380px}}
+
+.run5{stroke-dasharray:2 12;animation:run5 1.2s linear infinite}@keyframes run5{to{stroke-dashoffset:-14}}
+
+/* значки «Метелицы» 1–8 (выбор на карте, Ал 01.11) */
+.ic{position:relative}.ic>*{position:absolute}
+.ic .lab{left:26px;top:-12px;white-space:nowrap;font:600 italic 19px/1 "Cormorant Garamond",serif;color:#ffd99a;text-shadow:0 2px 10px #000}
+@keyframes pul{to{transform:scale(3);opacity:0}}
+@keyframes bob{50%{transform:translateY(-5px)}}
+@keyframes spin8{to{transform:rotate(360deg)}}
+@keyframes flick{0%,19%,23%,60%,100%{opacity:1}21%,62%{opacity:.45}}
+/* 1 Логотип в капле */
+.ic.v1 .pinb{left:-26px;top:-66px;width:52px;height:62px;animation:bob 2.6s ease-in-out infinite}
+.ic.v1 .pinb svg{width:100%;height:100%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+.ic.v1 .pinb img{position:absolute;left:5px;top:9px;width:42px;height:auto}
+.ic.v1 .sh{left:-10px;top:-4px;width:20px;height:7px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(2px)}
+/* 2 Снежинка-метель */
+.ic.v2 .p{left:-24px;top:-24px;width:48px;height:48px;border-radius:50%;background:rgba(190,225,255,.35);animation:pul 2.4s ease-out infinite}
+.ic.v2 .c{left:-24px;top:-24px;width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff,#cfe6ff 45%,#6b8fb8);box-shadow:0 0 0 2px #0d0806,0 0 26px rgba(190,225,255,.8);display:grid;place-items:center}
+.ic.v2 .c svg{width:30px;height:30px;stroke:#14324f;stroke-width:2;fill:none;animation:spin8 14s linear infinite}
+/* 3 Табличка-вывеска (логотип Метелицы) */
+.ic.v3 .sign{left:-70px;top:-74px;width:140px;padding:8px 10px 10px;border-radius:12px;background:linear-gradient(180deg,#1d120b,#0d0806);box-shadow:0 0 0 1px rgba(255,217,154,.6),0 0 24px rgba(233,162,74,.55),0 10px 24px rgba(0,0,0,.7);animation:flick 6s infinite}
+.ic.v3 .sign img{width:100%;display:block}
+.ic.v3 .sign::after{content:"";position:absolute;left:50%;bottom:-9px;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:rgba(255,217,154,.8)}
+.ic.v3 .dot{left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:#ffd99a;box-shadow:0 0 14px #e9a24a}
+/* 4 Клош — ресторан */
+.ic.v4 .p{left:-26px;top:-26px;width:52px;height:52px;border-radius:50%;background:rgba(233,162,74,.4);animation:pul 2.4s ease-out infinite}
+.ic.v4 .c{left:-26px;top:-26px;width:52px;height:52px;border-radius:50%;background:#12301f;box-shadow:0 0 0 2px #e9a24a,0 0 22px rgba(233,162,74,.7);display:grid;place-items:center}
+.ic.v4 .c svg{width:30px;height:30px;fill:#ffd99a}
+/* 5 Звезда-вспышка */
+.ic.v5 .rays{left:-46px;top:-46px;width:92px;height:92px;animation:spin8 18s linear infinite;opacity:.9}
+.ic.v5 .s{left:-20px;top:-20px;width:40px;height:40px;filter:drop-shadow(0 0 10px #ffd99a) drop-shadow(0 0 22px #e9a24a)}
+/* 6 Фото фасада в медальоне */
+.ic.v6 .med{left:-34px;top:-34px;width:68px;height:68px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #e9a24a,0 0 0 6px rgba(13,8,6,.8),0 0 30px rgba(233,162,74,.7)}
+.ic.v6 .med img{width:100%;height:100%;object-fit:cover;object-position:50% 70%}
+.ic.v6 .lab{left:42px}
+/* 7 Микрофон / сцена */
+.ic.v7 .c{left:-24px;top:-58px;width:48px;height:48px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:radial-gradient(circle at 35% 30%,#ff8fc8,#c82285 60%,#6a0f45);box-shadow:0 0 0 2px #0d0806,0 0 24px rgba(200,34,133,.7);animation:bob 2.6s ease-in-out infinite}
+.ic.v7 .c svg{position:absolute;left:12px;top:12px;width:24px;height:24px;fill:#fff;transform:rotate(45deg)}
+.ic.v7 .sh{left:-9px;top:-4px;width:18px;height:6px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(2px)}
+/* 8 Минимал — золотое кольцо */
+.ic.v8 .r{left:-16px;top:-16px;width:32px;height:32px;border-radius:50%;border:2px solid #ffd99a;box-shadow:0 0 18px rgba(233,162,74,.8)}
+.ic.v8 .r2{left:-16px;top:-16px;width:32px;height:32px;border-radius:50%;border:1px solid #ffd99a;animation:pul 2s ease-out infinite}
+.ic.v8 .d{left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:#ffd99a}
+.ic.v8 .lab{font:600 11px/1 Manrope,sans-serif;letter-spacing:.24em;text-transform:uppercase;top:-6px;color:#F7EAD4}
+.pick5{position:absolute;left:14px;bottom:14px;z-index:402;display:flex;align-items:center;gap:4px;padding:6px;border-radius:12px;background:rgba(13,8,6,.85);box-shadow:inset 0 0 0 1px rgba(240,217,138,.3)}
+.pick5 span{font:600 10px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#e9a24a;margin:0 6px}
+.pick5 button{all:unset;cursor:pointer;width:28px;height:28px;display:grid;place-items:center;border-radius:8px;font:700 13px/1 Manrope,sans-serif;color:#F7EAD4}
+.pick5 button:hover{background:rgba(233,162,74,.2)}.pick5 button.on{background:#e9a24a;color:#1d1006}
+
+/* значок «Метелицы» — вывеска с логотипом, остриё на двери (выбор Ала 01.11) */
+.ic.v3 .sign{left:-80px;top:-84px;width:160px}
+.ic.v3 .dot{left:-7px;top:-7px;width:14px;height:14px;box-shadow:0 0 0 3px rgba(13,8,6,.8),0 0 16px #e9a24a}
+
+.logo5{background:none;border:0}
+.logo5 img{width:116px;height:auto;display:block;filter:drop-shadow(0 0 2px #000) drop-shadow(0 4px 12px rgba(0,0,0,.85)) drop-shadow(0 0 16px rgba(233,162,74,.45))}
+.leaflet-marker-icon.logo5{width:116px!important;height:60px!important;overflow:visible}
+.leaflet-marker-icon.logo5 img{width:116px!important;max-width:116px!important;height:auto!important}
+
+.leaflet-tooltip.door5{background:#ffd99a;color:#1d1006;border:0;border-radius:8px;padding:3px 8px;font:700 12px/1.2 Manrope,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.6)}
+.leaflet-tooltip.door5::before{display:none}
+
+.zoom5{position:absolute;left:14px;bottom:14px;z-index:402;display:flex;gap:4px;padding:5px;border-radius:12px;background:rgba(13,8,6,.88);box-shadow:inset 0 0 0 1px rgba(240,217,138,.3)}
+.zoom5 button{all:unset;cursor:pointer;padding:8px 12px;border-radius:8px;font:600 12px/1 Manrope,sans-serif;color:#F7EAD4}
+.zoom5 button.on{background:#e9a24a;color:#1d1006}
+
+.logo-ov5{filter:drop-shadow(0 0 1px #000) drop-shadow(0 3px 8px rgba(0,0,0,.8))}
+/* партнёры в подвале — рядом с Метелицей (Ал 01.11) */
+.partners5{display:flex;align-items:center;justify-content:center;gap:clamp(24px,4vw,64px);flex-wrap:wrap;padding:30px 0;margin-top:20px;border-top:1px solid rgba(240,217,138,.14);border-bottom:1px solid rgba(240,217,138,.14)}
+.partners5 span{font:600 10px/1 Manrope,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#8f826f}
+.partners5 img{height:34px;width:auto;opacity:.9}.partners5 img.pm{height:46px}
+.vgal.five{grid-template-columns:repeat(6,1fr);max-width:1180px;margin:30px auto 0}.vgal.five>.gv{grid-column:span 2}.vgal.five>.gv:nth-child(4){grid-column:2/4}.vgal.five>.gv:nth-child(5){grid-column:4/6}
+@media (max-width:820px){.vgal.five{grid-template-columns:1fr}.vgal.five>.gv:nth-child(n){grid-column:auto}}
+/* Команда: актёры и постановочная группа */
+.rgrp{margin-top:44px}.rgrp-h{font:500 italic 30px/1.1 var(--serif);color:#ffd99a;margin:0 0 16px;text-align:center}
+.pgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-top:20px}
+.pcard{all:unset;cursor:pointer;width:180px;display:flex;flex-direction:column;gap:4px;text-align:center}
+.pcard img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px;box-shadow:0 0 0 1px rgba(240,217,138,.18);transition:transform .4s,box-shadow .4s;filter:saturate(.92)}
+.pcard:hover img,.pcard:focus-visible img{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(240,217,138,.6),0 14px 34px rgba(233,162,74,.25)}
+.pcard b{font:500 20px/1.15 var(--serif);color:var(--cr);margin-top:8px}.pcard span{font-size:13px;color:#b7aa98}
+.pd{max-width:760px;width:92vw;border:0;border-radius:22px;padding:0;background:#140c07;color:var(--cr);box-shadow:0 0 0 1px rgba(240,217,138,.25)}
+.pd::backdrop{background:rgba(5,3,2,.8);backdrop-filter:blur(4px)}
+.pd[open]{display:grid;grid-template-columns:260px 1fr}.pd img{width:100%;height:100%;object-fit:cover;max-height:420px}
+.pd>div{padding:28px 30px}.pd h3{font:500 italic 32px/1.1 var(--serif);margin:6px 0 14px}.pd-b{color:#d6c8b2;font-size:15px;line-height:1.55;max-height:300px;overflow:auto}
+.pd .x{position:absolute;right:12px;top:8px;background:none;border:0;color:var(--cr);font-size:30px;cursor:pointer}
+@media (max-width:640px){.pcard{width:calc(50% - 9px)}.pd[open]{grid-template-columns:1fr}.pd img{max-height:300px}}
+
+/* ===== Приёмка 03.11 (Анвер) ===== */
+/* п.10 мобильное меню: плотный фон, крестик, поверх всего */
+@media (max-width:1100px){
+  .hdr.navopen{background:#120b07!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  .hdr .thread{background:#120b07!important;box-shadow:0 30px 60px rgba(0,0,0,.6);max-height:calc(100vh - 64px);overflow:auto}
+  .hdr .thread::before,.hdr .thread .ember{display:none}
+  .hdr .thread a{border-bottom:1px solid rgba(240,217,138,.1)}
+}
+.burger i{transition:transform .3s,opacity .3s}
+.hdr.navopen .burger i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hdr.navopen .burger i:nth-child(2){opacity:0}
+.hdr.navopen .burger i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* п.38 шапка читается на ярком первом экране; кнопка видна сразу */
+.hdr:not(.solid){background:linear-gradient(180deg,rgba(7,5,10,.72),rgba(7,5,10,0))}
+.h4 .cta4.rise,.h4 .sub4.rise{opacity:1!important;translate:none!important;transition:none!important}
+/* п.24 карта не наезжает на шапку */
+.nav5-map{isolation:isolate;z-index:0}
+/* п.31 подвал: отступ текста под логотипом; п.33 «Вместе с» крупнее */
+.site-foot .fabout p{margin-top:18px}
+.partners5 span{font-size:12px;color:#b7aa98}
+/* п.32 меньше пустоты между блоками */
+.sec{padding-top:clamp(64px,8vw,120px);padding-bottom:clamp(64px,8vw,120px)}
+#today{padding-bottom:clamp(56px,6vw,90px)}
+.site-foot{padding-top:48px}
+/* п.45 «Лица истории» — ровная сетка 3 × 2 */
+.heroes{grid-template-columns:repeat(3,1fr);max-width:1000px;margin-left:auto;margin-right:auto}
+@media (max-width:760px){.heroes{grid-template-columns:repeat(2,1fr);gap:14px}}
+/* п.47 видео в галерее — на всю ширину ряда */
+.vgal{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+/* п.17 галерея: окно по центру, листание, подпись и счётчик */
+#lb[open]{display:flex;align-items:center;justify-content:center;gap:12px;max-width:100vw;max-height:100vh;width:100vw;height:100vh;margin:0;padding:0;background:transparent;border:0;overflow:hidden}
+#lb figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;max-width:calc(100vw - 140px)}
+#lb img{max-width:100%;max-height:82vh;object-fit:contain;border-radius:10px;margin:0 auto}
+#lb figcaption{display:flex;gap:16px;justify-content:center;color:#F7EAD4;font-size:15px}#lb .lb-n{color:#b7aa98}
+#lb .lb-prev,#lb .lb-next{all:unset;cursor:pointer;flex:0 0 auto;width:52px;height:52px;display:grid;place-items:center;border-radius:50%;background:rgba(20,12,7,.75);box-shadow:inset 0 0 0 1px rgba(240,217,138,.4);color:#ffd99a;font-size:22px}
+#lb .lb-prev:hover,#lb .lb-next:hover{background:rgba(233,162,74,.25)}
+#lb .x{z-index:2}
+@media (max-width:700px){#lb figure{max-width:100vw}#lb .lb-prev,#lb .lb-next{position:fixed;bottom:22px;width:48px;height:48px}#lb .lb-prev{left:22%}#lb .lb-next{right:22%}#lb img{max-height:70vh;border-radius:0}}
+/* п.21, п.56 формы: подсказка про телефон, строка согласия одной строкой */
+.giftf .ph-err{display:none;margin:-6px 0 0;color:#ff9f8f;font-size:13px}.giftf.badphone .ph-err{display:block}
+.giftf.badphone input[name=phone]{border-color:#ff9f8f!important}
+.giftf label.agree{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.45}
+.giftf label.agree input{margin-top:3px;flex:0 0 auto}.giftf label.agree span{flex:1 1 auto}.giftf label.agree a{color:#ffd99a}
+/* п.57, п.58 первый экран посадочных: золотой заголовок на затемнении */
+.phero{background:linear-gradient(180deg,rgba(7,5,10,.6),rgba(7,5,10,.78) 45%,rgba(7,5,10,.95)),var(--bg) center/cover no-repeat}
+.phero h1.title{filter:drop-shadow(0 2px 14px rgba(0,0,0,.85))}
+.phero .lead{text-shadow:0 1px 8px rgba(0,0,0,.8)}
+/* п.61 404: «На главную» рядом с датами */
+.p404{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+/* п.59 */
+.nw{white-space:nowrap}
+/* юр. страницы */
+.legaltxt h1{font-size:clamp(34px,4vw,52px);margin:0 0 20px}.legaltxt h2{font-size:26px;margin:30px 0 10px}
+.legaltxt ul{padding-left:20px}
+@media (max-width:1100px){.hdr .thread{left:0!important;right:0!important;width:auto!important;margin:0!important;box-sizing:border-box}}
+@media (max-width:520px){.phero h1.title{font-size:clamp(28px,9vw,40px);overflow-wrap:break-word}}
+
+/* круг 2: соцсети убраны — на «Контактах» две карточки */
+.nav5-cards{grid-template-columns:repeat(2,1fr)}
+@media (max-width:900px){.nav5-cards{grid-template-columns:1fr}}
+/* ===== Приёмка-2 (круг 5, 04.11) ===== */
+/* п.104: длинные заголовки на телефоне не вылезают за край */
+@media (max-width:520px){h2.title,h1.title{font-size:clamp(26px,8.2vw,40px);overflow-wrap:break-word}}
+/* п.111: галерея — ровная сетка вместо колонок разной длины */
+.gal5{columns:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.gal5 .gi{margin:0}.gal5 img{aspect-ratio:16/10;height:100%;object-fit:cover}
+/* п.115: подпись карты целиком внутри скруглённого угла */
+.nav5-map .leaflet-control-attribution{margin:0 18px 10px 0!important;border-radius:6px;padding:1px 6px}
+.nav5-map .leaflet-bottom.leaflet-right .leaflet-control-zoom{margin-right:18px}
+/* п.32: ещё меньше пустоты между блоками */
+.sec.m5{padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(48px,6vw,88px)}
+#today{padding-top:clamp(48px,6vw,88px)}
+.rgrp:last-child{margin-bottom:0}
+/* 08.11 Анвер: «текст не видно» — подпись первого экрана на ярком фоне */
+.sub4 .k4{color:#FFF3DE!important;opacity:1!important;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,.9),0 0 14px rgba(0,0,0,.75),0 0 28px rgba(0,0,0,.55)}
+.sub4 .slog4{text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 16px rgba(0,0,0,.6)}
+@media (max-width:640px){.sub4 .k4{font-size:12px;letter-spacing:.22em}}
+/* 09.11 блок «Москва» (текст — вариант 3, выбор Ал) */
+.msk{position:relative;overflow:hidden;padding:clamp(90px,14vw,170px) 0;background:#0d0806;text-align:center}
+#moskva.msk{padding-top:25vw!important;padding-bottom:3vw}
+.msk-bg{position:absolute;left:0;right:0;top:0;bottom:auto;height:42vw;z-index:0;background:url(img/our/v-fasad-vyveska-chb.jpg) center -19vw/100% auto no-repeat;opacity:1}
+#moskva .msk-in{z-index:1}
+.msk-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0d0806 0,rgba(13,8,6,.55) 80px,rgba(13,8,6,0) 200px),linear-gradient(0deg,#0d0806 0,rgba(13,8,6,.82) 22%,rgba(13,8,6,.55) 40%,rgba(13,8,6,0) 66%)}
+.msk .msk-l:not(.msk-big){text-shadow:0 1px 12px rgba(0,0,0,.8),0 0 2px rgba(0,0,0,.6)}
+.msk .msk-big{text-shadow:none;filter:drop-shadow(0 2px 10px rgba(0,0,0,.85)) drop-shadow(0 0 24px rgba(0,0,0,.6))}
+.h4 .stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:200px;z-index:3;pointer-events:none;background:linear-gradient(0deg,#0d0806,rgba(13,8,6,.55) 40%,rgba(13,8,6,0))}
+@media (max-width:820px){#moskva.msk{padding-top:88vw!important}.msk-bg{height:auto;bottom:0;background-size:auto 118vw;background-position:30% 0;background-color:#0d0806}.msk-bg::after{background:linear-gradient(180deg,rgba(13,8,6,.85) 0,rgba(13,8,6,0) 90px),linear-gradient(180deg,rgba(13,8,6,0) 62vw,rgba(13,8,6,.7) 86vw,#0d0806 118vw)}}
+.msk-in{position:relative;max-width:860px}
+.msk-l{font:400 italic clamp(22px,2.6vw,34px)/1.35 "Cormorant Garamond",serif;color:#F7EAD4;margin:0 0 .6em;text-shadow:0 2px 18px rgba(0,0,0,.7)}
+.msk-big{font:500 clamp(54px,8vw,108px)/1 "Cormorant Garamond",serif;letter-spacing:.02em;margin-bottom:.35em;background:linear-gradient(180deg,#ffe7b8,#d9a24e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.msk-trio span{display:inline-block;margin:0 .15em}
+.msk-q{margin:1.4em auto 1.3em;padding:1.1em 0;border-top:1px solid rgba(240,217,138,.25);border-bottom:1px solid rgba(240,217,138,.25)}
+.msk-q p{font:600 clamp(13px,1.2vw,15px)/2.2 var(--sans,Manrope,sans-serif);letter-spacing:.28em;text-transform:uppercase;color:#ffd99a;margin:0}
+.msk-end{font-size:clamp(24px,3vw,40px);margin:0}.msk-end em{font-style:italic;color:#ff8fc8}
+.msk [data-a="up"]:nth-child(2){transition-delay:.12s}.msk [data-a="up"]:nth-child(3){transition-delay:.24s}.msk [data-a="up"]:nth-child(4){transition-delay:.36s}.msk [data-a="up"]:nth-child(5){transition-delay:.48s}.msk [data-a="up"]:nth-child(6){transition-delay:.6s}
+@media (max-width:640px){.msk-trio span{display:block}.msk-q p{letter-spacing:.18em}}
+
+/* 11.11 у «трёх кадров» убран заголовок (Ал) — меньше пустоты сверху */
+#story3.sec{padding-top:clamp(16px,2vw,32px)!important}
+
+/* 11.11 описание сюжета над трейлером (Ал) */
+.plot5{max-width:860px;margin:1.1em auto 1.4em;text-align:center;font:400 italic clamp(22px,2.3vw,32px)/1.4 "Cormorant Garamond",serif;color:#F7EAD4;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.plot5-k{margin:-.4em auto 1.6em;text-align:center}
+#moskva .msk-k{max-width:none;margin:34px auto 0;text-align:center}
+/* 11.11 Ал: трейлер чуть выше */
+#trailer.sec{padding-top:clamp(24px,3vw,48px)!important}
+/* 11.11 Ал: лишняя пустота — выровнять отступы блоков главной */
+#trailer.sec{padding-bottom:clamp(28px,3.5vw,56px)!important}
+#vecher.sec{padding-top:clamp(28px,3.5vw,56px)!important;padding-bottom:clamp(28px,3.5vw,56px)!important}
+#dinner.sec{padding-top:clamp(28px,3.5vw,56px)!important}
+/* 11.11 десерт — курсивная плашка-подарок (Ал) */
+.gift5{max-width:620px;margin:40px auto 8px;padding:26px 28px 24px;text-align:center;border:1px solid rgba(240,200,120,.55);border-radius:18px;background:radial-gradient(ellipse at 50% 0%,rgba(233,162,59,.16),rgba(13,8,6,0) 70%),rgba(26,16,10,.6);box-shadow:0 0 0 4px rgba(240,200,120,.08),0 20px 50px rgba(0,0,0,.45)}
+.gift5-i{width:38px;height:38px;color:#F3CF86;margin:0 auto 8px;display:block}
+.gift5-k{font:600 12px/1.3 var(--sans,Manrope,sans-serif);letter-spacing:.28em;text-transform:uppercase;color:#E9B864;margin:0 0 8px}
+.gift5-t{font:500 italic clamp(26px,2.6vw,36px)/1.15 "Cormorant Garamond",serif;color:#FFE7B8;margin:0 0 10px}
+.gift5-d{font:400 italic clamp(18px,1.6vw,22px)/1.45 "Cormorant Garamond",serif;color:#F7EAD4;margin:0}
+/* 11.11 «Можно заказать дополнительно» — меню FoodPicasso (Ал) */
+#extra .xtabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:26px 0 30px}
+#extra .xtab{font:500 italic 17px/1 "Cormorant Garamond",serif;color:#F7EAD4;background:transparent;border:1px solid rgba(240,217,138,.4);border-radius:999px;padding:10px 18px;cursor:pointer}
+#extra .xtab.on{background:linear-gradient(180deg,#ffe7b8,#d9a24e);color:#1a100a;border-color:transparent}
+#extra .xpane{display:none}#extra .xpane.on{display:block}
+#extra .xg{font:600 12px/1.3 var(--sans,Manrope,sans-serif);letter-spacing:.26em;text-transform:uppercase;color:#E9B864;margin:26px 0 14px;text-align:center}
+#extra .xcards{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}#extra .xcard{width:180px}
+#extra .xcard{margin:0;border-radius:14px;overflow:hidden;background:rgba(26,16,10,.7);border:1px solid rgba(240,217,138,.18)}
+#extra .xcard img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+#extra .xcard figcaption{padding:10px 12px 12px}#extra .xcard b{display:block;font:500 italic 19px/1.2 "Cormorant Garamond",serif;color:#F7EAD4}
+#extra .xcard span{font:500 13px/1.4 var(--sans,Manrope,sans-serif);color:#E9B864}
+#extra .xlist{list-style:none;margin:8px auto 0;padding:0;max-width:640px}
+#extra .xlist li{display:flex;align-items:baseline;gap:8px;padding:7px 0;font:400 16px/1.35 var(--sans,Manrope,sans-serif);color:#F7EAD4}
+#extra .xlist .xn i{font-style:normal;color:rgba(247,234,212,.55);font-size:13px;margin-left:4px}
+#extra .xlist .xd{flex:1;border-bottom:1px dotted rgba(240,217,138,.35);transform:translateY(-4px)}
+#extra .xlist .xp{color:#E9B864;white-space:nowrap}
+@media (max-width:640px){#extra .xcards{gap:10px}#extra .xcard{width:calc(50% - 5px)}#extra .xtab{font-size:15px;padding:8px 14px}}
+
+/* 11.11 блок «Вечер, полный ярких впечатлений» (вернули, Ал) */
+.dlya .sub{max-width:720px;margin-left:auto;margin-right:auto}
+.dlya-g{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px;margin:34px auto 0}
+.dlya-c{padding:26px 28px;border-radius:18px;box-shadow:inset 0 0 0 1px rgba(240,217,138,.18);background:rgba(255,240,220,.03)}
+.dlya-c h3{font:500 italic 28px/1.15 "Cormorant Garamond",serif;color:#ffd99a;margin:0 0 10px}.dlya-c p{margin:0;color:#e3d6c2;line-height:1.6}
+.dlya-t{text-align:center;font:500 italic clamp(26px,2.4vw,36px)/1.2 "Cormorant Garamond",serif;color:#F7EAD4;margin:40px 0 0}
+.dlya .center{margin-top:26px}
+@media (max-width:700px){.dlya-g{grid-template-columns:1fr}}
+.dlya{background:radial-gradient(ellipse at 50% 0%,rgba(15,58,44,.55),transparent 60%),#0d0806}
+.dlya .dlya-c{padding:0!important;overflow:hidden}
+.dlya .dlya-c img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.dlya .dlya-t2{padding:18px 22px 20px}
+#extra .xcard.xk{width:280px}#extra .xcard.xk img{aspect-ratio:1/1;object-position:50% 42%}
+@media (max-width:640px){#extra .xcard.xk{width:calc(50% - 5px)}}
+/* 11.11 Ал: в слайдах «Пой/Танцуй» — ролики подачи сетов (рыбный, мясной) */
+.ptm .pane .bg video{width:100%;height:100%;object-fit:cover;display:block}
+.ptm .pA .bg video{filter:brightness(.5) saturate(.9)}
+.ptm .pB .bg video{filter:brightness(.5) saturate(.85)}
+.ptm .pC .bg video{filter:brightness(.5) saturate(.9)}
+/* 11.11 Ал: витрина сетов вместо «Пой/Танцуй/Мечтай» — ролик во всей красоте, без надписей и затемнения */
+.ptm[data-auto]{height:auto;padding:clamp(40px,6vw,90px) 0 clamp(30px,4vw,60px)}
+.ptm[data-auto] .stick{position:relative;top:auto;height:auto;aspect-ratio:16/9;max-height:100vh;max-height:100svh;width:min(100%,calc(100svh*16/9));margin:0 auto;background:var(--night);overflow:hidden}
+.ptm[data-auto] .pane{position:absolute;inset:0;opacity:0;height:auto;transition:opacity 1s ease}
+.ptm[data-auto] .pane.on{opacity:1}
+.ptm[data-auto] .pane .bg{inset:0;transform:none!important}
+.ptm[data-auto] .pane .bg video{filter:none}
+.ptm[data-auto] .dots{display:flex}
+.ptm[data-auto] .dots i{box-shadow:0 0 6px rgba(0,0,0,.6)}
+.ptm[data-auto] .ptm-ft{position:static;margin-top:clamp(24px,3vw,40px)}
+@media (max-width:760px){.ptm[data-auto] .stick{aspect-ratio:4/5;width:100%}.ptm[data-auto] .dots{right:12px}}
+/* 11.11 Ал: казино-штрихи — фишки и масти (фишки: сайт-src/chips.svg) */
+.chip{display:inline-block;width:22px;height:22px;flex:none;vertical-align:middle;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.45))}
+.bbtn .chip{width:24px;height:24px;margin:-4px 0;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.bbtn:hover .chip,.bbtn:focus-visible .chip{transform:rotate(135deg)}
+.msep{display:flex;align-items:center;justify-content:center;gap:.55em;margin:0 auto 26px;max-width:420px;color:var(--gold);font:26px/1 "Cormorant Garamond",Georgia,serif}
+.msep::before,.msep::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.msep::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.msep .r,.suit.r{color:var(--bb-pink,#C82285)}
+.suit{display:inline-block;margin-right:.7em;letter-spacing:0;font-size:1.15em;color:var(--gold)}
+.mvchip{position:relative;display:inline-grid;place-items:center;width:34px;height:34px;flex:none;margin-right:12px;align-self:center}
+.mvchip .chip{position:absolute;inset:0;width:100%;height:100%}
+.mvchip em{position:relative;font:700 13px/1 Manrope,system-ui,sans-serif;font-style:normal;color:#1a120c}
+.mvchip:has(use[href="#chipf-black"]) em{color:#F0D98A}
+.mv-li{display:flex;align-items:center}
+.dp{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center}
+.dp .chip{grid-row:1/3;width:30px;height:30px}
+.ptm[data-auto] .dots.chips i{width:auto;height:auto;border:0;background:none!important;cursor:pointer;opacity:.85;transition:opacity .3s,transform .3s}
+.ptm[data-auto] .dots.chips i.on{opacity:1;transform:scale(1.3)}
+.ptm[data-auto] .dots.chips .chip{width:20px;height:20px}
+@media (prefers-reduced-motion:reduce){.bbtn .chip,.ptm[data-auto] .dots.chips i{transition:none}}
+/* 11.11 Ал: подписи к роликам сетов — вкладки-фишки под роликом (вариант C) */
+.ptm[data-auto] .pane{transition:opacity .45s ease}
+.ptm-tabs{display:flex;justify-content:center;gap:clamp(8px,2vw,20px);flex-wrap:wrap;margin-top:clamp(16px,2vw,24px);padding:0 16px}
+.ptm-tabs .tab{display:flex;align-items:center;gap:10px;background:none;border:1px solid transparent;border-radius:99px;padding:8px 16px 8px 8px;color:#a99a85;cursor:pointer;font:600 12px/1.15 Manrope,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;text-align:left;transition:color .3s,border-color .3s}
+.ptm-tabs .tab em{display:block;font:italic 600 17px/1.1 "Cormorant Garamond",Georgia,serif;letter-spacing:0;text-transform:none;color:inherit;opacity:.9}
+.ptm-tabs .tab .chip{width:28px;height:28px;transition:transform .4s}
+.ptm-tabs .tab:hover{color:#F7EAD4}
+.ptm-tabs .tab.on{color:#F7EAD4;border-color:rgba(212,175,55,.35)}
+.ptm-tabs .tab.on em{color:#F0D98A}
+.ptm-tabs .tab.on .chip{transform:rotate(45deg)}
+.ptm-tabs .tab:focus-visible{outline:2px solid #D4AF37;outline-offset:2px}
+@media (max-width:560px){.ptm-tabs{gap:6px}.ptm-tabs .tab{padding:6px 12px 6px 6px}.ptm-tabs .tab em{font-size:15px}}
+@media (prefers-reduced-motion:reduce){.ptm-tabs .tab,.ptm-tabs .tab .chip{transition:none}}
+/* 12.11 Ал: хиты — главная фишка: 6 карточек + «И ещё в программе» */
+#music .songs{gap:8px;margin-top:22px}
+#music .songs li{padding:12px 18px}
+.hits-k{margin:26px 0 12px;font:600 11px/1 Manrope,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#D4AF37}
+.hits{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.hits li{font:italic 500 17px/1 "Cormorant Garamond",Georgia,serif;color:#F7EAD4;padding:8px 13px;border-radius:99px;box-shadow:inset 0 0 0 1px rgba(240,217,138,.18);white-space:nowrap}
+.hits-cta{margin-top:28px}
+@media (max-width:560px){.hits li{font-size:15px;padding:7px 11px}}
+/* 12.11 Ал: настоящее фото КК № 4 в «голосе героини» — герои справа в кадре */
+.jrn-big[src*="kk-4"]{object-position:72% 50%}
+/* 12.11 Ал: «Живые моменты» в галерее — вертикальные видео КК */
+.vgal.vert{grid-template-columns:repeat(4,1fr);max-width:1000px;margin:20px auto 0}
+.vgal.vert .gv video{aspect-ratio:9/16}
+@media (max-width:760px){.vgal.vert{grid-template-columns:repeat(2,1fr);gap:10px}}
+/* 12.11 Ал: блок песен — плейлист: зелёный фон бренда, курсив как на «О шоу», фишки «Слушать» */
+#music.pl-green{background:radial-gradient(70% 45% at 50% 0%,rgba(0,122,72,.38) 0%,rgba(0,122,72,.12) 45%,rgba(0,0,0,0) 75%)}   /* тёмный фон сайта + изумрудное свечение (Ал 12.11: сплошной зелёный выбивался) */
+#music .pl-wrap{max-width:940px;text-align:center}
+#music .pl-wrap .lead{margin:0 auto;max-width:62ch}
+.pl{list-style:none;margin:34px 0 0;padding:0;text-align:left;border-top:1px solid rgba(240,217,138,.25)}
+.pl li{display:flex;align-items:center;gap:18px;padding:14px 4px;border-bottom:1px solid rgba(240,217,138,.18)}
+.pl-n{width:28px;flex:none;text-align:right;font:italic 600 22px/1 "Cormorant Garamond",Georgia,serif;color:#D4AF37}
+.pl-t{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.pl-t b{font:italic 600 clamp(20px,2.2vw,26px)/1.15 "Cormorant Garamond",Georgia,serif;color:#F7EAD4}
+.pl-t small{font:500 11px/1.2 Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#a99a85}
+.pl-go{display:inline-flex;align-items:center;gap:9px;flex:none;padding:6px 16px 6px 6px;border-radius:99px;background:#F7EAD4;color:#002717;text-decoration:none;
+  font:700 11px/1 Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 6px 18px rgba(0,0,0,.25);transition:transform .2s,box-shadow .2s}
+.pl-go:hover,.pl-go:focus-visible{transform:translateY(-1px);box-shadow:0 10px 24px rgba(200,34,133,.3)}
+.pl-go .chip{width:28px;height:28px;transition:transform .5s}
+.pl-go:hover .chip{transform:rotate(90deg)}
+#music.pl-green .hits-cta{margin-top:34px;text-align:center}
+@media (max-width:600px){.pl li{gap:12px;flex-wrap:wrap}.pl-t{flex-basis:calc(100% - 44px)}.pl-go{margin-left:40px}}
+@media (prefers-reduced-motion:reduce){.pl-go,.pl-go .chip{transition:none}}
+
+/* на главной — 8 песен, остальные по кнопке; на «О шоу» — все */
+.pl-more{display:none}
+body[data-page="index"] #music .pl:not(.open) li:nth-child(n+9){display:none}
+body[data-page="index"] .pl-more{display:inline-flex;margin:22px auto 0;padding:11px 22px;border-radius:99px;background:none;border:1px solid rgba(240,217,138,.45);color:#F0D98A;cursor:pointer;
+  font:700 12px/1 Manrope,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+body[data-page="index"] .pl-more:hover{background:rgba(240,217,138,.08)}
+body[data-page="index"] .pl-more:focus-visible{outline:2px solid #D4AF37;outline-offset:2px}
+
+/* Стык «сказка → реальность» (Ал 12.11): настоящие фото КК полароидами, тёплый тон */
+.real5{background:radial-gradient(60% 50% at 50% 40%,rgba(212,150,70,.10),rgba(0,0,0,0) 75%)}
+.real5 .pols{display:flex;justify-content:center;flex-wrap:wrap;gap:18px 6px;margin-top:34px}
+.real5 .pol{display:block;width:clamp(150px,19vw,230px);background:#f4ecdf;padding:9px 9px 0;box-shadow:0 14px 34px rgba(0,0,0,.55);transform:rotate(var(--r));transition:transform .35s,box-shadow .35s;margin:0 -4px}
+.real5 .pol:hover{transform:rotate(0) scale(1.06);z-index:2;box-shadow:0 20px 44px rgba(0,0,0,.7)}
+.real5 .pol img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;filter:sepia(.22) saturate(1.08) brightness(1.05) contrast(.96)}
+.real5 .pol i{display:block;font:400 italic 19px/1 var(--serif,'Cormorant Garamond',serif);color:#3a2a1e;text-align:center;padding:10px 4px 13px}
+@media (max-width:640px){.real5 .pols{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:10px 16px 18px;margin:24px -16px 0;scroll-snap-type:x mandatory}.real5 .pol{flex:0 0 58vw;scroll-snap-align:center}}
+@media (max-width:640px){.real5{overflow:hidden}.real5 .pols{margin:24px -20px 0;padding:10px 20px 18px;max-width:100vw}}
+
+/* «История» — вариант 3 из текста КК (Ал 12.11 23:45); .jrn-txt сейчас не используется */
+#story .jrn-txt{clear:both;font:400 clamp(16px,1.25vw,19px)/1.7 var(--sans,'Manrope',sans-serif);color:#d9ccb8;margin-top:22px;max-width:620px}
+#story .jrn-sm{clear:both;padding-top:6px}
+
+/* «История» — коллаж (Ал 13.11 00:03): «18 мне уже» · Ксюша (вертикаль, поверх соседних) · Витя с другом; сдвинут влево, заходит под фото героев */
+#story .jrn-col{position:relative;height:clamp(300px,26vw,390px);margin-top:40px;width:calc(100% + clamp(40px,7vw,110px));z-index:2}
+#story .jrn-col img{position:absolute;object-fit:cover;aspect-ratio:3/2;border:8px solid #f3e6cf;border-bottom-width:26px;box-shadow:0 18px 40px rgba(0,0,0,.6);filter:sepia(.15) saturate(1.05);transition:transform .35s}
+#story .jrn-col img.v{aspect-ratio:3/4}
+#story .jrn-col .c1{left:0;top:26%;width:40%;transform:rotate(-4deg);z-index:2}
+#story .jrn-col .c2{left:31%;top:0;width:27%;transform:rotate(3deg);z-index:4;box-shadow:0 24px 50px rgba(0,0,0,.75)}
+#story .jrn-col .c3{left:52%;top:28%;width:40%;transform:rotate(-3deg);z-index:3}
+#story .jrn-col img:hover{transform:rotate(0) scale(1.06);z-index:5}
+@media (max-width:640px){#story .jrn-col{width:100%;height:78vw;margin-top:34px}#story .jrn-col .c1{width:50%;top:30%}#story .jrn-col .c2{left:30%;width:38%}#story .jrn-col .c3{left:50%;top:34%;width:50%}}
+
+/* «История» — главное фото Ксюша в зелёном, крупнее (Ал 13.11 00:10) */
+@media (min-width:641px){#story .jrn-grid{grid-template-columns:1.05fr .95fr}#story .jrn-pic{padding:0 0 12% 10%}}
+
+/* кнопка плейлиста Яндекс Музыки (13.11) */
+#music .hits-cta{display:flex;flex-direction:column;align-items:center;gap:18px}
+#music .hits-pl{font:500 italic 22px/1.3 "Cormorant Garamond",serif;color:#ffd99a;text-decoration:none;border-bottom:1px solid rgba(255,217,154,.4)}
+#music .hits-pl:hover{color:#fff2c4;border-color:#fff2c4}
+
+/* трейлер: если play() не сработал — родные кнопки плеера (13.11) */
+.tbox.native .tplay{display:none}
+
+/* концовка трейлера v17: живая карточка «Ближайшие даты» (14.11) — внизу слева, под логотипом; справа лицо */
+.tbox .tend{position:absolute;left:0;right:0;bottom:0;padding:60px 28% 56px 4%;z-index:3;opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;background:radial-gradient(ellipse 70% 100% at 0 100%,rgba(8,5,3,.85),rgba(8,5,3,.55) 50%,transparent 80%)}
+.tbox .tend.on{opacity:1;transform:none;pointer-events:auto}
+.tbox .tend-k{margin:0 4px 0 0;align-self:center;font:600 11px/1.35 var(--sans,'Manrope',sans-serif);letter-spacing:.18em;text-transform:uppercase;color:#f0d98a}
+.tbox .tend-r{display:flex;flex-wrap:nowrap;gap:8px;align-items:stretch}
+.tbox .tend-d{display:flex;flex-direction:column;gap:2px;min-width:88px;padding:5px 10px;gap:1px;border:1px solid rgba(240,217,138,.45);border-radius:10px;background:rgba(20,12,8,.55);color:#fbf3e6;text-decoration:none}
+.tbox .tend-d:hover{border-color:#f0d98a}
+.tbox .tend-d b{font:700 16px/1.1 var(--serif,'Cormorant Garamond',serif)}
+.tbox .tend-d i{font:400 12px/1.2 var(--sans,'Manrope',sans-serif);font-style:normal;opacity:.8}
+.tbox .tend-d span{font:600 12px/1.2 var(--sans,'Manrope',sans-serif);color:#f0d98a}
+.tbox .tend-b{display:inline-flex;align-items:center;gap:8px;padding:0 16px;border-radius:999px;background:#c82285;color:#fff;font:600 14px/1 var(--sans,'Manrope',sans-serif);text-decoration:none;white-space:nowrap}
+.tbox .tend-b svg{width:14px;height:14px;fill:#ffd99a}
+@media (max-width:820px){
+  .tbox .tend{padding:24px 24% 30px 10px;background:radial-gradient(ellipse 90% 100% at 0 100%,rgba(8,5,3,.85),rgba(8,5,3,.5) 55%,transparent 85%)}
+  .tbox .tend-k{display:none}
+  .tbox .tend-r{flex-wrap:nowrap;gap:5px}
+  .tbox .tend-d{min-width:0;flex:1;padding:4px 6px;border-radius:7px}
+  .tbox .tend-d.x4{display:none}
+  .tbox .tend-d b{font-size:12px}.tbox .tend-d i{display:none}.tbox .tend-d span{font-size:9.5px;white-space:nowrap}.tbox .tend-d b{white-space:nowrap}
+  .tbox .tend-b{padding:0 8px;font-size:10px;white-space:normal;text-align:center;line-height:1.1;max-width:62px}.tbox .tend-b svg{display:none}
+}
+
+/* Ал 15.11: финальный кадр — и обложка, и конец. Центральная кнопка прячется, кадр целиком кликабелен, кнопка «Смотреть трейлер» — в карточке дат */
+.tbox.has-endcard .tplay{background:none}
+.tbox.has-endcard .tplay svg,.tbox.has-endcard .tplay span{display:none}
+.tbox .tend-p{display:inline-flex;align-items:center;gap:8px;padding:0 16px;border:1px solid rgba(240,217,138,.7);border-radius:999px;background:rgba(20,12,8,.55);color:#fbf3e6;font:600 14px/1 var(--sans,'Manrope',sans-serif);cursor:pointer;white-space:nowrap}
+.tbox .tend-p:hover{border-color:#f0d98a;background:rgba(20,12,8,.8)}
+.tbox .tend-p svg{width:14px;height:14px;fill:#f0d98a}
+@media (max-width:820px){.tbox .tend-p{padding:0;width:34px;justify-content:center;flex:0 0 34px}.tbox .tend-p span{display:none}}
+
+/* 15.11 Ал: видно, что это видео — круглая ▶ с пульсацией в просвете между логотипом и лицом; видна до запуска и в конце */
+.tbox .tbig{position:absolute;left:48.5%;top:22%;transform:translate(-50%,-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none;opacity:0;transition:opacity .4s}
+.tbox.ended .tbig{opacity:1}
+.tbox .tbig-c{position:relative;width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:rgba(200,34,133,.92);box-shadow:0 0 0 2px rgba(255,217,154,.9),0 10px 40px rgba(0,0,0,.55);transition:transform .3s}
+.tbox .tbig-c::before,.tbox .tbig-c::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,217,154,.8);animation:tbigp 2.2s ease-out infinite}
+.tbox .tbig-c::after{animation-delay:1.1s}
+@keyframes tbigp{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+.tbox .tbig-c svg{width:44px;height:44px;fill:#fff;margin-left:6px}
+.tbox:hover .tbig-c{transform:scale(1.08)}
+.tbox .tbig-t{font:600 15px/1 var(--sans,'Manrope',sans-serif);letter-spacing:.04em;color:#fbf3e6;text-shadow:0 2px 10px rgba(0,0,0,.8);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.tbox .tbig-c::before,.tbox .tbig-c::after{animation:none}}
+@media (max-width:820px){.tbox .tbig{left:40%;top:15%;gap:0}.tbox .tbig-t{display:none}.tbox .tbig-c{width:44px;height:44px}.tbox .tbig-c svg{width:20px;height:20px;margin-left:3px}}
+
+/* 15.11: превью claude.ai — пока ролик скачивается целиком, на большой кнопке «загружаю ролик…» */
+.tbox.loading .tbig-c svg{opacity:.35}
+.tbox.loading .tbig-c::before{animation:tbigspin 1s linear infinite;border-color:transparent;border-top-color:#fff;inset:-6px;opacity:1}
+@keyframes tbigspin{to{transform:rotate(360deg)}}
+.tbox.loading .tbig-t::after{content:" · загружаю ролик…"}
+
+/* 15.11 Ал: на телефоне слова не режем по слогам («связа-ла»). Переносы выключены везде; заголовки — ровные строки (balance), абзацы — без одиноких слов (pretty).
+   Предлоги и союзы склеены со следующим словом при сборке (typo в build.py). */
+html,body,*{-webkit-hyphens:manual;hyphens:manual}
+h1,h2,h3,h4,.title,.mv-h,.bar5-h,.msk-l,.f3-cap,.lead4,.k4,.slog4,figcaption h3,.dlya-t2 h3,.gift5-t,.pol i{text-wrap:balance}
+p,li,figcaption p,.sub,.lead,.plot5,.mv-d{text-wrap:pretty}
+@media (max-width:520px){.cf h3{font-size:20px}}
+
+/* 16.11 Анвер: на телефоне плашки дат в кадре мелкие (9,5 px), пальцем не попасть — на телефоне карточка дат ПОД роликом, всегда видна, крупно */
+@media (max-width:820px){
+  .tbox .tend{position:relative;left:auto;right:auto;bottom:auto;opacity:1!important;transform:none!important;pointer-events:auto!important;
+    padding:14px 12px 16px;background:#140c08;border-top:1px solid rgba(240,217,138,.25)}
+  .tbox .tend-k{display:block;flex:0 0 100%;font-size:11px;margin:0 0 2px}
+  .tbox .tend-k br{display:none}
+  .tbox .tend-r{flex-wrap:wrap;gap:8px}
+  .tbox .tend-d{flex:1 1 28%;min-width:0;min-height:52px;padding:8px 8px;border-radius:10px;justify-content:center}
+  .tbox .tend-d.x4{display:none}
+  .tbox .tend-d b{font-size:15px}.tbox .tend-d i{display:block;font-size:12px}.tbox .tend-d span{font-size:12.5px;white-space:nowrap}
+  .tbox .tend-b,.tbox .tend-p{flex:1 1 40%;min-height:48px;justify-content:center;font-size:14px;max-width:none;width:auto;padding:0 12px;white-space:nowrap}
+  .tbox .tend-b svg{display:inline-block}
+  .tbox .tend-p span{display:inline}
+}
+@media (max-width:370px){.tbox .tend-d span{font-size:11.5px}.tbox .tend-b,.tbox .tend-p{flex-basis:100%}}
