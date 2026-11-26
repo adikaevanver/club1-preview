@@ -33,10 +33,38 @@
   var fresh = readMarks();
   if (fresh) { try { sessionStorage.setItem(KEY, JSON.stringify(fresh)); } catch (e) {} }
   var marks = fresh || storedMarks();
+
+  /* ---- виджет кассы по каналу (письмо Кузнецова 25.11 «CRM и реклама ОЧМЖ», п. 1) ----
+     Кабинет Яндекс Билетов UTM не хранит, канал заказа виден только по виджету.
+     Ключ канала вписать сюда, когда виджет заведут в кабинете Билетов; пустой ключ —
+     ссылка кассы остаётся как есть (общий виджет). */
+  var CHANNEL_KEYS = {
+    direct: '',   // Яндекс Директ
+    vk: '',       // VK Реклама
+    tg: '',       // посевы в Telegram
+    mail: '',     // рассылка
+    qr: ''        // QR (стенды, печать)
+  };
+  var SOURCE_CHANNEL = {
+    yandex: 'direct', direct: 'direct', 'yandex-direct': 'direct', ya: 'direct',
+    vk: 'vk', vkontakte: 'vk', vk_ads: 'vk', vkads: 'vk',
+    telegram: 'tg', tg: 'tg',
+    email: 'mail', mail: 'mail', rassylka: 'mail', newsletter: 'mail', unisender: 'mail',
+    qr: 'qr'
+  };
+  function channelKey() {
+    if (!marks) return '';
+    var src = String(marks.utm_source || '').toLowerCase();
+    var ch = SOURCE_CHANNEL[src] || (marks.yclid ? 'direct' : '');
+    return (ch && CHANNEL_KEYS[ch]) || '';
+  }
+
   function withMarks(href) {
     if (!marks) return href;
     var u; try { u = new URL(href, location.href); } catch (e) { return href; }
     Object.keys(marks).forEach(function (k) { if (!u.searchParams.has(k)) u.searchParams.set(k, marks[k]); });
+    var ck = channelKey();
+    if (ck && u.searchParams.has('clientKey')) u.searchParams.set('clientKey', ck);
     return u.toString();
   }
 
