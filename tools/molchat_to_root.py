@@ -13,6 +13,11 @@
 robots.txt (свой корневой) и sitemap.xml (его собирает build-seo.py).
 Список поставленных файлов — molchat-root-files.txt: при следующем пакете
 скрипт удаляет файлы, которые были в прошлом пакете и пропали из нового.
+
+    python3 tools/molchat_to_root.py --overlay <обновление.zip | папка molchat>
+
+--overlay — частичное обновление («залить поверх, ничего не удалять», как 26.11):
+файлы пакета кладутся поверх, ничего не удаляется, список дополняется.
 """
 import os, sys, shutil, tempfile, zipfile
 
@@ -32,7 +37,7 @@ def rewrite(data: str) -> str:
     return data
 
 
-def main(src):
+def main(src, overlay=False):
     tmp = None
     if src.endswith('.zip'):
         tmp = tempfile.mkdtemp(prefix='molchat-pkg-')
@@ -78,7 +83,9 @@ def main(src):
     old = []
     if os.path.exists(MANIFEST):
         old = [l.strip() for l in open(MANIFEST, encoding='utf-8') if l.strip()]
-    gone = sorted(set(old) - set(new))
+    gone = [] if overlay else sorted(set(old) - set(new))
+    if overlay:
+        new = sorted(set(old) | set(new))
     for rel in gone:
         p = os.path.join(ROOT, rel)
         if os.path.exists(p):
@@ -93,6 +100,9 @@ def main(src):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
+    args = sys.argv[1:]
+    overlay = '--overlay' in args
+    args = [a for a in args if a != '--overlay']
+    if len(args) != 1:
         raise SystemExit(__doc__)
-    main(sys.argv[1])
+    main(args[0], overlay)
