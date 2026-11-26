@@ -238,8 +238,12 @@
   /* видео: телефону — вертикальная версия 720×1280 */
   var v = $('#hv'), mob = innerWidth < 700 || innerHeight > innerWidth;
   v.poster = mob ? v.getAttribute('data-poster-m') : v.poster; $('.h4 .poster').src = v.poster;
-  v.src = mob ? v.getAttribute('data-src-m') : v.getAttribute('data-src');
-  if (!reduce){ v.autoplay = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }
+  /* 23.11 Ал «долго открывается»: сначала обложка, видео — после загрузки страницы (не мешает фото, шрифтам и скриптам).
+     На медленном интернете и в режиме экономии трафика видео не грузим — остаётся обложка. */
+  var cn = navigator.connection || {}, slowNet = cn.saveData || /(^|-)2g$/.test(cn.effectiveType || '');
+  function startHero(){ if (slowNet || v.getAttribute('src')) return; v.src = mob ? v.getAttribute('data-src-m') : v.getAttribute('data-src');
+    if (!reduce){ v.autoplay = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); } }
+  if (document.readyState === 'complete') setTimeout(startHero, 200); else addEventListener('load', function(){ setTimeout(startHero, 200); });
   v.addEventListener('playing', function(){ $('.h4 .poster').style.opacity = 0; });
 
   /* данные: ближайший вечер флагмана и мини-афиша */
@@ -266,9 +270,13 @@
       LINES.forEach(function(s, i){ var ts = document.createElementNS('http://www.w3.org/2000/svg','tspan'); if (i) ts.setAttribute('dy', fk === 3 ? '0.98em' : '0.92em'); ts.textContent = s; t.appendChild(ts); });
     });
   }
+  /* 25.11 Telegram iOS занижает 100svh (~455 из ~627 px) — первый экран короче окна, логотип уезжает под шапку. Берём innerHeight, только если svh < 80% окна (Safari/Chrome не трогаем) */
+  function fixH(){ stage.style.height = ''; var ih = innerHeight; if (ih > 300 && stage.clientHeight < ih * .8) stage.style.height = ih + 'px'; }
   function layoutSolid(){
+    fixH();
     W = stage.clientWidth; H = stage.clientHeight; var mob = W < 700;
-    var lw = Math.min(W * (mob ? .9 : .56), H * (mob ? .3 : .37) * 1137 / 634), lh = lw * 634 / 1137, top = H * (mob ? .13 : .1);
+    var hb = 0, hd = document.querySelector('.hdr'); if (hd) hb = Math.max(0, hd.getBoundingClientRect().bottom) + 10;
+    var lw = Math.min(W * (mob ? .84 : .46), H * (mob ? .27 : .30) * 1137 / 634)   /* 23.11 Ал после запуска: логотип меньше — верх ниже, не ложится на экраны и надписи в фоне */, lh = lw * 634 / 1137, top = Math.max(H * (mob ? .13 : .1), scrollY < 5 ? hb : 0);
     slogo.style.width = lw + 'px'; slogo.style.marginLeft = (-lw / 2) + 'px'; slogo.style.top = top + 'px';
     origin = [W / 2, top + lh * .55];
     sub.style.left = '0'; sub.style.right = '0'; sub.style.width = ''; sub.style.textAlign = 'center'; sub.classList.remove('side');
@@ -326,6 +334,8 @@
   }
   addEventListener('scroll', function(){ requestAnimationFrame(onScroll); }, {passive:true});
   var rt; addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(layout, 120); });
+  if (window.visualViewport) visualViewport.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(layout, 120); });
+  [500, 1500].forEach(function(ms){ setTimeout(layout, ms); }); /* Telegram раскрывает окно после загрузки */
   function go(){ layout(); requestAnimationFrame(function(){ document.documentElement.classList.add('ready'); }); }
   var fam = {1:'900 100px "Playfair Display"', 2:'400 100px "Yeseva One"', 3:'700 100px Oswald'}[fk];
   if (document.fonts && document.fonts.load) Promise.race([document.fonts.load(fam, 'О ЧЁМ МОЛЧАТ ЖЕНЩИНЫ'), new Promise(function(r){ setTimeout(r, 2500); })]).then(go, go); else go();
@@ -338,7 +348,7 @@
 (function(){
   'use strict';
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var c = document.getElementById('embers'); if (!c) return;
+  var c = document.getElementById('embers'); if (!c) return; c.remove(); return;   /* 23.11 Ал: летающие точки (искры) убраны */
   var x = c.getContext('2d'), W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), P = [], N = innerWidth < 700 ? 22 : 42;
   function size(){ W = innerWidth; H = innerHeight; c.width = W*dpr; c.height = H*dpr; x.setTransform(dpr,0,0,dpr,0,0); }
   function mk(any){ return {x: Math.random()*W, y: any ? Math.random()*H : H + 10, v: .25 + Math.random()*.7, s: .6 + Math.random()*1.8, w: Math.random()*6.28, l: .3 + Math.random()*.6, h: Math.random() < .5 ? '255,213,138' : '233,162,59'}; }
